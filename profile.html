@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VELA — Build Your Profile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #080C12; --bg2: #0D1320; --surface: #111827;
+      --border: rgba(255,255,255,0.07); --accent: #00E5A0;
+      --accent2: #0096FF; --text: #F0F4FF; --muted: #6B7A99;
+      --card: #0F1A2E; --danger: #FF6B6B; --warn: #FFA500;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: 'DM Sans', sans-serif; min-height: 100vh;
+      display: flex; flex-direction: column;
+    }
+
+    /* NAV */
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 5%; border-bottom: 1px solid var(--border);
+      background: rgba(8,12,18,0.95);
+    }
+    .logo {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem;
+      letter-spacing: 0.08em; background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; text-decoration: none;
+    }
+    .nav-step-info { color: var(--muted); font-size: 0.82rem; }
+
+    /* PROGRESS BAR */
+    .progress-wrap {
+      background: var(--bg2); padding: 1rem 5%; border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 50;
+    }
+    .progress-meta {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 0.6rem;
+    }
+    .progress-label {
+      font-family: 'Syne', sans-serif; font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent);
+    }
+    .progress-fraction { color: var(--muted); font-size: 0.78rem; }
+    .progress-track {
+      height: 4px; background: var(--surface); border-radius: 100px; overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%; border-radius: 100px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    /* MAIN */
+    main {
+      flex: 1; display: flex; align-items: flex-start; justify-content: center;
+      padding: 3rem 5% 5rem;
+    }
+    .step-container {
+      width: 100%; max-width: 620px;
+      animation: stepIn 0.35s cubic-bezier(0.4,0,0.2,1) both;
+    }
+    @keyframes stepIn {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .step-num {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem;
+    }
+    .step-title {
+      font-family: 'Syne', sans-serif; font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 800; line-height: 1.1; color: var(--text); margin-bottom: 0.6rem;
+    }
+    .step-title span {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .step-sub { color: var(--muted); font-size: 0.95rem; margin-bottom: 2rem; line-height: 1.6; }
+
+    /* INPUTS */
+    .field { margin-bottom: 1.25rem; }
+    .field label {
+      display: block; font-size: 0.82rem; font-weight: 600; color: var(--muted);
+      letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.5rem;
+    }
+    .input, .select, .textarea {
+      width: 100%; background: var(--surface); border: 1.5px solid var(--border);
+      color: var(--text); padding: 0.85rem 1.1rem; border-radius: 10px;
+      font-family: 'DM Sans', sans-serif; font-size: 0.95rem; outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .input:focus, .select:focus, .textarea:focus {
+      border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,229,160,0.08);
+    }
+    .input::placeholder, .textarea::placeholder { color: var(--muted); }
+    .select { cursor: pointer; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236B7A99' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 1rem center;
+      padding-right: 2.5rem;
+    }
+    .select option { background: var(--surface); }
+    .textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+
+    /* CHOICE GRID */
+    .choice-grid {
+      display: grid; gap: 0.75rem;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+    .choice-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+    .choice-grid.cols-1 { grid-template-columns: 1fr; }
+
+    .choice-card {
+      background: var(--card); border: 1.5px solid var(--border); border-radius: 12px;
+      padding: 1rem 1.1rem; cursor: pointer; transition: all 0.2s; user-select: none;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .choice-card:hover { border-color: rgba(0,229,160,0.3); background: rgba(0,229,160,0.04); }
+    .choice-card.selected {
+      border-color: var(--accent); background: rgba(0,229,160,0.08);
+      box-shadow: 0 0 0 3px rgba(0,229,160,0.1);
+    }
+    .choice-icon { font-size: 1.3rem; flex-shrink: 0; }
+    .choice-text { flex: 1; }
+    .choice-label { font-family: 'Syne', sans-serif; font-size: 0.88rem; font-weight: 700; color: var(--text); }
+    .choice-desc { font-size: 0.75rem; color: var(--muted); margin-top: 0.15rem; line-height: 1.4; }
+    .choice-check {
+      width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      transition: all 0.2s; font-size: 0.65rem;
+    }
+    .choice-card.selected .choice-check {
+      background: var(--accent); border-color: var(--accent); color: #000;
+    }
+
+    /* SKILL GRID (15 skills) */
+    .skill-grid {
+      display: grid; gap: 0.6rem;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    }
+    .skill-card {
+      background: var(--card); border: 1.5px solid var(--border); border-radius: 10px;
+      padding: 0.85rem 1rem; cursor: pointer; transition: all 0.2s; user-select: none;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .skill-card:hover { border-color: rgba(0,150,255,0.35); }
+    .skill-card.selected { border-color: var(--accent2); background: rgba(0,150,255,0.08); }
+    .skill-card-icon { font-size: 1.1rem; flex-shrink: 0; }
+    .skill-card-name { font-size: 0.82rem; font-weight: 600; color: var(--text); line-height: 1.3; }
+
+    /* TOOLS MULTI-SELECT */
+    .tools-grid {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+    }
+    .tool-chip {
+      background: var(--surface); border: 1.5px solid var(--border); color: var(--muted);
+      padding: 0.4rem 0.9rem; border-radius: 100px; font-size: 0.82rem; font-weight: 500;
+      cursor: pointer; transition: all 0.2s; user-select: none;
+    }
+    .tool-chip:hover { border-color: rgba(0,229,160,0.3); color: var(--text); }
+    .tool-chip.selected { background: rgba(0,229,160,0.1); border-color: var(--accent); color: var(--accent); }
+
+    /* SCALE SLIDER */
+    .scale-options { display: flex; gap: 0.5rem; }
+    .scale-btn {
+      flex: 1; background: var(--card); border: 1.5px solid var(--border);
+      color: var(--muted); padding: 0.75rem 0.5rem; border-radius: 10px;
+      text-align: center; cursor: pointer; transition: all 0.2s; user-select: none;
+    }
+    .scale-btn:hover { border-color: rgba(0,229,160,0.3); }
+    .scale-btn.selected { border-color: var(--accent); background: rgba(0,229,160,0.1); color: var(--accent); }
+    .scale-num { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 800; }
+    .scale-label { font-size: 0.65rem; color: var(--muted); margin-top: 0.2rem; }
+    .scale-btn.selected .scale-label { color: var(--accent); }
+
+    /* QUIZ */
+    .quiz-question { margin-bottom: 2rem; }
+    .q-text {
+      font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700;
+      color: var(--text); margin-bottom: 1rem; line-height: 1.4;
+    }
+    .q-num { color: var(--accent); margin-right: 0.5rem; }
+    .q-options { display: flex; flex-direction: column; gap: 0.5rem; }
+    .q-option {
+      background: var(--card); border: 1.5px solid var(--border); border-radius: 10px;
+      padding: 0.85rem 1.1rem; cursor: pointer; transition: all 0.2s;
+      font-size: 0.9rem; color: var(--muted); user-select: none;
+    }
+    .q-option:hover { border-color: rgba(0,229,160,0.3); color: var(--text); }
+    .q-option.selected { border-color: var(--accent); background: rgba(0,229,160,0.08); color: var(--text); }
+    .q-option.correct { border-color: var(--accent); background: rgba(0,229,160,0.12); color: var(--accent); }
+    .q-option.wrong { border-color: var(--danger); background: rgba(255,107,107,0.08); color: var(--danger); }
+
+    /* BUTTONS */
+    .btn-row { display: flex; gap: 0.75rem; margin-top: 2rem; }
+    .btn-next {
+      flex: 1; background: linear-gradient(135deg, var(--accent), #00C080);
+      color: #000; border: none; padding: 0.9rem 2rem; border-radius: 10px;
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem;
+      letter-spacing: 0.03em; cursor: pointer; transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn-next:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-next:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
+    .btn-back {
+      background: var(--surface); border: 1.5px solid var(--border); color: var(--muted);
+      padding: 0.9rem 1.5rem; border-radius: 10px; font-family: 'Syne', sans-serif;
+      font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-back:hover { border-color: var(--muted); color: var(--text); }
+
+    /* SCORE SCREEN */
+    .score-screen { text-align: center; padding: 1rem 0; }
+    .score-ring {
+      width: 160px; height: 160px; margin: 0 auto 2rem;
+      position: relative; display: flex; align-items: center; justify-content: center;
+    }
+    .score-ring svg { position: absolute; inset: 0; transform: rotate(-90deg); }
+    .score-ring-track { fill: none; stroke: var(--surface); stroke-width: 8; }
+    .score-ring-fill { fill: none; stroke-width: 8; stroke-linecap: round; transition: stroke-dashoffset 1.2s cubic-bezier(0.4,0,0.2,1); }
+    .score-num {
+      font-family: 'Syne', sans-serif; font-size: 2.5rem; font-weight: 800;
+      color: var(--text); line-height: 1;
+    }
+    .score-label { font-size: 0.75rem; color: var(--muted); margin-top: 0.2rem; letter-spacing: 0.08em; text-transform: uppercase; }
+    .score-title { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; margin-bottom: 0.75rem; color: var(--text); }
+    .score-message { color: var(--muted); font-size: 1rem; max-width: 460px; margin: 0 auto 2rem; line-height: 1.6; }
+    .score-breakdown {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem;
+      margin: 2rem 0; text-align: left;
+    }
+    .breakdown-item {
+      background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 1rem;
+    }
+    .breakdown-label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.35rem; }
+    .breakdown-val { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 800; }
+    .breakdown-bar { height: 3px; background: var(--surface); border-radius: 100px; margin-top: 0.5rem; overflow: hidden; }
+    .breakdown-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+
+    .improve-list { text-align: left; margin: 1.5rem 0; display: flex; flex-direction: column; gap: 0.6rem; }
+    .improve-item {
+      background: rgba(255,165,0,0.06); border: 1px solid rgba(255,165,0,0.15);
+      border-radius: 10px; padding: 0.85rem 1rem;
+      display: flex; align-items: flex-start; gap: 0.75rem; font-size: 0.88rem; color: var(--muted);
+    }
+    .improve-item::before { content: "→"; color: var(--warn); flex-shrink: 0; margin-top: 0.05rem; }
+
+    .pass-actions { display: flex; flex-direction: column; gap: 0.75rem; }
+    .btn-jobs {
+      width: 100%; background: linear-gradient(135deg, var(--accent), #00C080);
+      color: #000; border: none; padding: 1rem; border-radius: 10px;
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem;
+      letter-spacing: 0.03em; cursor: pointer; transition: opacity 0.2s;
+      text-decoration: none; display: block; text-align: center;
+    }
+    .btn-jobs:hover { opacity: 0.88; }
+    .btn-retry {
+      width: 100%; background: transparent; border: 1.5px solid var(--border);
+      color: var(--muted); padding: 0.9rem; border-radius: 10px;
+      font-family: 'Syne', sans-serif; font-weight: 600; font-size: 0.9rem;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .btn-retry:hover { border-color: var(--accent); color: var(--accent); }
+
+    .error-msg { color: var(--danger); font-size: 0.82rem; margin-top: 0.5rem; display: none; }
+
+    @media (max-width: 600px) {
+      .choice-grid { grid-template-columns: 1fr; }
+      .choice-grid.cols-2 { grid-template-columns: 1fr; }
+      .skill-grid { grid-template-columns: 1fr 1fr; }
+      .score-breakdown { grid-template-columns: 1fr; }
+      .scale-options { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="index.html">VELA</a>
+  <span class="nav-step-info" id="nav-step-info">Building your profile</span>
+</nav>
+
+<div class="progress-wrap">
+  <div class="progress-meta">
+    <span class="progress-label" id="progress-label">Welcome</span>
+    <span class="progress-fraction" id="progress-fraction">Step 1 of 10</span>
+  </div>
+  <div class="progress-track">
+    <div class="progress-fill" id="progress-fill" style="width:10%"></div>
+  </div>
+</div>
+
+<main>
+  <div class="step-container" id="step-container"></div>
+</main>
+
+<script>
+// ─── DATA ────────────────────────────────────────────────────────────────────
+const SKILLS_15 = [
+  { icon:"🎧", name:"Customer Service" },
+  { icon:"🤝", name:"Virtual Assistant" },
+  { icon:"📊", name:"Data Analysis" },
+  { icon:"🤖", name:"Prompt Engineering & AI" },
+  { icon:"📱", name:"Social Media Management" },
+  { icon:"✍️", name:"Content Writing" },
+  { icon:"🔍", name:"SEO Specialist" },
+  { icon:"💼", name:"Project Management" },
+  { icon:"🎨", name:"UI/UX Design" },
+  { icon:"📧", name:"Email Marketing" },
+  { icon:"🔐", name:"Cybersecurity" },
+  { icon:"📚", name:"Online Tutoring" },
+  { icon:"💰", name:"Bookkeeping" },
+  { icon:"🛒", name:"E-Commerce" },
+  { icon:"👥", name:"HR & Recruitment" },
+];
+
+const TOOLS_BY_SKILL = {
+  "Customer Service":          ["Zendesk","Intercom","Freshdesk","Slack","Zoom","HubSpot","Salesforce","Jira"],
+  "Virtual Assistant":         ["Google Workspace","Notion","Trello","Asana","Calendly","ChatGPT","Zoom","Slack"],
+  "Data Analysis":             ["Excel","SQL","Python","Tableau","Power BI","Google Sheets","Looker","R"],
+  "Prompt Engineering & AI":   ["ChatGPT","Claude","Midjourney","Make.com","Zapier","LangChain","Gemini","Perplexity"],
+  "Social Media Management":   ["Canva","Buffer","Hootsuite","Meta Business Suite","CapCut","Later","Sprout Social","TikTok"],
+  "Content Writing":           ["Grammarly","Surfer SEO","WordPress","Jasper","Hemingway","Ahrefs","Google Docs","Notion"],
+  "SEO Specialist":            ["Ahrefs","Semrush","Google Search Console","Moz","Screaming Frog","Surfer SEO","Ubersuggest","Yoast"],
+  "Project Management":        ["Asana","Jira","Monday.com","Notion","Trello","MS Project","ClickUp","Slack"],
+  "UI/UX Design":              ["Figma","Adobe XD","Sketch","Miro","Maze","InVision","Zeroheight","Webflow"],
+  "Email Marketing":           ["Mailchimp","Klaviyo","ConvertKit","ActiveCampaign","HubSpot","Brevo","Drip","GetResponse"],
+  "Cybersecurity":             ["Wireshark","Kali Linux","Splunk","Nmap","Burp Suite","CompTIA","Metasploit","TryHackMe"],
+  "Online Tutoring":           ["Zoom","Google Meet","Loom","Notion","Miro","Teachable","Padlet","Kahoot"],
+  "Bookkeeping":               ["QuickBooks","Xero","Wave","FreshBooks","Excel","Gusto","Sage","Zoho Books"],
+  "E-Commerce":                ["Shopify","WooCommerce","Meta Ads","Google Ads","Canva","Klaviyo","Oberlo","Gorgias"],
+  "HR & Recruitment":          ["LinkedIn Recruiter","Workday","BambooHR","Greenhouse","Lever","Slack","ADP","Rippling"],
+};
+
+const QUIZ_BY_SKILL = {
+  "Customer Service": [
+    { q:"A customer is angry about a delayed order. What's the BEST first response?", options:["Explain company policy immediately","Apologise and acknowledge their frustration first","Ask them to check their tracking number","Tell them delays are outside your control"], answer:1 },
+    { q:"What does CSAT stand for in customer support?", options:["Customer Service Action Team","Customer Satisfaction Score","Customer Support Analytics Tool","Centralised Service Assessment Test"], answer:1 },
+    { q:"A customer asks for a refund outside the policy window. You should:", options:["Refuse and cite policy","Ignore the request","Escalate to a supervisor and try to find a solution","Promise a refund you can't guarantee"], answer:2 },
+  ],
+  "Virtual Assistant": [
+    { q:"Your manager asks you to 'block some time' on their calendar. What should you do first?", options:["Block every empty slot","Ask for the purpose and duration before scheduling","Send a calendar invite without checking","Block only mornings"], answer:1 },
+    { q:"Which tool is BEST for managing recurring tasks and project workflows?", options:["WhatsApp","Notion or Asana","Google Photos","Excel Charts"], answer:1 },
+    { q:"You accidentally sent a draft email from your manager's account. What do you do?", options:["Delete it and say nothing","Immediately inform your manager and assess the damage","Wait to see if anyone notices","Blame a technical error"], answer:1 },
+  ],
+  "Data Analysis": [
+    { q:"What does SQL stand for?", options:["Structured Query Language","Simple Question Logic","System Query Layer","Standard Question List"], answer:0 },
+    { q:"You have sales data for 12 months. Which chart best shows trends over time?", options:["Pie chart","Bar chart","Line chart","Scatter plot"], answer:2 },
+    { q:"What is the purpose of a pivot table in Excel?", options:["To create colourful charts","To summarise and analyse large datasets quickly","To send emails","To run Python scripts"], answer:1 },
+  ],
+  "Prompt Engineering & AI": [
+    { q:"What is 'few-shot prompting'?", options:["Giving the AI very short instructions","Providing example input-output pairs in your prompt","Limiting the AI's response length","Using multiple AI tools at once"], answer:1 },
+    { q:"Which of these is a hallucination in AI?", options:["When AI refuses to answer","When AI generates confident but false information","When AI gives very long responses","When AI asks clarifying questions"], answer:1 },
+    { q:"What does 'temperature' control in an AI model?", options:["Server cooling","How fast the model responds","The randomness/creativity of the output","The number of tokens used"], answer:2 },
+  ],
+  "Social Media Management": [
+    { q:"What is the best time to post on LinkedIn for maximum reach?", options:["Late night weekends","Tuesday to Thursday, 8–10am or 12pm","Every hour daily","Only on Mondays"], answer:1 },
+    { q:"What does 'engagement rate' measure?", options:["Number of followers gained","How many people interact with your content relative to reach","Total impressions","Money earned from posts"], answer:1 },
+    { q:"A brand's post gets negative comments. You should:", options:["Delete all negative comments","Ignore them","Respond professionally and address the concern publicly","Post more content to push it down"], answer:2 },
+  ],
+  "Content Writing": [
+    { q:"What is the AIDA copywriting framework?", options:["Analyse, Inform, Design, Act","Attention, Interest, Desire, Action","Audience, Idea, Draft, Approve","Assess, Implement, Distribute, Analyse"], answer:1 },
+    { q:"What is a meta description used for?", options:["Describing images on social media","Summarising a page for search engine results","Setting page loading speed","Defining page colours"], answer:1 },
+    { q:"When writing for online readers, you should:", options:["Use long dense paragraphs","Write in academic style","Use short paragraphs, subheadings, and clear language","Avoid using any examples"], answer:2 },
+  ],
+  "SEO Specialist": [
+    { q:"What is a backlink?", options:["An internal link on your own website","A link from another website pointing to yours","A broken link","A link in your email signature"], answer:1 },
+    { q:"What does 'search intent' mean?", options:["How fast a search query loads","The reason behind a user's search query","The number of keywords on a page","How often a keyword is searched"], answer:1 },
+    { q:"Which Google tool shows you how your site performs in search?", options:["Google Analytics","Google Ads","Google Search Console","Google Drive"], answer:2 },
+  ],
+  "Project Management": [
+    { q:"In Agile, what is a 'sprint'?", options:["A speed test for developers","A fixed time period to complete a set of tasks","A type of meeting","A risk assessment tool"], answer:1 },
+    { q:"What does a Gantt chart show?", options:["Team performance scores","Budget allocation","Project timeline and task dependencies","Customer satisfaction data"], answer:2 },
+    { q:"A project is falling behind schedule. First you should:", options:["Immediately request more budget","Assess the cause and impact before deciding next steps","Tell the client nothing","Add more tasks to the sprint"], answer:1 },
+  ],
+  "UI/UX Design": [
+    { q:"What is the primary purpose of a wireframe?", options:["Final visual design of a product","Low-fidelity layout to plan structure and flow","A colour palette guide","A coding framework"], answer:1 },
+    { q:"What does UX stand for?", options:["User Execution","Universal Experience","User Experience","Unique Extension"], answer:2 },
+    { q:"What is a 'user persona'?", options:["A fake social media account","A fictional representation of a target user based on research","A product logo","A server configuration"], answer:1 },
+  ],
+  "Email Marketing": [
+    { q:"What is a good average email open rate for marketing emails?", options:["1–3%","5–10%","20–30%","60–80%"], answer:2 },
+    { q:"What does A/B testing in email marketing mean?", options:["Testing two versions of an email to see which performs better","Sending emails to A and B lists","Automating emails","Archiving and backing up emails"], answer:0 },
+    { q:"What is email segmentation?", options:["Deleting old email subscribers","Dividing your email list into groups based on specific criteria","Formatting email layouts","Scheduling emails at different times"], answer:1 },
+  ],
+  "Cybersecurity": [
+    { q:"What is phishing?", options:["A type of firewall","A fraudulent attempt to steal credentials via fake communications","A network speed test","An encryption method"], answer:1 },
+    { q:"What does CIA stand for in cybersecurity?", options:["Central Intelligence Agency","Confidentiality, Integrity, Availability","Cyber Intelligence Assessment","Computer Incident Analysis"], answer:1 },
+    { q:"What is two-factor authentication (2FA)?", options:["Using two passwords","A second layer of identity verification beyond a password","Two firewall systems","Two antivirus programs"], answer:1 },
+  ],
+  "Online Tutoring": [
+    { q:"A student keeps getting the same concept wrong. You should:", options:["Move on to the next topic","Give the same explanation louder","Try a different explanation method or use an analogy","Tell them to revise at home"], answer:2 },
+    { q:"Which tool is BEST for collaborative online whiteboards during lessons?", options:["WhatsApp","Excel","Miro or Mural","Dropbox"], answer:2 },
+    { q:"What is the most important factor in keeping online students engaged?", options:["Having a perfect background","Active participation and varied activity types","Speaking very quickly","Using lots of slides"], answer:1 },
+  ],
+  "Bookkeeping": [
+    { q:"What is the accounting equation?", options:["Revenue − Expenses = Profit","Assets = Liabilities + Equity","Cash + Debt = Capital","Income − Tax = Net Pay"], answer:1 },
+    { q:"What is a balance sheet?", options:["A daily cash record","A statement of a company's assets, liabilities, and equity at a point in time","A list of all invoices","A payroll document"], answer:1 },
+    { q:"What does reconciliation mean in bookkeeping?", options:["Paying all outstanding invoices","Matching internal financial records with external statements like bank records","Creating new accounts","Filing tax returns"], answer:1 },
+  ],
+  "E-Commerce": [
+    { q:"What is a conversion rate in e-commerce?", options:["The exchange rate for international sales","The percentage of visitors who complete a purchase","The speed of page loading","The number of products in stock"], answer:1 },
+    { q:"What is dropshipping?", options:["Deleting unsold products","Selling products you hold in a warehouse","Selling products you don't physically hold — the supplier ships directly to the customer","Shipping products in bulk"], answer:2 },
+    { q:"Which metric best shows if your ad spend is profitable?", options:["Click-through rate","Number of impressions","Return on Ad Spend (ROAS)","Email open rate"], answer:2 },
+  ],
+  "HR & Recruitment": [
+    { q:"What is an ATS?", options:["Advanced Training System","Applicant Tracking System","Automated Tax Software","Annual Team Survey"], answer:1 },
+    { q:"What is the purpose of an onboarding process?", options:["To test new employees immediately","To help new hires integrate, understand culture and get productive faster","To reduce the number of new hires","To replace training programs"], answer:1 },
+    { q:"What does 'Boolean search' mean in recruiting?", options:["Searching only on LinkedIn","Using operators like AND, OR, NOT to find specific candidate profiles","A background check process","A payroll calculation method"], answer:1 },
+  ],
+};
+
+// Default fallback quiz
+const DEFAULT_QUIZ = [
+  { q:"What does remote work primarily require?", options:["Office presence","Reliable internet and self-discipline","Physical proximity to employer","Daily commute"], answer:1 },
+  { q:"Which communication tool is most commonly used by remote teams?", options:["Fax","In-person meetings","Slack or Microsoft Teams","Printed memos"], answer:2 },
+  { q:"What is the most important quality for a remote worker?", options:["Working the fastest","Self-motivation and time management","Having the latest laptop","Working only in the morning"], answer:1 },
+];
+
+const AFRICAN_COUNTRIES = [
+  "Nigeria","Kenya","Ghana","South Africa","Ethiopia","Tanzania","Uganda","Rwanda",
+  "Senegal","Ivory Coast","Cameroon","Zimbabwe","Zambia","Mozambique","Botswana",
+  "Namibia","Sierra Leone","Liberia","Gambia","Togo","Benin","Mali","Burkina Faso",
+  "Niger","Chad","Sudan","Egypt","Morocco","Tunisia","Algeria","Libya","Somalia",
+  "Eritrea","Djibouti","Comoros","Madagascar","Mauritius","Seychelles","Angola",
+  "DR Congo","Congo","Gabon","Equatorial Guinea","Malawi","Lesotho","Swaziland",
+  "Other"
+].sort();
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let currentStep = 0;
+let profile = {
+  name:"", country:"", email:"",
+  education:"", field:"", institution:"",
+  experience:"", expYears:"",
+  skill:"", selfLevel:0,
+  tools:[], english:0, availability:"", timezone:"",
+  motivation:"", goal:"",
+  quizAnswers:[], quizScore:0,
+};
+let quizAnswers = {};
+
+const STEP_LABELS = [
+  "Welcome","Education","Experience",
+  "Your Skill","Current Level","Tools",
+  "English","Availability","Your Why","Knowledge Check"
+];
+
+// ─── SCORING ─────────────────────────────────────────────────────────────────
+function calcScore() {
+  let score = 0;
+
+  // Education (max 20)
+  const eduMap = {"secondary":4,"diploma":8,"bachelor":14,"master":18,"phd":20};
+  score += eduMap[profile.education] || 6;
+
+  // Experience (max 15)
+  const expMap = {"none":0,"less1":5,"1to3":10,"3plus":15};
+  score += expMap[profile.experience] || 0;
+
+  // Self level (max 15) — 1–5 scale → 3,6,9,12,15
+  score += (profile.selfLevel || 0) * 3;
+
+  // Tools known (max 15) — each tool = 2pts, max 15
+  score += Math.min(profile.tools.length * 2, 15);
+
+  // English (max 15) — 1–5 scale → 3,6,9,12,15
+  score += (profile.english || 0) * 3;
+
+  // Quiz (max 20) — each correct = ~6.67pts
+  const quizTotal = Object.keys(quizAnswers).length;
+  const correct = Object.entries(quizAnswers).filter(([qi, ans]) => {
+    const quiz = (QUIZ_BY_SKILL[profile.skill] || DEFAULT_QUIZ);
+    return quiz[parseInt(qi)] && quiz[parseInt(qi)].answer === ans;
+  }).length;
+  profile.quizScore = correct;
+  score += Math.round((correct / Math.max(quizTotal,1)) * 20);
+
+  return Math.min(Math.round(score), 100);
+}
+
+function getImproveItems(score) {
+  const items = [];
+  const eduMap = {"secondary":4,"diploma":8,"bachelor":14,"master":18,"phd":20};
+  if ((eduMap[profile.education]||6) < 14) items.push("Consider completing a formal qualification — employers value credentials");
+  if ((profile.experience==="none"||!profile.experience)) items.push("Build experience through freelance projects, volunteering, or internships");
+  if ((profile.selfLevel||0) < 3) items.push(`Spend 4–6 weeks deepening your ${profile.skill} skills before applying`);
+  if (profile.tools.length < 3) items.push(`Learn at least 3 core tools for ${profile.skill} — employers expect tool familiarity`);
+  if ((profile.english||0) < 3) items.push("Improve your professional English — take a free course on Coursera or BBC Learning English");
+  if (profile.quizScore < 2) items.push(`Review the fundamentals of ${profile.skill} — your knowledge check showed some gaps`);
+  if (items.length === 0) items.push("You're very close — practice a mock interview and update your professional profile");
+  return items;
+}
+
+// ─── RENDER STEP ─────────────────────────────────────────────────────────────
+function updateProgress() {
+  const total = 10;
+  const pct = Math.round(((currentStep + 1) / total) * 100);
+  document.getElementById("progress-fill").style.width = pct + "%";
+  document.getElementById("progress-fraction").textContent = `Step ${currentStep + 1} of ${total}`;
+  document.getElementById("progress-label").textContent = STEP_LABELS[currentStep] || "";
+  document.getElementById("nav-step-info").textContent = STEP_LABELS[currentStep] || "";
+}
+
+function renderStep() {
+  updateProgress();
+  const container = document.getElementById("step-container");
+  container.style.animation = "none";
+  requestAnimationFrame(() => {
+    container.style.animation = "";
+    container.innerHTML = steps[currentStep]();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+}
+
+function next() {
+  if (currentStep < steps.length - 1) { currentStep++; renderStep(); }
+}
+function back() {
+  if (currentStep > 0) { currentStep--; renderStep(); }
+}
+
+function choose(key, val, el, group) {
+  profile[key] = val;
+  document.querySelectorAll(`.${group}`).forEach(e => e.classList.remove("selected"));
+  el.classList.add("selected");
+}
+
+function toggleTool(tool, el) {
+  if (profile.tools.includes(tool)) {
+    profile.tools = profile.tools.filter(t => t !== tool);
+    el.classList.remove("selected");
+  } else {
+    profile.tools.push(tool);
+    el.classList.add("selected");
+  }
+}
+
+function selectSkill(name, el) {
+  profile.skill = name;
+  document.querySelectorAll(".skill-card").forEach(e => e.classList.remove("selected"));
+  el.classList.add("selected");
+}
+
+function setScale(key, val, el, group) {
+  profile[key] = val;
+  document.querySelectorAll(`.${group}`).forEach(e => e.classList.remove("selected"));
+  el.classList.add("selected");
+}
+
+function answerQuiz(qi, ans, el) {
+  quizAnswers[qi] = ans;
+  const wrap = el.closest(".quiz-question");
+  wrap.querySelectorAll(".q-option").forEach(o => o.classList.remove("selected"));
+  el.classList.add("selected");
+}
+
+// ─── STEPS ───────────────────────────────────────────────────────────────────
+const steps = [
+
+  // STEP 1 — Welcome
+  () => `
+    <div class="step-num">Step 1 of 10 · Welcome</div>
+    <h1 class="step-title">Let's build your <span>VELA profile</span></h1>
+    <p class="step-sub">10 quick steps. We get to know the real you — your background, your skill, your goal. At the end, you'll get a VELA Readiness Score and your path to getting placed.</p>
+    <div class="field"><label>Full Name</label>
+      <input class="input" id="f-name" placeholder="Your full name" value="${profile.name}"/>
+    </div>
+    <div class="field"><label>Country</label>
+      <select class="select" id="f-country">
+        <option value="">Select your country</option>
+        ${AFRICAN_COUNTRIES.map(c=>`<option value="${c}" ${profile.country===c?"selected":""}>${c}</option>`).join("")}
+      </select>
+    </div>
+    <div class="field"><label>Email Address</label>
+      <input class="input" id="f-email" type="email" placeholder="you@email.com" value="${profile.email}"/>
+    </div>
+    <span class="error-msg" id="step1-err">Please fill in all fields correctly.</span>
+    <div class="btn-row">
+      <button class="btn-next" onclick="saveStep1()">Continue →</button>
+    </div>`,
+
+  // STEP 2 — Education
+  () => `
+    <div class="step-num">Step 2 of 10 · Education</div>
+    <h1 class="step-title">Your <span>education</span> background</h1>
+    <p class="step-sub">Be honest — this helps us position you correctly to employers. All education levels are welcome here.</p>
+    <div class="field"><label>Highest Education Level</label></div>
+    <div class="choice-grid cols-2">
+      ${[
+        {val:"secondary",icon:"📗",label:"Secondary School",desc:"WAEC, O-Level or equivalent"},
+        {val:"diploma",icon:"📘",label:"Diploma / HND",desc:"Polytechnic or college diploma"},
+        {val:"bachelor",icon:"🎓",label:"Bachelor's Degree",desc:"BSc, BA, BEd or equivalent"},
+        {val:"master",icon:"🏆",label:"Master's Degree",desc:"MSc, MA, MBA or equivalent"},
+        {val:"phd",icon:"⭐",label:"PhD / Doctorate",desc:"Research doctorate"},
+        {val:"other",icon:"📋",label:"Professional Cert",desc:"Industry certification or training"},
+      ].map(o=>`
+        <div class="choice-card ${profile.education===o.val?"selected":""}" onclick="choose('education','${o.val}',this,'edu-opt')">
+          <div class="choice-icon">${o.icon}</div>
+          <div class="choice-text"><div class="choice-label">${o.label}</div><div class="choice-desc">${o.desc}</div></div>
+          <div class="choice-check">✓</div>
+        </div>`).join("")}
+    </div>
+    <div class="field" style="margin-top:1.25rem"><label>Field of Study</label>
+      <input class="input" id="f-field" placeholder="e.g. Mathematics, Business, Engineering" value="${profile.field}"/>
+    </div>
+    <div class="btn-row">
+      <button class="btn-back" onclick="back()">← Back</button>
+      <button class="btn-next" onclick="saveStep2()">Continue →</button>
+    </div>`,
+
+  // STEP 3 — Experience
+  () => `
+    <div class="step-num">Step 3 of 10 · Experience</div>
+    <h1 class="step-title">Any <span>work experience</span>?</h1>
+    <p class="step-sub">Any kind — formal jobs, freelance, volunteering, side work. It all counts. We're building an honest picture of where you are.</p>
+    <div class="choice-grid cols-2" style="margin-bottom:1.25rem">
+      ${[
+        {val:"none",icon:"🌱",label:"No experience yet",desc:"Completely fresh start"},
+        {val:"less1",icon:"💡",label:"Under 1 year",desc:"Some work or projects"},
+        {val:"1to3",icon:"📈",label:"1–3 years",desc:"Decent track record"},
+        {val:"3plus",icon:"🚀",label:"3+ years",desc:"Solid experience"},
+      ].map(o=>`
+        <div class="choice-card ${profile.experience===o.val?"selected":""}" onclick="choose('experience','${o.val}',this,'exp-opt')">
+          <div class="choice-icon">${o.icon}</div>
+          <div class="choice-text"><div class="choice-label">${o.label}</div><div class="choice-desc">${o.desc}</div></div>
+          <div class="choice-check">✓</div>
+        </div>`).join("")}
+    </div>
+    <div class="field"><label>Briefly describe your experience (optional)</label>
+      <textarea class="textarea" id="f-exp" placeholder="e.g. Worked as a math teacher for 2 years, did some freelance admin work...">${profile.expYears}</textarea>
+    </div>
+    <div class="btn-row">
+      <button class="btn-back" onclick="back()">← Back</button>
+      <button class="btn-next" onclick="saveStep3()">Continue →</button>
+    </div>`,
+
+  // STEP 4 — Skill Choice
+  () => `
+    <div class="step-num">Step 4 of 10 · Your Skill</div>
+    <h1 class="step-title">Choose your <span>skill path</span></h1>
+    <p class="step-sub">Pick the skill you want to build and get hired for. Choose based on what will get you a job — not just what sounds interesting. You can always come back and choose another later.</p>
+    <div class="skill-grid">
+      ${SKILLS_15.map(s=>`
+        <div class="skill-card ${profile.skill===s.name?"selected":""}" onclick="selectSkill('${s.name}',this)">
+          <span class="skill-card-icon">${s.icon}</span>
+          <span class="skill-card-name">${s.name}</span>
+        </div>`).join("")}
+    </div>
+    <div class="btn-row" style="margin-top:1.5rem">
+      <button class="btn-back" onclick="back()">← Back</button>
+      <button class="btn-next" onclick="saveStep4()">Continue →</button>
+    </div>`,
+
+  // STEP 5 — Self Assessment
+  () => `
+    <div class="step-num">Step 5 of 10 · Current Level</div>
+    <h1 class="step-title">How good are you at <span>${profile.skill||"your skill"}</span> right now?</h1>
+    <p class="step-sub">Be honest — overrating yourself leads to mismatch. We'll use this to show you exactly what to work on.</p>
+    <div class="scale-options">
+      ${[
+        {v:1,label:"Never done it"},
+        {v:2,label:"Basics only"},
+        {v:3,label:"Intermediate"},
+        {v:4,label:"Confident"},
+        {v:5,label:"Advanced"},
+      ].map(s=>`
+        <div class="scale-btn sl-opt ${profile.selfLevel===s.v?"selected":""}" onclick="setScale('selfLevel',${s.v},this,'sl-opt')">
+          <div class="scale-num">${s.v}</div>
+          <div class="scale-label">${s.label}</div>
+        </div>`).join("")}
+    </div>
+    <div class="btn-row" style="margin-top:2rem">
+      <button class="btn-back" onclick="back()">← Back</button>
+      <button class="btn-next" onclick="saveStep5()">Continue →</button>
+    </div>`,
+
+  // STEP 6 — Tools
+  () => `
+    <div class="step-num">Step 6 of 10 · Tools</div>
+    <h1 class="step-title">Which tools do you <span>already know</span>?</h1>
+    <p class="step-sub">Select every tool you can use today — even basic familiarity counts. These are the tools employers for ${profile.skill||"your skill"} expect.</p>
+    <div class="tools-grid">
+      ${(TOOLS_BY_SKILL[profile.skill] || Object.values(TOOLS_BY_SKILL)[0]).map(t=>`
+        <div class="tool-chip ${profile.tools.includes(t)?"selected":""}" onclick="toggleTool('${t}',this)">${t}</div>`).join("")}
+    </div>
+    <div class="btn-row" style="margin-top:1.5rem">
+      <button class="btn-back" onclick="back()">← Back</button>
+      <button class="btn-next" onclick="next()">Continue →</button>
+    </div>`,
+
+  // STEP 7 — English
+  () => `
+    <div class="step-num">Step 7 of 10 · English Proficiency</div>
+    <h1 class="step-title">Your <span>English</span> level</h1>
+    <p class="step-sub">Almost all remote roles require professional English. Rate yourself honestly — both writing and speaking combined.</p>
+    <div class="choice-grid cols-1">
+      ${[
+        {v:1,icon:"🌱",label:"Basic",desc:"I know some English but struggle with professional communication"},
+        {v:2,icon:"📗",label:"Conversational",desc:"I can communicate but make frequent errors in writing"},
+        {v:3,icon:"📘",label:"Intermediate",desc:"I communicate well but have some gaps in professional tone"},
+        {v:4,icon:"🎯",label:"Proficient",desc:"I write and speak professionally with minor errors"},
+        {v:5,icon:"⭐",label:"Fluent",desc:"Native or near-native level — confident in all professional settings"},
+      ].map(o=>`
+        <div class="choice-card ${profile.english===o.v?"selected":""}" onclick="setScale('english',${o.v},this,'eng-opt')">
+          <div class="choice-icon">${o.icon}</div>
+          <div class="choice-text"><div class="choice-label">${o.label}</div><div class="choice-desc">${o.desc}</div></div>
+          <div class="choice-check">✓</div>
+        </div>`).join("")}
+    </div>
+    <div class="btn-row" style="margin-top:1rem">
+      <button class="btn-back" onclick="back()">← Back</button>
+      <button class="btn-next" onclick="saveStep7()">Continue →</button>
+    </div>`,
+
+  // STEP 8 — Availability
+  () => `
+    <div class="step-num">Step 8 of 10 · Availability</div>
+    <h1 class="step-title">Your <span>availability</span></h1>
+    <p class="step-sub">Employers need to know when you're available and what timezone you work in. This helps us match you accurately.</p>
+    <div class="field"><label>Hours available per week</label>
+      <select class="select" id="f-avail" onchange="profile.availability=this.value">
+        <option value="">Select availability</option>
+        ${["Less than 10 hours","10–20 hours (part time)","20–30 hours","30–40 hours (full time)","40+ hours"].map(a=>`
+          <option value="${a}" ${profile.availability===a?"selected":""}>${a}</option>`).join("")}
+      </select>
+    </div>
+    <div class="field"><label>Your timezone (UTC offset)</label>
+      <select class="select" id="f-tz" onchange="profile.timezone=this.value">
+        <option value="">Select timezone</option>
+        ${["UTC+0 (Ghana, Senegal)","UTC+1 (Nigeria, Cameroon, Congo)","UTC+2 (South Africa, Egypt, Kenya)","UTC+3 (Ethiopia, Tanzania, Somalia)","UTC+4 (Mauritius, Seychelles)"].map(t=>`
+          <option value="${t}" ${profile.timezone===t?"selected":""}>${t}</option>`).join("")}
+      </select>
+    </div>
+    <div class="btn-row">
+      <button class="btn-back" onclick="back()">← Back</button>
+      <button class="btn-next" onclick="saveStep8()">Continue →</button>
+    </div>`,
+
+  // STEP 9 — Motivation
+  () => `
+    <div class="step-num">Step 9 of 10 · Your Why</div>
+    <h1 class="step-title">Why do you want <span>remote work</span>?</h1>
+    <p class="step-sub">Your story matters. This becomes part of your candidate profile that employers see — be genuine. This is your voice.</p>
+    <div class="field"><label>What is driving you to get a remote job?</label>
+      <textarea class="textarea" id="f-motivation" placeholder="Tell us why this matters to you. What would change in your life if you landed a remote job?" style="min-height:120px">${profile.motivation}</textarea>
+    </div>
+    <div class="field"><label>What is your goal in the next 12 months?</label>
+      <textarea class="textarea" id="f-goal" placeholder="e.g. I want to earn $800/month remotely, build my skills in data analysis, and eventually..." style="min-height:100px">${profile.goal}</textarea>
+    </div>
+    <div class="btn-row">
+      <button class="btn-back" onclick="back()">← Back</button>
+      <button class="btn-next" onclick="saveStep9()">Continue →</button>
+    </div>`,
+
+  // STEP 10 — Knowledge Check
+  () => {
+    const quiz = QUIZ_BY_SKILL[profile.skill] || DEFAULT_QUIZ;
+    return `
+    <div class="step-num">Step 10 of 10 · Knowledge Check</div>
+    <h1 class="step-title">3 quick questions on <span>${profile.skill||"your skill"}</span></h1>
+    <p class="step-sub">This feeds directly into your VELA Readiness Score. Answer honestly — getting these right confirms you're ready for employers.</p>
+    ${quiz.map((q,i)=>`
+      <div class="quiz-question">
+        <div class="q-text"><span class="q-num">Q${i+1}.</span>${q.q}</div>
+        <div class="q-options">
+          ${q.options.map((opt,ai)=>`
+            <div class="q-option ${quizAnswers[i]===ai?"selected":""}" onclick="answerQuiz(${i},${ai},this)">${opt}</div>
+          `).join("")}
+        </div>
+      </div>`).join("")}
+    <div class="btn-row">
+      <button class="btn-back" onclick="back()">← Back</button>
+      <button class="btn-next" onclick="showScore()">Calculate My Score →</button>
+    </div>`; },
+];
+
+// ─── SAVE FUNCTIONS ───────────────────────────────────────────────────────────
+function saveStep1() {
+  const name  = document.getElementById("f-name").value.trim();
+  const country = document.getElementById("f-country").value;
+  const email = document.getElementById("f-email").value.trim();
+  const err   = document.getElementById("step1-err");
+  if (!name || !country || !email.includes("@")) {
+    err.style.display = "block"; return;
+  }
+  err.style.display = "none";
+  profile.name = name; profile.country = country; profile.email = email;
+  next();
+}
+function saveStep2() {
+  if (!profile.education) { alert("Please select your education level"); return; }
+  profile.field = document.getElementById("f-field").value;
+  next();
+}
+function saveStep3() {
+  if (!profile.experience) { alert("Please select your experience level"); return; }
+  profile.expYears = document.getElementById("f-exp").value;
+  next();
+}
+function saveStep4() {
+  if (!profile.skill) { alert("Please choose a skill path"); return; }
+  next();
+}
+function saveStep5() {
+  if (!profile.selfLevel) { alert("Please rate your current level"); return; }
+  next();
+}
+function saveStep7() {
+  if (!profile.english) { alert("Please select your English level"); return; }
+  next();
+}
+function saveStep8() {
+  profile.availability = document.getElementById("f-avail").value;
+  profile.timezone = document.getElementById("f-tz").value;
+  if (!profile.availability || !profile.timezone) { alert("Please select your availability and timezone"); return; }
+  next();
+}
+function saveStep9() {
+  profile.motivation = document.getElementById("f-motivation").value.trim();
+  profile.goal = document.getElementById("f-goal").value.trim();
+  if (!profile.motivation) { alert("Please tell us why you want remote work"); return; }
+  next();
+}
+
+// ─── SCORE SCREEN ─────────────────────────────────────────────────────────────
+function showScore() {
+  const score = calcScore();
+  const passed = score >= 60;
+  const circumference = 2 * Math.PI * 56;
+  const offset = circumference - (score / 100) * circumference;
+  const color = score >= 60 ? "#00E5A0" : score >= 40 ? "#FFA500" : "#FF6B6B";
+
+  const eduScores = {"secondary":4,"diploma":8,"bachelor":14,"master":18,"phd":20,"other":6};
+  const expScores = {"none":0,"less1":5,"1to3":10,"3plus":15};
+  const eduS = (eduScores[profile.education]||6);
+  const expS = (expScores[profile.experience]||0);
+  const skillS = (profile.selfLevel||0)*3;
+  const toolsS = Math.min(profile.tools.length*2,15);
+  const engS = (profile.english||0)*3;
+  const quizS = Math.round((profile.quizScore/3)*20);
+
+  const improveItems = !passed ? getImproveItems(score) : [];
+
+  document.getElementById("step-container").innerHTML = `
+    <div class="score-screen">
+      <div class="score-ring">
+        <svg viewBox="0 0 120 120" width="160" height="160">
+          <circle class="score-ring-track" cx="60" cy="60" r="56"/>
+          <circle class="score-ring-fill" cx="60" cy="60" r="56"
+            stroke="${color}"
+            stroke-dasharray="${circumference}"
+            stroke-dashoffset="${circumference}"
+            id="ring-fill"/>
+        </svg>
+        <div>
+          <div class="score-num" id="score-display">0</div>
+          <div class="score-label">/ 100</div>
+        </div>
+      </div>
+
+      <h2 class="score-title">${passed ? "🎉 You're Ready, "+profile.name.split(" ")[0]+"!" : "Almost There, "+profile.name.split(" ")[0]+"!"}</h2>
+      <p class="score-message">${passed
+        ? `Your VELA Readiness Score is <strong>${score}/100</strong>. You've cleared the bar. You're ready to see verified remote jobs matched to your ${profile.skill} skill path.`
+        : `Your VELA Readiness Score is <strong>${score}/100</strong>. The pass mark is 60. You're not far — here's exactly what to improve to get placed.`
+      }</p>
+
+      <div class="score-breakdown">
+        ${[
+          {label:"Education",val:eduS,max:20},
+          {label:"Experience",val:expS,max:15},
+          {label:"Skill Level",val:skillS,max:15},
+          {label:"Tools Known",val:toolsS,max:15},
+          {label:"English",val:engS,max:15},
+          {label:"Knowledge Check",val:quizS,max:20},
+        ].map(b=>`
+          <div class="breakdown-item">
+            <div class="breakdown-label">${b.label}</div>
+            <div class="breakdown-val" style="color:${b.val/b.max>=0.6?'var(--accent)':b.val/b.max>=0.3?'var(--warn)':'var(--danger)'}">${b.val} <span style="font-size:0.7rem;color:var(--muted);font-weight:400">/ ${b.max}</span></div>
+            <div class="breakdown-bar"><div class="breakdown-fill" style="width:${Math.round((b.val/b.max)*100)}%"></div></div>
+          </div>`).join("")}
+      </div>
+
+      ${!passed ? `
+        <div style="text-align:left;margin-bottom:1.5rem">
+          <div class="modal-section-title" style="font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--warn);margin-bottom:1rem">What to improve</div>
+          <div class="improve-list">
+            ${improveItems.map(i=>`<div class="improve-item">${i}</div>`).join("")}
+          </div>
+        </div>` : ""}
+
+      <div class="pass-actions">
+        ${passed
+          ? `<a class="btn-jobs" href="jobs.html?skill=${encodeURIComponent(profile.skill)}">View ${profile.skill} Jobs →</a>
+             <button class="btn-retry" onclick="location.href='skills.html'">Explore Your Skill Roadmap</button>`
+          : `<button class="btn-retry" onclick="retryQuiz()">Retake Knowledge Check</button>
+             <a class="btn-jobs" style="background:transparent;border:1.5px solid rgba(0,229,160,0.3);color:var(--accent);padding:0.9rem;border-radius:10px;font-family:'Syne',sans-serif;font-weight:600;font-size:0.9rem;cursor:pointer;text-align:center" href="skills.html?skill=${encodeURIComponent(profile.skill)}">Study Your Roadmap First</a>`
+        }
+      </div>
+    </div>`;
+
+  // Animate ring and counter
+  setTimeout(() => {
+    document.getElementById("ring-fill").style.strokeDashoffset = offset;
+    let count = 0;
+    const interval = setInterval(() => {
+      count = Math.min(count + 2, score);
+      document.getElementById("score-display").textContent = count;
+      if (count >= score) clearInterval(interval);
+    }, 20);
+  }, 100);
+
+  document.getElementById("progress-fill").style.width = "100%";
+  document.getElementById("progress-fraction").textContent = "Complete";
+  document.getElementById("progress-label").textContent = "Your Score";
+}
+
+function retryQuiz() {
+  quizAnswers = {};
+  currentStep = 9;
+  renderStep();
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+renderStep();
+</script>
+</body>
+</html>

@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VELA — Choose Your Path</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #080C12;
+      --bg2: #0D1320;
+      --surface: #111827;
+      --border: rgba(255,255,255,0.07);
+      --accent: #00E5A0;
+      --accent2: #0096FF;
+      --text: #F0F4FF;
+      --muted: #6B7A99;
+      --card: #0F1A2E;
+      --card2: #0A1525;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 5%;
+      backdrop-filter: blur(20px);
+      background: rgba(8,12,18,0.92);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.5rem;
+      letter-spacing: 0.08em;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .nav-right span {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    /* HEADER */
+    .header {
+      padding: 4rem 5% 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(0,229,160,0.08);
+      border: 1px solid rgba(0,229,160,0.2);
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.9rem;
+      border-radius: 100px;
+      margin-bottom: 1.5rem;
+    }
+
+    .header h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+
+    .header h1 span {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .header p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 580px;
+      margin-bottom: 2rem;
+    }
+
+    /* FILTER TABS */
+    .filters {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      padding: 0 5%;
+      max-width: 1200px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .filter-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 0.45rem 1rem;
+      border-radius: 100px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      background: rgba(0,229,160,0.1);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* SKILLS GRID */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.25rem;
+      padding: 0 5% 6rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* SKILL CARD */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      position: relative;
+    }
+
+    .card:hover {
+      border-color: rgba(0,229,160,0.35);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+
+    .card-top-bar {
+      height: 3px;
+      width: 100%;
+    }
+
+    .card-body {
+      padding: 1.5rem;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .card-icon-title {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .card-icon {
+      font-size: 1.75rem;
+      line-height: 1;
+    }
+
+    .card-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    .card-category {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .demand-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.65rem;
+      border-radius: 100px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .demand-high { background: rgba(0,229,160,0.12); color: var(--accent); border: 1px solid rgba(0,229,160,0.25); }
+    .demand-very-high { background: rgba(255,165,0,0.12); color: #FFA500; border: 1px solid rgba(255,165,0,0.25); }
+    .demand-explosive { background: rgba(255,80,80,0.12); color: #FF6B6B; border: 1px solid rgba(255,80,80,0.25); }
+
+    .card-desc {
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+
+    /* STATS ROW */
+    .card-stats {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .stat-val {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .stat-lbl {
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .stat-divider {
+      width: 1px;
+      background: var(--border);
+      align-self: stretch;
+    }
+
+    /* ROADMAP PREVIEW */
+    .roadmap-preview {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .roadmap-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .roadmap-steps {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .roadmap-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+      flex: 1;
+      position: relative;
+    }
+
+    .roadmap-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 10px;
+      left: 60%;
+      right: -40%;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .step-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: var(--muted);
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-dot.active {
+      border-color: var(--accent);
+      background: rgba(0,229,160,0.15);
+      color: var(--accent);
+    }
+
+    .step-name {
+      font-size: 0.65rem;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    /* TOOLS */
+    .tools-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .tool-tag {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.72rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+
+    /* CTA */
+    .card-cta {
+      width: 100%;
+      background: linear-gradient(135deg, var(--accent), #00C080);
+      color: #000;
+      border: none;
+      padding: 0.75rem;
+      border-radius: 8px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .card-cta:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    /* MODAL */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      z-index: 200;
+      backdrop-filter: blur(8px);
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: var(--bg2);
+      border: 1px solid rgba(0,229,160,0.2);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 640px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 2rem;
+      position: relative;
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s;
+    }
+
+    .modal-close:hover { color: var(--text); }
+
+    .modal-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+
+    .modal-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-desc {
+      color: var(--muted);
+      margin-bottom: 1.75rem;
+      font-size: 0.95rem;
+    }
+
+    .modal-section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .full-roadmap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .roadmap-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .roadmap-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(0,229,160,0.1);
+      border: 1px solid rgba(0,229,160,0.3);
+      color: var(--accent);
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .roadmap-content h4 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.2rem;
+    }
+
+    .roadmap-content p {
+      color: var(--muted);
+      font-size: 0.83rem;
+      line-height: 1.5;
+    }
+
+    .modal-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .modal-stat {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .modal-stat-val {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 0.2rem;
+    }
+
+    .modal-stat-lbl {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .modal-cta {
+      width: 100%;
+      background: linear-gradient(135deg, var(--accent), #00C080);
+      color: #000;
+      border: none;
+      padding: 1rem;
+      border-radius: 10px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      letter-spacing: 0.03em;
+      transition: opacity 0.2s;
+    }
+
+    .modal-cta:hover { opacity: 0.88; }
+
+    @media (max-width: 768px) {
+      .grid { grid-template-columns: 1fr; padding: 0 4% 4rem; }
+      .modal { padding: 1.5rem; }
+      .modal-stats { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="index.html">VELA</a>
+  <div class="nav-right">
+    <span>Choose your path to get placed</span>
+  </div>
+</nav>
+
+<div class="header">
+  <div class="header-badge">15 In-Demand Skills · 2025–2026</div>
+  <h1>What Gets Africans<br/><span>Hired Remotely Right Now</span></h1>
+  <p>Not what sounds good. Not what's trending on Twitter. These are the 15 skills with the highest volume of remote job postings globally — all accessible from Africa, all learnable within months.</p>
+</div>
+
+<div class="filters">
+  <button class="filter-btn active" onclick="filterCards('all', this)">All Skills</button>
+  <button class="filter-btn" onclick="filterCards('entry', this)">Entry Level</button>
+  <button class="filter-btn" onclick="filterCards('tech', this)">Tech</button>
+  <button class="filter-btn" onclick="filterCards('business', this)">Business</button>
+  <button class="filter-btn" onclick="filterCards('creative', this)">Creative</button>
+  <button class="filter-btn" onclick="filterCards('ai', this)">AI-Powered</button>
+</div>
+
+<div class="grid" id="skills-grid"></div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+  <div class="modal" id="modal-content">
+    <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+const skills = [
+  {
+    id: 1,
+    icon: "🎧",
+    title: "Customer Service",
+    category: "entry",
+    categoryLabel: "Entry Level · Business",
+    demand: "explosive",
+    demandLabel: "🔥 Explosive Demand",
+    salary: "$400–$1,200/mo",
+    timeToReady: "4–6 weeks",
+    jobVolume: "58,000+ postings",
+    color: "linear-gradient(90deg, #00E5A0, #0096FF)",
+    desc: "The #1 most hired remote role globally. Companies need people who can handle support via email, chat, and phone. If you communicate well in English, you can get hired.",
+    tools: ["Zendesk", "Intercom", "Freshdesk", "Slack", "Zoom", "HubSpot"],
+    roadmap: [
+      { title: "Communication Foundations", desc: "Professional English writing, email etiquette, tone and empathy training" },
+      { title: "Support Tools", desc: "Master Zendesk, Intercom or Freshdesk — the tools every employer uses" },
+      { title: "Live Chat & Ticketing", desc: "Handle real scenarios — complaints, refunds, escalations, follow-ups" },
+      { title: "Mock Assessment", desc: "VELA simulated customer interaction — scored and verified" },
+      { title: "Job Ready", desc: "Matched to CS roles at tech companies, e-commerce, and SaaS businesses" }
+    ],
+    steps: ["Communication", "Tools", "Simulation", "Verified", "Placed"]
+  },
+  {
+    id: 2,
+    icon: "🤝",
+    title: "Virtual Assistant",
+    category: "entry",
+    categoryLabel: "Entry Level · Business",
+    demand: "explosive",
+    demandLabel: "🔥 Explosive Demand",
+    salary: "$500–$1,500/mo",
+    timeToReady: "4–8 weeks",
+    jobVolume: "45,000+ postings",
+    color: "linear-gradient(90deg, #FF6B6B, #FFA500)",
+    desc: "Executives and founders pay well for organised, reliable VAs who manage their calendar, inbox, research, and admin. Degree holders thrive here — it requires real intelligence.",
+    tools: ["Google Workspace", "Notion", "Trello", "Asana", "Calendly", "ChatGPT"],
+    roadmap: [
+      { title: "Admin & Organisation", desc: "Calendar management, email handling, scheduling, travel planning" },
+      { title: "Productivity Tools", desc: "Google Workspace, Notion, Trello — the VA tech stack" },
+      { title: "AI-Assisted VA Work", desc: "Use ChatGPT and AI tools to 10x your output as a VA" },
+      { title: "Executive Communication", desc: "Write on behalf of others, manage stakeholders, represent professionally" },
+      { title: "VELA Verified", desc: "Task simulation scored — clients see your actual work quality" }
+    ],
+    steps: ["Admin", "Tools", "AI Skills", "Executive Comms", "Placed"]
+  },
+  {
+    id: 3,
+    icon: "📊",
+    title: "Data Analysis",
+    category: "tech",
+    categoryLabel: "Tech · High Growth",
+    demand: "very-high",
+    demandLabel: "⚡ Very High Demand",
+    salary: "$800–$3,000/mo",
+    timeToReady: "3–5 months",
+    jobVolume: "40,000+ postings",
+    color: "linear-gradient(90deg, #0096FF, #7B61FF)",
+    desc: "Companies need people who can turn data into decisions. If you have a math or science background, this accelerates fast. One of the highest-paying accessible remote paths.",
+    tools: ["Excel", "SQL", "Python", "Tableau", "Power BI", "Google Sheets"],
+    roadmap: [
+      { title: "Excel & Google Sheets", desc: "Advanced formulas, pivot tables, data cleaning — the foundation" },
+      { title: "SQL Fundamentals", desc: "Query databases, extract insights, understand data structures" },
+      { title: "Python for Data", desc: "Pandas, NumPy, basic visualisation with Matplotlib" },
+      { title: "Visualisation & Reporting", desc: "Tableau or Power BI — tell stories with data" },
+      { title: "Portfolio Projects", desc: "3 real analysis projects for your GitHub — your proof of work" }
+    ],
+    steps: ["Excel/SQL", "Python", "Visualisation", "Portfolio", "Placed"]
+  },
+  {
+    id: 4,
+    icon: "🤖",
+    title: "Prompt Engineering & AI",
+    category: "ai",
+    categoryLabel: "AI · Fastest Growing",
+    demand: "explosive",
+    demandLabel: "🔥 Explosive Demand",
+    salary: "$700–$2,500/mo",
+    timeToReady: "6–10 weeks",
+    jobVolume: "35,000+ postings",
+    color: "linear-gradient(90deg, #7B61FF, #FF6B6B)",
+    desc: "The newest high-demand skill. Companies need people who know how to work with AI tools effectively — writing prompts, building workflows, training teams. Brand new field, less competition.",
+    tools: ["ChatGPT", "Claude", "Midjourney", "Make.com", "Zapier", "LangChain"],
+    roadmap: [
+      { title: "AI Fundamentals", desc: "How LLMs work, what they're good at, their limitations" },
+      { title: "Prompt Techniques", desc: "Chain of thought, few-shot, role prompting, structured outputs" },
+      { title: "AI Workflow Automation", desc: "Build automations with Make.com and Zapier using AI" },
+      { title: "Business Applications", desc: "Apply AI to customer service, content, data, and operations" },
+      { title: "Certified AI Professional", desc: "VELA AI certification — verified and employer-ready" }
+    ],
+    steps: ["AI Basics", "Prompting", "Automation", "Applied AI", "Certified"]
+  },
+  {
+    id: 5,
+    icon: "📱",
+    title: "Social Media Management",
+    category: "creative",
+    categoryLabel: "Creative · Business",
+    demand: "very-high",
+    demandLabel: "⚡ Very High Demand",
+    salary: "$500–$1,800/mo",
+    timeToReady: "6–10 weeks",
+    jobVolume: "32,000+ postings",
+    color: "linear-gradient(90deg, #FFA500, #FF6B6B)",
+    desc: "Every business needs a social media presence. Africans who understand both global platforms and local culture bring unique value. One of the most hireable creative skills.",
+    tools: ["Canva", "Buffer", "Hootsuite", "Meta Business Suite", "CapCut", "Later"],
+    roadmap: [
+      { title: "Platform Mastery", desc: "LinkedIn, Instagram, X, TikTok — how each algorithm works" },
+      { title: "Content Creation", desc: "Canva for graphics, CapCut for video, writing that converts" },
+      { title: "Strategy & Analytics", desc: "Content calendars, analytics, audience growth strategies" },
+      { title: "Scheduling & Tools", desc: "Buffer, Hootsuite, Later — manage multiple accounts efficiently" },
+      { title: "Portfolio", desc: "3 managed accounts or campaigns as proof of work" }
+    ],
+    steps: ["Platforms", "Content", "Strategy", "Tools", "Portfolio"]
+  },
+  {
+    id: 6,
+    icon: "✍️",
+    title: "Content Writing & Copywriting",
+    category: "creative",
+    categoryLabel: "Creative · High Demand",
+    demand: "very-high",
+    demandLabel: "⚡ Very High Demand",
+    salary: "$500–$2,000/mo",
+    timeToReady: "6–10 weeks",
+    jobVolume: "30,000+ postings",
+    color: "linear-gradient(90deg, #00E5A0, #7B61FF)",
+    desc: "Businesses need words that sell, inform, and convert. Strong English writers from Africa are highly competitive here. Combines well with SEO for maximum hirability.",
+    tools: ["Grammarly", "Surfer SEO", "Jasper", "WordPress", "Hemingway", "Ahrefs"],
+    roadmap: [
+      { title: "Writing Foundations", desc: "Clarity, structure, persuasion — writing that actually works" },
+      { title: "Copywriting Frameworks", desc: "AIDA, PAS, StoryBrand — formulas that convert" },
+      { title: "SEO Writing", desc: "Keywords, structure, meta descriptions — rank on Google" },
+      { title: "Niche Specialisation", desc: "Pick a niche: tech, health, finance, SaaS — command higher rates" },
+      { title: "Writing Portfolio", desc: "5 published or sample pieces across different formats" }
+    ],
+    steps: ["Writing Basics", "Copywriting", "SEO", "Specialise", "Portfolio"]
+  },
+  {
+    id: 7,
+    icon: "🔍",
+    title: "SEO Specialist",
+    category: "tech",
+    categoryLabel: "Tech · Business",
+    demand: "high",
+    demandLabel: "✅ High Demand",
+    salary: "$600–$2,500/mo",
+    timeToReady: "2–4 months",
+    jobVolume: "28,000+ postings",
+    color: "linear-gradient(90deg, #0096FF, #00E5A0)",
+    desc: "Every website wants to rank on Google. SEO specialists are consistently hired remotely with no location restrictions. Analytical thinkers excel here.",
+    tools: ["Ahrefs", "Semrush", "Google Search Console", "Screaming Frog", "Surfer SEO", "Moz"],
+    roadmap: [
+      { title: "SEO Fundamentals", desc: "How search engines work, ranking factors, on-page vs off-page" },
+      { title: "Keyword Research", desc: "Finding opportunities, understanding search intent, competitive analysis" },
+      { title: "Technical SEO", desc: "Site speed, crawlability, schema, Core Web Vitals" },
+      { title: "Link Building", desc: "Outreach, guest posting, authority building strategies" },
+      { title: "SEO Audit Portfolio", desc: "Real website audits as proof of your analytical capability" }
+    ],
+    steps: ["Fundamentals", "Keywords", "Technical", "Link Building", "Audit Portfolio"]
+  },
+  {
+    id: 8,
+    icon: "💼",
+    title: "Project Management",
+    category: "business",
+    categoryLabel: "Business · Leadership",
+    demand: "very-high",
+    demandLabel: "⚡ Very High Demand",
+    salary: "$800–$3,500/mo",
+    timeToReady: "2–4 months",
+    jobVolume: "26,000+ postings",
+    color: "linear-gradient(90deg, #FFA500, #7B61FF)",
+    desc: "One of the most consistently remote-friendly careers. Companies need people who can keep projects on track, coordinate teams, and deliver results. Degree holders are already halfway there.",
+    tools: ["Asana", "Jira", "Monday.com", "Notion", "Slack", "MS Project"],
+    roadmap: [
+      { title: "PM Fundamentals", desc: "Scope, timeline, budget, risk — the four pillars of project management" },
+      { title: "Agile & Scrum", desc: "Sprints, standups, retrospectives — how modern tech teams work" },
+      { title: "Tool Mastery", desc: "Asana, Jira, Notion — manage projects where employers actually work" },
+      { title: "PMP or CAPM Prep", desc: "Entry certification that signals professional seriousness to employers" },
+      { title: "Simulated PM Case", desc: "VELA project scenario — assessed on planning and execution quality" }
+    ],
+    steps: ["PM Basics", "Agile", "Tools", "Certification", "Placed"]
+  },
+  {
+    id: 9,
+    icon: "🎨",
+    title: "UI/UX Design",
+    category: "creative",
+    categoryLabel: "Creative · Tech",
+    demand: "high",
+    demandLabel: "✅ High Demand",
+    salary: "$700–$3,000/mo",
+    timeToReady: "3–5 months",
+    jobVolume: "24,000+ postings",
+    color: "linear-gradient(90deg, #FF6B6B, #7B61FF)",
+    desc: "Every app and website needs designers. No coding required. If you have visual instincts and can learn Figma, this path leads to some of the best-paid remote creative work available.",
+    tools: ["Figma", "Adobe XD", "Maze", "Miro", "Lottie", "Zeroheight"],
+    roadmap: [
+      { title: "Design Principles", desc: "Typography, colour, layout, hierarchy — the visual language of design" },
+      { title: "Figma Mastery", desc: "Components, auto-layout, prototyping — the industry standard tool" },
+      { title: "UX Research", desc: "User interviews, personas, journey mapping, usability testing" },
+      { title: "Case Study Projects", desc: "3 end-to-end design case studies solving real problems" },
+      { title: "Portfolio Site", desc: "Professional design portfolio — your ticket to global remote roles" }
+    ],
+    steps: ["Design Basics", "Figma", "UX Research", "Case Studies", "Portfolio"]
+  },
+  {
+    id: 10,
+    icon: "📧",
+    title: "Email Marketing",
+    category: "business",
+    categoryLabel: "Business · Marketing",
+    demand: "high",
+    demandLabel: "✅ High Demand",
+    salary: "$500–$2,000/mo",
+    timeToReady: "6–10 weeks",
+    jobVolume: "22,000+ postings",
+    color: "linear-gradient(90deg, #00E5A0, #FFA500)",
+    desc: "Email generates the highest ROI of any marketing channel. Businesses constantly hire for this. Learn copywriting plus email tools and you're highly hireable within 2 months.",
+    tools: ["Mailchimp", "Klaviyo", "ConvertKit", "ActiveCampaign", "Canva", "HubSpot"],
+    roadmap: [
+      { title: "Email Marketing Strategy", desc: "List building, segmentation, automation, deliverability basics" },
+      { title: "Copywriting for Email", desc: "Subject lines, CTAs, sequences — email copy that converts" },
+      { title: "Platform Mastery", desc: "Klaviyo for e-commerce, ConvertKit for creators, Mailchimp basics" },
+      { title: "A/B Testing & Analytics", desc: "Open rates, click rates, conversion — data-driven optimisation" },
+      { title: "Campaign Portfolio", desc: "Real or simulated campaigns with documented results" }
+    ],
+    steps: ["Strategy", "Copywriting", "Platforms", "Analytics", "Portfolio"]
+  },
+  {
+    id: 11,
+    icon: "🔐",
+    title: "Cybersecurity Analyst",
+    category: "tech",
+    categoryLabel: "Tech · High Growth",
+    demand: "explosive",
+    demandLabel: "🔥 Explosive Demand",
+    salary: "$1,000–$4,000/mo",
+    timeToReady: "4–6 months",
+    jobVolume: "20,000+ postings",
+    color: "linear-gradient(90deg, #7B61FF, #0096FF)",
+    desc: "Cyber threats are rising globally and companies are hiring fast. One of the highest-paying entry paths in tech. Analytical minds from any background can enter this field with the right cert.",
+    tools: ["Wireshark", "Kali Linux", "Splunk", "Nmap", "Metasploit", "CompTIA"],
+    roadmap: [
+      { title: "Networking Fundamentals", desc: "TCP/IP, DNS, firewalls, VPNs — how networks actually work" },
+      { title: "Security Concepts", desc: "Threats, vulnerabilities, attack vectors, defence strategies" },
+      { title: "CompTIA Security+", desc: "The entry-level certification that opens doors globally" },
+      { title: "Hands-On Practice", desc: "TryHackMe and HackTheBox labs — real practice environments" },
+      { title: "SOC Analyst Ready", desc: "Security Operations Center analyst role — most common entry point" }
+    ],
+    steps: ["Networking", "Security Concepts", "Security+", "Lab Practice", "SOC Ready"]
+  },
+  {
+    id: 12,
+    icon: "📚",
+    title: "Online Tutoring & Education",
+    category: "entry",
+    categoryLabel: "Entry Level · Education",
+    demand: "high",
+    demandLabel: "✅ High Demand",
+    salary: "$400–$1,500/mo",
+    timeToReady: "2–4 weeks",
+    jobVolume: "18,000+ postings",
+    color: "linear-gradient(90deg, #FFA500, #00E5A0)",
+    desc: "If you have a degree, you already qualify. Math, science, English, and test prep tutors are hired constantly. One of the fastest paths to earning remotely with existing credentials.",
+    tools: ["Zoom", "Google Meet", "Teachable", "Notion", "Loom", "Miro"],
+    roadmap: [
+      { title: "Subject Mastery Proof", desc: "Document your credentials and areas of expertise clearly" },
+      { title: "Online Teaching Methods", desc: "Engagement, explanation, assessment — teaching that works virtually" },
+      { title: "Platform Profiles", desc: "VIPKid, Preply, Wyzant, Cambly — set up verified tutor profiles" },
+      { title: "First 10 Sessions", desc: "Build reviews and rating — social proof drives more bookings" },
+      { title: "Niche & Scale", desc: "Specialise in exam prep, coding, or professional skills for higher rates" }
+    ],
+    steps: ["Your Credentials", "Online Teaching", "Platforms", "First Reviews", "Scale"]
+  },
+  {
+    id: 13,
+    icon: "💰",
+    title: "Bookkeeping & Accounting",
+    category: "business",
+    categoryLabel: "Business · Finance",
+    demand: "very-high",
+    demandLabel: "⚡ Very High Demand",
+    salary: "$600–$2,500/mo",
+    timeToReady: "2–4 months",
+    jobVolume: "17,000+ postings",
+    color: "linear-gradient(90deg, #0096FF, #FFA500)",
+    desc: "Accounting and finance grew 30%+ in remote job postings in 2025. Every business needs financial management. Highly trusted remote role that pays consistently well.",
+    tools: ["QuickBooks", "Xero", "Wave", "Excel", "FreshBooks", "Gusto"],
+    roadmap: [
+      { title: "Accounting Fundamentals", desc: "Debits, credits, financial statements — the core language of business finance" },
+      { title: "QuickBooks & Xero", desc: "The two most in-demand bookkeeping platforms globally" },
+      { title: "Payroll & Tax Basics", desc: "Understanding payroll processing and basic tax preparation" },
+      { title: "QuickBooks Certification", desc: "Official certification that employers specifically look for" },
+      { title: "First Clients", desc: "Start with small businesses — build a trusted track record" }
+    ],
+    steps: ["Accounting Basics", "Software", "Payroll/Tax", "Certified", "Placed"]
+  },
+  {
+    id: 14,
+    icon: "🛒",
+    title: "E-Commerce & Shopify",
+    category: "business",
+    categoryLabel: "Business · Tech",
+    demand: "high",
+    demandLabel: "✅ High Demand",
+    salary: "$500–$2,000/mo",
+    timeToReady: "6–10 weeks",
+    jobVolume: "15,000+ postings",
+    color: "linear-gradient(90deg, #00E5A0, #FF6B6B)",
+    desc: "The global e-commerce market is massive and growing. Shopify store management, product listing, ads management, and customer handling are all hireable standalone skills.",
+    tools: ["Shopify", "WooCommerce", "Meta Ads", "Google Ads", "Canva", "Klaviyo"],
+    roadmap: [
+      { title: "E-Commerce Foundations", desc: "How online stores work — products, fulfilment, customer journey" },
+      { title: "Shopify Operations", desc: "Store setup, product management, orders, apps ecosystem" },
+      { title: "Digital Advertising", desc: "Meta Ads and Google Ads — drive traffic that converts" },
+      { title: "Analytics & Optimisation", desc: "Conversion rate optimisation, analytics, improving performance" },
+      { title: "E-Commerce Portfolio", desc: "A managed or built store as your core proof of work" }
+    ],
+    steps: ["Foundations", "Shopify", "Paid Ads", "Analytics", "Portfolio"]
+  },
+  {
+    id: 15,
+    icon: "👥",
+    title: "HR & Recruitment",
+    category: "business",
+    categoryLabel: "Business · People",
+    demand: "very-high",
+    demandLabel: "⚡ Very High Demand",
+    salary: "$600–$2,500/mo",
+    timeToReady: "2–4 months",
+    jobVolume: "14,000+ postings",
+    color: "linear-gradient(90deg, #FF6B6B, #FFA500)",
+    desc: "HR and recruiting grew 19%+ in remote postings in 2025. Companies hiring globally need remote HR professionals who understand international talent. Africans have a natural advantage here.",
+    tools: ["LinkedIn Recruiter", "Workday", "BambooHR", "Greenhouse", "Lever", "ATS systems"],
+    roadmap: [
+      { title: "HR Fundamentals", desc: "Employment law basics, onboarding, benefits, performance management" },
+      { title: "Recruitment Process", desc: "Sourcing, screening, interviewing, offer management" },
+      { title: "LinkedIn Recruiting", desc: "Boolean search, InMail, talent pipeline building" },
+      { title: "ATS Systems", desc: "Greenhouse, Lever, Workday — tools every HR team uses" },
+      { title: "SHRM-CP Prep", desc: "Entry HR certification that signals professional credibility globally" }
+    ],
+    steps: ["HR Basics", "Recruitment", "LinkedIn", "ATS Tools", "Certified"]
+  }
+];
+
+function getDemandClass(d) {
+  if (d === 'explosive') return 'demand-explosive';
+  if (d === 'very-high') return 'demand-very-high';
+  return 'demand-high';
+}
+
+function renderCards(filter = 'all') {
+  const grid = document.getElementById('skills-grid');
+  const filtered = filter === 'all' ? skills : skills.filter(s => s.category === filter);
+  
+  grid.innerHTML = filtered.map((s, i) => `
+    <div class="card" onclick="openModal(${s.id})" style="animation: fadeUp 0.4s ${i * 0.05}s both">
+      <div class="card-top-bar" style="background: ${s.color}"></div>
+      <div class="card-body">
+        <div class="card-header">
+          <div class="card-icon-title">
+            <div class="card-icon">${s.icon}</div>
+            <div>
+              <div class="card-title">${s.title}</div>
+              <div class="card-category">${s.categoryLabel}</div>
+            </div>
+          </div>
+          <span class="demand-badge ${getDemandClass(s.demand)}">${s.demandLabel}</span>
+        </div>
+
+        <p class="card-desc">${s.desc}</p>
+
+        <div class="card-stats">
+          <div class="stat-item">
+            <div class="stat-val">${s.salary}</div>
+            <div class="stat-lbl">Monthly Range</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <div class="stat-val">${s.timeToReady}</div>
+            <div class="stat-lbl">To Job Ready</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <div class="stat-val">${s.jobVolume}</div>
+            <div class="stat-lbl">Open Roles</div>
+          </div>
+        </div>
+
+        <div class="roadmap-preview">
+          <div class="roadmap-label">Your Roadmap</div>
+          <div class="roadmap-steps">
+            ${s.steps.map((step, i) => `
+              <div class="roadmap-step">
+                <div class="step-dot ${i === 0 ? 'active' : ''}">${i + 1}</div>
+                <div class="step-name">${step}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <div class="tools-row">
+          ${s.tools.slice(0,4).map(t => `<span class="tool-tag">${t}</span>`).join('')}
+          ${s.tools.length > 4 ? `<span class="tool-tag">+${s.tools.length - 4} more</span>` : ''}
+        </div>
+
+        <button class="card-cta">View Full Roadmap →</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterCards(filter, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCards(filter);
+}
+
+function openModal(id) {
+  const s = skills.find(x => x.id === id);
+  if (!s) return;
+  
+  document.getElementById('modal-body').innerHTML = `
+    <div class="modal-icon">${s.icon}</div>
+    <div class="modal-title">${s.title}</div>
+    <p class="modal-desc">${s.desc}</p>
+
+    <div class="modal-stats">
+      <div class="modal-stat">
+        <div class="modal-stat-val">${s.salary}</div>
+        <div class="modal-stat-lbl">Monthly Pay</div>
+      </div>
+      <div class="modal-stat">
+        <div class="modal-stat-val">${s.timeToReady}</div>
+        <div class="modal-stat-lbl">Time to Ready</div>
+      </div>
+      <div class="modal-stat">
+        <div class="modal-stat-val">${s.jobVolume}</div>
+        <div class="modal-stat-lbl">Open Roles</div>
+      </div>
+    </div>
+
+    <div class="modal-section-title">Your Step-by-Step Roadmap</div>
+    <div class="full-roadmap">
+      ${s.roadmap.map((r, i) => `
+        <div class="roadmap-item">
+          <div class="roadmap-num">${i + 1}</div>
+          <div class="roadmap-content">
+            <h4>${r.title}</h4>
+            <p>${r.desc}</p>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="modal-section-title">Tools You'll Master</div>
+    <div class="tools-row" style="margin-bottom: 1.75rem;">
+      ${s.tools.map(t => `<span class="tool-tag">${t}</span>`).join('')}
+    </div>
+
+    <button class="modal-cta">Start This Path on VELA →</button>
+  `;
+  
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modal')) closeModalDirect();
+}
+
+function closeModalDirect() {
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDirect(); });
+
+// Init
+renderCards();
+
+// Add fadeUp animation
+const style = document.createElement('style');
+style.textContent = `@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }`;
+document.head.appendChild(style);
+</script>
+</body>
+</html>

@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VELA — My Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #080C12; --bg2: #0D1320; --surface: #111827;
+      --border: rgba(255,255,255,0.07); --accent: #00E5A0;
+      --accent2: #0096FF; --text: #F0F4FF; --muted: #6B7A99;
+      --card: #0F1A2E; --danger: #FF6B6B;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+
+    /* NAV */
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 5%; border-bottom: 1px solid var(--border);
+      background: rgba(8,12,18,0.95); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px);
+    }
+    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem;
+      letter-spacing: 0.08em; background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a.active { color: var(--accent); }
+    .nav-right { display: flex; gap: 0.75rem; align-items: center; }
+    .btn-share { display: flex; align-items: center; gap: 0.5rem; background: rgba(0,229,160,0.1);
+      border: 1.5px solid rgba(0,229,160,0.25); color: var(--accent); padding: 0.45rem 1rem;
+      border-radius: 7px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.82rem;
+      cursor: pointer; transition: all 0.2s; }
+    .btn-share:hover { background: rgba(0,229,160,0.18); }
+    .btn-preview { background: var(--accent); color: #000; border: none; padding: 0.45rem 1.1rem;
+      border-radius: 7px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.82rem;
+      cursor: pointer; transition: opacity 0.2s; }
+    .btn-preview:hover { opacity: 0.88; }
+
+    /* PAGE LAYOUT */
+    .page { max-width: 1100px; margin: 0 auto; padding: 2.5rem 5% 6rem;
+      display: grid; grid-template-columns: 1fr 360px; gap: 1.5rem; align-items: start; }
+
+    /* ── LEFT: BUILDER ── */
+    .builder { display: flex; flex-direction: column; gap: 1.25rem; }
+
+    /* PORTFOLIO HEADER EDITOR */
+    .header-editor {
+      background: linear-gradient(145deg, #0D1A2E, #080C12);
+      border: 1.5px solid rgba(0,229,160,0.2); border-radius: 20px; padding: 2rem; position: relative; overflow: hidden;
+    }
+    .header-editor::before { content:''; position:absolute; top:-40px; right:-40px; width:180px; height:180px;
+      border-radius:50%; background:radial-gradient(circle,rgba(0,229,160,0.06),transparent 70%); }
+    .he-top { display: flex; align-items: center; gap: 1.25rem; margin-bottom: 1.5rem; }
+    .he-avatar { width: 72px; height: 72px; border-radius: 18px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.6rem;
+      background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #000; }
+    .he-fields { flex: 1; display: flex; flex-direction: column; gap: 0.6rem; }
+    .he-name { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--text);
+      background: transparent; border: none; outline: none; width: 100%;
+      border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 0.3rem; }
+    .he-name::placeholder { color: var(--muted); }
+    .he-tagline { background: transparent; border: none; outline: none; width: 100%;
+      color: var(--muted); font-size: 0.9rem; font-family: 'DM Sans', sans-serif;
+      border-bottom: 1px dashed rgba(255,255,255,0.06); padding-bottom: 0.3rem; }
+    .he-tagline::placeholder { color: rgba(107,122,153,0.5); }
+    .he-meta-row { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .he-meta-chip { display: flex; align-items: center; gap: 0.4rem;
+      background: rgba(0,229,160,0.06); border: 1px solid rgba(0,229,160,0.12);
+      border-radius: 100px; padding: 0.3rem 0.85rem; font-size: 0.78rem; color: var(--accent); font-weight: 600; }
+    .he-bio-field { width: 100%; background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.08);
+      border-radius: 10px; padding: 0.85rem 1rem; color: var(--muted); font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem; resize: none; outline: none; line-height: 1.6; min-height: 80px; }
+    .he-bio-field::placeholder { color: rgba(107,122,153,0.5); }
+    .he-bio-field:focus { border-color: rgba(0,229,160,0.2); }
+
+    /* SECTION CARD */
+    .section-card { background: var(--card); border: 1.5px solid var(--border); border-radius: 16px; overflow: hidden; }
+    .section-header { padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between; }
+    .section-title { font-family: 'Syne', sans-serif; font-size: 0.88rem; font-weight: 700; color: var(--text); }
+    .section-body { padding: 1.5rem; }
+
+    /* PROJECT CARDS */
+    .projects-list { display: flex; flex-direction: column; gap: 1rem; }
+
+    .project-card {
+      background: var(--bg2); border: 1.5px solid var(--border); border-radius: 14px;
+      overflow: hidden; transition: border-color 0.25s;
+    }
+    .project-card:hover { border-color: rgba(0,229,160,0.2); }
+    .project-card-header { padding: 1rem 1.25rem; display: flex; align-items: center; gap: 0.85rem;
+      cursor: pointer; user-select: none; }
+    .project-type-icon { width: 36px; height: 36px; border-radius: 9px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 1rem;
+      border: 1px solid var(--border); background: var(--surface); }
+    .project-type-icon.file { background: rgba(0,150,255,0.08); border-color: rgba(0,150,255,0.2); }
+    .project-type-icon.link { background: rgba(0,229,160,0.08); border-color: rgba(0,229,160,0.2); }
+    .project-type-icon.image { background: rgba(255,165,0,0.08); border-color: rgba(255,165,0,0.2); }
+    .project-title-area { flex: 1; min-width: 0; }
+    .project-title-display { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700;
+      color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .project-type-label { font-size: 0.7rem; color: var(--muted); margin-top: 0.1rem; text-transform: uppercase; letter-spacing: 0.07em; }
+    .project-actions { display: flex; gap: 0.4rem; flex-shrink: 0; }
+    .btn-icon { background: transparent; border: 1px solid var(--border); color: var(--muted);
+      width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center;
+      justify-content: center; cursor: pointer; font-size: 0.75rem; transition: all 0.2s; }
+    .btn-icon:hover { border-color: var(--danger); color: var(--danger); }
+    .btn-icon.edit:hover { border-color: var(--accent); color: var(--accent); }
+
+    .project-body { border-top: 1px solid var(--border); padding: 1.25rem; display: none; }
+    .project-body.open { display: block; }
+
+    /* FORM FIELDS */
+    .field { margin-bottom: 1rem; }
+    .field:last-child { margin-bottom: 0; }
+    .field label { display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 0.45rem; }
+    .input, .select, .textarea {
+      width: 100%; background: var(--surface); border: 1.5px solid var(--border); color: var(--text);
+      padding: 0.75rem 0.9rem; border-radius: 9px; font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem; outline: none; transition: border-color 0.2s;
+    }
+    .input:focus, .select:focus, .textarea:focus { border-color: var(--accent); }
+    .input::placeholder, .textarea::placeholder { color: var(--muted); }
+    .textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
+    .select { cursor: pointer; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%236B7A99' d='M5 7L0 2h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 0.9rem center; padding-right: 2.2rem; }
+
+    /* TYPE SELECTOR */
+    .type-selector { display: flex; gap: 0.5rem; }
+    .type-btn { flex: 1; background: var(--surface); border: 1.5px solid var(--border);
+      color: var(--muted); padding: 0.65rem 0.5rem; border-radius: 9px; text-align: center;
+      cursor: pointer; transition: all 0.2s; user-select: none; font-size: 0.82rem; font-weight: 600; }
+    .type-btn:hover { border-color: rgba(0,229,160,0.3); }
+    .type-btn.active { border-color: var(--accent); background: rgba(0,229,160,0.08); color: var(--accent); }
+    .type-btn .type-icon { font-size: 1.1rem; display: block; margin-bottom: 0.2rem; }
+
+    /* UPLOAD ZONE */
+    .upload-zone { border: 2px dashed var(--border); border-radius: 10px; padding: 1.5rem;
+      text-align: center; cursor: pointer; transition: all 0.2s; position: relative; }
+    .upload-zone:hover { border-color: rgba(0,229,160,0.3); background: rgba(0,229,160,0.02); }
+    .upload-zone input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; }
+    .upload-zone-text { font-size: 0.85rem; color: var(--muted); }
+    .upload-zone-hint { font-size: 0.72rem; color: rgba(107,122,153,0.6); margin-top: 0.25rem; }
+    .upload-done { display: flex; align-items: center; gap: 0.6rem; background: rgba(0,229,160,0.06);
+      border: 1px solid rgba(0,229,160,0.15); border-radius: 8px; padding: 0.65rem 0.85rem; margin-top: 0.6rem; }
+    .upload-done-name { font-size: 0.82rem; color: var(--accent); }
+
+    /* ADD PROJECT BTN */
+    .btn-add { width: 100%; background: transparent; border: 1.5px dashed var(--border);
+      color: var(--muted); padding: 0.9rem; border-radius: 12px; font-family: 'Syne', sans-serif;
+      font-weight: 700; font-size: 0.85rem; cursor: pointer; transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+    .btn-add:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,229,160,0.03); }
+
+    /* SAVE BTN */
+    .btn-save { width: 100%; background: linear-gradient(135deg, var(--accent), #00C080);
+      color: #000; border: none; padding: 0.9rem; border-radius: 10px;
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem;
+      cursor: pointer; transition: opacity 0.2s; }
+    .btn-save:hover { opacity: 0.88; }
+
+    /* ── RIGHT: PREVIEW ── */
+    .preview-panel { position: sticky; top: 80px; display: flex; flex-direction: column; gap: 1.25rem; }
+    .preview-card { background: var(--card); border: 1.5px solid var(--border); border-radius: 16px; overflow: hidden; }
+    .preview-header { padding: 1rem 1.25rem; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between; }
+    .preview-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 0.4rem; }
+    .preview-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
+    .preview-body { padding: 1.25rem; }
+
+    /* LINK COPY */
+    .link-box { background: var(--surface); border: 1px solid var(--border); border-radius: 9px;
+      padding: 0.75rem 1rem; display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+    .link-url { font-size: 0.78rem; color: var(--muted); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: monospace; }
+    .btn-copy { background: var(--surface); border: 1px solid var(--border); color: var(--muted);
+      padding: 0.3rem 0.75rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600;
+      cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+    .btn-copy:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* TIPS */
+    .tips-list { display: flex; flex-direction: column; gap: 0.6rem; }
+    .tip-item { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+    .tip-icon { flex-shrink: 0; font-size: 0.9rem; margin-top: 0.05rem; }
+
+    /* VERIF LINK */
+    .verif-link-card { background: rgba(0,229,160,0.05); border: 1.5px solid rgba(0,229,160,0.15);
+      border-radius: 14px; padding: 1.25rem; }
+    .vlc-title { font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 700; color: var(--text); margin-bottom: 0.4rem; }
+    .vlc-text { font-size: 0.8rem; color: var(--muted); line-height: 1.5; margin-bottom: 1rem; }
+    .btn-verif { display: block; text-align: center; background: transparent;
+      border: 1.5px solid rgba(0,229,160,0.3); color: var(--accent); padding: 0.6rem;
+      border-radius: 8px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.82rem;
+      text-decoration: none; transition: all 0.2s; }
+    .btn-verif:hover { background: rgba(0,229,160,0.08); }
+
+    /* SKILL TIPS BY CATEGORY */
+    .skill-tips { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.25rem; }
+    .st-title { font-family: 'Syne', sans-serif; font-size: 0.78rem; font-weight: 700; color: var(--accent2); margin-bottom: 0.6rem; }
+    .st-list { display: flex; flex-direction: column; gap: 0.4rem; }
+    .st-item { font-size: 0.78rem; color: var(--muted); display: flex; align-items: flex-start; gap: 0.4rem; line-height: 1.4; }
+    .st-item::before { content:"→"; color: var(--accent2); flex-shrink: 0; }
+
+    /* TOAST */
+    .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(60px);
+      background: var(--surface); border: 1px solid rgba(0,229,160,0.3); color: var(--accent);
+      padding: 0.75rem 1.5rem; border-radius: 100px; font-size: 0.85rem; font-weight: 600;
+      transition: transform 0.3s cubic-bezier(0.4,0,0.2,1); z-index: 500; white-space: nowrap; }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* PUBLIC PORTFOLIO VIEW (modal) */
+    .portfolio-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 300;
+      display: none; overflow-y: auto; }
+    .portfolio-modal.open { display: block; }
+    .portfolio-modal-inner { max-width: 860px; margin: 2rem auto; padding: 0 1rem 4rem; }
+    .pm-close { position: fixed; top: 1.5rem; right: 2rem; background: var(--surface);
+      border: 1px solid var(--border); color: var(--muted); width: 36px; height: 36px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 1rem; transition: all 0.2s; z-index: 301; }
+    .pm-close:hover { border-color: var(--danger); color: var(--danger); }
+
+    /* PUBLIC PAGE STYLES */
+    .pub-hero { background: linear-gradient(145deg, #0C1625, #07090F);
+      border: 1.5px solid rgba(0,229,160,0.15); border-radius: 20px; padding: 2.5rem;
+      text-align: center; margin-bottom: 1.5rem; position: relative; overflow: hidden; }
+    .pub-hero::before { content:''; position:absolute; top:-60px; left:50%; transform:translateX(-50%);
+      width:300px; height:300px; border-radius:50%;
+      background:radial-gradient(circle,rgba(0,229,160,0.05),transparent 70%); }
+    .pub-avatar { width: 80px; height: 80px; border-radius: 20px; margin: 0 auto 1rem;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.8rem;
+      background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #000; }
+    .pub-name { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--text); margin-bottom: 0.4rem; }
+    .pub-tagline { color: var(--muted); font-size: 0.95rem; margin-bottom: 1rem; }
+    .pub-chips { display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1rem; }
+    .pub-chip { background: rgba(0,229,160,0.08); border: 1px solid rgba(0,229,160,0.2);
+      color: var(--accent); font-size: 0.75rem; font-weight: 600; padding: 0.3rem 0.85rem; border-radius: 100px; }
+    .pub-bio { color: var(--muted); font-size: 0.9rem; max-width: 520px; margin: 0 auto; line-height: 1.7; }
+    .pub-verif-bar { display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 1.25rem;
+      flex-wrap: wrap; }
+    .pub-verif-pill { background: rgba(0,229,160,0.08); border: 1px solid rgba(0,229,160,0.2);
+      color: var(--accent); font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.65rem;
+      border-radius: 100px; letter-spacing: 0.06em; text-transform: uppercase; }
+    .pub-projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+    .pub-project-card { background: var(--card); border: 1.5px solid var(--border); border-radius: 14px;
+      overflow: hidden; transition: all 0.25s; cursor: pointer; text-decoration: none; color: inherit; display: block; }
+    .pub-project-card:hover { border-color: rgba(0,229,160,0.3); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+    .pub-project-thumb { height: 140px; background: linear-gradient(135deg, var(--surface), var(--bg2));
+      display: flex; align-items: center; justify-content: center; font-size: 2.5rem;
+      border-bottom: 1px solid var(--border); }
+    .pub-project-body { padding: 1.1rem; }
+    .pub-project-type { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; }
+    .pub-project-title { font-family: 'Syne', sans-serif; font-size: 0.92rem; font-weight: 700;
+      color: var(--text); margin-bottom: 0.4rem; }
+    .pub-project-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.5;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .pub-section-title { font-family: 'Syne', sans-serif; font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.5rem; }
+    .pub-section-title::after { content:''; flex:1; height:1px; background: var(--border); }
+    .pub-vela-footer { text-align: center; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    .pub-vela-footer a { color: var(--accent); text-decoration: none; font-family: 'Syne', sans-serif;
+      font-size: 0.82rem; font-weight: 700; }
+
+    @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.4} }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)} }
+    .fade-up { animation: fadeUp 0.35s ease both; }
+
+    @media (max-width: 900px) {
+      .page { grid-template-columns: 1fr; }
+      .preview-panel { position: static; }
+    }
+    @media (max-width: 640px) { .nav-links { display: none; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="index.html">VELA</a>
+  <ul class="nav-links">
+    <li><a href="dashboard.html">Dashboard</a></li>
+    <li><a href="verify.html">Verify</a></li>
+    <li><a href="jobs.html">Jobs</a></li>
+    <li><a href="portfolio.html" class="active">Portfolio</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="btn-share" onclick="copyLink()">🔗 Copy Portfolio Link</button>
+    <button class="btn-preview" onclick="openPreview()">Preview as Employer →</button>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- ── LEFT: BUILDER ── -->
+  <div class="builder fade-up">
+
+    <!-- HEADER EDITOR -->
+    <div class="header-editor">
+      <div class="he-top">
+        <div class="he-avatar" id="he-avatar">?</div>
+        <div class="he-fields">
+          <input class="he-name" id="he-name" placeholder="Your full name" oninput="saveAndRefresh()"/>
+          <input class="he-tagline" id="he-tagline" placeholder="e.g. Data Analyst · Ghana · Available full-time" oninput="saveAndRefresh()"/>
+        </div>
+      </div>
+      <div class="he-meta-row" id="he-meta-row"></div>
+      <textarea class="he-bio-field" id="he-bio" rows="3"
+        placeholder="Write 2–3 sentences about yourself. What do you do, what have you achieved, and what are you looking for? This is the first thing employers read."
+        oninput="saveAndRefresh()"></textarea>
+    </div>
+
+    <!-- SKILL-SPECIFIC PORTFOLIO GUIDE -->
+    <div class="skill-tips" id="skill-tips"></div>
+
+    <!-- PROJECTS -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-title">📁 Portfolio Projects</div>
+        <span style="font-size:0.75rem;color:var(--muted)" id="project-count">0 projects</span>
+      </div>
+      <div class="section-body">
+        <div class="projects-list" id="projects-list"></div>
+        <button class="btn-add" onclick="addProject()" style="margin-top:1rem">
+          <span>+</span> Add Project
+        </button>
+      </div>
+    </div>
+
+    <button class="btn-save" onclick="savePortfolio()">Save Portfolio</button>
+  </div>
+
+  <!-- ── RIGHT: PREVIEW PANEL ── -->
+  <div class="preview-panel fade-up" style="animation-delay:0.08s">
+
+    <!-- SHARE LINK -->
+    <div class="preview-card">
+      <div class="preview-header">
+        <div class="preview-label"><span class="preview-dot"></span> Your Portfolio Link</div>
+      </div>
+      <div class="preview-body">
+        <div class="link-box">
+          <span class="link-url" id="portfolio-link">vela.work/portfolio/your-name</span>
+          <button class="btn-copy" onclick="copyLink()">Copy</button>
+        </div>
+        <p style="font-size:0.78rem;color:var(--muted);line-height:1.5">Share this link in job applications, LinkedIn, and emails. Employers see your verified scores alongside your work.</p>
+      </div>
+    </div>
+
+    <!-- TIPS -->
+    <div class="preview-card">
+      <div class="preview-header">
+        <div class="preview-label">💡 What makes a strong portfolio</div>
+      </div>
+      <div class="preview-body">
+        <div class="tips-list">
+          <div class="tip-item"><span class="tip-icon">🎯</span>Show real outcomes — numbers, results, before/after. "Grew followers from 2k to 50k" beats "managed social media".</div>
+          <div class="tip-item"><span class="tip-icon">📁</span>Add 3–5 projects minimum. More is better. Employers want to see range.</div>
+          <div class="tip-item"><span class="tip-icon">🔗</span>Link to live work where possible — published articles, live websites, Figma files, Google Sheets.</div>
+          <div class="tip-item"><span class="tip-icon">✍️</span>Write project descriptions clearly. Assume the employer knows nothing about your context.</div>
+          <div class="tip-item"><span class="tip-icon">⭐</span>Put your best work first. Employers decide in seconds.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VERIFICATION LINK -->
+    <div class="verif-link-card">
+      <div class="vlc-title">⚡ Add Verification Scores</div>
+      <div class="vlc-text">Your portfolio is stronger when paired with VELA verification. Employers see your work AND your independently assessed scores.</div>
+      <a class="btn-verif" href="verify.html">Complete Verification →</a>
+    </div>
+
+  </div>
+</div>
+
+<!-- PUBLIC PORTFOLIO MODAL (Preview) -->
+<div class="portfolio-modal" id="portfolio-modal">
+  <button class="pm-close" onclick="closePreview()">✕</button>
+  <div class="portfolio-modal-inner" id="portfolio-modal-inner"></div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✓ Copied to clipboard</div>
+
+<script>
+// ─── STATE ────────────────────────────────────────────────────────────────
+let portfolio = JSON.parse(localStorage.getItem("vela_portfolio") || "null") || {
+  name: localStorage.getItem("vela_name") || "",
+  tagline: "",
+  bio: "",
+  projects: [],
+};
+
+const candidate = {
+  skill:    localStorage.getItem("vela_skill")    || "Data Analysis",
+  country:  localStorage.getItem("vela_country")  || "Ghana",
+  score:    localStorage.getItem("vela_score")    || "74",
+  english:  localStorage.getItem("vela_english")  || "4",
+};
+
+const verifState = JSON.parse(localStorage.getItem("vela_verif") || "{}");
+
+// ─── SKILL-SPECIFIC TIPS ──────────────────────────────────────────────────
+const SKILL_PORTFOLIO_TIPS = {
+  "Data Analysis":          ["Upload a real analysis PDF — even a sample dataset you found online","Show a dashboard screenshot from Tableau, Power BI, or Google Data Studio","Include a Google Sheet with formulas and visualisations","Write up a case study: what question you answered and what you found"],
+  "Customer Service":       ["Create a sample email thread showing how you handled a difficult customer","Write a case study of a real support challenge you solved","Show a CSAT improvement you contributed to with data","Upload a sample knowledge base article or FAQ you wrote"],
+  "Virtual Assistant":      ["Share a sample week schedule you built for an executive","Show a research brief or document you compiled","Upload a Notion workspace template you designed","Include a sample inbox management system with categories"],
+  "Social Media Management":["Show before/after follower counts or engagement metrics","Upload 3–5 content pieces you created (images, captions, reels)","Share a content calendar you designed","Include analytics screenshots showing results"],
+  "Content Writing":        ["Link to 3+ published articles — or upload polished samples","Show different writing styles — blog, email, landing page","Include a before/after rewrite showing your editing skill","Upload a content strategy or editorial calendar"],
+  "UI/UX Design":           ["Link to a Figma file — even a small redesign project","Show a case study: problem → research → solution → outcome","Include wireframes, prototypes, and final designs","Add before/after comparisons of UX improvements"],
+  "Project Management":     ["Upload a sample project plan or Gantt chart","Share a risk register or stakeholder communication","Show a retrospective document from a completed project","Include metrics: delivered on time, under budget, team size"],
+  "SEO Specialist":         ["Show keyword research work in a spreadsheet","Upload a site audit report you created","Share organic traffic growth screenshots with Google Search Console","Include a content brief or on-page SEO document"],
+  "Email Marketing":        ["Upload sample email campaigns you designed or wrote","Show open rate / CTR results from campaigns","Include an email sequence flow diagram","Share A/B test results with analysis"],
+  "Cybersecurity":          ["Upload a vulnerability assessment report (sample or practice)","Show a TryHackMe or HackTheBox completion certificate","Include a network diagram or security architecture","Share write-ups from CTF challenges"],
+  "Online Tutoring":        ["Upload a sample lesson plan or curriculum outline","Show student feedback or testimonials","Include a sample teaching video link (Loom or YouTube)","Share a before/after showing student improvement"],
+  "Bookkeeping":            ["Upload a sample financial report (use fictional data)","Show a reconciliation exercise you completed","Include a chart of accounts or budget template you built","Share a QuickBooks or Xero screenshot (anonymised)"],
+  "E-Commerce":             ["Show a Shopify store you managed (screenshots or live link)","Upload a product listing with copywriting you wrote","Share ROAS or revenue metrics from campaigns you ran","Include a customer journey map or funnel you designed"],
+  "HR & Recruitment":       ["Upload a job description you wrote","Show a candidate evaluation framework you developed","Include an onboarding checklist or process document","Share a sourcing strategy for a hard-to-fill role"],
+  "Prompt Engineering & AI":["Show a before/after of a workflow you automated with AI","Upload a prompt library you built for a specific use case","Include a case study of an AI system you designed","Share Make.com or Zapier flow screenshots with results"],
+};
+
+const TYPE_ICONS = { file:"📄", link:"🔗", image:"🖼️" };
+const TYPE_LABELS = { file:"File Upload", link:"External Link", image:"Image / Screenshot" };
+
+let projectCounter = portfolio.projects.length;
+
+// ─── INIT ─────────────────────────────────────────────────────────────────
+function init() {
+  // Populate header fields
+  document.getElementById("he-name").value = portfolio.name;
+  document.getElementById("he-tagline").value = portfolio.tagline;
+  document.getElementById("he-bio").value = portfolio.bio;
+
+  // Avatar
+  updateAvatar();
+
+  // Meta chips
+  const metaChips = [];
+  if (candidate.skill) metaChips.push(`🎯 ${candidate.skill}`);
+  if (candidate.country) metaChips.push(`📍 ${candidate.country}`);
+  const engLabels = {3:"Intermediate English",4:"Proficient English",5:"Fluent English"};
+  if (candidate.english) metaChips.push(`🗣️ ${engLabels[candidate.english]||"English"}`);
+  document.getElementById("he-meta-row").innerHTML = metaChips.map(c => `<span class="he-meta-chip">${c}</span>`).join("");
+
+  // Portfolio link
+  const slug = (portfolio.name || "your-name").toLowerCase().replace(/\s+/g,"-").replace(/[^a-z0-9-]/g,"");
+  document.getElementById("portfolio-link").textContent = `vela.work/portfolio/${slug}`;
+
+  // Skill tips
+  const tips = SKILL_PORTFOLIO_TIPS[candidate.skill] || SKILL_PORTFOLIO_TIPS["Data Analysis"];
+  document.getElementById("skill-tips").innerHTML = `
+    <div class="st-title">📌 What to include for ${candidate.skill}</div>
+    <div class="st-list">${tips.map(t=>`<div class="st-item">${t}</div>`).join("")}</div>`;
+
+  // Render projects
+  renderProjects();
+}
+
+function updateAvatar() {
+  const name = document.getElementById("he-name").value || portfolio.name || "?";
+  const initials = name.split(" ").map(w=>w[0]).join("").slice(0,2).toUpperCase() || "?";
+  document.getElementById("he-avatar").textContent = initials;
+}
+
+// ─── PROJECTS ─────────────────────────────────────────────────────────────
+function addProject() {
+  const id = ++projectCounter;
+  portfolio.projects.push({
+    id, title:"", description:"", type:"link", url:"", fileName:"", open: true
+  });
+  renderProjects();
+  savePortfolio(true);
+}
+
+function removeProject(id) {
+  portfolio.projects = portfolio.projects.filter(p => p.id !== id);
+  renderProjects();
+  savePortfolio(true);
+}
+
+function toggleProject(id) {
+  const p = portfolio.projects.find(p => p.id === id);
+  if (p) p.open = !p.open;
+  renderProjects();
+}
+
+function renderProjects() {
+  const list = document.getElementById("projects-list");
+  document.getElementById("project-count").textContent = `${portfolio.projects.length} project${portfolio.projects.length !== 1 ? "s" : ""}`;
+
+  if (!portfolio.projects.length) {
+    list.innerHTML = `<div style="text-align:center;padding:2rem;color:var(--muted);font-size:0.88rem">
+      No projects yet. Add your first project above.<br/><span style="font-size:0.78rem;opacity:0.6">Start with your best piece of work.</span>
+    </div>`;
+    return;
+  }
+
+  list.innerHTML = portfolio.projects.map((p, idx) => `
+    <div class="project-card" id="pc-${p.id}">
+      <div class="project-card-header" onclick="toggleProject(${p.id})">
+        <div class="project-type-icon ${p.type}">${TYPE_ICONS[p.type]||"📋"}</div>
+        <div class="project-title-area">
+          <div class="project-title-display">${p.title || `Project ${idx+1} — click to edit`}</div>
+          <div class="project-type-label">${TYPE_LABELS[p.type]||"Project"}</div>
+        </div>
+        <div class="project-actions" onclick="event.stopPropagation()">
+          <button class="btn-icon edit" onclick="toggleProject(${p.id})" title="Edit">✏️</button>
+          <button class="btn-icon" onclick="removeProject(${p.id})" title="Remove">🗑</button>
+        </div>
+      </div>
+      <div class="project-body ${p.open ? 'open' : ''}">
+        <div class="field">
+          <label>Project Title</label>
+          <input class="input" placeholder="e.g. Sales Dashboard for E-Commerce Brand" value="${p.title}"
+            oninput="updateProject(${p.id},'title',this.value)"/>
+        </div>
+        <div class="field">
+          <label>Type of Evidence</label>
+          <div class="type-selector">
+            ${["link","file","image"].map(t=>`
+              <div class="type-btn ${p.type===t?"active":""}" onclick="updateProject(${p.id},'type','${t}');renderProjects()">
+                <span class="type-icon">${TYPE_ICONS[t]}</span>${t.charAt(0).toUpperCase()+t.slice(1)}
+              </div>`).join("")}
+          </div>
+        </div>
+        ${p.type === "link" ? `
+          <div class="field">
+            <label>Link URL</label>
+            <input class="input" type="url" placeholder="https://figma.com/file/... or https://docs.google.com/..."
+              value="${p.url}" oninput="updateProject(${p.id},'url',this.value)"/>
+          </div>` : `
+          <div class="field">
+            <label>${p.type === "image" ? "Upload Image" : "Upload File"}</label>
+            <div class="upload-zone">
+              <input type="file" accept="${p.type==="image"?".jpg,.jpeg,.png,.webp,.gif":".pdf,.doc,.docx,.xlsx,.csv,.pptx"}"
+                onchange="handleUpload(${p.id},this)"/>
+              <div class="upload-zone-text">📤 Drop here or click to browse</div>
+              <div class="upload-zone-hint">${p.type==="image"?"JPG, PNG, WebP · Max 5MB":"PDF, DOCX, XLSX, PPTX · Max 10MB"}</div>
+            </div>
+            ${p.fileName ? `<div class="upload-done"><span>✅</span><span class="upload-done-name">${p.fileName}</span></div>` : ""}
+          </div>`}
+        <div class="field">
+          <label>Description <span style="color:var(--muted);text-transform:none;font-weight:400;letter-spacing:0">(what you did, what the outcome was)</span></label>
+          <textarea class="textarea" placeholder="Explain what this project is, what problem it solved, what tools you used, and what the result was. Be specific — numbers and outcomes matter."
+            oninput="updateProject(${p.id},'description',this.value)">${p.description}</textarea>
+        </div>
+        <div class="field">
+          <label>Skill Demonstrated</label>
+          <input class="input" placeholder="e.g. SQL, Tableau, Data Storytelling"
+            value="${p.skill||""}" oninput="updateProject(${p.id},'skill',this.value)"/>
+        </div>
+      </div>
+    </div>`).join("");
+}
+
+function updateProject(id, key, val) {
+  const p = portfolio.projects.find(p => p.id === id);
+  if (p) { p[key] = val; savePortfolio(true); }
+}
+
+function handleUpload(id, input) {
+  const file = input.files[0];
+  if (!file) return;
+  updateProject(id, "fileName", file.name);
+  renderProjects();
+}
+
+// ─── SAVE ─────────────────────────────────────────────────────────────────
+function saveAndRefresh() {
+  portfolio.name = document.getElementById("he-name").value;
+  portfolio.tagline = document.getElementById("he-tagline").value;
+  portfolio.bio = document.getElementById("he-bio").value;
+  updateAvatar();
+  const slug = (portfolio.name||"your-name").toLowerCase().replace(/\s+/g,"-").replace(/[^a-z0-9-]/g,"");
+  document.getElementById("portfolio-link").textContent = `vela.work/portfolio/${slug}`;
+  savePortfolio(true);
+}
+
+function savePortfolio(silent) {
+  portfolio.name = document.getElementById("he-name").value;
+  portfolio.tagline = document.getElementById("he-tagline").value;
+  portfolio.bio = document.getElementById("he-bio").value;
+  localStorage.setItem("vela_portfolio", JSON.stringify(portfolio));
+  localStorage.setItem("vela_name", portfolio.name);
+  if (!silent) showToast("✓ Portfolio saved");
+}
+
+// ─── PREVIEW ──────────────────────────────────────────────────────────────
+function openPreview() {
+  const modal = document.getElementById("portfolio-modal");
+  document.getElementById("portfolio-modal-inner").innerHTML = buildPublicView();
+  modal.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closePreview() {
+  document.getElementById("portfolio-modal").classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+function buildPublicView() {
+  const p = portfolio;
+  const name = p.name || "Candidate";
+  const initials = name.split(" ").map(w=>w[0]).join("").slice(0,2).toUpperCase();
+  const verifPassed = Object.values(verifState).filter(v => v?.status === "passed").length;
+  const score = candidate.score || 0;
+  const scoreColor = score >= 80 ? "#00E5A0" : score >= 65 ? "#0096FF" : "#FFA500";
+
+  const verifBadges = verifPassed > 0 ? `
+    <div class="pub-verif-bar">
+      <span style="font-size:0.72rem;color:var(--muted)">VELA Verified:</span>
+      ${["comm","tools","interview","task","video"].filter(k=>verifState[k]?.status==="passed").map(k=>({
+        comm:"✓ Communication",tools:"✓ Tools",interview:"✓ Interview",task:"✓ Task",video:"✓ Video"
+      })[k]).map(l=>`<span class="pub-verif-pill">${l}</span>`).join("")}
+      <span class="pub-verif-pill" style="background:rgba(0,150,255,0.1);border-color:rgba(0,150,255,0.2);color:#0096FF">Score: ${score}/100</span>
+    </div>` : "";
+
+  const projectsHTML = p.projects.length ? `
+    <div class="pub-section-title">Portfolio Projects</div>
+    <div class="pub-projects-grid">
+      ${p.projects.map(proj => `
+        <${proj.url || proj.fileName ? 'a href="'+(proj.url||"#")+'" target="_blank"' : 'div'} class="pub-project-card">
+          <div class="pub-project-thumb">${TYPE_ICONS[proj.type]||"📋"}</div>
+          <div class="pub-project-body">
+            <div class="pub-project-type">${TYPE_LABELS[proj.type]||"Project"} ${proj.skill ? `· ${proj.skill}` : ""}</div>
+            <div class="pub-project-title">${proj.title||"Untitled Project"}</div>
+            <div class="pub-project-desc">${proj.description||"No description added."}</div>
+          </div>
+        </${proj.url || proj.fileName ? 'a' : 'div'}>
+      `).join("")}
+    </div>` : `
+    <div style="text-align:center;padding:2rem;color:var(--muted);font-size:0.88rem">
+      No projects added yet. Add projects in the builder to see them here.
+    </div>`;
+
+  return `
+    <div style="background:var(--bg);min-height:100vh;padding:1rem">
+      <div style="text-align:center;margin-bottom:1.5rem">
+        <span style="font-size:0.72rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);background:var(--surface);border:1px solid var(--border);padding:0.3rem 0.85rem;border-radius:100px">👁 Employer Preview</span>
+      </div>
+      <div class="pub-hero">
+        <div class="pub-avatar">${initials}</div>
+        <div class="pub-name">${name}</div>
+        <div class="pub-tagline">${p.tagline || candidate.skill + " · " + candidate.country}</div>
+        <div class="pub-chips">
+          ${candidate.skill ? `<span class="pub-chip">🎯 ${candidate.skill}</span>` : ""}
+          ${candidate.country ? `<span class="pub-chip">📍 ${candidate.country}</span>` : ""}
+          <span class="pub-chip" style="background:rgba(0,150,255,0.08);border-color:rgba(0,150,255,0.2);color:#0096FF">⭐ ${score}/100 VELA Score</span>
+        </div>
+        ${p.bio ? `<div class="pub-bio">${p.bio}</div>` : ""}
+        ${verifBadges}
+      </div>
+      ${projectsHTML}
+      <div class="pub-vela-footer">
+        <p style="color:var(--muted);font-size:0.78rem;margin-bottom:0.4rem">Verified by</p>
+        <a href="employers.html">VELA · African Talent. Verified. Placed. Global.</a>
+      </div>
+    </div>`;
+}
+
+// ─── UTILS ────────────────────────────────────────────────────────────────
+function copyLink() {
+  const link = document.getElementById("portfolio-link").textContent;
+  navigator.clipboard.writeText(link).catch(() => {});
+  showToast("🔗 Portfolio link copied!");
+}
+
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 2500);
+}
+
+// ─── RUN ──────────────────────────────────────────────────────────────────
+init();
+</script>
+</body>
+</html>

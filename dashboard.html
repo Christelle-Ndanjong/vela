@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VELA — My Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #080C12; --bg2: #0D1320; --surface: #111827;
+      --border: rgba(255,255,255,0.07); --accent: #00E5A0;
+      --accent2: #0096FF; --text: #F0F4FF; --muted: #6B7A99;
+      --card: #0F1A2E; --danger: #FF6B6B; --warn: #FFA500;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+
+    /* ── NAV ── */
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 5%; border-bottom: 1px solid var(--border);
+      background: rgba(8,12,18,0.95); position: sticky; top: 0; z-index: 100;
+      backdrop-filter: blur(20px);
+    }
+    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem;
+      letter-spacing: 0.08em; background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; text-decoration: none; }
+    .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a.active { color: var(--accent); }
+    .nav-avatar { width: 34px; height: 34px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.8rem;
+      color: #000; cursor: pointer; flex-shrink: 0; }
+
+    /* ── LAYOUT ── */
+    .page { max-width: 1200px; margin: 0 auto; padding: 2.5rem 5% 6rem; }
+
+    /* ── WELCOME HEADER ── */
+    .welcome { margin-bottom: 2.5rem; display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .welcome-left { }
+    .welcome-greeting { font-size: 0.8rem; color: var(--muted); font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.4rem; }
+    .welcome-name { font-family: 'Syne', sans-serif; font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 800; color: var(--text); line-height: 1.1; }
+    .welcome-name span { background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .welcome-sub { color: var(--muted); font-size: 0.9rem; margin-top: 0.4rem; }
+    .verified-badge { display: flex; align-items: center; gap: 0.6rem;
+      background: rgba(0,229,160,0.08); border: 1.5px solid rgba(0,229,160,0.25);
+      border-radius: 100px; padding: 0.5rem 1.1rem;
+      font-family: 'Syne', sans-serif; font-size: 0.8rem; font-weight: 700; color: var(--accent); }
+    .verified-dot { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
+
+    /* ── NEXT ACTION BANNER ── */
+    .next-action {
+      background: linear-gradient(135deg, rgba(0,229,160,0.08), rgba(0,150,255,0.05));
+      border: 1.5px solid rgba(0,229,160,0.2); border-radius: 14px;
+      padding: 1.25rem 1.5rem; margin-bottom: 2rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+    }
+    .next-action-left { display: flex; align-items: center; gap: 1rem; }
+    .next-icon { font-size: 1.5rem; }
+    .next-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.2rem; }
+    .next-text { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--text); }
+    .btn-action {
+      background: linear-gradient(135deg, var(--accent), #00C080); color: #000;
+      border: none; padding: 0.65rem 1.4rem; border-radius: 8px;
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem;
+      cursor: pointer; text-decoration: none; white-space: nowrap; transition: opacity 0.2s;
+      display: inline-block;
+    }
+    .btn-action:hover { opacity: 0.88; }
+
+    /* ── TOP ROW ── */
+    .top-row { display: grid; grid-template-columns: 280px 1fr; gap: 1.25rem; margin-bottom: 1.25rem; }
+
+    /* ── SCORE CARD ── */
+    .score-card {
+      background: linear-gradient(160deg, #0D1A2E, #080C12);
+      border: 1.5px solid rgba(0,229,160,0.2); border-radius: 20px;
+      padding: 2rem 1.5rem; display: flex; flex-direction: column; align-items: center;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .score-card::before {
+      content: ''; position: absolute; top: -60px; left: 50%; transform: translateX(-50%);
+      width: 200px; height: 200px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,229,160,0.07), transparent 70%);
+    }
+    .score-label-top { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 1.25rem; }
+    .score-ring-wrap { position: relative; width: 140px; height: 140px; margin-bottom: 1.25rem; }
+    .score-ring-wrap svg { position: absolute; inset: 0; transform: rotate(-90deg); }
+    .score-ring-track { fill: none; stroke: var(--surface); stroke-width: 7; }
+    .score-ring-fill { fill: none; stroke-width: 7; stroke-linecap: round;
+      transition: stroke-dashoffset 1.4s cubic-bezier(0.4,0,0.2,1); }
+    .score-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .score-num { font-family: 'Syne', sans-serif; font-size: 2.2rem; font-weight: 800; color: var(--text); line-height: 1; }
+    .score-denom { font-size: 0.72rem; color: var(--muted); margin-top: 0.15rem; }
+    .score-status { font-family: 'Syne', sans-serif; font-size: 0.88rem; font-weight: 700; margin-bottom: 0.35rem; }
+    .score-hint { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+    .score-breakdown-mini { display: flex; flex-direction: column; gap: 0.5rem; width: 100%; margin-top: 1.25rem; }
+    .mini-bar-row { display: flex; align-items: center; gap: 0.5rem; }
+    .mini-bar-label { font-size: 0.7rem; color: var(--muted); width: 70px; text-align: right; flex-shrink: 0; }
+    .mini-bar-track { flex: 1; height: 4px; background: var(--surface); border-radius: 100px; overflow: hidden; }
+    .mini-bar-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 1s ease; }
+    .mini-bar-val { font-size: 0.68rem; color: var(--muted); width: 28px; flex-shrink: 0; font-family: 'Syne', sans-serif; font-weight: 700; }
+
+    /* ── STATS GRID ── */
+    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .stat-card {
+      background: var(--card); border: 1.5px solid var(--border); border-radius: 16px;
+      padding: 1.4rem; display: flex; flex-direction: column; justify-content: space-between;
+      transition: border-color 0.3s; text-decoration: none; color: inherit;
+    }
+    .stat-card:hover { border-color: rgba(0,229,160,0.25); }
+    .stat-card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1rem; }
+    .stat-card-icon { font-size: 1.3rem; }
+    .stat-card-arrow { color: var(--muted); font-size: 0.8rem; }
+    .stat-card-val { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--text); margin-bottom: 0.2rem; line-height: 1; }
+    .stat-card-label { font-size: 0.78rem; color: var(--muted); }
+    .stat-card-sub { font-size: 0.72rem; color: var(--muted); margin-top: 0.5rem; }
+    .accent-val { background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    /* ── MAIN GRID ── */
+    .main-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem; }
+
+    /* ── SECTION CARD ── */
+    .section-card { background: var(--card); border: 1.5px solid var(--border); border-radius: 16px; overflow: hidden; }
+    .section-header { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between; }
+    .section-title { font-family: 'Syne', sans-serif; font-size: 0.88rem; font-weight: 700; color: var(--text); }
+    .section-link { font-size: 0.75rem; color: var(--accent); text-decoration: none; font-weight: 600; transition: opacity 0.2s; }
+    .section-link:hover { opacity: 0.75; }
+    .section-body { padding: 1.25rem 1.5rem; }
+
+    /* ── VERIF PROGRESS ── */
+    .verif-list { display: flex; flex-direction: column; gap: 0.6rem; }
+    .verif-row { display: flex; align-items: center; gap: 0.75rem; }
+    .verif-dot { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center;
+      justify-content: center; font-size: 0.8rem; flex-shrink: 0; border: 1px solid var(--border); }
+    .verif-dot.passed { background: rgba(0,229,160,0.12); border-color: rgba(0,229,160,0.3); }
+    .verif-dot.review { background: rgba(255,165,0,0.1); border-color: rgba(255,165,0,0.25); }
+    .verif-dot.failed { background: rgba(255,107,107,0.1); border-color: rgba(255,107,107,0.25); }
+    .verif-dot.pending { background: var(--surface); }
+    .verif-row-title { font-size: 0.82rem; font-weight: 600; color: var(--text); flex: 1; }
+    .verif-row-status { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+    .status-passed { color: var(--accent); }
+    .status-review { color: var(--warn); }
+    .status-failed { color: var(--danger); }
+    .status-pending { color: var(--muted); }
+    .verif-progress-bar { height: 3px; background: var(--surface); border-radius: 100px; overflow: hidden; margin-top: 1rem; }
+    .verif-progress-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 0.8s ease; }
+
+    /* ── ROADMAP ── */
+    .roadmap-list { display: flex; flex-direction: column; gap: 0.5rem; }
+    .roadmap-step-row { display: flex; align-items: center; gap: 0.75rem; }
+    .roadmap-step-num { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center;
+      justify-content: center; font-family: 'Syne', sans-serif; font-size: 0.65rem; font-weight: 800;
+      flex-shrink: 0; border: 1.5px solid var(--border); color: var(--muted); }
+    .roadmap-step-num.done { background: rgba(0,229,160,0.15); border-color: rgba(0,229,160,0.35); color: var(--accent); }
+    .roadmap-step-num.current { background: rgba(0,150,255,0.15); border-color: rgba(0,150,255,0.35); color: var(--accent2); animation: glowPulse 2s infinite; }
+    .roadmap-step-text { font-size: 0.82rem; color: var(--muted); flex: 1; }
+    .roadmap-step-text.done { color: var(--text); text-decoration: line-through; }
+    .roadmap-step-text.current { color: var(--text); font-weight: 600; }
+    .skill-banner { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem;
+      background: rgba(0,150,255,0.06); border: 1px solid rgba(0,150,255,0.15);
+      border-radius: 8px; padding: 0.6rem 0.85rem; }
+    .skill-banner-icon { font-size: 1rem; }
+    .skill-banner-name { font-family: 'Syne', sans-serif; font-size: 0.82rem; font-weight: 700; color: var(--accent2); }
+    .roadmap-progress { margin-top: 1rem; }
+    .roadmap-pct { font-size: 0.72rem; color: var(--muted); margin-bottom: 0.35rem; display: flex; justify-content: space-between; }
+    .roadmap-bar { height: 3px; background: var(--surface); border-radius: 100px; overflow: hidden; }
+    .roadmap-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--accent2), var(--accent)); transition: width 0.8s ease; }
+
+    /* ── JOBS ── */
+    .jobs-list { display: flex; flex-direction: column; gap: 0.6rem; }
+    .job-row { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem;
+      background: var(--bg2); border: 1px solid var(--border); border-radius: 10px;
+      text-decoration: none; color: inherit; transition: border-color 0.2s; }
+    .job-row:hover { border-color: rgba(0,229,160,0.25); }
+    .job-logo-sm { width: 32px; height: 32px; border-radius: 8px; background: var(--surface);
+      border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; flex-shrink: 0; font-family: 'Syne', sans-serif; font-weight: 800; color: var(--muted); }
+    .job-info { flex: 1; min-width: 0; }
+    .job-title-sm { font-family: 'Syne', sans-serif; font-size: 0.82rem; font-weight: 700; color: var(--text);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .job-company-sm { font-size: 0.72rem; color: var(--muted); }
+    .job-badge-new { background: rgba(0,229,160,0.1); border: 1px solid rgba(0,229,160,0.2);
+      color: var(--accent); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; padding: 0.15rem 0.45rem; border-radius: 4px; flex-shrink: 0; }
+
+    /* ── BOTTOM ROW ── */
+    .bottom-row { display: grid; grid-template-columns: 2fr 1fr; gap: 1.25rem; }
+
+    /* ── ACTIVITY FEED ── */
+    .activity-list { display: flex; flex-direction: column; }
+    .activity-item { display: flex; gap: 1rem; padding: 0.9rem 0; border-bottom: 1px solid var(--border); }
+    .activity-item:last-child { border-bottom: none; }
+    .activity-icon-wrap { width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+    .activity-content { flex: 1; }
+    .activity-text { font-size: 0.85rem; color: var(--text); margin-bottom: 0.15rem; line-height: 1.4; }
+    .activity-time { font-size: 0.72rem; color: var(--muted); }
+
+    /* ── PROFILE COMPLETENESS ── */
+    .completeness-list { display: flex; flex-direction: column; gap: 0.6rem; }
+    .completeness-item { display: flex; align-items: center; gap: 0.75rem; }
+    .comp-icon { font-size: 0.9rem; flex-shrink: 0; }
+    .comp-text { font-size: 0.82rem; color: var(--muted); flex: 1; }
+    .comp-text.done { color: var(--text); }
+    .comp-check { font-size: 0.75rem; }
+    .comp-check.done { color: var(--accent); }
+    .comp-check.todo { color: var(--border); }
+    .overall-pct { text-align: center; padding: 1rem 0 0.5rem; }
+    .overall-num { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; }
+    .overall-label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+    /* ── EMPTY STATE ── */
+    .empty-state { text-align: center; padding: 2rem 1rem; }
+    .empty-state p { color: var(--muted); font-size: 0.85rem; margin-top: 0.5rem; }
+
+    /* ── DEMO NOTICE ── */
+    .demo-bar {
+      background: rgba(255,165,0,0.06); border-bottom: 1px solid rgba(255,165,0,0.12);
+      padding: 0.6rem 5%; font-size: 0.8rem; color: var(--warn);
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+
+    @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.4} }
+    @keyframes glowPulse { 0%,100%{box-shadow:0 0 0 0 rgba(0,150,255,0.3)}50%{box-shadow:0 0 0 4px rgba(0,150,255,0.1)} }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)} }
+    .fade-up { animation: fadeUp 0.4s ease both; }
+
+    @media (max-width: 1024px) {
+      .top-row { grid-template-columns: 1fr; }
+      .main-grid { grid-template-columns: 1fr 1fr; }
+      .bottom-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .main-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- DEMO BAR -->
+<div class="demo-bar" id="demo-bar">
+  ⚡ <strong>Demo Mode</strong> — Showing sample data. Complete your <a href="profile.html" style="color:var(--warn);font-weight:700">profile</a> to see your real dashboard.
+</div>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="index.html">VELA</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="skills.html">Skills</a></li>
+    <li><a href="jobs.html">Jobs</a></li>
+    <li><a href="verify.html">Verify</a></li>
+    <li><a href="dashboard.html" class="active">Dashboard</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="nav-avatar" id="nav-avatar">?</div>
+  </div>
+</nav>
+
+<!-- PAGE -->
+<div class="page">
+
+  <!-- WELCOME -->
+  <div class="welcome fade-up">
+    <div class="welcome-left">
+      <div class="welcome-greeting" id="greeting">Good morning</div>
+      <div class="welcome-name">Welcome back, <span id="display-name">Candidate</span></div>
+      <div class="welcome-sub" id="welcome-sub">Here's where you stand today</div>
+    </div>
+    <div class="verified-badge" id="verified-badge" style="display:none">
+      <span class="verified-dot"></span> VELA Verified
+    </div>
+  </div>
+
+  <!-- NEXT ACTION -->
+  <div class="next-action fade-up" id="next-action" style="animation-delay:0.05s">
+    <div class="next-action-left">
+      <div class="next-icon" id="next-icon">🎯</div>
+      <div>
+        <div class="next-label">Your Next Step</div>
+        <div class="next-text" id="next-text">Loading your personalised next action...</div>
+      </div>
+    </div>
+    <a class="btn-action" id="next-btn" href="profile.html">Start Now →</a>
+  </div>
+
+  <!-- TOP ROW: SCORE + STATS -->
+  <div class="top-row fade-up" style="animation-delay:0.1s">
+
+    <!-- SCORE CARD -->
+    <div class="score-card">
+      <div class="score-label-top">VELA Readiness Score</div>
+      <div class="score-ring-wrap">
+        <svg viewBox="0 0 140 140" width="140" height="140">
+          <circle class="score-ring-track" cx="70" cy="70" r="62"/>
+          <circle class="score-ring-fill" cx="70" cy="70" r="62"
+            id="score-ring" stroke="#00E5A0"
+            stroke-dasharray="389.6" stroke-dashoffset="389.6"/>
+        </svg>
+        <div class="score-center">
+          <div class="score-num" id="score-num">0</div>
+          <div class="score-denom">out of 100</div>
+        </div>
+      </div>
+      <div class="score-status" id="score-status">—</div>
+      <div class="score-hint" id="score-hint">Complete your profile to see your score</div>
+
+      <div class="score-breakdown-mini" id="score-breakdown">
+        <!-- populated by JS -->
+      </div>
+    </div>
+
+    <!-- STATS GRID -->
+    <div class="stats-grid">
+      <a class="stat-card" href="verify.html">
+        <div class="stat-card-top">
+          <div class="stat-card-icon">✅</div>
+          <div class="stat-card-arrow">→</div>
+        </div>
+        <div class="stat-card-val accent-val" id="stat-verif">0/5</div>
+        <div class="stat-card-label">Verifications Complete</div>
+        <div class="stat-card-sub" id="stat-verif-sub">Start your first verification</div>
+      </a>
+
+      <a class="stat-card" href="jobs.html">
+        <div class="stat-card-top">
+          <div class="stat-card-icon">💼</div>
+          <div class="stat-card-arrow">→</div>
+        </div>
+        <div class="stat-card-val accent-val" id="stat-jobs">—</div>
+        <div class="stat-card-label">Matched Remote Jobs</div>
+        <div class="stat-card-sub" id="stat-jobs-sub">Set your skill to see jobs</div>
+      </a>
+
+      <a class="stat-card" href="skills.html">
+        <div class="stat-card-top">
+          <div class="stat-card-icon">📚</div>
+          <div class="stat-card-arrow">→</div>
+        </div>
+        <div class="stat-card-val accent-val" id="stat-roadmap">0%</div>
+        <div class="stat-card-label">Roadmap Progress</div>
+        <div class="stat-card-sub" id="stat-roadmap-sub">Start your skill path</div>
+      </a>
+
+      <a class="stat-card" href="profile.html">
+        <div class="stat-card-top">
+          <div class="stat-card-icon">👤</div>
+          <div class="stat-card-arrow">→</div>
+        </div>
+        <div class="stat-card-val accent-val" id="stat-profile">0%</div>
+        <div class="stat-card-label">Profile Complete</div>
+        <div class="stat-card-sub" id="stat-profile-sub">Build your profile</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- MAIN GRID: VERIF + ROADMAP + JOBS -->
+  <div class="main-grid fade-up" style="animation-delay:0.15s">
+
+    <!-- VERIFICATION PROGRESS -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-title">⚡ Verification Progress</div>
+        <a class="section-link" href="verify.html">Continue →</a>
+      </div>
+      <div class="section-body">
+        <div class="verif-list" id="verif-list"></div>
+        <div class="verif-progress-bar">
+          <div class="verif-progress-fill" id="verif-bar" style="width:0%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SKILL ROADMAP -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-title">🗺️ Skill Roadmap</div>
+        <a class="section-link" href="skills.html">View Full →</a>
+      </div>
+      <div class="section-body" id="roadmap-body">
+        <div class="empty-state">
+          <div style="font-size:1.5rem">🎯</div>
+          <p>Complete your profile to see your personalised skill roadmap</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- MATCHED JOBS -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-title">💼 Matched Jobs</div>
+        <a class="section-link" id="jobs-link" href="jobs.html">View All →</a>
+      </div>
+      <div class="section-body">
+        <div class="jobs-list" id="jobs-list">
+          <div class="empty-state">
+            <div style="font-size:1.5rem">🌍</div>
+            <p>Loading matched jobs...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM ROW: ACTIVITY + PROFILE COMPLETENESS -->
+  <div class="bottom-row fade-up" style="animation-delay:0.2s">
+
+    <!-- ACTIVITY FEED -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-title">📋 Recent Activity</div>
+      </div>
+      <div class="section-body">
+        <div class="activity-list" id="activity-list"></div>
+      </div>
+    </div>
+
+    <!-- PROFILE COMPLETENESS -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-title">👤 Profile Completeness</div>
+        <a class="section-link" href="profile.html">Edit →</a>
+      </div>
+      <div class="section-body">
+        <div class="overall-pct">
+          <div class="overall-num accent-val" id="overall-pct">0%</div>
+          <div class="overall-label">Complete</div>
+        </div>
+        <div class="completeness-list" id="completeness-list"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ─── LOAD STATE ───────────────────────────────────────────────────────────
+const profile = {
+  name:         localStorage.getItem("vela_name")     || "",
+  skill:        localStorage.getItem("vela_skill")    || "",
+  country:      localStorage.getItem("vela_country")  || "",
+  score:        parseInt(localStorage.getItem("vela_score") || "0"),
+  education:    localStorage.getItem("vela_edu")      || "",
+  experience:   localStorage.getItem("vela_exp")      || "",
+  tools:        JSON.parse(localStorage.getItem("vela_tools") || "[]"),
+  english:      parseInt(localStorage.getItem("vela_english") || "0"),
+  motivation:   localStorage.getItem("vela_motivation") || "",
+  availability: localStorage.getItem("vela_avail")   || "",
+};
+const verifState = JSON.parse(localStorage.getItem("vela_verif") || "{}");
+const roadmapProgress = JSON.parse(localStorage.getItem("vela_roadmap") || "{}");
+
+// ─── DEMO DATA (when no real profile exists) ──────────────────────────────
+const isDemo = !profile.name;
+if (isDemo) {
+  profile.name = "Amara Osei";
+  profile.skill = "Data Analysis";
+  profile.country = "Ghana";
+  profile.score = 74;
+  profile.education = "master";
+  profile.experience = "1to3";
+  profile.tools = ["Excel","SQL","Python","Google Sheets"];
+  profile.english = 4;
+  profile.motivation = "I want to work remotely";
+  profile.availability = "30–40 hours (full time)";
+  verifState.comm = { status: "passed", score: 82 };
+  verifState.tools = { status: "passed", score: 90 };
+  verifState.task = { status: "review" };
+  roadmapProgress.step = 2;
+} else {
+  document.getElementById("demo-bar").style.display = "none";
+}
+
+// ─── SKILL ROADMAPS ───────────────────────────────────────────────────────
+const ROADMAPS = {
+  "Data Analysis":          ["Excel & Google Sheets","SQL Fundamentals","Python for Data","Visualisation & Reporting","Portfolio Projects"],
+  "Customer Service":       ["Communication Foundations","Support Tools","Live Chat & Ticketing","Mock Assessment","Job Ready"],
+  "Virtual Assistant":      ["Admin & Organisation","Productivity Tools","AI-Assisted VA Work","Executive Communication","VELA Verified"],
+  "Prompt Engineering & AI":["AI Fundamentals","Prompt Techniques","AI Workflow Automation","Business Applications","Certified AI Professional"],
+  "Social Media Management":["Platform Mastery","Content Creation","Strategy & Analytics","Scheduling & Tools","Portfolio"],
+  "Content Writing":        ["Writing Foundations","Copywriting Frameworks","SEO Writing","Niche Specialisation","Writing Portfolio"],
+  "SEO Specialist":         ["SEO Fundamentals","Keyword Research","Technical SEO","Link Building","SEO Audit Portfolio"],
+  "Project Management":     ["PM Fundamentals","Agile & Scrum","Tool Mastery","PMP or CAPM Prep","Simulated PM Case"],
+  "UI/UX Design":           ["Design Principles","Figma Mastery","UX Research","Case Study Projects","Portfolio Site"],
+  "Email Marketing":        ["Email Marketing Strategy","Copywriting for Email","Platform Mastery","A/B Testing & Analytics","Campaign Portfolio"],
+  "Cybersecurity":          ["Networking Fundamentals","Security Concepts","CompTIA Security+","Hands-On Practice","SOC Analyst Ready"],
+  "Online Tutoring":        ["Subject Mastery Proof","Online Teaching Methods","Platform Profiles","First 10 Sessions","Niche & Scale"],
+  "Bookkeeping":            ["Accounting Fundamentals","QuickBooks & Xero","Payroll & Tax Basics","QuickBooks Certification","First Clients"],
+  "E-Commerce":             ["E-Commerce Foundations","Shopify Operations","Digital Advertising","Analytics & Optimisation","E-Commerce Portfolio"],
+  "HR & Recruitment":       ["HR Fundamentals","Recruitment Process","LinkedIn Recruiting","ATS Systems","SHRM-CP Prep"],
+};
+
+const SKILL_ICONS = {
+  "Customer Service":"🎧","Virtual Assistant":"🤝","Data Analysis":"📊",
+  "Prompt Engineering & AI":"🤖","Social Media Management":"📱","Content Writing":"✍️",
+  "SEO Specialist":"🔍","Project Management":"💼","UI/UX Design":"🎨",
+  "Email Marketing":"📧","Cybersecurity":"🔐","Online Tutoring":"📚",
+  "Bookkeeping":"💰","E-Commerce":"🛒","HR & Recruitment":"👥",
+};
+
+const VERIF_LAYERS = [
+  { id:"comm",      title:"Communication Test",    icon:"✍️" },
+  { id:"task",      title:"Task Simulation",        icon:"📁" },
+  { id:"tools",     title:"Tool Knowledge",         icon:"🛠️" },
+  { id:"video",     title:"Video Introduction",     icon:"🎥" },
+  { id:"interview", title:"Mock Interview",          icon:"💬" },
+];
+
+// ─── DEMO JOBS ─────────────────────────────────────────────────────────────
+const DEMO_JOBS = {
+  "Data Analysis": [
+    { title:"Data Analyst – Marketing", company:"HubSpot", url:"https://hubspot.com/careers", new:true },
+    { title:"Business Intelligence Analyst", company:"Stripe", url:"https://stripe.com/jobs", new:true },
+    { title:"Analytics Engineer", company:"dbt Labs", url:"https://getdbt.com/careers", new:false },
+    { title:"Junior Data Analyst", company:"Shopify", url:"https://shopify.com/careers", new:false },
+  ],
+  "Customer Service": [
+    { title:"Customer Support Specialist", company:"Shopify", url:"https://shopify.com/careers", new:true },
+    { title:"Customer Success Manager", company:"Intercom", url:"https://intercom.com/careers", new:true },
+    { title:"Support Engineer", company:"Zendesk", url:"https://zendesk.com/jobs", new:false },
+  ],
+  "Virtual Assistant": [
+    { title:"Executive Virtual Assistant", company:"Boldly", url:"https://boldly.com", new:true },
+    { title:"Remote Administrative Assistant", company:"Belay", url:"https://belaysolutions.com", new:false },
+    { title:"VA – Operations Support", company:"Fancy Hands", url:"https://fancyhands.com", new:false },
+  ],
+};
+const DEFAULT_JOBS = [
+  { title:"Remote Professional Role", company:"Global Employer", url:"jobs.html", new:true },
+  { title:"Complete your profile to see matched jobs", company:"VELA Platform", url:"profile.html", new:false },
+];
+
+// ─── HELPERS ──────────────────────────────────────────────────────────────
+function getGreeting() {
+  const h = new Date().getHours();
+  return h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening";
+}
+
+function getVerifCount() {
+  return VERIF_LAYERS.filter(l => verifState[l.id]?.status === "passed" || verifState[l.id]?.status === "review").length;
+}
+
+function getProfilePct() {
+  let done = 0, total = 6;
+  if (profile.name)         done++;
+  if (profile.skill)        done++;
+  if (profile.education)    done++;
+  if (profile.experience)   done++;
+  if (profile.english)      done++;
+  if (profile.motivation)   done++;
+  return Math.round((done / total) * 100);
+}
+
+function getRoadmapPct() {
+  if (!profile.skill) return 0;
+  const step = roadmapProgress.step || 0;
+  const total = (ROADMAPS[profile.skill] || []).length;
+  return total ? Math.round((step / total) * 100) : 0;
+}
+
+function getNextAction() {
+  const pct = getProfilePct();
+  const verif = getVerifCount();
+  const roadmap = getRoadmapPct();
+  if (pct < 100) return { icon:"👤", text:"Complete your profile to unlock your full VELA experience", btn:"Build Profile →", url:"profile.html" };
+  if (verif === 0) return { icon:"⚡", text:"Start your first verification — Communication Test is the best place to begin", btn:"Start Verification →", url:"verify.html" };
+  if (verif < 3)   return { icon:"🏆", text:`${verif}/5 verifications done — keep going to unlock VELA Verified status`, btn:"Continue Verification →", url:"verify.html" };
+  if (verif < 5)   return { icon:"🔐", text:`Almost there — ${5-verif} more verification${5-verif>1?"s":""} needed for the full badge`, btn:"Finish Verification →", url:"verify.html" };
+  if (roadmap < 50) return { icon:"📚", text:`Work through your ${profile.skill} roadmap — you're ${roadmap}% through`, btn:"Continue Learning →", url:"skills.html" };
+  return { icon:"💼", text:"You're verified and skilled — time to apply to matched remote jobs", btn:"View Jobs →", url:`jobs.html${profile.skill?`?skill=${encodeURIComponent(profile.skill)}`:""}` };
+}
+
+function getScoreColor(s) {
+  return s >= 70 ? "#00E5A0" : s >= 50 ? "#FFA500" : "#FF6B6B";
+}
+
+// ─── RENDER ───────────────────────────────────────────────────────────────
+function render() {
+  // Greeting
+  document.getElementById("greeting").textContent = getGreeting();
+  const firstName = profile.name.split(" ")[0];
+  document.getElementById("display-name").textContent = firstName;
+  document.getElementById("nav-avatar").textContent = firstName.charAt(0).toUpperCase();
+  document.getElementById("welcome-sub").textContent =
+    profile.skill ? `${profile.skill} · ${profile.country || "Africa"}` : "Complete your profile to get started";
+
+  // Verified badge
+  if (getVerifCount() === 5) document.getElementById("verified-badge").style.display = "flex";
+
+  // Next action
+  const na = getNextAction();
+  document.getElementById("next-icon").textContent = na.icon;
+  document.getElementById("next-text").textContent = na.text;
+  document.getElementById("next-btn").textContent = na.btn;
+  document.getElementById("next-btn").href = na.url;
+
+  // Score ring
+  const score = profile.score || 0;
+  const circumference = 389.6;
+  const color = getScoreColor(score);
+  document.getElementById("score-ring").style.strokeDashoffset = circumference;
+  document.getElementById("score-ring").style.stroke = color;
+  document.getElementById("score-num").textContent = "0";
+
+  setTimeout(() => {
+    const offset = circumference - (score / 100) * circumference;
+    document.getElementById("score-ring").style.strokeDashoffset = offset;
+    let count = 0;
+    const interval = setInterval(() => {
+      count = Math.min(count + 2, score);
+      document.getElementById("score-num").textContent = count;
+      if (count >= score) clearInterval(interval);
+    }, 25);
+  }, 400);
+
+  const scoreLabels = { 0:"No Score Yet", 1:"Getting Started", 40:"Developing", 60:"Job Ready", 75:"Strong Candidate", 90:"Exceptional" };
+  const label = Object.entries(scoreLabels).reverse().find(([k]) => score >= parseInt(k))?.[1] || "No Score Yet";
+  document.getElementById("score-status").textContent = label;
+  document.getElementById("score-status").style.color = color;
+  document.getElementById("score-hint").textContent = score >= 60
+    ? "You've cleared the pass mark. Keep improving to stand out more."
+    : score > 0 ? "Pass mark is 60. Complete more verifications to boost your score."
+    : "Complete your profile to calculate your score.";
+
+  // Score breakdown mini
+  const breakdown = [
+    { label:"Education",  val: ({secondary:4,diploma:8,bachelor:14,master:18,phd:20}[profile.education]||0), max:20 },
+    { label:"Experience", val: ({none:0,less1:5,"1to3":10,"3plus":15}[profile.experience]||0), max:15 },
+    { label:"English",    val: (profile.english||0)*3, max:15 },
+    { label:"Tools",      val: Math.min((profile.tools||[]).length*2,15), max:15 },
+  ];
+  document.getElementById("score-breakdown").innerHTML = breakdown.map(b => `
+    <div class="mini-bar-row">
+      <div class="mini-bar-label">${b.label}</div>
+      <div class="mini-bar-track"><div class="mini-bar-fill" style="width:${Math.round((b.val/b.max)*100)}%"></div></div>
+      <div class="mini-bar-val">${b.val}/${b.max}</div>
+    </div>`).join("");
+
+  // Stats
+  const verifCount = getVerifCount();
+  const profilePct = getProfilePct();
+  const roadmapPct = getRoadmapPct();
+  document.getElementById("stat-verif").textContent = `${verifCount}/5`;
+  document.getElementById("stat-verif-sub").textContent = verifCount === 5 ? "All complete — VELA Verified!" : verifCount > 0 ? `${5-verifCount} more to complete` : "Start your first verification";
+  document.getElementById("stat-roadmap").textContent = `${roadmapPct}%`;
+  document.getElementById("stat-roadmap-sub").textContent = roadmapPct > 0 ? `Step ${roadmapProgress.step||0} of ${(ROADMAPS[profile.skill]||[]).length}` : "Start your skill path";
+  document.getElementById("stat-profile").textContent = `${profilePct}%`;
+  document.getElementById("stat-profile-sub").textContent = profilePct === 100 ? "Profile complete ✓" : `${6-Math.round(profilePct/100*6)} fields missing`;
+
+  // Verif list
+  document.getElementById("verif-list").innerHTML = VERIF_LAYERS.map(l => {
+    const s = verifState[l.id]?.status || "pending";
+    const score = verifState[l.id]?.score;
+    const cls = s === "passed" ? "passed" : s === "review" ? "review" : s === "failed" ? "failed" : "pending";
+    const statusText = s === "passed" ? "Passed" : s === "review" ? "In Review" : s === "failed" ? "Retry" : "Pending";
+    return `<div class="verif-row">
+      <div class="verif-dot ${cls}">${s==="passed"?"✓":s==="review"?"⏳":s==="failed"?"✗":"○"}</div>
+      <div class="verif-row-title">${l.title}</div>
+      ${score!==undefined ? `<div class="verif-row-status status-${cls}" style="margin-right:0.25rem">${score}</div>` : ""}
+      <div class="verif-row-status status-${cls}">${statusText}</div>
+    </div>`;
+  }).join("");
+  document.getElementById("verif-bar").style.width = `${(verifCount/5)*100}%`;
+
+  // Roadmap
+  const steps = ROADMAPS[profile.skill] || [];
+  const currentStep = roadmapProgress.step || 0;
+  if (steps.length) {
+    const icon = SKILL_ICONS[profile.skill] || "📚";
+    document.getElementById("roadmap-body").innerHTML = `
+      <div class="skill-banner">
+        <span class="skill-banner-icon">${icon}</span>
+        <span class="skill-banner-name">${profile.skill}</span>
+      </div>
+      <div class="roadmap-list">
+        ${steps.map((step, i) => {
+          const done = i < currentStep;
+          const current = i === currentStep;
+          return `<div class="roadmap-step-row">
+            <div class="roadmap-step-num ${done?"done":current?"current":""}">${done?"✓":i+1}</div>
+            <div class="roadmap-step-text ${done?"done":current?"current":""}">${step}</div>
+            ${current?`<span style="font-size:0.65rem;color:var(--accent2);font-weight:700;background:rgba(0,150,255,0.1);padding:0.15rem 0.45rem;border-radius:4px">NOW</span>`:""}
+          </div>`;
+        }).join("")}
+      </div>
+      <div class="roadmap-progress">
+        <div class="roadmap-pct">
+          <span>Progress</span>
+          <span>${roadmapPct}%</span>
+        </div>
+        <div class="roadmap-bar"><div class="roadmap-fill" style="width:${roadmapPct}%"></div></div>
+      </div>`;
+  }
+
+  // Jobs
+  const skillJobs = DEMO_JOBS[profile.skill] || DEFAULT_JOBS;
+  document.getElementById("jobs-list").innerHTML = skillJobs.slice(0,4).map(j => `
+    <a class="job-row" href="${j.url}" target="_blank">
+      <div class="job-logo-sm">${j.company.charAt(0)}</div>
+      <div class="job-info">
+        <div class="job-title-sm">${j.title}</div>
+        <div class="job-company-sm">${j.company} · Worldwide</div>
+      </div>
+      ${j.new ? `<span class="job-badge-new">New</span>` : ""}
+    </a>`).join("");
+  if (profile.skill) {
+    document.getElementById("jobs-link").href = `jobs.html?skill=${encodeURIComponent(profile.skill)}`;
+  }
+  document.getElementById("stat-jobs").textContent = `${skillJobs.length}+`;
+  document.getElementById("stat-jobs-sub").textContent = profile.skill ? `Matched to ${profile.skill}` : "Set your skill to see jobs";
+
+  // Activity feed
+  const activities = buildActivity();
+  document.getElementById("activity-list").innerHTML = activities.length
+    ? activities.map(a => `
+      <div class="activity-item">
+        <div class="activity-icon-wrap" style="background:${a.bg}">${a.icon}</div>
+        <div class="activity-content">
+          <div class="activity-text">${a.text}</div>
+          <div class="activity-time">${a.time}</div>
+        </div>
+      </div>`).join("")
+    : `<div class="empty-state"><div style="font-size:1.5rem">📋</div><p>Your activity will appear here as you complete steps</p></div>`;
+
+  // Profile completeness
+  const checks = [
+    { icon:"👤", label:"Basic info (name, country, email)", done: !!profile.name },
+    { icon:"🎓", label:"Education background",              done: !!profile.education },
+    { icon:"💼", label:"Work experience",                   done: !!profile.experience },
+    { icon:"🎯", label:"Skill path chosen",                 done: !!profile.skill },
+    { icon:"🗣️", label:"English level set",                 done: !!profile.english },
+    { icon:"💬", label:"Motivation & goals",                done: !!profile.motivation },
+  ];
+  document.getElementById("overall-pct").textContent = `${profilePct}%`;
+  document.getElementById("completeness-list").innerHTML = checks.map(c => `
+    <div class="completeness-item">
+      <span class="comp-icon">${c.icon}</span>
+      <span class="comp-text ${c.done?"done":""}">${c.label}</span>
+      <span class="comp-check ${c.done?"done":"todo"}">${c.done?"✓":"○"}</span>
+    </div>`).join("");
+}
+
+function buildActivity() {
+  const acts = [];
+  const now = new Date();
+  const fmt = (mins) => {
+    if (mins < 60) return `${mins} minutes ago`;
+    if (mins < 1440) return `${Math.floor(mins/60)} hours ago`;
+    return `${Math.floor(mins/1440)} days ago`;
+  };
+  if (profile.name && !isDemo)      acts.push({ icon:"👤", bg:"rgba(0,229,160,0.1)", text:"Profile created — welcome to VELA!", time:fmt(30) });
+  if (verifState.comm?.status)      acts.push({ icon:"✍️", bg:"rgba(0,150,255,0.1)", text:`Communication Test ${verifState.comm.status === "passed" ? "passed with score "+verifState.comm.score : "submitted"}`, time:fmt(120) });
+  if (verifState.tools?.status)     acts.push({ icon:"🛠️", bg:"rgba(0,229,160,0.1)", text:`Tool Knowledge Assessment ${verifState.tools.status === "passed" ? "passed — "+verifState.tools.score+"/100" : "submitted"}`, time:fmt(180) });
+  if (verifState.task?.status)      acts.push({ icon:"📁", bg:"rgba(255,165,0,0.1)", text:"Task Simulation document submitted for review", time:fmt(360) });
+  if (verifState.video?.status)     acts.push({ icon:"🎥", bg:"rgba(255,165,0,0.1)", text:"Video Introduction submitted for review", time:fmt(480) });
+  if (verifState.interview?.status) acts.push({ icon:"💬", bg:"rgba(0,150,255,0.1)", text:`Mock Interview ${verifState.interview.status === "passed" ? "passed — "+verifState.interview.score+"/100" : "submitted"}`, time:fmt(600) });
+  if (isDemo) return [
+    { icon:"👤", bg:"rgba(0,229,160,0.1)", text:"Profile created — welcome to VELA!", time:"2 hours ago" },
+    { icon:"✍️", bg:"rgba(0,150,255,0.1)", text:"Communication Test passed — 82/100", time:"1 hour ago" },
+    { icon:"🛠️", bg:"rgba(0,229,160,0.1)", text:"Tool Knowledge Assessment passed — 90/100", time:"45 minutes ago" },
+    { icon:"📁", bg:"rgba(255,165,0,0.1)", text:"Task Simulation submitted for review", time:"20 minutes ago" },
+  ];
+  return acts.reverse();
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────
+render();
+</script>
+</body>
+</html>
