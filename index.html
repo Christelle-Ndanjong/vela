@@ -535,6 +535,15 @@
       .stats { gap: 2rem; }
       footer { justify-content: center; text-align: center; }
     }
+    .skill-pill-home { background:#0F1A2E; border:1.5px solid rgba(255,255,255,0.07); border-radius:12px; padding:1rem; text-align:center; text-decoration:none; display:block; transition:all 0.2s; }
+    .skill-pill-home:hover { border-color:rgba(0,229,160,0.3); background:rgba(0,229,160,0.04); }
+    .sph-icon { font-size:1.4rem; margin-bottom:0.4rem; }
+    .sph-name { font-family:'Syne',sans-serif; font-size:0.82rem; font-weight:700; color:#F0F4FF; margin-bottom:0.3rem; line-height:1.3; }
+    .sph-badge { font-size:0.68rem; font-weight:700; }
+    .sph-badge.hot { color:#00E5A0; }
+    .sph-badge.vhigh { color:#00E5A0; }
+    .sph-badge.high { color:#0096FF; }
+    .sph-badge.steady { color:#6B7A99; }
   </style>
 </head>
 <body>
@@ -618,29 +627,22 @@
         <h2 style="font-family:'Syne',sans-serif;font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:800;color:#F0F4FF;margin-bottom:0.75rem;line-height:1.1">The 15 highest-recruiting<br/>remote skills right now</h2>
         <p style="color:#6B7A99;font-size:0.95rem;max-width:500px;margin:0 auto">Every skill on VELA comes with a full learning roadmap, tool list, salary data, and direct job matches. Choose yours and start building.</p>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0.75rem;margin-bottom:2rem">
-        ${[
-          ["🎧","Customer Service","High demand"],
-          ["🤝","Virtual Assistant","Very high demand"],
-          ["📊","Data Analysis","High demand"],
-          ["🤖","Prompt Engineering & AI","🔥 Fastest growing"],
-          ["📱","Social Media","High demand"],
-          ["✍️","Content Writing","High demand"],
-          ["🔍","SEO Specialist","Steady demand"],
-          ["💼","Project Management","High demand"],
-          ["🎨","UI/UX Design","High demand"],
-          ["📧","Email Marketing","Steady demand"],
-          ["🔐","Cybersecurity","Very high demand"],
-          ["📚","Online Tutoring","Growing"],
-          ["💰","Bookkeeping","Steady demand"],
-          ["🛒","E-Commerce","High demand"],
-          ["👥","HR & Recruitment","Steady demand"],
-        ].map(([icon,name,badge]) => `
-          <a href="skills.html" style="background:#0F1A2E;border:1.5px solid rgba(255,255,255,0.07);border-radius:12px;padding:1rem;text-align:center;text-decoration:none;display:block;transition:all 0.2s" onmouseover="this.style.borderColor='rgba(0,229,160,0.3)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)'">
-            <div style="font-size:1.4rem;margin-bottom:0.4rem">${icon}</div>
-            <div style="font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:700;color:#F0F4FF;margin-bottom:0.3rem;line-height:1.3">${name}</div>
-            <div style="font-size:0.68rem;font-weight:700;color:${badge.includes('🔥')||badge.includes('Very')?'#00E5A0':'#6B7A99'}">${badge}</div>
-          </a>`).join("")}
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:0.75rem;margin-bottom:2rem" id="skills-grid">
+        <a href="skills.html" class="skill-pill-home"><div class="sph-icon">🎧</div><div class="sph-name">Customer Service</div><div class="sph-badge high">High demand</div></a>
+        <a href="skills.html" class="skill-pill-home"><div class="sph-icon">🤝</div><div class="sph-name">Virtual Assistant</div><div class="sph-badge vhigh">Very high demand</div></a>
+        <a href="skills.html" class="skill-pill-home"><div class="sph-icon">📊</div><div class="sph-name">Data Analysis</div><div class="sph-badge high">High demand</div></a>
+        <a href="skills.html" class="skill-pill-home"><div class="sph-icon">🤖</div><div class="sph-name">Prompt Engineering & AI</div><div class="sph-badge hot">🔥 Fastest growing</div></a>
+        <a href="skills.html" class="skill-pill-home"><div class="sph-icon">📱</div><div class="sph-name">Social Media</div><div class="sph-badge high">High demand</div></a>
+        <a href="skills.html" class="skill-pill-home"><div class="sph-icon">✍️</div><div class="sph-name">Content Writing</div><div class="sph-badge high">High demand</div></a>
+        <a href="skills.html" class="skill-pill-home"><div class="sph-icon">🔍</div><div class="sph-name">SEO Specialist</div><div class="sph-badge steady">Steady demand</div></a>
+        <a href="skills.html" class="skill-pill-home"><div class="sph-icon">💼</div><div class="sph-name">Project Management</div><div class="sph-badge high">High demand</div></a>
+        <a href="skills.html" class="skill-pill-home"><div class="sph-icon">🎨</div><div class="sph-name">UI/UX Design</div><div class="sph-badge high">High demand</div></a>
+        <a href="skills.html" class="skill-pill-home"><div class="sph-icon">📧</div><div class="sph-name">Email Marketing</div><div class="sph-badge steady">Steady demand</div></a>
+        <a href="skills.html" class="skill-pill-home"><div class="sph-icon">🔐</div><div class="sph-name">Cybersecurity</div><div class="sph-badge vhigh">Very high demand</div></a>
+        <a href="skills.html" class="skill-pill-home"><div class="sph-icon">📚</div><div class="sph-name">Online Tutoring</div><div class="sph-badge steady">Growing</div></a>
+        <a href="skills.html" class="skill-pill-home"><div class="sph-icon">💰</div><div class="sph-name">Bookkeeping</div><div class="sph-badge steady">Steady demand</div></a>
+        <a href="skills.html" class="skill-pill-home"><div class="sph-icon">🛒</div><div class="sph-name">E-Commerce</div><div class="sph-badge high">High demand</div></a>
+        <a href="skills.html" class="skill-pill-home"><div class="sph-icon">👥</div><div class="sph-name">HR & Recruitment</div><div class="sph-badge steady">Steady demand</div></a>
       </div>
       <div style="text-align:center">
         <a href="skills.html" style="background:transparent;border:1.5px solid rgba(0,229,160,0.3);color:#00E5A0;padding:0.85rem 2rem;border-radius:9px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;text-decoration:none;display:inline-block;transition:all 0.2s">Explore All Skills & Roadmaps →</a>
