@@ -530,10 +530,24 @@
     /* RESPONSIVE */
     @media (max-width: 768px) {
       .nav-links { display: none; }
-      .waitlist { flex-direction: column; }
+      .waitlist { flex-direction: column; align-items: stretch; }
+      .waitlist input { width: 100%; }
       .audience { grid-template-columns: 1fr; }
-      .stats { gap: 2rem; }
+      .stats { gap: 1.5rem; padding: 2rem 5%; flex-wrap: wrap; }
+      .stat-num { font-size: 2rem; }
       footer { justify-content: center; text-align: center; }
+      .steps { grid-template-columns: 1fr; gap: 1rem; }
+      .hero { padding: 7rem 5% 4rem; }
+      h1 { font-size: 2.4rem; }
+      .hero-sub { font-size: 0.95rem; }
+      #skills-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 0.6rem !important; }
+      .audience-card { padding: 1.25rem; }
+      .section { padding: 3rem 5%; }
+      .section-title { font-size: 1.6rem; }
+    }
+    @media (max-width: 400px) {
+      #skills-grid { grid-template-columns: 1fr 1fr !important; }
+      h1 { font-size: 2rem; }
     }
     .skill-pill-home { background:#0F1A2E; border:1.5px solid rgba(255,255,255,0.07); border-radius:12px; padding:1rem; text-align:center; text-decoration:none; display:block; transition:all 0.2s; }
     .skill-pill-home:hover { border-color:rgba(0,229,160,0.3); background:rgba(0,229,160,0.04); }
