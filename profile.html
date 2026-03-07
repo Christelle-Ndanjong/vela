@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>VELA — Get Verified</title>
+  <title>VELA — Build Your Profile</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -12,241 +12,285 @@
       --border: rgba(255,255,255,0.07); --accent: #00E5A0;
       --accent2: #0096FF; --text: #F0F4FF; --muted: #6B7A99;
       --card: #0F1A2E; --danger: #FF6B6B; --warn: #FFA500;
-      --gold: #FFD700; --silver: #C0C0C0; --bronze: #CD7F32;
     }
-    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: 'DM Sans', sans-serif; min-height: 100vh;
+      display: flex; flex-direction: column;
+    }
 
+    /* NAV */
     nav {
       display: flex; align-items: center; justify-content: space-between;
       padding: 1.1rem 5%; border-bottom: 1px solid var(--border);
-      background: rgba(8,12,18,0.95); position: sticky; top: 0; z-index: 100;
+      background: rgba(8,12,18,0.95);
     }
-    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem;
+    .logo {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem;
       letter-spacing: 0.08em; background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
-    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
-    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--accent); }
-    .nav-links a.active { color: var(--accent); }
-
-    /* PAGE HEADER */
-    .page-header { padding: 3rem 5% 2rem; max-width: 1100px; margin: 0 auto; }
-    .header-badge { display: inline-flex; align-items: center; gap: 0.5rem;
-      background: rgba(0,229,160,0.08); border: 1px solid rgba(0,229,160,0.2);
-      color: var(--accent); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
-      text-transform: uppercase; padding: 0.35rem 0.9rem; border-radius: 100px; margin-bottom: 1.25rem; }
-    .page-header h1 { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 800; color: var(--text); margin-bottom: 0.6rem; line-height: 1.1; }
-    .page-header h1 span { background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .page-header p { color: var(--muted); font-size: 0.95rem; max-width: 560px; line-height: 1.6; }
-
-    /* PASSPORT PREVIEW */
-    .passport-wrap { padding: 0 5% 2rem; max-width: 1100px; margin: 0 auto; }
-    .passport {
-      background: linear-gradient(135deg, #0D1A2E, #0A1020);
-      border: 1px solid rgba(0,229,160,0.2); border-radius: 20px; padding: 1.75rem 2rem;
-      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;
-      position: relative; overflow: hidden;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; text-decoration: none;
     }
-    .passport::before {
-      content: ''; position: absolute; top: -40px; right: -40px;
-      width: 200px; height: 200px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,229,160,0.06), transparent 70%);
+    .nav-step-info { color: var(--muted); font-size: 0.82rem; }
+
+    /* PROGRESS BAR */
+    .progress-wrap {
+      background: var(--bg2); padding: 1rem 5%; border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 50;
     }
-    .passport-left { display: flex; align-items: center; gap: 1.25rem; }
-    .passport-avatar {
-      width: 56px; height: 56px; border-radius: 50%;
+    .progress-meta {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 0.6rem;
+    }
+    .progress-label {
+      font-family: 'Syne', sans-serif; font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent);
+    }
+    .progress-fraction { color: var(--muted); font-size: 0.78rem; }
+    .progress-track {
+      height: 4px; background: var(--surface); border-radius: 100px; overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%; border-radius: 100px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    /* MAIN */
+    main {
+      flex: 1; display: flex; align-items: flex-start; justify-content: center;
+      padding: 3rem 5% 5rem;
+    }
+    .step-container {
+      width: 100%; max-width: 620px;
+      animation: stepIn 0.35s cubic-bezier(0.4,0,0.2,1) both;
+    }
+    @keyframes stepIn {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .step-num {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem;
+    }
+    .step-title {
+      font-family: 'Syne', sans-serif; font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 800; line-height: 1.1; color: var(--text); margin-bottom: 0.6rem;
+    }
+    .step-title span {
       background: linear-gradient(135deg, var(--accent), var(--accent2));
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.3rem; color: #000;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
-    .passport-name { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--text); }
-    .passport-skill { color: var(--muted); font-size: 0.82rem; margin-top: 0.2rem; }
-    .passport-badges { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-    .badge-chip {
-      display: flex; align-items: center; gap: 0.4rem;
-      padding: 0.35rem 0.8rem; border-radius: 100px; font-size: 0.72rem; font-weight: 700;
-      letter-spacing: 0.06em; text-transform: uppercase; border: 1px solid;
+    .step-sub { color: var(--muted); font-size: 0.95rem; margin-bottom: 2rem; line-height: 1.6; }
+
+    /* INPUTS */
+    .field { margin-bottom: 1.25rem; }
+    .field label {
+      display: block; font-size: 0.82rem; font-weight: 600; color: var(--muted);
+      letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.5rem;
     }
-    .badge-chip.locked { background: rgba(255,255,255,0.03); border-color: var(--border); color: var(--muted); }
-    .badge-chip.passed { background: rgba(0,229,160,0.1); border-color: rgba(0,229,160,0.3); color: var(--accent); }
-    .badge-chip.review { background: rgba(255,165,0,0.08); border-color: rgba(255,165,0,0.25); color: var(--warn); }
-    .badge-chip.failed { background: rgba(255,107,107,0.08); border-color: rgba(255,107,107,0.25); color: var(--danger); }
-    .vela-badge {
+    .input, .select, .textarea {
+      width: 100%; background: var(--surface); border: 1.5px solid var(--border);
+      color: var(--text); padding: 0.85rem 1.1rem; border-radius: 10px;
+      font-family: 'DM Sans', sans-serif; font-size: 0.95rem; outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .input:focus, .select:focus, .textarea:focus {
+      border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,229,160,0.08);
+    }
+    .input::placeholder, .textarea::placeholder { color: var(--muted); }
+    .select { cursor: pointer; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236B7A99' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 1rem center;
+      padding-right: 2.5rem;
+    }
+    .select option { background: var(--surface); }
+    .textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+
+    /* CHOICE GRID */
+    .choice-grid {
+      display: grid; gap: 0.75rem;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+    .choice-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+    .choice-grid.cols-1 { grid-template-columns: 1fr; }
+
+    .choice-card {
+      background: var(--card); border: 1.5px solid var(--border); border-radius: 12px;
+      padding: 1rem 1.1rem; cursor: pointer; transition: all 0.2s; user-select: none;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .choice-card:hover { border-color: rgba(0,229,160,0.3); background: rgba(0,229,160,0.04); }
+    .choice-card.selected {
+      border-color: var(--accent); background: rgba(0,229,160,0.08);
+      box-shadow: 0 0 0 3px rgba(0,229,160,0.1);
+    }
+    .choice-icon { font-size: 1.3rem; flex-shrink: 0; }
+    .choice-text { flex: 1; }
+    .choice-label { font-family: 'Syne', sans-serif; font-size: 0.88rem; font-weight: 700; color: var(--text); }
+    .choice-desc { font-size: 0.75rem; color: var(--muted); margin-top: 0.15rem; line-height: 1.4; }
+    .choice-check {
+      width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      transition: all 0.2s; font-size: 0.65rem;
+    }
+    .choice-card.selected .choice-check {
+      background: var(--accent); border-color: var(--accent); color: #000;
+    }
+
+    /* SKILL GRID (15 skills) */
+    .skill-grid {
+      display: grid; gap: 0.6rem;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    }
+    .skill-card {
+      background: var(--card); border: 1.5px solid var(--border); border-radius: 10px;
+      padding: 0.85rem 1rem; cursor: pointer; transition: all 0.2s; user-select: none;
       display: flex; align-items: center; gap: 0.6rem;
-      background: rgba(0,229,160,0.06); border: 1.5px solid rgba(0,229,160,0.15);
-      border-radius: 12px; padding: 0.75rem 1.1rem;
     }
-    .vela-badge-icon { font-size: 1.5rem; }
-    .vela-badge-text .label { font-family: 'Syne', sans-serif; font-size: 0.82rem; font-weight: 700; color: var(--muted); }
-    .vela-badge-text .val { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 800; color: var(--accent); }
+    .skill-card:hover { border-color: rgba(0,150,255,0.35); }
+    .skill-card.selected { border-color: var(--accent2); background: rgba(0,150,255,0.08); }
+    .skill-card-icon { font-size: 1.1rem; flex-shrink: 0; }
+    .skill-card-name { font-size: 0.82rem; font-weight: 600; color: var(--text); line-height: 1.3; }
 
-    /* VERIFICATION GRID */
-    .verif-grid { padding: 0 5% 5rem; max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; }
-
-    .verif-card {
-      background: var(--card); border: 1.5px solid var(--border); border-radius: 16px; overflow: hidden;
-      transition: border-color 0.3s;
+    /* TOOLS MULTI-SELECT */
+    .tools-grid {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
     }
-    .verif-card.active { border-color: rgba(0,229,160,0.3); }
-    .verif-card.passed-card { border-color: rgba(0,229,160,0.2); }
-    .verif-card.failed-card { border-color: rgba(255,107,107,0.2); }
-
-    .verif-header {
-      padding: 1.25rem 1.5rem; display: flex; align-items: center; gap: 1rem;
-      cursor: pointer; user-select: none;
+    .tool-chip {
+      background: var(--surface); border: 1.5px solid var(--border); color: var(--muted);
+      padding: 0.4rem 0.9rem; border-radius: 100px; font-size: 0.82rem; font-weight: 500;
+      cursor: pointer; transition: all 0.2s; user-select: none;
     }
-    .verif-icon-wrap {
-      width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center;
-      justify-content: center; font-size: 1.2rem; flex-shrink: 0; border: 1px solid var(--border);
-      background: var(--surface);
-    }
-    .verif-icon-wrap.passed { background: rgba(0,229,160,0.1); border-color: rgba(0,229,160,0.3); }
-    .verif-icon-wrap.failed { background: rgba(255,107,107,0.1); border-color: rgba(255,107,107,0.3); }
-    .verif-icon-wrap.review { background: rgba(255,165,0,0.1); border-color: rgba(255,165,0,0.3); }
-    .verif-meta { flex: 1; min-width: 0; }
-    .verif-title { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--text); }
-    .verif-desc { font-size: 0.8rem; color: var(--muted); margin-top: 0.15rem; }
-    .verif-right { display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; }
-    .verif-status {
-      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-      padding: 0.25rem 0.7rem; border-radius: 100px; border: 1px solid;
-    }
-    .status-pending { background: rgba(107,122,153,0.1); border-color: rgba(107,122,153,0.2); color: var(--muted); }
-    .status-passed  { background: rgba(0,229,160,0.1); border-color: rgba(0,229,160,0.25); color: var(--accent); }
-    .status-failed  { background: rgba(255,107,107,0.1); border-color: rgba(255,107,107,0.25); color: var(--danger); }
-    .status-review  { background: rgba(255,165,0,0.1); border-color: rgba(255,165,0,0.25); color: var(--warn); }
-    .verif-score { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 800; }
-    .chevron { color: var(--muted); transition: transform 0.3s; font-size: 0.8rem; }
-    .chevron.open { transform: rotate(180deg); }
+    .tool-chip:hover { border-color: rgba(0,229,160,0.3); color: var(--text); }
+    .tool-chip.selected { background: rgba(0,229,160,0.1); border-color: var(--accent); color: var(--accent); }
 
-    /* VERIF BODY */
-    .verif-body { display: none; border-top: 1px solid var(--border); }
-    .verif-body.open { display: block; }
-    .verif-body-inner { padding: 1.5rem; }
-
-    /* FORM ELEMENTS */
-    .vf-label { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem; display: block; }
-    .vf-textarea {
-      width: 100%; background: var(--surface); border: 1.5px solid var(--border); color: var(--text);
-      padding: 0.85rem 1.1rem; border-radius: 10px; font-family: 'DM Sans', sans-serif;
-      font-size: 0.9rem; outline: none; resize: vertical; min-height: 120px; line-height: 1.6;
-      transition: border-color 0.2s;
+    /* SCALE SLIDER */
+    .scale-options { display: flex; gap: 0.5rem; }
+    .scale-btn {
+      flex: 1; background: var(--card); border: 1.5px solid var(--border);
+      color: var(--muted); padding: 0.75rem 0.5rem; border-radius: 10px;
+      text-align: center; cursor: pointer; transition: all 0.2s; user-select: none;
     }
-    .vf-textarea:focus { border-color: var(--accent); }
-    .vf-textarea::placeholder { color: var(--muted); }
+    .scale-btn:hover { border-color: rgba(0,229,160,0.3); }
+    .scale-btn.selected { border-color: var(--accent); background: rgba(0,229,160,0.1); color: var(--accent); }
+    .scale-num { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 800; }
+    .scale-label { font-size: 0.65rem; color: var(--muted); margin-top: 0.2rem; }
+    .scale-btn.selected .scale-label { color: var(--accent); }
 
-    /* QUIZ ITEMS */
-    .vq-item { margin-bottom: 1.5rem; }
-    .vq-text { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 0.75rem; line-height: 1.4; }
-    .vq-num { color: var(--accent); margin-right: 0.4rem; }
-    .vq-options { display: flex; flex-direction: column; gap: 0.4rem; }
-    .vq-opt {
-      background: var(--bg2); border: 1.5px solid var(--border); border-radius: 8px;
-      padding: 0.7rem 1rem; cursor: pointer; font-size: 0.86rem; color: var(--muted);
-      transition: all 0.2s; user-select: none;
+    /* QUIZ */
+    .quiz-question { margin-bottom: 2rem; }
+    .q-text {
+      font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700;
+      color: var(--text); margin-bottom: 1rem; line-height: 1.4;
     }
-    .vq-opt:hover { border-color: rgba(0,229,160,0.3); color: var(--text); }
-    .vq-opt.selected { border-color: var(--accent); background: rgba(0,229,160,0.07); color: var(--text); }
-    .vq-opt.correct { border-color: var(--accent); background: rgba(0,229,160,0.12); color: var(--accent); }
-    .vq-opt.wrong { border-color: var(--danger); background: rgba(255,107,107,0.08); color: var(--danger); }
-
-    /* UPLOAD ZONE */
-    .upload-zone {
-      border: 2px dashed var(--border); border-radius: 12px; padding: 2.5rem 1rem;
-      text-align: center; cursor: pointer; transition: all 0.2s; position: relative;
+    .q-num { color: var(--accent); margin-right: 0.5rem; }
+    .q-options { display: flex; flex-direction: column; gap: 0.5rem; }
+    .q-option {
+      background: var(--card); border: 1.5px solid var(--border); border-radius: 10px;
+      padding: 0.85rem 1.1rem; cursor: pointer; transition: all 0.2s;
+      font-size: 0.9rem; color: var(--muted); user-select: none;
     }
-    .upload-zone:hover, .upload-zone.drag { border-color: var(--accent); background: rgba(0,229,160,0.03); }
-    .upload-zone input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
-    .upload-icon { font-size: 2rem; margin-bottom: 0.75rem; }
-    .upload-title { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 0.35rem; }
-    .upload-hint { font-size: 0.78rem; color: var(--muted); }
-    .upload-done { display: flex; align-items: center; gap: 0.75rem; background: rgba(0,229,160,0.08);
-      border: 1px solid rgba(0,229,160,0.2); border-radius: 10px; padding: 0.85rem 1rem; margin-top: 0.75rem; }
-    .upload-done-name { font-size: 0.85rem; color: var(--accent); font-weight: 500; }
-
-    /* SCENARIO BOX */
-    .scenario-box {
-      background: var(--bg2); border: 1px solid var(--border); border-radius: 12px;
-      padding: 1.25rem; margin-bottom: 1.25rem;
-    }
-    .scenario-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--accent); margin-bottom: 0.6rem; }
-    .scenario-text { font-size: 0.88rem; color: var(--text); line-height: 1.6; }
-
-    /* AI FEEDBACK */
-    .ai-feedback {
-      background: rgba(0,150,255,0.05); border: 1px solid rgba(0,150,255,0.15);
-      border-radius: 12px; padding: 1.25rem; margin-top: 1.25rem;
-    }
-    .ai-feedback-header { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.85rem; }
-    .ai-feedback-label { font-family: 'Syne', sans-serif; font-size: 0.75rem; font-weight: 700;
-      letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent2); }
-    .ai-score-pill { background: rgba(0,150,255,0.15); border: 1px solid rgba(0,150,255,0.25);
-      color: var(--accent2); font-family: 'Syne', sans-serif; font-size: 0.8rem; font-weight: 800;
-      padding: 0.2rem 0.65rem; border-radius: 100px; margin-left: auto; }
-    .ai-text { font-size: 0.86rem; color: var(--muted); line-height: 1.6; white-space: pre-wrap; }
-
-    /* LOADING */
-    .ai-loading { display: flex; align-items: center; gap: 0.75rem; color: var(--muted); font-size: 0.85rem; padding: 0.5rem 0; }
-    .spinner { width: 18px; height: 18px; border: 2px solid var(--border); border-top-color: var(--accent);
-      border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
+    .q-option:hover { border-color: rgba(0,229,160,0.3); color: var(--text); }
+    .q-option.selected { border-color: var(--accent); background: rgba(0,229,160,0.08); color: var(--text); }
+    .q-option.correct { border-color: var(--accent); background: rgba(0,229,160,0.12); color: var(--accent); }
+    .q-option.wrong { border-color: var(--danger); background: rgba(255,107,107,0.08); color: var(--danger); }
 
     /* BUTTONS */
-    .btn-submit {
-      background: linear-gradient(135deg, var(--accent), #00C080); color: #000;
-      border: none; padding: 0.85rem 1.75rem; border-radius: 10px;
-      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem;
-      letter-spacing: 0.03em; cursor: pointer; transition: opacity 0.2s; margin-top: 1.25rem;
-      display: flex; align-items: center; gap: 0.5rem;
+    .btn-row { display: flex; gap: 0.75rem; margin-top: 2rem; }
+    .btn-next {
+      flex: 1; background: linear-gradient(135deg, var(--accent), #00C080);
+      color: #000; border: none; padding: 0.9rem 2rem; border-radius: 10px;
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem;
+      letter-spacing: 0.03em; cursor: pointer; transition: opacity 0.2s, transform 0.2s;
     }
-    .btn-submit:hover { opacity: 0.88; }
-    .btn-submit:disabled { opacity: 0.35; cursor: not-allowed; }
-    .btn-retry-sm {
-      background: transparent; border: 1.5px solid var(--border); color: var(--muted);
-      padding: 0.6rem 1.2rem; border-radius: 8px; font-family: 'Syne', sans-serif;
-      font-weight: 600; font-size: 0.8rem; cursor: pointer; transition: all 0.2s; margin-top: 0.75rem;
+    .btn-next:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-next:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
+    .btn-back {
+      background: var(--surface); border: 1.5px solid var(--border); color: var(--muted);
+      padding: 0.9rem 1.5rem; border-radius: 10px; font-family: 'Syne', sans-serif;
+      font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: all 0.2s;
     }
-    .btn-retry-sm:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-back:hover { border-color: var(--muted); color: var(--text); }
 
-    /* COMPLETE BANNER */
-    .complete-banner {
-      background: linear-gradient(135deg, rgba(0,229,160,0.12), rgba(0,150,255,0.08));
-      border: 1.5px solid rgba(0,229,160,0.3); border-radius: 16px;
-      padding: 2rem; text-align: center; margin: 0 5% 3rem; max-width: 1100px;
-      margin-left: auto; margin-right: auto; display: none;
+    /* SCORE SCREEN */
+    .score-screen { text-align: center; padding: 1rem 0; }
+    .score-ring {
+      width: 160px; height: 160px; margin: 0 auto 2rem;
+      position: relative; display: flex; align-items: center; justify-content: center;
     }
-    .complete-banner h2 { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800;
-      color: var(--text); margin-bottom: 0.5rem; }
-    .complete-banner p { color: var(--muted); margin-bottom: 1.5rem; }
-    .btn-jobs { background: linear-gradient(135deg, var(--accent), #00C080); color: #000;
-      border: none; padding: 0.9rem 2rem; border-radius: 10px; font-family: 'Syne', sans-serif;
-      font-weight: 700; font-size: 0.95rem; cursor: pointer; text-decoration: none; display: inline-block; }
-
-    @keyframes spin { to { transform: rotate(360deg); } }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-
-    .fade-in { animation: fadeIn 0.3s ease both; }
-
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .passport { flex-direction: column; gap: 1rem; }
-      .verif-header { flex-wrap: wrap; gap: 0.5rem; }
-      .verif-container { padding: 1.25rem 4%; }
-      .verif-card { padding: 1.25rem; border-radius: 14px; }
-      .verif-card-header { padding: 1rem; flex-wrap: wrap; gap: 0.5rem; }
-      .verif-card-body { padding: 1.25rem; }
-      .score-display { font-size: 2.5rem; }
-      .feedback-box { padding: 1rem; }
-      .options-grid { grid-template-columns: 1fr; }
-      textarea { font-size: 0.95rem; }
-      .btn-submit { width: 100%; padding: 0.9rem; }
-      .passport-layers { gap: 0.4rem; }
+    .score-ring svg { position: absolute; inset: 0; transform: rotate(-90deg); }
+    .score-ring-track { fill: none; stroke: var(--surface); stroke-width: 8; }
+    .score-ring-fill { fill: none; stroke-width: 8; stroke-linecap: round; transition: stroke-dashoffset 1.2s cubic-bezier(0.4,0,0.2,1); }
+    .score-num {
+      font-family: 'Syne', sans-serif; font-size: 2.5rem; font-weight: 800;
+      color: var(--text); line-height: 1;
     }
-    @media (max-width: 400px) {
-      .verif-card-header h3 { font-size: 0.85rem; }
-      .passport-score { font-size: 1.8rem; }
+    .score-label { font-size: 0.75rem; color: var(--muted); margin-top: 0.2rem; letter-spacing: 0.08em; text-transform: uppercase; }
+    .score-title { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; margin-bottom: 0.75rem; color: var(--text); }
+    .score-message { color: var(--muted); font-size: 1rem; max-width: 460px; margin: 0 auto 2rem; line-height: 1.6; }
+    .score-breakdown {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem;
+      margin: 2rem 0; text-align: left;
+    }
+    .breakdown-item {
+      background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 1rem;
+    }
+    .breakdown-label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.35rem; }
+    .breakdown-val { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 800; }
+    .breakdown-bar { height: 3px; background: var(--surface); border-radius: 100px; margin-top: 0.5rem; overflow: hidden; }
+    .breakdown-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+
+    .improve-list { text-align: left; margin: 1.5rem 0; display: flex; flex-direction: column; gap: 0.6rem; }
+    .improve-item {
+      background: rgba(255,165,0,0.06); border: 1px solid rgba(255,165,0,0.15);
+      border-radius: 10px; padding: 0.85rem 1rem;
+      display: flex; align-items: flex-start; gap: 0.75rem; font-size: 0.88rem; color: var(--muted);
+    }
+    .improve-item::before { content: "→"; color: var(--warn); flex-shrink: 0; margin-top: 0.05rem; }
+
+    .pass-actions { display: flex; flex-direction: column; gap: 0.75rem; }
+    .btn-jobs {
+      width: 100%; background: linear-gradient(135deg, var(--accent), #00C080);
+      color: #000; border: none; padding: 1rem; border-radius: 10px;
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem;
+      letter-spacing: 0.03em; cursor: pointer; transition: opacity 0.2s;
+      text-decoration: none; display: block; text-align: center;
+    }
+    .btn-jobs:hover { opacity: 0.88; }
+    .btn-retry {
+      width: 100%; background: transparent; border: 1.5px solid var(--border);
+      color: var(--muted); padding: 0.9rem; border-radius: 10px;
+      font-family: 'Syne', sans-serif; font-weight: 600; font-size: 0.9rem;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .btn-retry:hover { border-color: var(--accent); color: var(--accent); }
+
+    .error-msg { color: var(--danger); font-size: 0.82rem; margin-top: 0.5rem; display: none; }
+
+    @media (max-width: 600px) {
+      .choice-grid { grid-template-columns: 1fr; }
+      .choice-grid.cols-2 { grid-template-columns: 1fr; }
+      .skill-grid { grid-template-columns: 1fr 1fr; }
+      .score-breakdown { grid-template-columns: 1fr; }
+      .scale-options { flex-wrap: wrap; }
+      .profile-card { padding: 1.5rem 1.25rem; margin: 0 0.5rem; }
+      .step-title { font-size: 1.3rem; }
+      .step-sub { font-size: 0.88rem; }
+      .btn-next { width: 100%; padding: 0.9rem; font-size: 0.95rem; }
+      .btn-back { width: 100%; padding: 0.9rem; font-size: 0.95rem; }
+      .nav-actions { flex-direction: column-reverse; gap: 0.5rem; }
+      .score-big { font-size: 3.5rem; }
+      .score-card { padding: 2rem 1.25rem; }
+      .breakdown-item { padding: 0.85rem; }
+      .skill-grid { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+      nav { padding: 0.9rem 4%; }
+    }
+    @media (max-width: 380px) {
+      .skill-grid { grid-template-columns: 1fr; }
+      .score-big { font-size: 3rem; }
     }
   </style>
 </head>
@@ -254,604 +298,652 @@
 
 <nav>
   <a class="logo" href="index.html">VELA</a>
-  <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="skills.html">Skills</a></li>
-    <li><a href="jobs.html">Jobs</a></li>
-    <li><a href="profile.html">Profile</a></li>
-    <li><a href="verify.html" class="active">Verify</a></li>
-  </ul>
+  <span class="nav-step-info" id="nav-step-info">Building your profile</span>
 </nav>
 
-<!-- PAGE HEADER -->
-<div class="page-header">
-  <div class="header-badge">⚡ 5 Layers · All Required · VELA Verified</div>
-  <h1>Get <span>VELA Verified</span></h1>
-  <p>Complete all 5 verification layers to earn your VELA Verified badge. Employers see your scores, your evidence, your proof — not just your CV.</p>
-</div>
-
-<!-- CANDIDATE PASSPORT -->
-<div class="passport-wrap">
-  <div class="passport">
-    <div class="passport-left">
-      <div class="passport-avatar" id="pp-avatar">?</div>
-      <div>
-        <div class="passport-name" id="pp-name">Your Name</div>
-        <div class="passport-skill" id="pp-skill">Skill path not set · <a href="profile.html" style="color:var(--accent);text-decoration:none">Complete your profile first →</a></div>
-      </div>
-    </div>
-    <div class="passport-badges" id="passport-badges"></div>
-    <div class="vela-badge">
-      <div class="vela-badge-icon" id="badge-icon">🔒</div>
-      <div class="vela-badge-text">
-        <div class="label">VELA Status</div>
-        <div class="val" id="badge-status">Not Yet Verified</div>
-      </div>
-    </div>
+<div class="progress-wrap">
+  <div class="progress-meta">
+    <span class="progress-label" id="progress-label">Welcome</span>
+    <span class="progress-fraction" id="progress-fraction">Step 1 of 10</span>
+  </div>
+  <div class="progress-track">
+    <div class="progress-fill" id="progress-fill" style="width:10%"></div>
   </div>
 </div>
 
-<!-- COMPLETE BANNER -->
-<div class="complete-banner" id="complete-banner">
-  <div style="font-size:2.5rem;margin-bottom:0.75rem">🏆</div>
-  <h2>You Are VELA Verified!</h2>
-  <p>All 5 layers complete. Your verified profile is now visible to employers. You're ready to be placed.</p>
-  <a class="btn-jobs" href="jobs.html">View Matched Jobs →</a>
-</div>
-
-<!-- VERIFICATION CARDS -->
-<div class="verif-grid" id="verif-grid"></div>
+<main>
+  <div class="step-container" id="step-container"></div>
+</main>
 
 <script>
-// ─── CANDIDATE STATE (in real app loaded from backend) ────────────────────
-let candidate = {
-  name: localStorage.getItem("vela_name") || "Candidate",
-  skill: localStorage.getItem("vela_skill") || "Customer Service",
-  country: localStorage.getItem("vela_country") || "",
-};
-
-// Verif state
-let verifState = JSON.parse(localStorage.getItem("vela_verif") || "{}");
-
-// ─── SCENARIOS BY SKILL ───────────────────────────────────────────────────
-const SCENARIOS = {
-  "Customer Service": {
-    comm: { title: "Professional Email Response", prompt: "Write a professional email response to this customer complaint:", scenario: "Subject: Order #4891 — Still Not Arrived!\n\nI placed my order 3 weeks ago and it still hasn't arrived. Your tracking link doesn't work and I've emailed twice with no response. This is absolutely unacceptable. I want a full refund immediately or I'm disputing with my bank.", placeholder: "Write your professional response email here. Show empathy, take ownership, and resolve the issue clearly..." },
-    task: { title: "Customer Service Case File", instructions: "Create a 1-page customer service case study document. Include: (1) A real or fictional difficult customer scenario, (2) How you handled it step by step, (3) The outcome and what you learned. Upload as PDF or DOCX.", accepts: ".pdf,.doc,.docx" },
-    interview: [
-      { q: "Tell me about a time you turned an angry customer into a satisfied one. What did you do?", placeholder: "Describe the situation, your actions, and the result..." },
-      { q: "How do you stay calm and professional when a customer is being rude or unreasonable?", placeholder: "Explain your approach and any specific techniques you use..." },
-      { q: "What does excellent customer service mean to you and how do you deliver it consistently?", placeholder: "Share your philosophy and give a concrete example..." },
-    ],
-    tools: [
-      { q: "In Zendesk, what is a 'macro'?", opts: ["A keyboard shortcut","A pre-written response template","A type of ticket","A reporting feature"], ans: 1 },
-      { q: "What does 'CSAT' stand for?", opts: ["Customer Service Analytics Tool","Customer Satisfaction Score","Centralised Support Action Team","Client Service Assessment Tracker"], ans: 1 },
-      { q: "Which metric measures how quickly support agents respond to tickets?", opts: ["Resolution rate","CSAT","First Response Time (FRT)","Ticket volume"], ans: 2 },
-      { q: "What is a 'ticket escalation'?", opts: ["Closing a ticket quickly","Moving a ticket to a higher-level agent or team","Deleting a difficult ticket","Reopening a resolved ticket"], ans: 1 },
-      { q: "In HubSpot, what is a 'contact property'?", opts: ["A customer's home address","A field that stores information about a contact","A type of email campaign","A sales pipeline stage"], ans: 1 },
-      { q: "What is 'omnichannel support'?", opts: ["Support via phone only","Supporting customers across multiple channels with a seamless experience","Having multiple support agents","Outsourcing customer service"], ans: 1 },
-      { q: "What does SLA stand for in customer service?", opts: ["Service Level Agreement","Standard Login Access","Support Level Analytics","Subscriber List Agreement"], ans: 0 },
-      { q: "Which is the best way to handle a customer asking for something outside your authority?", opts: ["Refuse politely","Make a promise you can't keep","Acknowledge, apologise, and escalate to someone who can help","Tell them to contact another company"], ans: 2 },
-      { q: "What is 'first contact resolution' (FCR)?", opts: ["Closing every ticket in under a minute","Resolving a customer issue in the first interaction without follow-up","Responding in under an hour","Routing tickets to the right agent first time"], ans: 1 },
-      { q: "What does 'AHT' stand for?", opts: ["Automated Help Tool","Average Handle Time","Account History Tracker","Agent Helpdesk Terminal"], ans: 1 },
-    ],
-  },
-  "Virtual Assistant": {
-    comm: { title: "Professional Email on Behalf of Executive", prompt: "Your executive asked you to write this email on their behalf:", scenario: "Send an email to David Chen at Acorn Partners rescheduling tomorrow's 2pm meeting to Thursday at the same time. Be professional. The executive's name is Sarah Williams.", placeholder: "Write the complete professional email as Sarah's VA..." },
-    task: { title: "VA Work Sample", instructions: "Create a document showing a sample week's work as a Virtual Assistant. Include: (1) A sample inbox management system you'd use, (2) A weekly schedule template for an executive, (3) A research brief on any topic of your choice (1 page). Upload as PDF or DOCX.", accepts: ".pdf,.doc,.docx" },
-    interview: [
-      { q: "How do you manage competing priorities when your executive has multiple urgent tasks at once?", placeholder: "Walk through your prioritisation approach..." },
-      { q: "Describe your system for managing someone else's inbox. How do you decide what needs attention first?", placeholder: "Explain your inbox management methodology..." },
-      { q: "What steps do you take to protect confidential information when working remotely as a VA?", placeholder: "Detail your approach to data security and confidentiality..." },
-    ],
-    tools: [
-      { q: "What is Google Workspace's 'shared drive' best used for?", opts: ["Personal file storage","Team file collaboration with consistent access","Sending large email attachments","Video conferencing"], ans: 1 },
-      { q: "In Notion, what is a 'database'?", opts: ["A code repository","A structured collection of pages with properties for organising information","A note-taking page","A calendar view"], ans: 1 },
-      { q: "What does Calendly primarily do?", opts: ["Sends automated emails","Allows others to book time in your calendar based on your availability","Manages social media posts","Tracks task completion"], ans: 1 },
-      { q: "What is Asana primarily used for?", opts: ["Video calls","Email marketing","Project and task management","Cloud file storage"], ans: 2 },
-      { q: "In Trello, what is a 'card'?", opts: ["A payment method","A contact record","A single task or item within a list","A type of board"], ans: 2 },
-      { q: "What is the main benefit of using ChatGPT as a VA?", opts: ["It replaces the VA entirely","It helps draft, research, and automate written tasks faster","It manages calendars automatically","It makes video calls"], ans: 1 },
-      { q: "Which Google tool is best for collaborative real-time document editing?", opts: ["Google Photos","Google Docs","Google Calendar","Google Drive"], ans: 1 },
-      { q: "What is Zoom primarily used for?", opts: ["File storage","Email communication","Video conferencing and online meetings","Project management"], ans: 2 },
-      { q: "What does 'EOD' mean in professional communication?", opts: ["End of Deal","End of Day","Email on Desktop","External Out of Date"], ans: 1 },
-      { q: "A VA receives a task marked 'ASAP' and another marked 'P1'. Which should they do first?", opts: ["ASAP — it sounds more urgent","P1 — it's a defined priority level","Both at the same time","Ask the executive to decide"], ans: 1 },
-    ],
-  },
-  "Data Analysis": {
-    comm: { title: "Data Insights Summary Email", prompt: "Write a professional email presenting data findings to a non-technical manager:", scenario: "You've analysed last quarter's sales data and found that: Revenue is up 12% overall, but the North region is down 18%. Online sales grew 34% while in-store sales dropped 8%. The top-selling product category is Electronics (+28%). Write a clear, professional summary email to your manager.", placeholder: "Write your data insights email. Make it clear, professional, and actionable for a non-technical reader..." },
-    task: { title: "Data Analysis Portfolio Sample", instructions: "Create a data analysis report document. You can use any dataset (real or fictional). Include: (1) The question you were answering, (2) Your methodology, (3) Key findings with at least one chart or table, (4) Your recommendations. Upload as PDF or XLSX.", accepts: ".pdf,.xlsx,.xls,.csv,.docx" },
-    interview: [
-      { q: "Walk me through your process when you receive a new dataset to analyse. What are your first steps?", placeholder: "Describe your analytical workflow from raw data to insights..." },
-      { q: "How do you explain complex data findings to stakeholders who aren't technical?", placeholder: "Give an example of how you've translated data into business language..." },
-      { q: "Tell me about a time you found something unexpected in data. What did you do with that finding?", placeholder: "Describe the situation, your discovery, and the impact..." },
-    ],
-    tools: [
-      { q: "In Excel, what does VLOOKUP do?", opts: ["Creates a chart","Searches for a value in a column and returns a corresponding value","Filters duplicate data","Calculates averages"], ans: 1 },
-      { q: "What SQL command retrieves data from a table?", opts: ["INSERT","UPDATE","SELECT","DELETE"], ans: 2 },
-      { q: "What is a pivot table used for?", opts: ["Creating formulas","Summarising and aggregating large datasets","Building dashboards","Writing SQL queries"], ans: 1 },
-      { q: "In statistics, what does 'mean' refer to?", opts: ["The most common value","The middle value","The average of all values","The range of values"], ans: 2 },
-      { q: "What Python library is most commonly used for data analysis?", opts: ["NumPy","Django","Pandas","Flask"], ans: 2 },
-      { q: "What does KPI stand for?", opts: ["Key Performance Indicator","Known Process Implementation","Key Product Index","Knowledge Performance Input"], ans: 0 },
-      { q: "What chart type is best for showing composition (parts of a whole)?", opts: ["Line chart","Scatter plot","Pie or donut chart","Histogram"], ans: 2 },
-      { q: "What is data cleaning?", opts: ["Deleting all old data","Identifying and fixing errors, inconsistencies, and missing values in a dataset","Formatting charts","Exporting data to CSV"], ans: 1 },
-      { q: "In SQL, what does GROUP BY do?", opts: ["Sorts results alphabetically","Groups rows with the same values for aggregate functions","Filters rows","Joins two tables"], ans: 1 },
-      { q: "What is an outlier in data?", opts: ["The most common value","A data point significantly different from the rest","A missing value","A duplicate entry"], ans: 1 },
-    ],
-  },
-};
-
-// Default for skills without specific scenarios
-const DEFAULT_SCENARIO = {
-  comm: { title: "Professional Introduction Email", prompt: "Write a professional introduction email to a potential employer:", scenario: `You've found a remote ${candidate.skill} role at a company called TechGlobal. Write a compelling cold introduction email expressing your interest and briefly highlighting why you're a strong candidate.`, placeholder: "Write your professional introduction email here..." },
-  task: { title: "Skills Portfolio Document", instructions: `Create a 2-page document showcasing your ${candidate.skill} skills. Include: (1) Your relevant background and experience, (2) A sample piece of work or project demonstrating your skills, (3) What makes you stand out as a remote ${candidate.skill} professional. Upload as PDF or DOCX.`, accepts: ".pdf,.doc,.docx" },
-  interview: [
-    { q: `Why do you want to work remotely as a ${candidate.skill} professional, and what makes you suited for it?`, placeholder: "Share your motivation and remote work readiness..." },
-    { q: `What is your greatest strength in ${candidate.skill} and how does it translate to value for an employer?`, placeholder: "Be specific — give an example..." },
-    { q: "Where do you see yourself professionally in 2 years, and how does this remote role fit into that path?", placeholder: "Show ambition and a clear direction..." },
-  ],
-  tools: [
-    { q: "What does remote work primarily require?", opts: ["Office proximity","Reliable internet connection and self-discipline","The latest hardware","Daily commute"], ans: 1 },
-    { q: "Which tool is most commonly used for team communication in remote roles?", opts: ["Fax machine","In-person meetings","Slack or Microsoft Teams","Printed memos"], ans: 2 },
-    { q: "What is asynchronous communication?", opts: ["Communication happening in real time","Communication where responses aren't expected immediately","Video calling","Group messaging"], ans: 1 },
-    { q: "What does a strong remote work portfolio typically include?", opts: ["Just your CV","Evidence of completed work, testimonials, and demonstrated skills","A photo of your workspace","Your social media profiles"], ans: 1 },
-    { q: "What is the most important quality for a remote worker according to most employers?", opts: ["Working the fastest","Looking professional on video","Self-motivation and accountability","Having a home office"], ans: 2 },
-    { q: "How should you handle a missed deadline when working remotely?", opts: ["Say nothing and hope no one notices","Communicate proactively before the deadline if possible","Blame connection issues","Ask for a new deadline without explanation"], ans: 1 },
-    { q: "What is a 'standup' in a remote team context?", opts: ["A comedy show","A brief daily team check-in sharing progress and blockers","A formal performance review","A type of presentation"], ans: 1 },
-    { q: "Which tool would you use to share documents with a remote team?", opts: ["Email attachments only","Google Drive or Dropbox","USB drives","Printed documents"], ans: 1 },
-    { q: "What does 'time zone overlap' mean for remote work?", opts: ["Working overtime","Hours when distributed team members are all available simultaneously","Changing your timezone","Jet lag"], ans: 1 },
-    { q: "What is the best way to demonstrate reliability to a remote employer?", opts: ["Sending lots of emails","Meeting deadlines consistently and communicating proactively","Working very long hours","Being available 24/7"], ans: 1 },
-  ],
-};
-
-function getScenario() {
-  return SCENARIOS[candidate.skill] || DEFAULT_SCENARIO;
-}
-
-// ─── VERIF DEFINITIONS ────────────────────────────────────────────────────
-const LAYERS = [
-  { id:"comm",     icon:"✍️", title:"Communication Test",      desc:"Written professional scenario — AI scored", auto: true  },
-  { id:"task",     icon:"📁", title:"Task Simulation",         desc:"Upload a real work sample document",         auto: false },
-  { id:"tools",    icon:"🛠️", title:"Tool Knowledge Assessment",desc:"10 questions on your skill's core tools",     auto: true  },
-  { id:"video",    icon:"🎥", title:"Video Introduction",      desc:"60-second professional introduction",        auto: false },
-  { id:"interview",icon:"💬", title:"Mock Interview",          desc:"3 role-specific questions — AI scored",      auto: true  },
+// ─── DATA ────────────────────────────────────────────────────────────────────
+const SKILLS_15 = [
+  { icon:"🎧", name:"Customer Service" },
+  { icon:"🤝", name:"Virtual Assistant" },
+  { icon:"📊", name:"Data Analysis" },
+  { icon:"🤖", name:"Prompt Engineering & AI" },
+  { icon:"📱", name:"Social Media Management" },
+  { icon:"✍️", name:"Content Writing" },
+  { icon:"🔍", name:"SEO Specialist" },
+  { icon:"💼", name:"Project Management" },
+  { icon:"🎨", name:"UI/UX Design" },
+  { icon:"📧", name:"Email Marketing" },
+  { icon:"🔐", name:"Cybersecurity" },
+  { icon:"📚", name:"Online Tutoring" },
+  { icon:"💰", name:"Bookkeeping" },
+  { icon:"🛒", name:"E-Commerce" },
+  { icon:"👥", name:"HR & Recruitment" },
 ];
 
-// ─── PASSPORT ─────────────────────────────────────────────────────────────
-function updatePassport() {
-  const initials = candidate.name.split(" ").map(w=>w[0]).join("").toUpperCase().slice(0,2);
-  document.getElementById("pp-avatar").textContent = initials || "?";
-  document.getElementById("pp-name").textContent = candidate.name;
-  document.getElementById("pp-skill").innerHTML = candidate.skill
-    ? `${candidate.skill} · ${candidate.country || "Africa"}`
-    : `Skill path not set · <a href="profile.html" style="color:var(--accent);text-decoration:none">Complete your profile first →</a>`;
+const TOOLS_BY_SKILL = {
+  "Customer Service":          ["Zendesk","Intercom","Freshdesk","Slack","Zoom","HubSpot","Salesforce","Jira"],
+  "Virtual Assistant":         ["Google Workspace","Notion","Trello","Asana","Calendly","ChatGPT","Zoom","Slack"],
+  "Data Analysis":             ["Excel","SQL","Python","Tableau","Power BI","Google Sheets","Looker","R"],
+  "Prompt Engineering & AI":   ["ChatGPT","Claude","Midjourney","Make.com","Zapier","LangChain","Gemini","Perplexity"],
+  "Social Media Management":   ["Canva","Buffer","Hootsuite","Meta Business Suite","CapCut","Later","Sprout Social","TikTok"],
+  "Content Writing":           ["Grammarly","Surfer SEO","WordPress","Jasper","Hemingway","Ahrefs","Google Docs","Notion"],
+  "SEO Specialist":            ["Ahrefs","Semrush","Google Search Console","Moz","Screaming Frog","Surfer SEO","Ubersuggest","Yoast"],
+  "Project Management":        ["Asana","Jira","Monday.com","Notion","Trello","MS Project","ClickUp","Slack"],
+  "UI/UX Design":              ["Figma","Adobe XD","Sketch","Miro","Maze","InVision","Zeroheight","Webflow"],
+  "Email Marketing":           ["Mailchimp","Klaviyo","ConvertKit","ActiveCampaign","HubSpot","Brevo","Drip","GetResponse"],
+  "Cybersecurity":             ["Wireshark","Kali Linux","Splunk","Nmap","Burp Suite","CompTIA","Metasploit","TryHackMe"],
+  "Online Tutoring":           ["Zoom","Google Meet","Loom","Notion","Miro","Teachable","Padlet","Kahoot"],
+  "Bookkeeping":               ["QuickBooks","Xero","Wave","FreshBooks","Excel","Gusto","Sage","Zoho Books"],
+  "E-Commerce":                ["Shopify","WooCommerce","Meta Ads","Google Ads","Canva","Klaviyo","Oberlo","Gorgias"],
+  "HR & Recruitment":          ["LinkedIn Recruiter","Workday","BambooHR","Greenhouse","Lever","Slack","ADP","Rippling"],
+};
 
-  const passed = LAYERS.filter(l => verifState[l.id]?.status === "passed" || verifState[l.id]?.status === "review");
-  const allDone = passed.length === LAYERS.length;
+const QUIZ_BY_SKILL = {
+  "Customer Service": [
+    { q:"A customer is angry about a delayed order. What's the BEST first response?", options:["Explain company policy immediately","Apologise and acknowledge their frustration first","Ask them to check their tracking number","Tell them delays are outside your control"], answer:1 },
+    { q:"What does CSAT stand for in customer support?", options:["Customer Service Action Team","Customer Satisfaction Score","Customer Support Analytics Tool","Centralised Service Assessment Test"], answer:1 },
+    { q:"A customer asks for a refund outside the policy window. You should:", options:["Refuse and cite policy","Ignore the request","Escalate to a supervisor and try to find a solution","Promise a refund you can't guarantee"], answer:2 },
+  ],
+  "Virtual Assistant": [
+    { q:"Your manager asks you to 'block some time' on their calendar. What should you do first?", options:["Block every empty slot","Ask for the purpose and duration before scheduling","Send a calendar invite without checking","Block only mornings"], answer:1 },
+    { q:"Which tool is BEST for managing recurring tasks and project workflows?", options:["WhatsApp","Notion or Asana","Google Photos","Excel Charts"], answer:1 },
+    { q:"You accidentally sent a draft email from your manager's account. What do you do?", options:["Delete it and say nothing","Immediately inform your manager and assess the damage","Wait to see if anyone notices","Blame a technical error"], answer:1 },
+  ],
+  "Data Analysis": [
+    { q:"What does SQL stand for?", options:["Structured Query Language","Simple Question Logic","System Query Layer","Standard Question List"], answer:0 },
+    { q:"You have sales data for 12 months. Which chart best shows trends over time?", options:["Pie chart","Bar chart","Line chart","Scatter plot"], answer:2 },
+    { q:"What is the purpose of a pivot table in Excel?", options:["To create colourful charts","To summarise and analyse large datasets quickly","To send emails","To run Python scripts"], answer:1 },
+  ],
+  "Prompt Engineering & AI": [
+    { q:"What is 'few-shot prompting'?", options:["Giving the AI very short instructions","Providing example input-output pairs in your prompt","Limiting the AI's response length","Using multiple AI tools at once"], answer:1 },
+    { q:"Which of these is a hallucination in AI?", options:["When AI refuses to answer","When AI generates confident but false information","When AI gives very long responses","When AI asks clarifying questions"], answer:1 },
+    { q:"What does 'temperature' control in an AI model?", options:["Server cooling","How fast the model responds","The randomness/creativity of the output","The number of tokens used"], answer:2 },
+  ],
+  "Social Media Management": [
+    { q:"What is the best time to post on LinkedIn for maximum reach?", options:["Late night weekends","Tuesday to Thursday, 8–10am or 12pm","Every hour daily","Only on Mondays"], answer:1 },
+    { q:"What does 'engagement rate' measure?", options:["Number of followers gained","How many people interact with your content relative to reach","Total impressions","Money earned from posts"], answer:1 },
+    { q:"A brand's post gets negative comments. You should:", options:["Delete all negative comments","Ignore them","Respond professionally and address the concern publicly","Post more content to push it down"], answer:2 },
+  ],
+  "Content Writing": [
+    { q:"What is the AIDA copywriting framework?", options:["Analyse, Inform, Design, Act","Attention, Interest, Desire, Action","Audience, Idea, Draft, Approve","Assess, Implement, Distribute, Analyse"], answer:1 },
+    { q:"What is a meta description used for?", options:["Describing images on social media","Summarising a page for search engine results","Setting page loading speed","Defining page colours"], answer:1 },
+    { q:"When writing for online readers, you should:", options:["Use long dense paragraphs","Write in academic style","Use short paragraphs, subheadings, and clear language","Avoid using any examples"], answer:2 },
+  ],
+  "SEO Specialist": [
+    { q:"What is a backlink?", options:["An internal link on your own website","A link from another website pointing to yours","A broken link","A link in your email signature"], answer:1 },
+    { q:"What does 'search intent' mean?", options:["How fast a search query loads","The reason behind a user's search query","The number of keywords on a page","How often a keyword is searched"], answer:1 },
+    { q:"Which Google tool shows you how your site performs in search?", options:["Google Analytics","Google Ads","Google Search Console","Google Drive"], answer:2 },
+  ],
+  "Project Management": [
+    { q:"In Agile, what is a 'sprint'?", options:["A speed test for developers","A fixed time period to complete a set of tasks","A type of meeting","A risk assessment tool"], answer:1 },
+    { q:"What does a Gantt chart show?", options:["Team performance scores","Budget allocation","Project timeline and task dependencies","Customer satisfaction data"], answer:2 },
+    { q:"A project is falling behind schedule. First you should:", options:["Immediately request more budget","Assess the cause and impact before deciding next steps","Tell the client nothing","Add more tasks to the sprint"], answer:1 },
+  ],
+  "UI/UX Design": [
+    { q:"What is the primary purpose of a wireframe?", options:["Final visual design of a product","Low-fidelity layout to plan structure and flow","A colour palette guide","A coding framework"], answer:1 },
+    { q:"What does UX stand for?", options:["User Execution","Universal Experience","User Experience","Unique Extension"], answer:2 },
+    { q:"What is a 'user persona'?", options:["A fake social media account","A fictional representation of a target user based on research","A product logo","A server configuration"], answer:1 },
+  ],
+  "Email Marketing": [
+    { q:"What is a good average email open rate for marketing emails?", options:["1–3%","5–10%","20–30%","60–80%"], answer:2 },
+    { q:"What does A/B testing in email marketing mean?", options:["Testing two versions of an email to see which performs better","Sending emails to A and B lists","Automating emails","Archiving and backing up emails"], answer:0 },
+    { q:"What is email segmentation?", options:["Deleting old email subscribers","Dividing your email list into groups based on specific criteria","Formatting email layouts","Scheduling emails at different times"], answer:1 },
+  ],
+  "Cybersecurity": [
+    { q:"What is phishing?", options:["A type of firewall","A fraudulent attempt to steal credentials via fake communications","A network speed test","An encryption method"], answer:1 },
+    { q:"What does CIA stand for in cybersecurity?", options:["Central Intelligence Agency","Confidentiality, Integrity, Availability","Cyber Intelligence Assessment","Computer Incident Analysis"], answer:1 },
+    { q:"What is two-factor authentication (2FA)?", options:["Using two passwords","A second layer of identity verification beyond a password","Two firewall systems","Two antivirus programs"], answer:1 },
+  ],
+  "Online Tutoring": [
+    { q:"A student keeps getting the same concept wrong. You should:", options:["Move on to the next topic","Give the same explanation louder","Try a different explanation method or use an analogy","Tell them to revise at home"], answer:2 },
+    { q:"Which tool is BEST for collaborative online whiteboards during lessons?", options:["WhatsApp","Excel","Miro or Mural","Dropbox"], answer:2 },
+    { q:"What is the most important factor in keeping online students engaged?", options:["Having a perfect background","Active participation and varied activity types","Speaking very quickly","Using lots of slides"], answer:1 },
+  ],
+  "Bookkeeping": [
+    { q:"What is the accounting equation?", options:["Revenue − Expenses = Profit","Assets = Liabilities + Equity","Cash + Debt = Capital","Income − Tax = Net Pay"], answer:1 },
+    { q:"What is a balance sheet?", options:["A daily cash record","A statement of a company's assets, liabilities, and equity at a point in time","A list of all invoices","A payroll document"], answer:1 },
+    { q:"What does reconciliation mean in bookkeeping?", options:["Paying all outstanding invoices","Matching internal financial records with external statements like bank records","Creating new accounts","Filing tax returns"], answer:1 },
+  ],
+  "E-Commerce": [
+    { q:"What is a conversion rate in e-commerce?", options:["The exchange rate for international sales","The percentage of visitors who complete a purchase","The speed of page loading","The number of products in stock"], answer:1 },
+    { q:"What is dropshipping?", options:["Deleting unsold products","Selling products you hold in a warehouse","Selling products you don't physically hold — the supplier ships directly to the customer","Shipping products in bulk"], answer:2 },
+    { q:"Which metric best shows if your ad spend is profitable?", options:["Click-through rate","Number of impressions","Return on Ad Spend (ROAS)","Email open rate"], answer:2 },
+  ],
+  "HR & Recruitment": [
+    { q:"What is an ATS?", options:["Advanced Training System","Applicant Tracking System","Automated Tax Software","Annual Team Survey"], answer:1 },
+    { q:"What is the purpose of an onboarding process?", options:["To test new employees immediately","To help new hires integrate, understand culture and get productive faster","To reduce the number of new hires","To replace training programs"], answer:1 },
+    { q:"What does 'Boolean search' mean in recruiting?", options:["Searching only on LinkedIn","Using operators like AND, OR, NOT to find specific candidate profiles","A background check process","A payroll calculation method"], answer:1 },
+  ],
+};
 
-  document.getElementById("badge-icon").textContent = allDone ? "🏆" : passed.length >= 3 ? "⭐" : "🔒";
-  document.getElementById("badge-status").textContent = allDone ? "Fully Verified" : passed.length >= 3 ? `${passed.length}/5 Complete` : "Not Yet Verified";
+// Default fallback quiz
+const DEFAULT_QUIZ = [
+  { q:"What does remote work primarily require?", options:["Office presence","Reliable internet and self-discipline","Physical proximity to employer","Daily commute"], answer:1 },
+  { q:"Which communication tool is most commonly used by remote teams?", options:["Fax","In-person meetings","Slack or Microsoft Teams","Printed memos"], answer:2 },
+  { q:"What is the most important quality for a remote worker?", options:["Working the fastest","Self-motivation and time management","Having the latest laptop","Working only in the morning"], answer:1 },
+];
 
-  const badges = document.getElementById("passport-badges");
-  badges.innerHTML = LAYERS.map(l => {
-    const s = verifState[l.id]?.status;
-    const cls = s === "passed" ? "passed" : s === "review" ? "review" : s === "failed" ? "failed" : "locked";
-    const icon = s === "passed" ? "✓" : s === "review" ? "⏳" : s === "failed" ? "✗" : "○";
-    return `<span class="badge-chip ${cls}">${icon} ${l.title.split(" ")[0]}</span>`;
-  }).join("");
+const AFRICAN_COUNTRIES = [
+  "Nigeria","Kenya","Ghana","South Africa","Ethiopia","Tanzania","Uganda","Rwanda",
+  "Senegal","Ivory Coast","Cameroon","Zimbabwe","Zambia","Mozambique","Botswana",
+  "Namibia","Sierra Leone","Liberia","Gambia","Togo","Benin","Mali","Burkina Faso",
+  "Niger","Chad","Sudan","Egypt","Morocco","Tunisia","Algeria","Libya","Somalia",
+  "Eritrea","Djibouti","Comoros","Madagascar","Mauritius","Seychelles","Angola",
+  "DR Congo","Congo","Gabon","Equatorial Guinea","Malawi","Lesotho","Swaziland",
+  "Other"
+].sort();
 
-  if (allDone) document.getElementById("complete-banner").style.display = "block";
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let currentStep = 0;
+let profile = {
+  name:"", country:"", email:"",
+  education:"", field:"", institution:"",
+  experience:"", expYears:"",
+  skill:"", selfLevel:0,
+  tools:[], english:0, availability:"", timezone:"",
+  motivation:"", goal:"",
+  quizAnswers:[], quizScore:0,
+};
+let quizAnswers = {};
+
+const STEP_LABELS = [
+  "Welcome","Education","Experience",
+  "Your Skill","Current Level","Tools",
+  "English","Availability","Your Why","Knowledge Check"
+];
+
+// ─── SCORING ─────────────────────────────────────────────────────────────────
+function calcScore() {
+  let score = 0;
+
+  // Education (max 20)
+  const eduMap = {"secondary":4,"diploma":8,"bachelor":14,"master":18,"phd":20};
+  score += eduMap[profile.education] || 6;
+
+  // Experience (max 15)
+  const expMap = {"none":0,"less1":5,"1to3":10,"3plus":15};
+  score += expMap[profile.experience] || 0;
+
+  // Self level (max 15) — 1–5 scale → 3,6,9,12,15
+  score += (profile.selfLevel || 0) * 3;
+
+  // Tools known (max 15) — each tool = 2pts, max 15
+  score += Math.min(profile.tools.length * 2, 15);
+
+  // English (max 15) — 1–5 scale → 3,6,9,12,15
+  score += (profile.english || 0) * 3;
+
+  // Quiz (max 20) — each correct = ~6.67pts
+  const quizTotal = Object.keys(quizAnswers).length;
+  const correct = Object.entries(quizAnswers).filter(([qi, ans]) => {
+    const quiz = (QUIZ_BY_SKILL[profile.skill] || DEFAULT_QUIZ);
+    return quiz[parseInt(qi)] && quiz[parseInt(qi)].answer === ans;
+  }).length;
+  profile.quizScore = correct;
+  score += Math.round((correct / Math.max(quizTotal,1)) * 20);
+
+  return Math.min(Math.round(score), 100);
 }
 
-// ─── RENDER CARDS ─────────────────────────────────────────────────────────
-function renderCards() {
-  const grid = document.getElementById("verif-grid");
-  grid.innerHTML = LAYERS.map((layer, idx) => {
-    const state = verifState[layer.id] || {};
-    const status = state.status || "pending";
-    const score = state.score;
-    const cardClass = status === "passed" ? "passed-card" : status === "failed" ? "failed-card" : "";
-    const iconClass = status === "passed" ? "passed" : status === "failed" ? "failed" : status === "review" ? "review" : "";
-    const statusLabel = status === "passed" ? "Passed" : status === "failed" ? "Try Again" : status === "review" ? "Under Review" : "Not Started";
-    const statusClass = `status-${status === "pending" ? "pending" : status}`;
+function getImproveItems(score) {
+  const items = [];
+  const eduMap = {"secondary":4,"diploma":8,"bachelor":14,"master":18,"phd":20};
+  if ((eduMap[profile.education]||6) < 14) items.push("Consider completing a formal qualification — employers value credentials");
+  if ((profile.experience==="none"||!profile.experience)) items.push("Build experience through freelance projects, volunteering, or internships");
+  if ((profile.selfLevel||0) < 3) items.push(`Spend 4–6 weeks deepening your ${profile.skill} skills before applying`);
+  if (profile.tools.length < 3) items.push(`Learn at least 3 core tools for ${profile.skill} — employers expect tool familiarity`);
+  if ((profile.english||0) < 3) items.push("Improve your professional English — take a free course on Coursera or BBC Learning English");
+  if (profile.quizScore < 2) items.push(`Review the fundamentals of ${profile.skill} — your knowledge check showed some gaps`);
+  if (items.length === 0) items.push("You're very close — practice a mock interview and update your professional profile");
+  return items;
+}
 
+// ─── RENDER STEP ─────────────────────────────────────────────────────────────
+function updateProgress() {
+  const total = 10;
+  const pct = Math.round(((currentStep + 1) / total) * 100);
+  document.getElementById("progress-fill").style.width = pct + "%";
+  document.getElementById("progress-fraction").textContent = `Step ${currentStep + 1} of ${total}`;
+  document.getElementById("progress-label").textContent = STEP_LABELS[currentStep] || "";
+  document.getElementById("nav-step-info").textContent = STEP_LABELS[currentStep] || "";
+}
+
+function renderStep() {
+  updateProgress();
+  const container = document.getElementById("step-container");
+  container.style.animation = "none";
+  requestAnimationFrame(() => {
+    container.style.animation = "";
+    container.innerHTML = steps[currentStep]();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+}
+
+function next() {
+  if (currentStep < steps.length - 1) { currentStep++; renderStep(); }
+}
+function back() {
+  if (currentStep > 0) { currentStep--; renderStep(); }
+}
+
+function choose(key, val, el, group) {
+  profile[key] = val;
+  document.querySelectorAll(`.${group}`).forEach(e => e.classList.remove("selected"));
+  el.classList.add("selected");
+}
+
+function toggleTool(tool, el) {
+  if (profile.tools.includes(tool)) {
+    profile.tools = profile.tools.filter(t => t !== tool);
+    el.classList.remove("selected");
+  } else {
+    profile.tools.push(tool);
+    el.classList.add("selected");
+  }
+}
+
+function selectSkill(name, el) {
+  profile.skill = name;
+  document.querySelectorAll(".skill-card").forEach(e => e.classList.remove("selected"));
+  el.classList.add("selected");
+}
+
+function setScale(key, val, el, group) {
+  profile[key] = val;
+  document.querySelectorAll(`.${group}`).forEach(e => e.classList.remove("selected"));
+  el.classList.add("selected");
+}
+
+function answerQuiz(qi, ans, el) {
+  quizAnswers[qi] = ans;
+  const wrap = el.closest(".quiz-question");
+  wrap.querySelectorAll(".q-option").forEach(o => o.classList.remove("selected"));
+  el.classList.add("selected");
+}
+
+// ─── STEPS ───────────────────────────────────────────────────────────────────
+const steps = [
+
+  // STEP 1 — Welcome
+  () => `
+    <div class="step-num">Step 1 of 10 · Welcome</div>
+    <h1 class="step-title">Let's build your <span>VELA profile</span></h1>
+    <p class="step-sub">10 quick steps. We get to know the real you — your background, your skill, your goal. At the end, you'll get a VELA Readiness Score and your path to getting placed.</p>
+    <div class="field"><label>Full Name</label>
+      <input class="input" id="f-name" placeholder="Your full name" value="${profile.name}"/>
+    </div>
+    <div class="field"><label>Country</label>
+      <select class="select" id="f-country">
+        <option value="">Select your country</option>
+        ${AFRICAN_COUNTRIES.map(c=>`<option value="${c}" ${profile.country===c?"selected":""}>${c}</option>`).join("")}
+      </select>
+    </div>
+    <div class="field"><label>Email Address</label>
+      <input class="input" id="f-email" type="email" placeholder="you@email.com" value="${profile.email}"/>
+    </div>
+    <span class="error-msg" id="step1-err">Please fill in all fields correctly.</span>
+    <div class="btn-row">
+      <button class="btn-next" onclick="saveStep1()">Continue →</button>
+    </div>`,
+
+  // STEP 2 — Education
+  () => `
+    <div class="step-num">Step 2 of 10 · Education</div>
+    <h1 class="step-title">Your <span>education</span> background</h1>
+    <p class="step-sub">Be honest — this helps us position you correctly to employers. All education levels are welcome here.</p>
+    <div class="field"><label>Highest Education Level</label></div>
+    <div class="choice-grid cols-2">
+      ${[
+        {val:"secondary",icon:"📗",label:"Secondary School",desc:"WAEC, O-Level or equivalent"},
+        {val:"diploma",icon:"📘",label:"Diploma / HND",desc:"Polytechnic or college diploma"},
+        {val:"bachelor",icon:"🎓",label:"Bachelor's Degree",desc:"BSc, BA, BEd or equivalent"},
+        {val:"master",icon:"🏆",label:"Master's Degree",desc:"MSc, MA, MBA or equivalent"},
+        {val:"phd",icon:"⭐",label:"PhD / Doctorate",desc:"Research doctorate"},
+        {val:"other",icon:"📋",label:"Professional Cert",desc:"Industry certification or training"},
+      ].map(o=>`
+        <div class="choice-card ${profile.education===o.val?"selected":""}" onclick="choose('education','${o.val}',this,'edu-opt')">
+          <div class="choice-icon">${o.icon}</div>
+          <div class="choice-text"><div class="choice-label">${o.label}</div><div class="choice-desc">${o.desc}</div></div>
+          <div class="choice-check">✓</div>
+        </div>`).join("")}
+    </div>
+    <div class="field" style="margin-top:1.25rem"><label>Field of Study</label>
+      <input class="input" id="f-field" placeholder="e.g. Mathematics, Business, Engineering" value="${profile.field}"/>
+    </div>
+    <div class="btn-row">
+      <button class="btn-back" onclick="back()">← Back</button>
+      <button class="btn-next" onclick="saveStep2()">Continue →</button>
+    </div>`,
+
+  // STEP 3 — Experience
+  () => `
+    <div class="step-num">Step 3 of 10 · Experience</div>
+    <h1 class="step-title">Any <span>work experience</span>?</h1>
+    <p class="step-sub">Any kind — formal jobs, freelance, volunteering, side work. It all counts. We're building an honest picture of where you are.</p>
+    <div class="choice-grid cols-2" style="margin-bottom:1.25rem">
+      ${[
+        {val:"none",icon:"🌱",label:"No experience yet",desc:"Completely fresh start"},
+        {val:"less1",icon:"💡",label:"Under 1 year",desc:"Some work or projects"},
+        {val:"1to3",icon:"📈",label:"1–3 years",desc:"Decent track record"},
+        {val:"3plus",icon:"🚀",label:"3+ years",desc:"Solid experience"},
+      ].map(o=>`
+        <div class="choice-card ${profile.experience===o.val?"selected":""}" onclick="choose('experience','${o.val}',this,'exp-opt')">
+          <div class="choice-icon">${o.icon}</div>
+          <div class="choice-text"><div class="choice-label">${o.label}</div><div class="choice-desc">${o.desc}</div></div>
+          <div class="choice-check">✓</div>
+        </div>`).join("")}
+    </div>
+    <div class="field"><label>Briefly describe your experience (optional)</label>
+      <textarea class="textarea" id="f-exp" placeholder="e.g. Worked as a math teacher for 2 years, did some freelance admin work...">${profile.expYears}</textarea>
+    </div>
+    <div class="btn-row">
+      <button class="btn-back" onclick="back()">← Back</button>
+      <button class="btn-next" onclick="saveStep3()">Continue →</button>
+    </div>`,
+
+  // STEP 4 — Skill Choice
+  () => `
+    <div class="step-num">Step 4 of 10 · Your Skill</div>
+    <h1 class="step-title">Choose your <span>skill path</span></h1>
+    <p class="step-sub">Pick the skill you want to build and get hired for. Choose based on what will get you a job — not just what sounds interesting. You can always come back and choose another later.</p>
+    <div class="skill-grid">
+      ${SKILLS_15.map(s=>`
+        <div class="skill-card ${profile.skill===s.name?"selected":""}" onclick="selectSkill('${s.name}',this)">
+          <span class="skill-card-icon">${s.icon}</span>
+          <span class="skill-card-name">${s.name}</span>
+        </div>`).join("")}
+    </div>
+    <div class="btn-row" style="margin-top:1.5rem">
+      <button class="btn-back" onclick="back()">← Back</button>
+      <button class="btn-next" onclick="saveStep4()">Continue →</button>
+    </div>`,
+
+  // STEP 5 — Self Assessment
+  () => `
+    <div class="step-num">Step 5 of 10 · Current Level</div>
+    <h1 class="step-title">How good are you at <span>${profile.skill||"your skill"}</span> right now?</h1>
+    <p class="step-sub">Be honest — overrating yourself leads to mismatch. We'll use this to show you exactly what to work on.</p>
+    <div class="scale-options">
+      ${[
+        {v:1,label:"Never done it"},
+        {v:2,label:"Basics only"},
+        {v:3,label:"Intermediate"},
+        {v:4,label:"Confident"},
+        {v:5,label:"Advanced"},
+      ].map(s=>`
+        <div class="scale-btn sl-opt ${profile.selfLevel===s.v?"selected":""}" onclick="setScale('selfLevel',${s.v},this,'sl-opt')">
+          <div class="scale-num">${s.v}</div>
+          <div class="scale-label">${s.label}</div>
+        </div>`).join("")}
+    </div>
+    <div class="btn-row" style="margin-top:2rem">
+      <button class="btn-back" onclick="back()">← Back</button>
+      <button class="btn-next" onclick="saveStep5()">Continue →</button>
+    </div>`,
+
+  // STEP 6 — Tools
+  () => `
+    <div class="step-num">Step 6 of 10 · Tools</div>
+    <h1 class="step-title">Which tools do you <span>already know</span>?</h1>
+    <p class="step-sub">Select every tool you can use today — even basic familiarity counts. These are the tools employers for ${profile.skill||"your skill"} expect.</p>
+    <div class="tools-grid">
+      ${(TOOLS_BY_SKILL[profile.skill] || Object.values(TOOLS_BY_SKILL)[0]).map(t=>`
+        <div class="tool-chip ${profile.tools.includes(t)?"selected":""}" onclick="toggleTool('${t}',this)">${t}</div>`).join("")}
+    </div>
+    <div class="btn-row" style="margin-top:1.5rem">
+      <button class="btn-back" onclick="back()">← Back</button>
+      <button class="btn-next" onclick="next()">Continue →</button>
+    </div>`,
+
+  // STEP 7 — English
+  () => `
+    <div class="step-num">Step 7 of 10 · English Proficiency</div>
+    <h1 class="step-title">Your <span>English</span> level</h1>
+    <p class="step-sub">Almost all remote roles require professional English. Rate yourself honestly — both writing and speaking combined.</p>
+    <div class="choice-grid cols-1">
+      ${[
+        {v:1,icon:"🌱",label:"Basic",desc:"I know some English but struggle with professional communication"},
+        {v:2,icon:"📗",label:"Conversational",desc:"I can communicate but make frequent errors in writing"},
+        {v:3,icon:"📘",label:"Intermediate",desc:"I communicate well but have some gaps in professional tone"},
+        {v:4,icon:"🎯",label:"Proficient",desc:"I write and speak professionally with minor errors"},
+        {v:5,icon:"⭐",label:"Fluent",desc:"Native or near-native level — confident in all professional settings"},
+      ].map(o=>`
+        <div class="choice-card ${profile.english===o.v?"selected":""}" onclick="setScale('english',${o.v},this,'eng-opt')">
+          <div class="choice-icon">${o.icon}</div>
+          <div class="choice-text"><div class="choice-label">${o.label}</div><div class="choice-desc">${o.desc}</div></div>
+          <div class="choice-check">✓</div>
+        </div>`).join("")}
+    </div>
+    <div class="btn-row" style="margin-top:1rem">
+      <button class="btn-back" onclick="back()">← Back</button>
+      <button class="btn-next" onclick="saveStep7()">Continue →</button>
+    </div>`,
+
+  // STEP 8 — Availability
+  () => `
+    <div class="step-num">Step 8 of 10 · Availability</div>
+    <h1 class="step-title">Your <span>availability</span></h1>
+    <p class="step-sub">Employers need to know when you're available and what timezone you work in. This helps us match you accurately.</p>
+    <div class="field"><label>Hours available per week</label>
+      <select class="select" id="f-avail" onchange="profile.availability=this.value">
+        <option value="">Select availability</option>
+        ${["Less than 10 hours","10–20 hours (part time)","20–30 hours","30–40 hours (full time)","40+ hours"].map(a=>`
+          <option value="${a}" ${profile.availability===a?"selected":""}>${a}</option>`).join("")}
+      </select>
+    </div>
+    <div class="field"><label>Your timezone (UTC offset)</label>
+      <select class="select" id="f-tz" onchange="profile.timezone=this.value">
+        <option value="">Select timezone</option>
+        ${["UTC+0 (Ghana, Senegal)","UTC+1 (Nigeria, Cameroon, Congo)","UTC+2 (South Africa, Egypt, Kenya)","UTC+3 (Ethiopia, Tanzania, Somalia)","UTC+4 (Mauritius, Seychelles)"].map(t=>`
+          <option value="${t}" ${profile.timezone===t?"selected":""}>${t}</option>`).join("")}
+      </select>
+    </div>
+    <div class="btn-row">
+      <button class="btn-back" onclick="back()">← Back</button>
+      <button class="btn-next" onclick="saveStep8()">Continue →</button>
+    </div>`,
+
+  // STEP 9 — Motivation
+  () => `
+    <div class="step-num">Step 9 of 10 · Your Why</div>
+    <h1 class="step-title">Why do you want <span>remote work</span>?</h1>
+    <p class="step-sub">Your story matters. This becomes part of your candidate profile that employers see — be genuine. This is your voice.</p>
+    <div class="field"><label>What is driving you to get a remote job?</label>
+      <textarea class="textarea" id="f-motivation" placeholder="Tell us why this matters to you. What would change in your life if you landed a remote job?" style="min-height:120px">${profile.motivation}</textarea>
+    </div>
+    <div class="field"><label>What is your goal in the next 12 months?</label>
+      <textarea class="textarea" id="f-goal" placeholder="e.g. I want to earn $800/month remotely, build my skills in data analysis, and eventually..." style="min-height:100px">${profile.goal}</textarea>
+    </div>
+    <div class="btn-row">
+      <button class="btn-back" onclick="back()">← Back</button>
+      <button class="btn-next" onclick="saveStep9()">Continue →</button>
+    </div>`,
+
+  // STEP 10 — Knowledge Check
+  () => {
+    const quiz = QUIZ_BY_SKILL[profile.skill] || DEFAULT_QUIZ;
     return `
-    <div class="verif-card ${cardClass}" id="card-${layer.id}">
-      <div class="verif-header" onclick="toggleCard('${layer.id}')">
-        <div class="verif-icon-wrap ${iconClass}">${layer.icon}</div>
-        <div class="verif-meta">
-          <div class="verif-title">${layer.title}</div>
-          <div class="verif-desc">${layer.desc} ${layer.auto ? "· <span style='color:var(--accent);font-size:0.72rem'>Auto-scored by AI</span>" : "· <span style='color:var(--warn);font-size:0.72rem'>Human reviewed</span>"}</div>
-        </div>
-        <div class="verif-right">
-          ${score !== undefined ? `<div class="verif-score" style="color:${score>=70?'var(--accent)':score>=50?'var(--warn)':'var(--danger)'}">${score}<span style="font-size:0.7rem;color:var(--muted);font-weight:400">/100</span></div>` : ""}
-          <span class="verif-status ${statusClass}">${statusLabel}</span>
-          <span class="chevron" id="chevron-${layer.id}">▼</span>
-        </div>
-      </div>
-      <div class="verif-body" id="body-${layer.id}">
-        <div class="verif-body-inner">
-          ${renderLayerBody(layer, state)}
-        </div>
-      </div>
-    </div>`;
-  }).join("");
-}
-
-function renderLayerBody(layer, state) {
-  const scenario = getScenario();
-  const status = state.status;
-
-  if (layer.id === "comm") return renderComm(scenario.comm, state);
-  if (layer.id === "task") return renderTask(scenario.task, state);
-  if (layer.id === "tools") return renderTools(state);
-  if (layer.id === "video") return renderVideo(state);
-  if (layer.id === "interview") return renderInterview(scenario.interview, state);
-  return "";
-}
-
-// ─── COMM ─────────────────────────────────────────────────────────────────
-function renderComm(s, state) {
-  if (state.status === "passed" || state.status === "failed") {
-    return renderResult("comm", state);
-  }
-  return `
-    <div class="scenario-box">
-      <div class="scenario-label">${s.title}</div>
-      <div class="scenario-text">${s.prompt}<br/><br/><em style="color:var(--muted)">${s.scenario}</em></div>
-    </div>
-    <label class="vf-label">Your Response</label>
-    <textarea class="vf-textarea" id="comm-response" placeholder="${s.placeholder}" style="min-height:160px">${state.draft||""}</textarea>
-    <div id="comm-feedback"></div>
-    <button class="btn-submit" onclick="submitComm()">
-      <span>Submit for AI Scoring</span> <span>→</span>
-    </button>`;
-}
-
-// ─── TASK ─────────────────────────────────────────────────────────────────
-function renderTask(t, state) {
-  if (state.status === "review") {
-    return `<div class="upload-done" style="margin-top:0">
-      <span>✅</span>
-      <div>
-        <div class="upload-done-name">${state.filename || "Document uploaded"}</div>
-        <div style="font-size:0.75rem;color:var(--muted);margin-top:0.2rem">Under review by VELA team. You'll be notified within 24–48 hours.</div>
-      </div>
-    </div>`;
-  }
-  return `
-    <div class="scenario-box">
-      <div class="scenario-label">Your Task</div>
-      <div class="scenario-text">${t.instructions}</div>
-    </div>
-    <div class="upload-zone" id="upload-zone-task" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop('task',event)">
-      <input type="file" accept="${t.accepts}" onchange="handleFile('task',this)"/>
-      <div class="upload-icon">📄</div>
-      <div class="upload-title">Drop your document here or click to browse</div>
-      <div class="upload-hint">Accepts: ${t.accepts.split(",").join(", ")} · Max 10MB</div>
-    </div>
-    <div id="task-file-info"></div>
-    <button class="btn-submit" id="btn-submit-task" onclick="submitTask()" style="display:none">
-      <span>Submit for Review</span> <span>→</span>
-    </button>`;
-}
-
-// ─── TOOLS ────────────────────────────────────────────────────────────────
-function renderTools(state) {
-  if (state.status === "passed" || state.status === "failed") {
-    return renderResult("tools", state);
-  }
-  const scenario = getScenario();
-  const tools = scenario.tools || DEFAULT_SCENARIO.tools;
-  return `
-    ${tools.map((q,i) => `
-      <div class="vq-item">
-        <div class="vq-text"><span class="vq-num">Q${i+1}.</span>${q.q}</div>
-        <div class="vq-options">
-          ${q.opts.map((opt,ai) => `
-            <div class="vq-opt" id="tools-q${i}-a${ai}" onclick="selectTool(${i},${ai})">${opt}</div>
+    <div class="step-num">Step 10 of 10 · Knowledge Check</div>
+    <h1 class="step-title">3 quick questions on <span>${profile.skill||"your skill"}</span></h1>
+    <p class="step-sub">This feeds directly into your VELA Readiness Score. Answer honestly — getting these right confirms you're ready for employers.</p>
+    ${quiz.map((q,i)=>`
+      <div class="quiz-question">
+        <div class="q-text"><span class="q-num">Q${i+1}.</span>${q.q}</div>
+        <div class="q-options">
+          ${q.options.map((opt,ai)=>`
+            <div class="q-option ${quizAnswers[i]===ai?"selected":""}" onclick="answerQuiz(${i},${ai},this)">${opt}</div>
           `).join("")}
         </div>
       </div>`).join("")}
-    <button class="btn-submit" onclick="submitTools()">
-      <span>Submit Answers</span> <span>→</span>
-    </button>`;
-}
+    <div class="btn-row">
+      <button class="btn-back" onclick="back()">← Back</button>
+      <button class="btn-next" onclick="showScore()">Calculate My Score →</button>
+    </div>`; },
+];
 
-// ─── VIDEO ────────────────────────────────────────────────────────────────
-function renderVideo(state) {
-  if (state.status === "review") {
-    return `<div class="upload-done" style="margin-top:0">
-      <span>✅</span>
-      <div>
-        <div class="upload-done-name">${state.filename || "Video uploaded"}</div>
-        <div style="font-size:0.75rem;color:var(--muted);margin-top:0.2rem">Under review by VELA team. Reviewed within 24–48 hours.</div>
-      </div>
-    </div>`;
+// ─── SAVE FUNCTIONS ───────────────────────────────────────────────────────────
+function saveStep1() {
+  const name  = document.getElementById("f-name").value.trim();
+  const country = document.getElementById("f-country").value;
+  const email = document.getElementById("f-email").value.trim();
+  const err   = document.getElementById("step1-err");
+  if (!name || !country || !email.includes("@")) {
+    err.style.display = "block"; return;
   }
-  return `
-    <div class="scenario-box">
-      <div class="scenario-label">What to cover in 60 seconds</div>
-      <div class="scenario-text">
-        1. Your name, country, and skill path<br/>
-        2. Your relevant background in 1–2 sentences<br/>
-        3. Why you want remote work and what you bring to an employer<br/>
-        4. One thing that makes you stand out<br/><br/>
-        <span style="color:var(--muted);font-size:0.82rem">Record using Loom, your phone, or any camera. Upload as MP4, MOV, or WebM.</span>
-      </div>
-    </div>
-    <div class="upload-zone" id="upload-zone-video" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop('video',event)">
-      <input type="file" accept=".mp4,.mov,.webm,.avi" onchange="handleFile('video',this)"/>
-      <div class="upload-icon">🎥</div>
-      <div class="upload-title">Drop your video here or click to browse</div>
-      <div class="upload-hint">MP4, MOV, WebM · Max 200MB · 60 seconds</div>
-    </div>
-    <div id="video-file-info"></div>
-    <button class="btn-submit" id="btn-submit-video" onclick="submitVideo()" style="display:none">
-      <span>Submit for Review</span> <span>→</span>
-    </button>`;
+  err.style.display = "none";
+  profile.name = name; profile.country = country; profile.email = email;
+  next();
+}
+function saveStep2() {
+  if (!profile.education) { alert("Please select your education level"); return; }
+  profile.field = document.getElementById("f-field").value;
+  next();
+}
+function saveStep3() {
+  if (!profile.experience) { alert("Please select your experience level"); return; }
+  profile.expYears = document.getElementById("f-exp").value;
+  next();
+}
+function saveStep4() {
+  if (!profile.skill) { alert("Please choose a skill path"); return; }
+  next();
+}
+function saveStep5() {
+  if (!profile.selfLevel) { alert("Please rate your current level"); return; }
+  next();
+}
+function saveStep7() {
+  if (!profile.english) { alert("Please select your English level"); return; }
+  next();
+}
+function saveStep8() {
+  profile.availability = document.getElementById("f-avail").value;
+  profile.timezone = document.getElementById("f-tz").value;
+  if (!profile.availability || !profile.timezone) { alert("Please select your availability and timezone"); return; }
+  next();
+}
+function saveStep9() {
+  profile.motivation = document.getElementById("f-motivation").value.trim();
+  profile.goal = document.getElementById("f-goal").value.trim();
+  if (!profile.motivation) { alert("Please tell us why you want remote work"); return; }
+  next();
 }
 
-// ─── INTERVIEW ────────────────────────────────────────────────────────────
-function renderInterview(questions, state) {
-  if (state.status === "passed" || state.status === "failed") {
-    return renderResult("interview", state);
-  }
-  return `
-    <div style="background:rgba(0,229,160,0.05);border:1px solid rgba(0,229,160,0.1);border-radius:10px;padding:1rem;margin-bottom:1.25rem;font-size:0.85rem;color:var(--muted);line-height:1.6">
-      Answer each question as you would in a real interview. Write at least 3–4 sentences per answer. Be specific — use real examples where possible. The AI will score your clarity, relevance, and depth.
-    </div>
-    ${questions.map((q,i) => `
-      <div style="margin-bottom:1.5rem">
-        <label class="vf-label">Question ${i+1} of ${questions.length}</label>
-        <div style="font-family:'Syne',sans-serif;font-size:0.92rem;font-weight:700;color:var(--text);margin-bottom:0.75rem;line-height:1.4">${q.q}</div>
-        <textarea class="vf-textarea" id="int-q${i}" placeholder="${q.placeholder}"></textarea>
-      </div>`).join("")}
-    <div id="interview-feedback"></div>
-    <button class="btn-submit" onclick="submitInterview()">
-      <span>Submit for AI Scoring</span> <span>→</span>
-    </button>`;
-}
-
-// ─── RESULT DISPLAY ───────────────────────────────────────────────────────
-function renderResult(id, state) {
-  const passed = state.status === "passed";
-  return `
-    <div class="ai-feedback fade-in">
-      <div class="ai-feedback-header">
-        <div class="ai-feedback-label">${passed ? "✅ Passed" : "❌ Did Not Pass"}</div>
-        ${state.score !== undefined ? `<div class="ai-score-pill">${state.score}/100</div>` : ""}
-      </div>
-      <div class="ai-text">${state.feedback || ""}</div>
-    </div>
-    ${!passed ? `<button class="btn-retry-sm" onclick="retryLayer('${id}')">Try Again →</button>` : ""}`;
-}
-
-// ─── INTERACTIONS ─────────────────────────────────────────────────────────
-function toggleCard(id) {
-  const body = document.getElementById(`body-${id}`);
-  const chevron = document.getElementById(`chevron-${id}`);
-  const isOpen = body.classList.contains("open");
-  // Close all
-  document.querySelectorAll(".verif-body").forEach(b => b.classList.remove("open"));
-  document.querySelectorAll(".chevron").forEach(c => c.classList.remove("open"));
-  document.querySelectorAll(".verif-card").forEach(c => c.classList.remove("active"));
-  if (!isOpen) {
-    body.classList.add("open");
-    chevron.classList.add("open");
-    document.getElementById(`card-${id}`).classList.add("active");
-  }
-}
-
-let toolAnswers = {};
-function selectTool(qi, ai) {
-  toolAnswers[qi] = ai;
-  const scenario = getScenario();
-  const tools = scenario.tools || DEFAULT_SCENARIO.tools;
-  tools.forEach((_, i) => {
-    tools[i].opts.forEach((_, a) => {
-      const el = document.getElementById(`tools-q${i}-a${a}`);
-      if (el) el.classList.toggle("selected", i === qi && a === ai);
-    });
-  });
-}
-
-function handleFile(type, input) {
-  const file = input.files[0];
-  if (!file) return;
-  const infoId = `${type}-file-info`;
-  const btnId = `btn-submit-${type}`;
-  document.getElementById(infoId).innerHTML = `
-    <div class="upload-done" style="margin-top:0.75rem">
-      <span>📄</span>
-      <div>
-        <div class="upload-done-name">${file.name}</div>
-        <div style="font-size:0.75rem;color:var(--muted);margin-top:0.2rem">${(file.size/1024/1024).toFixed(2)} MB — ready to submit</div>
-      </div>
-    </div>`;
-  const btn = document.getElementById(btnId);
-  if (btn) btn.style.display = "flex";
-  window[`${type}_file`] = file;
-}
-
-function handleDrop(type, event) {
-  event.preventDefault();
-  document.getElementById(`upload-zone-${type}`).classList.remove("drag");
-  const file = event.dataTransfer.files[0];
-  if (!file) return;
-  const fakeInput = { files: [file] };
-  handleFile(type, fakeInput);
-}
-
-// ─── SUBMIT FUNCTIONS ─────────────────────────────────────────────────────
-async function submitComm() {
-  const response = document.getElementById("comm-response").value.trim();
-  if (response.length < 50) { alert("Please write a more complete response (at least 50 characters)."); return; }
-  const scenario = getScenario();
-  const feedbackEl = document.getElementById("comm-feedback");
-  feedbackEl.innerHTML = `<div class="ai-loading"><div class="spinner"></div>AI is scoring your response...</div>`;
-  document.querySelector("#card-comm .btn-submit").disabled = true;
-
-  const result = await scoreWithAI("comm", scenario.comm.scenario, response);
-  saveVerif("comm", result);
-  renderCards();
-  toggleCard("comm");
-  updatePassport();
-}
-
-async function submitInterview() {
-  const scenario = getScenario();
-  const answers = scenario.interview.map((q,i) => {
-    const el = document.getElementById(`int-q${i}`);
-    return el ? el.value.trim() : "";
-  });
-  if (answers.some(a => a.length < 30)) { alert("Please answer all questions with at least a few sentences each."); return; }
-
-  document.getElementById("interview-feedback").innerHTML = `<div class="ai-loading"><div class="spinner"></div>AI is evaluating your interview responses...</div>`;
-  document.querySelector("#card-interview .btn-submit").disabled = true;
-
-  const combined = scenario.interview.map((q,i) => `Q: ${q.q}\nA: ${answers[i]}`).join("\n\n");
-  const result = await scoreWithAI("interview", "Mock interview for " + candidate.skill + " role", combined);
-  saveVerif("interview", result);
-  renderCards();
-  toggleCard("interview");
-  updatePassport();
-}
-
-function submitTools() {
-  const scenario = getScenario();
-  const tools = scenario.tools || DEFAULT_SCENARIO.tools;
-  if (Object.keys(toolAnswers).length < tools.length) {
-    alert(`Please answer all ${tools.length} questions before submitting.`); return;
-  }
-  let correct = 0;
-  tools.forEach((q,i) => { if (toolAnswers[i] === q.ans) correct++; });
-  const score = Math.round((correct / tools.length) * 100);
+// ─── SCORE SCREEN ─────────────────────────────────────────────────────────────
+function showScore() {
+  const score = calcScore();
   const passed = score >= 60;
-  const feedback = `You answered ${correct} out of ${tools.length} questions correctly.\n\n${passed
-    ? `Score: ${score}/100 — You demonstrated solid tool knowledge for ${candidate.skill}. Employers will see you know the core tools of your field.`
-    : `Score: ${score}/100 — You need to strengthen your tool knowledge. Review the tools for ${candidate.skill} on your skills roadmap page and try again.`}`;
-  saveVerif("tools", { score, passed, feedback });
-  renderCards();
-  toggleCard("tools");
-  updatePassport();
+  const circumference = 2 * Math.PI * 56;
+  const offset = circumference - (score / 100) * circumference;
+  const color = score >= 60 ? "#00E5A0" : score >= 40 ? "#FFA500" : "#FF6B6B";
+
+  const eduScores = {"secondary":4,"diploma":8,"bachelor":14,"master":18,"phd":20,"other":6};
+  const expScores = {"none":0,"less1":5,"1to3":10,"3plus":15};
+  const eduS = (eduScores[profile.education]||6);
+  const expS = (expScores[profile.experience]||0);
+  const skillS = (profile.selfLevel||0)*3;
+  const toolsS = Math.min(profile.tools.length*2,15);
+  const engS = (profile.english||0)*3;
+  const quizS = Math.round((profile.quizScore/3)*20);
+
+  const improveItems = !passed ? getImproveItems(score) : [];
+
+  document.getElementById("step-container").innerHTML = `
+    <div class="score-screen">
+      <div class="score-ring">
+        <svg viewBox="0 0 120 120" width="160" height="160">
+          <circle class="score-ring-track" cx="60" cy="60" r="56"/>
+          <circle class="score-ring-fill" cx="60" cy="60" r="56"
+            stroke="${color}"
+            stroke-dasharray="${circumference}"
+            stroke-dashoffset="${circumference}"
+            id="ring-fill"/>
+        </svg>
+        <div>
+          <div class="score-num" id="score-display">0</div>
+          <div class="score-label">/ 100</div>
+        </div>
+      </div>
+
+      <h2 class="score-title">${passed ? "🎉 You're Ready, "+profile.name.split(" ")[0]+"!" : "Almost There, "+profile.name.split(" ")[0]+"!"}</h2>
+      <p class="score-message">${passed
+        ? `Your VELA Readiness Score is <strong>${score}/100</strong>. You've cleared the bar. You're ready to see verified remote jobs matched to your ${profile.skill} skill path.`
+        : `Your VELA Readiness Score is <strong>${score}/100</strong>. The pass mark is 60. You're not far — here's exactly what to improve to get placed.`
+      }</p>
+
+      <div class="score-breakdown">
+        ${[
+          {label:"Education",val:eduS,max:20},
+          {label:"Experience",val:expS,max:15},
+          {label:"Skill Level",val:skillS,max:15},
+          {label:"Tools Known",val:toolsS,max:15},
+          {label:"English",val:engS,max:15},
+          {label:"Knowledge Check",val:quizS,max:20},
+        ].map(b=>`
+          <div class="breakdown-item">
+            <div class="breakdown-label">${b.label}</div>
+            <div class="breakdown-val" style="color:${b.val/b.max>=0.6?'var(--accent)':b.val/b.max>=0.3?'var(--warn)':'var(--danger)'}">${b.val} <span style="font-size:0.7rem;color:var(--muted);font-weight:400">/ ${b.max}</span></div>
+            <div class="breakdown-bar"><div class="breakdown-fill" style="width:${Math.round((b.val/b.max)*100)}%"></div></div>
+          </div>`).join("")}
+      </div>
+
+      ${!passed ? `
+        <div style="text-align:left;margin-bottom:1.5rem">
+          <div class="modal-section-title" style="font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--warn);margin-bottom:1rem">What to improve</div>
+          <div class="improve-list">
+            ${improveItems.map(i=>`<div class="improve-item">${i}</div>`).join("")}
+          </div>
+        </div>` : ""}
+
+      <div class="pass-actions">
+        ${passed
+          ? `<a class="btn-jobs" href="jobs.html?skill=${encodeURIComponent(profile.skill)}">View ${profile.skill} Jobs →</a>
+             <button class="btn-retry" onclick="location.href='skills.html'">Explore Your Skill Roadmap</button>`
+          : `<button class="btn-retry" onclick="retryQuiz()">Retake Knowledge Check</button>
+             <a class="btn-jobs" style="background:transparent;border:1.5px solid rgba(0,229,160,0.3);color:var(--accent);padding:0.9rem;border-radius:10px;font-family:'Syne',sans-serif;font-weight:600;font-size:0.9rem;cursor:pointer;text-align:center" href="skills.html?skill=${encodeURIComponent(profile.skill)}">Study Your Roadmap First</a>`
+        }
+      </div>
+    </div>`;
+
+  // Animate ring and counter
+  setTimeout(() => {
+    document.getElementById("ring-fill").style.strokeDashoffset = offset;
+    let count = 0;
+    const interval = setInterval(() => {
+      count = Math.min(count + 2, score);
+      document.getElementById("score-display").textContent = count;
+      if (count >= score) clearInterval(interval);
+    }, 20);
+  }, 100);
+
+  document.getElementById("progress-fill").style.width = "100%";
+  document.getElementById("progress-fraction").textContent = "Complete";
+  document.getElementById("progress-label").textContent = "Your Score";
 }
 
-function submitTask() {
-  const file = window.task_file;
-  if (!file) { alert("Please select a file to upload."); return; }
-  saveVerif("task", { status: "review", filename: file.name, feedback: "Your document is under review by the VELA team. You'll hear back within 24–48 hours." });
-  renderCards();
-  updatePassport();
+function retryQuiz() {
+  quizAnswers = {};
+  currentStep = 9;
+  renderStep();
 }
 
-function submitVideo() {
-  const file = window.video_file;
-  if (!file) { alert("Please select a video file to upload."); return; }
-  saveVerif("video", { status: "review", filename: file.name, feedback: "Your video introduction is under review. You'll hear back within 24–48 hours." });
-  renderCards();
-  updatePassport();
-}
-
-function retryLayer(id) {
-  delete verifState[id];
-  localStorage.setItem("vela_verif", JSON.stringify(verifState));
-  if (id === "tools") toolAnswers = {};
-  renderCards();
-  setTimeout(() => toggleCard(id), 100);
-  updatePassport();
-}
-
-// ─── AI SCORING ───────────────────────────────────────────────────────────
-async function scoreWithAI(type, context, response) {
-  const prompts = {
-    comm: `You are a professional hiring assessor for VELA, a remote job platform for African professionals.
-Evaluate this professional written communication response for a ${candidate.skill} candidate.
-
-Context/Scenario: ${context}
-
-Candidate's Response:
-${response}
-
-Score from 0-100 based on:
-- Professional tone and language (25pts)
-- Clarity and structure (25pts)  
-- Relevance and addressing the scenario (25pts)
-- Grammar and written English quality (25pts)
-
-Respond in this exact format:
-SCORE: [number]
-VERDICT: [Passed/Failed]
-FEEDBACK: [3-4 sentences of specific, constructive feedback mentioning what they did well and what to improve]`,
-
-    interview: `You are a professional hiring assessor for VELA, a remote job platform for African professionals.
-Evaluate these mock interview responses from a ${candidate.skill} candidate applying for a remote role.
-
-${context}
-
-Score from 0-100 based on:
-- Clarity and communication (25pts)
-- Relevance and depth of answers (25pts)
-- Use of specific examples (25pts)
-- Professional confidence and tone (25pts)
-
-Respond in this exact format:
-SCORE: [number]
-VERDICT: [Passed/Failed]
-FEEDBACK: [4-5 sentences of specific, constructive feedback on their interview performance, what was strong and what needs work]`
-  };
-
-  try {
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 1000,
-        messages: [{ role: "user", content: prompts[type] }]
-      })
-    });
-    const data = await res.json();
-    const text = data.content?.[0]?.text || "";
-    const scoreMatch = text.match(/SCORE:\s*(\d+)/);
-    const verdictMatch = text.match(/VERDICT:\s*(Passed|Failed)/i);
-    const feedbackMatch = text.match(/FEEDBACK:\s*([\s\S]+)/);
-    const score = scoreMatch ? parseInt(scoreMatch[1]) : 50;
-    const passed = verdictMatch ? verdictMatch[1].toLowerCase() === "passed" : score >= 60;
-    const feedback = feedbackMatch ? feedbackMatch[1].trim() : text;
-    return { score, passed, feedback };
-  } catch (e) {
-    // Fallback scoring if API unavailable
-    const wordCount = response.split(" ").length;
-    const score = Math.min(Math.max(wordCount * 2, 30), 85);
-    const passed = score >= 60;
-    return {
-      score,
-      passed,
-      feedback: passed
-        ? `Your response showed good professional communication. Your writing demonstrated relevant knowledge and appropriate tone for a ${candidate.skill} role. To strengthen future responses, add more specific examples and quantifiable outcomes.`
-        : `Your response needs development. Try to be more specific in your answers, use professional language throughout, and address all parts of the scenario. Review professional communication guides and try again.`
-    };
-  }
-}
-
-// ─── SAVE STATE ───────────────────────────────────────────────────────────
-function saveVerif(id, result) {
-  verifState[id] = {
-    status: result.status || (result.passed ? "passed" : "failed"),
-    score: result.score,
-    feedback: result.feedback,
-    filename: result.filename,
-    timestamp: new Date().toISOString(),
-  };
-  localStorage.setItem("vela_verif", JSON.stringify(verifState));
-}
-
-// ─── INIT ─────────────────────────────────────────────────────────────────
-updatePassport();
-renderCards();
-// Auto-open first incomplete layer
-const firstIncomplete = LAYERS.find(l => !verifState[l.id] || verifState[l.id].status === "failed");
-if (firstIncomplete) setTimeout(() => toggleCard(firstIncomplete.id), 300);
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+renderStep();
 </script>
 </body>
 </html>
