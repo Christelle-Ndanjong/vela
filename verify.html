@@ -231,8 +231,22 @@
 
     @media (max-width: 768px) {
       .nav-links { display: none; }
-      .passport { flex-direction: column; }
-      .verif-header { flex-wrap: wrap; }
+      .passport { flex-direction: column; gap: 1rem; }
+      .verif-header { flex-wrap: wrap; gap: 0.5rem; }
+      .verif-container { padding: 1.25rem 4%; }
+      .verif-card { padding: 1.25rem; border-radius: 14px; }
+      .verif-card-header { padding: 1rem; flex-wrap: wrap; gap: 0.5rem; }
+      .verif-card-body { padding: 1.25rem; }
+      .score-display { font-size: 2.5rem; }
+      .feedback-box { padding: 1rem; }
+      .options-grid { grid-template-columns: 1fr; }
+      textarea { font-size: 0.95rem; }
+      .btn-submit { width: 100%; padding: 0.9rem; }
+      .passport-layers { gap: 0.4rem; }
+    }
+    @media (max-width: 400px) {
+      .verif-card-header h3 { font-size: 0.85rem; }
+      .passport-score { font-size: 1.8rem; }
     }
   </style>
 </head>
