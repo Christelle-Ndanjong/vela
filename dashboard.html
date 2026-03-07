@@ -241,10 +241,23 @@
       .main-grid { grid-template-columns: 1fr 1fr; }
       .bottom-row { grid-template-columns: 1fr; }
     }
-    @media (max-width: 640px) {
+    @media (max-width: 768px) {
       .nav-links { display: none; }
       .main-grid { grid-template-columns: 1fr; }
       .stats-grid { grid-template-columns: 1fr 1fr; }
+      .dashboard-wrap { padding: 1.25rem 4%; }
+      .welcome-header { padding: 1.5rem; }
+      .welcome-name { font-size: 1.6rem; }
+      .score-ring-wrap { width: 110px; height: 110px; }
+      .next-action { padding: 1.1rem 1.25rem; flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+      .next-action-btn { width: 100%; text-align: center; }
+      .card { padding: 1.25rem; }
+      .jobs-grid { grid-template-columns: 1fr; }
+      .verif-layer-row { flex-wrap: wrap; gap: 0.5rem; }
+    }
+    @media (max-width: 400px) {
+      .stats-grid { grid-template-columns: 1fr; }
+      .welcome-name { font-size: 1.3rem; }
     }
   </style>
 </head>
