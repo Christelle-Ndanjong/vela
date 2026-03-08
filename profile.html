@@ -543,7 +543,14 @@ function back() {
 
 function choose(key, val, el, group) {
   profile[key] = val;
-  document.querySelectorAll(`.${group}`).forEach(e => e.classList.remove("selected"));
+  // Try group class first, fall back to siblings in same parent grid
+  const byGroup = document.querySelectorAll(`.${group}`);
+  if (byGroup.length > 0) {
+    byGroup.forEach(e => e.classList.remove("selected"));
+  } else {
+    // fallback: deselect all choice-cards in the same grid
+    el.closest(".choice-grid")?.querySelectorAll(".choice-card").forEach(e => e.classList.remove("selected"));
+  }
   el.classList.add("selected");
 }
 
@@ -625,7 +632,7 @@ const steps = [
         {val:"phd",icon:"⭐",label:"PhD / Doctorate",desc:"Research doctorate"},
         {val:"other",icon:"📋",label:"Professional Cert",desc:"Industry certification or training"},
       ].map(o=>`
-        <div class="choice-card ${profile.education===o.val?"selected":""}" onclick="choose('education','${o.val}',this,'edu-opt')">
+        <div class="choice-card ${profile.education===o.val?"selected":""}" onclick="choose('education','${o.val}',this,'edu-opt')" class="choice-card edu-opt ${profile.education===o.val?'selected':''}">
           <div class="choice-icon">${o.icon}</div>
           <div class="choice-text"><div class="choice-label">${o.label}</div><div class="choice-desc">${o.desc}</div></div>
           <div class="choice-check">✓</div>
