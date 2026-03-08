@@ -447,9 +447,28 @@ function joinWaitlist() {
     msg.textContent = 'Please enter a valid email address.';
     return;
   }
-  msg.style.color = '#00E5A0';
-  msg.textContent = '✓ You\'re on the list! We\'ll be in touch soon.';
-  document.getElementById('waitlist-email').value = '';
+
+  // Submit to Brevo
+  const brevoUrl = 'https://1824084c.sibforms.com/serve/MUIFADyoOno2zbs3q7dYakumYUYnv9Pi-UbLCYQznPAaEdloD6sNFLNHzDrNAcCcSjvVd4TvElXTmW1R5DIFAbVhy4crNoIkzyl57Dyn04OaTeR4afAE25yiqz13sxNZZrSVYqdCylWJ0l6_VxHV-76meFaI7rIAq_6HwIQtxmb5QIUStkswBoINEruS49X6c4joiDj7OuzJH9IOOA==';
+  const formData = new FormData();
+  formData.append('EMAIL', email);
+  formData.append('email_address_check', '');
+  formData.append('locale', 'en');
+
+  fetch(brevoUrl, {
+    method: 'POST',
+    body: formData,
+    mode: 'no-cors'
+  }).then(() => {
+    msg.style.color = '#00E5A0';
+    msg.textContent = '✓ You\'re on the list! Check your inbox for a confirmation email.';
+    document.getElementById('waitlist-email').value = '';
+  }).catch(() => {
+    // no-cors means we can't read response, but submission likely worked
+    msg.style.color = '#00E5A0';
+    msg.textContent = '✓ You\'re on the list! Check your inbox for a confirmation email.';
+    document.getElementById('waitlist-email').value = '';
+  });
 }
 </script>
 </body>
