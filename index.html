@@ -1,825 +1,445 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>VELA — African Talent, Globally Placed</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg: #080C12;
-      --bg2: #0D1320;
+      --bg: #07090F;
+      --bg2: #0C1018;
       --surface: #111827;
       --border: rgba(255,255,255,0.07);
       --accent: #00E5A0;
       --accent2: #0096FF;
-      --text: #F0F4FF;
-      --muted: #6B7A99;
-      --card: #0F1A2E;
+      --text: #EEF2FF;
+      --muted: #64748B;
+      --card: #0E1521;
     }
-
     html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; min-height: 100vh; }
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 16px;
-      line-height: 1.6;
-      overflow-x: hidden;
-      min-height: 100vh;
-    }
-
-    main, section, div {
-      position: relative;
-      z-index: 1;
-    }
-
-    /* NOISE TEXTURE */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.4;
-    }
-
-    /* NAV */
+    /* ── NAV ── */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.25rem 5%;
-      backdrop-filter: blur(20px);
-      background: rgba(8,12,18,0.85);
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 6%;
+      backdrop-filter: blur(24px);
+      background: rgba(7,9,15,0.88);
       border-bottom: 1px solid var(--border);
     }
-
-    .logo {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: 1.6rem;
-      letter-spacing: 0.08em;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
-
+    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; letter-spacing: 0.1em; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
+    .nav-links { display: flex; gap: 1.75rem; list-style: none; align-items: center; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color 0.2s; }
     .nav-links a:hover { color: var(--text); }
+    .nav-cta { background: var(--accent) !important; color: #07090F !important; padding: 0.45rem 1.1rem; border-radius: 7px; font-weight: 700 !important; }
 
-    .nav-cta {
-      background: var(--accent);
-      color: #000 !important;
-      padding: 0.5rem 1.25rem;
-      border-radius: 6px;
-      font-weight: 600 !important;
-      transition: opacity 0.2s !important;
-    }
-
-    .nav-cta:hover { opacity: 0.85; }
-
-    /* HERO */
+    /* ── HERO ── */
     .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      min-height: 88vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
       text-align: center;
-      padding: 8rem 5% 5rem;
+      padding: 6rem 6% 5rem;
       position: relative;
+      overflow: hidden;
     }
-
-    .hero-glow {
-      position: absolute;
-      top: 20%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 700px;
-      height: 500px;
-      background: radial-gradient(ellipse, rgba(0,229,160,0.08) 0%, rgba(0,150,255,0.05) 40%, transparent 70%);
+    .hero::before {
+      content: '';
+      position: absolute; top: -30%; left: 50%; transform: translateX(-50%);
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(0,229,160,0.06) 0%, transparent 70%);
       pointer-events: none;
-      z-index: 0;
     }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: rgba(0,229,160,0.08);
-      border: 1px solid rgba(0,229,160,0.2);
-      color: var(--accent);
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.4rem 1rem;
-      border-radius: 100px;
-      margin-bottom: 2rem;
-      animation: fadeUp 0.6s ease both;
+    .hero-pill {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(0,229,160,0.08); border: 1px solid rgba(0,229,160,0.2);
+      color: var(--accent); font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.35rem 0.9rem; border-radius: 20px; margin-bottom: 2rem;
     }
-
-    .hero-badge span { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
-
+    .hero-pill::before { content: '●'; font-size: 0.5rem; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
     h1 {
       font-family: 'Syne', sans-serif;
-      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-size: clamp(2.6rem, 7vw, 5rem);
       font-weight: 800;
+      color: var(--text);
       line-height: 1.05;
       letter-spacing: -0.02em;
       margin-bottom: 1.5rem;
-      animation: fadeUp 0.6s 0.1s ease both;
+      max-width: 800px;
     }
-
-    h1 em {
-      font-style: normal;
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-sub {
-      font-size: clamp(1rem, 2vw, 1.25rem);
-      color: var(--muted);
-      max-width: 580px;
-      margin: 0 auto 3rem;
-      font-weight: 300;
-      animation: fadeUp 0.6s 0.2s ease both;
-    }
-
-    /* WAITLIST FORM */
-    .waitlist {
-      display: flex;
-      gap: 0.75rem;
-      max-width: 500px;
-      width: 100%;
-      margin: 0 auto 1rem;
-      animation: fadeUp 0.6s 0.3s ease both;
-    }
-
-    .waitlist input {
-      flex: 1;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 0.85rem 1.25rem;
-      border-radius: 8px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.95rem;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .waitlist input:focus { border-color: var(--accent); }
-    .waitlist input::placeholder { color: var(--muted); }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--accent), #00C080);
-      color: #000;
-      border: none;
-      padding: 0.85rem 1.75rem;
-      border-radius: 8px;
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 0.9rem;
-      letter-spacing: 0.03em;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: transform 0.2s, opacity 0.2s;
-    }
-
-    .btn-primary:hover { transform: translateY(-1px); opacity: 0.9; }
-
-    .hero-note {
-      color: var(--muted);
-      font-size: 0.8rem;
-      animation: fadeUp 0.6s 0.4s ease both;
-    }
-
-    .hero-note a { color: var(--accent); text-decoration: none; }
-
-    /* SOCIAL STRIP */
-    .social-strip {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      margin-top: 1.5rem;
-      animation: fadeUp 0.6s 0.5s ease both;
-    }
-
-    .social-btn {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 0.6rem 1.2rem;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      font-weight: 500;
-      text-decoration: none;
-      transition: border-color 0.2s, background 0.2s;
-    }
-
-    .social-btn:hover { border-color: var(--accent); background: rgba(0,229,160,0.05); }
-
-    /* STATS */
-    .stats {
-      display: flex;
-      justify-content: center;
-      gap: 3rem;
-      padding: 3rem 5%;
+    h1 .green { background: linear-gradient(135deg, var(--accent), #00C48C); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    h1 .blue { background: linear-gradient(135deg, var(--accent2), #60A5FA); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-sub { color: var(--muted); font-size: 1.05rem; max-width: 500px; margin: 0 auto 2.5rem; line-height: 1.75; }
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem; }
+    .btn-main { background: var(--accent); color: #07090F; padding: 0.9rem 2rem; border-radius: 10px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; text-decoration: none; transition: all 0.2s; }
+    .btn-main:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-ghost { background: transparent; border: 1.5px solid rgba(255,255,255,0.12); color: var(--text); padding: 0.9rem 2rem; border-radius: 10px; font-family: 'Syne', sans-serif; font-weight: 600; font-size: 0.95rem; text-decoration: none; transition: all 0.2s; }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.25); }
+    .hero-stats {
+      display: flex; gap: 2.5rem; justify-content: center; flex-wrap: wrap;
+      padding-top: 2.5rem;
       border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      background: var(--bg2);
-      flex-wrap: wrap;
+      width: 100%; max-width: 600px;
     }
+    .hero-stat-num { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800; color: var(--text); }
+    .hero-stat-lbl { font-size: 0.75rem; color: var(--muted); margin-top: 0.1rem; }
 
-    .stat { text-align: center; }
-
-    .stat-num {
-      font-family: 'Syne', sans-serif;
-      font-size: 2rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+    /* ── TABS ── */
+    .tabs-section { max-width: 1100px; margin: 0 auto; padding: 0 6% 6rem; }
+    .tabs-nav {
+      display: flex; gap: 0; margin-bottom: 2.5rem;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 0.35rem;
+      overflow-x: auto;
     }
-
-    .stat-label { color: var(--muted); font-size: 0.85rem; margin-top: 0.25rem; }
-
-    /* HOW IT WORKS */
-    .section {
-      padding: 6rem 5%;
-      max-width: 1100px;
-      margin: 0 auto;
-      background: transparent;
-      color: var(--text);
+    .tab-btn {
+      flex: 1; background: none; border: none; color: var(--muted);
+      font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600;
+      padding: 0.7rem 1rem; border-radius: 9px; cursor: pointer;
+      transition: all 0.2s; white-space: nowrap;
     }
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active { background: rgba(0,229,160,0.1); color: var(--accent); border: 1px solid rgba(0,229,160,0.2); }
+    .tab-panel { display: none; animation: fadeIn 0.25s ease; }
+    .tab-panel.active { display: block; }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
 
-    .section-label {
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 1rem;
-    }
+    /* ── HOW IT WORKS TAB ── */
+    .steps-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    .step-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.75rem; display: flex; gap: 1.25rem; align-items: flex-start; transition: border-color 0.2s; }
+    .step-card:hover { border-color: rgba(0,229,160,0.2); }
+    .step-num { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: rgba(0,229,160,0.2); line-height: 1; flex-shrink: 0; width: 2.5rem; }
+    .step-body h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 0.4rem; }
+    .step-body p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+    .step-cta { display: inline-block; margin-top: 0.75rem; font-size: 0.8rem; font-weight: 700; color: var(--accent); text-decoration: none; }
 
-    .section-title {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 800;
-      line-height: 1.1;
-      margin-bottom: 1rem;
-      color: var(--text);
-    }
+    /* ── SKILLS TAB ── */
+    .skills-intro { text-align: center; margin-bottom: 2rem; }
+    .skills-intro p { color: var(--muted); font-size: 0.9rem; max-width: 500px; margin: 0.5rem auto 0; }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 0.65rem; margin-bottom: 1.5rem; }
+    .skill-pill { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 0.9rem 0.75rem; text-align: center; text-decoration: none; display: block; transition: all 0.2s; }
+    .skill-pill:hover { border-color: rgba(0,229,160,0.3); background: rgba(0,229,160,0.04); transform: translateY(-2px); }
+    .sp-icon { font-size: 1.3rem; margin-bottom: 0.35rem; }
+    .sp-name { font-family: 'Syne', sans-serif; font-size: 0.78rem; font-weight: 700; color: var(--text); margin-bottom: 0.25rem; line-height: 1.3; }
+    .sp-badge { font-size: 0.65rem; font-weight: 700; }
+    .sp-badge.hot { color: var(--accent); }
+    .sp-badge.high { color: var(--accent2); }
+    .sp-badge.steady { color: var(--muted); }
+    .skills-cta { text-align: center; }
 
-    .section-sub {
-      color: var(--muted);
-      max-width: 520px;
-      margin-bottom: 3.5rem;
-      font-size: 1.05rem;
-    }
+    /* ── FOR CANDIDATES TAB ── */
+    .audience-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
+    .audience-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; }
+    .audience-icon { font-size: 1.8rem; margin-bottom: 0.75rem; }
+    .audience-title { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 0.4rem; }
+    .audience-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.6; }
+    .verify-steps { display: flex; flex-direction: column; gap: 0.65rem; margin-top: 1.5rem; }
+    .verify-step { display: flex; align-items: center; gap: 1rem; background: rgba(0,229,160,0.04); border: 1px solid rgba(0,229,160,0.1); border-radius: 10px; padding: 0.85rem 1rem; }
+    .vs-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.85rem; color: var(--accent); width: 1.5rem; flex-shrink: 0; }
+    .vs-text { font-size: 0.85rem; color: var(--text); font-weight: 500; }
+    .vs-desc { font-size: 0.78rem; color: var(--muted); }
 
-    /* STEPS */
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.5rem;
-    }
+    /* ── FOR EMPLOYERS TAB ── */
+    .employer-hero { background: linear-gradient(135deg, rgba(0,150,255,0.08), rgba(0,229,160,0.05)); border: 1px solid rgba(0,150,255,0.15); border-radius: 16px; padding: 2rem; margin-bottom: 1.5rem; text-align: center; }
+    .employer-hero h3 { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 800; color: var(--text); margin-bottom: 0.5rem; }
+    .employer-hero p { color: var(--muted); font-size: 0.88rem; max-width: 500px; margin: 0 auto 1.25rem; }
+    .employer-stats { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .emp-stat { text-align: center; }
+    .emp-stat-num { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--accent2); }
+    .emp-stat-lbl { font-size: 0.72rem; color: var(--muted); }
+    .employer-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+    .emp-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; }
+    .emp-card-icon { font-size: 1.4rem; margin-bottom: 0.5rem; }
+    .emp-card-title { font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 700; color: var(--text); margin-bottom: 0.35rem; }
+    .emp-card-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+    .btn-employer { display: inline-block; background: var(--accent2); color: #fff; padding: 0.75rem 1.75rem; border-radius: 9px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.88rem; text-decoration: none; transition: opacity 0.2s; margin-top: 1.25rem; }
 
-    .step {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 2rem;
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.3s, transform 0.3s;
-    }
+    /* ── WAITLIST ── */
+    .waitlist-section { background: var(--bg2); border-top: 1px solid var(--border); padding: 5rem 6%; text-align: center; }
+    .waitlist-section h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 800; color: var(--text); margin-bottom: 0.75rem; }
+    .waitlist-section p { color: var(--muted); font-size: 0.95rem; margin-bottom: 2rem; }
+    .waitlist-form { display: flex; gap: 0.75rem; justify-content: center; max-width: 480px; margin: 0 auto; }
+    .waitlist-input { flex: 1; background: var(--card); border: 1.5px solid var(--border); color: var(--text); padding: 0.85rem 1rem; border-radius: 10px; font-size: 0.9rem; font-family: 'DM Sans', sans-serif; outline: none; transition: border-color 0.2s; }
+    .waitlist-input:focus { border-color: rgba(0,229,160,0.4); }
+    .waitlist-input::placeholder { color: var(--muted); }
+    .waitlist-btn { background: var(--accent); color: #07090F; border: none; padding: 0.85rem 1.5rem; border-radius: 10px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.88rem; cursor: pointer; white-space: nowrap; transition: opacity 0.2s; }
+    .waitlist-btn:hover { opacity: 0.88; }
+    .waitlist-note { font-size: 0.75rem; color: var(--muted); margin-top: 0.75rem; }
 
-    .step:hover { border-color: rgba(0,229,160,0.3); transform: translateY(-4px); }
+    /* ── FOOTER ── */
+    footer { padding: 2rem 6%; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); }
+    .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { color: var(--muted); font-size: 0.8rem; text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--text); }
+    .footer-copy { font-size: 0.75rem; color: var(--muted); }
 
-    .step::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
+    /* ── SHARED BTN ── */
+    .btn-outline { background: transparent; border: 1.5px solid rgba(0,229,160,0.25); color: var(--accent); padding: 0.75rem 1.75rem; border-radius: 9px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.88rem; text-decoration: none; transition: all 0.2s; display: inline-block; }
+    .btn-outline:hover { background: rgba(0,229,160,0.06); }
 
-    .step:hover::before { opacity: 1; }
-
-    .step-num {
-      font-family: 'Syne', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--accent);
-      letter-spacing: 0.1em;
-      margin-bottom: 1rem;
-    }
-
-    .step-icon {
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
-    }
-
-    .step h3 {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.05rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-    }
-
-    .step p { color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
-
-    /* FOR WHO */
-    .audience {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      margin-top: 3.5rem;
-    }
-
-    .audience-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 2.5rem;
-      transition: border-color 0.3s;
-    }
-
-    .audience-card:hover { border-color: rgba(0,150,255,0.3); }
-
-    .audience-card h3 {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.3rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-    }
-
-    .audience-card ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-    }
-
-    .audience-card li {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.6rem;
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-
-    .audience-card li::before {
-      content: '→';
-      color: var(--accent);
-      flex-shrink: 0;
-      margin-top: 0.1rem;
-    }
-
-    /* VERIFICATION */
-    .verify-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 1rem;
-      margin-top: 3rem;
-    }
-
-    .verify-item {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.5rem;
-      text-align: center;
-      transition: border-color 0.3s, transform 0.3s;
-    }
-
-    .verify-item:hover { border-color: rgba(0,229,160,0.2); transform: translateY(-3px); }
-
-    .verify-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
-
-    .verify-item h4 {
-      font-family: 'Syne', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 700;
-      margin-bottom: 0.35rem;
-    }
-
-    .verify-item p { color: var(--muted); font-size: 0.8rem; }
-
-    /* CTA SECTION */
-    .cta-section {
-      background: var(--bg2);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 6rem 5%;
-      text-align: center;
-    }
-
-    .cta-inner { max-width: 600px; margin: 0 auto; }
-
-    .cta-section h2 {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 800;
-      margin-bottom: 1rem;
-      line-height: 1.1;
-      color: var(--text);
-    }
-
-    .cta-section p { color: var(--muted); margin-bottom: 2.5rem; font-size: 1.05rem; }
-
-    .cta-buttons {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--text);
-      border: 1px solid var(--border);
-      padding: 0.85rem 1.75rem;
-      border-radius: 8px;
-      font-family: 'Syne', sans-serif;
-      font-weight: 600;
-      font-size: 0.9rem;
-      cursor: pointer;
-      text-decoration: none;
-      transition: border-color 0.2s, background 0.2s;
-      display: inline-block;
-    }
-
-    .btn-secondary:hover { border-color: var(--accent); background: rgba(0,229,160,0.05); }
-
-    /* FOOTER */
-    footer {
-      padding: 2.5rem 5%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-top: 1px solid var(--border);
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
-    .footer-logo {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: 1.2rem;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .footer-text { color: var(--muted); font-size: 0.82rem; }
-
-    /* ANIMATIONS */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.8); }
-    }
-
-    /* SUCCESS STATE */
-    .success-msg {
-      display: none;
-      color: var(--accent);
-      font-size: 0.9rem;
-      margin-top: 0.5rem;
-      font-weight: 500;
-    }
-
-    /* RESPONSIVE */
+    /* ── MOBILE ── */
     @media (max-width: 768px) {
       .nav-links { display: none; }
-      .waitlist { flex-direction: column; align-items: stretch; }
-      .waitlist input { width: 100%; }
-      .audience { grid-template-columns: 1fr; }
-      .stats { gap: 1.5rem; padding: 2rem 5%; flex-wrap: wrap; }
-      .stat-num { font-size: 2rem; }
-      footer { justify-content: center; text-align: center; }
-      .steps { grid-template-columns: 1fr; gap: 1rem; }
-      .hero { padding: 7rem 5% 4rem; }
       h1 { font-size: 2.4rem; }
-      .hero-sub { font-size: 0.95rem; }
-      #skills-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 0.6rem !important; }
-      .audience-card { padding: 1.25rem; }
-      .section { padding: 3rem 5%; }
-      .section-title { font-size: 1.6rem; }
+      .hero { padding: 5rem 5% 3.5rem; min-height: auto; }
+      .hero-stats { gap: 1.5rem; }
+      .hero-btns { flex-direction: column; align-items: center; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .audience-grid { grid-template-columns: 1fr; }
+      .employer-cards { grid-template-columns: 1fr; }
+      .tabs-nav { gap: 0.25rem; }
+      .tab-btn { font-size: 0.78rem; padding: 0.6rem 0.75rem; }
+      .waitlist-form { flex-direction: column; }
+      .waitlist-input { width: 100%; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+      .skills-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 400px) {
-      #skills-grid { grid-template-columns: 1fr 1fr !important; }
       h1 { font-size: 2rem; }
+      .hero-stat-num { font-size: 1.3rem; }
     }
-    .skill-pill-home { background:#0F1A2E; border:1.5px solid rgba(255,255,255,0.07); border-radius:12px; padding:1rem; text-align:center; text-decoration:none; display:block; transition:all 0.2s; }
-    .skill-pill-home:hover { border-color:rgba(0,229,160,0.3); background:rgba(0,229,160,0.04); }
-    .sph-icon { font-size:1.4rem; margin-bottom:0.4rem; }
-    .sph-name { font-family:'Syne',sans-serif; font-size:0.82rem; font-weight:700; color:#F0F4FF; margin-bottom:0.3rem; line-height:1.3; }
-    .sph-badge { font-size:0.68rem; font-weight:700; }
-    .sph-badge.hot { color:#00E5A0; }
-    .sph-badge.vhigh { color:#00E5A0; }
-    .sph-badge.high { color:#0096FF; }
-    .sph-badge.steady { color:#6B7A99; }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav>
-    <div class="logo">VELA</div>
-    <ul class="nav-links">
-      <li><a href="#how">How It Works</a></li>
-      <li><a href="skills.html">Skills</a></li>
+<!-- NAV -->
+<nav>
+  <a class="logo" href="index.html">VELA</a>
+  <ul class="nav-links">
+    <li><a href="skills.html">Skills</a></li>
     <li><a href="experience.html">Get Experience</a></li>
-      <li><a href="jobs.html">Jobs</a></li>
-      <li><a href="employers.html">For Employers</a></li>
-      <li><a href="profile.html" class="nav-cta">Get Started</a></li>
-    </ul>
-  </nav>
+    <li><a href="jobs.html">Jobs</a></li>
+    <li><a href="portfolio.html">Portfolio</a></li>
+    <li><a href="employers.html">For Employers</a></li>
+    <li><a href="profile.html" class="nav-cta">Get Started</a></li>
+  </ul>
+</nav>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-glow"></div>
-
-    <div class="hero-badge">
-      <span></span>
-      Now Building · Join the Waitlist
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-pill">Now in Beta · Join the Waitlist</div>
+  <h1>African Talent.<br/><span class="green">Verified.</span> <span class="blue">Placed.</span></h1>
+  <p class="hero-sub">VELA connects verified African professionals to remote jobs worldwide — with the skills, evidence, and credibility to get hired with confidence.</p>
+  <div class="hero-btns">
+    <a href="profile.html" class="btn-main">Build Your Profile →</a>
+    <a href="employers.html" class="btn-ghost">For Employers →</a>
+  </div>
+  <div class="hero-stats">
+    <div>
+      <div class="hero-stat-num">2,400+</div>
+      <div class="hero-stat-lbl">Candidates</div>
     </div>
-
-    <h1>African Talent.<br/><em>Verified. Placed.</em><br/>Global.</h1>
-
-    <p class="hero-sub">
-      VELA connects verified African professionals to remote opportunities worldwide — with the skills, evidence, and credibility to get hired with confidence.
-    </p>
-
-    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.5rem">
-      <a href="profile.html" style="background:linear-gradient(135deg,#00E5A0,#00C080);color:#000;border:none;padding:1rem 2.2rem;border-radius:9px;font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;letter-spacing:0.03em;cursor:pointer;text-decoration:none;display:inline-block;transition:opacity 0.2s">Build Your Profile →</a>
-      <a href="employers.html" style="background:transparent;color:#F0F4FF;border:1.5px solid rgba(255,255,255,0.15);padding:1rem 2rem;border-radius:9px;font-family:'Syne',sans-serif;font-weight:600;font-size:1rem;cursor:pointer;text-decoration:none;display:inline-block;transition:all 0.2s">For Employers →</a>
+    <div>
+      <div class="hero-stat-num">54</div>
+      <div class="hero-stat-lbl">Countries</div>
     </div>
-
-    <div class="waitlist" id="waitlist">
-      <input type="email" id="email-input" placeholder="Enter your email address" />
-      <button class="btn-primary" onclick="handleWaitlist()">Join Waitlist</button>
+    <div>
+      <div class="hero-stat-num">15</div>
+      <div class="hero-stat-lbl">Skill Paths</div>
     </div>
-    <p class="success-msg" id="success-msg">✓ You're on the list. We'll be in touch soon.</p>
-    <p class="hero-note">Free to join. Free until you're placed. <a href="#how">Learn how it works →</a></p>
-
-    <div class="social-strip">
-      <a href="https://facebook.com" target="_blank" class="social-btn">
-        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-        Follow on Facebook
-      </a>
-      <a href="https://linkedin.com" target="_blank" class="social-btn">
-        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-        Connect on LinkedIn
-      </a>
-    </div>
-  </section>
-
-  <!-- STATS -->
-  <div class="stats">
-    <div class="stat">
-      <div class="stat-num">54</div>
-      <div class="stat-label">African Countries Served</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">100%</div>
-      <div class="stat-label">Remote Opportunities</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">Free</div>
-      <div class="stat-label">Until You're Placed</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">AI</div>
-      <div class="stat-label">Powered Verification</div>
+    <div>
+      <div class="hero-stat-num">Free</div>
+      <div class="hero-stat-lbl">Until Hired</div>
     </div>
   </div>
+</section>
 
-  <!-- TOP SKILLS SECTION -->
-  <div style="background:var(--bg2);border-top:1px solid rgba(255,255,255,0.07);border-bottom:1px solid rgba(255,255,255,0.07);padding:4rem 5%">
-    <div style="max-width:1100px;margin:0 auto">
-      <div style="text-align:center;margin-bottom:2.5rem">
-        <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#00E5A0;margin-bottom:0.75rem">In-Demand Skills 2026</div>
-        <h2 style="font-family:'Syne',sans-serif;font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:800;color:#F0F4FF;margin-bottom:0.75rem;line-height:1.1">The 15 highest-recruiting<br/>remote skills right now</h2>
-        <p style="color:#6B7A99;font-size:0.95rem;max-width:500px;margin:0 auto">Every skill on VELA comes with a full learning roadmap, tool list, salary data, and direct job matches. Choose yours and start building.</p>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:0.75rem;margin-bottom:2rem" id="skills-grid">
-        <a href="skills.html" class="skill-pill-home"><div class="sph-icon">🎧</div><div class="sph-name">Customer Service</div><div class="sph-badge high">High demand</div></a>
-        <a href="skills.html" class="skill-pill-home"><div class="sph-icon">🤝</div><div class="sph-name">Virtual Assistant</div><div class="sph-badge vhigh">Very high demand</div></a>
-        <a href="skills.html" class="skill-pill-home"><div class="sph-icon">📊</div><div class="sph-name">Data Analysis</div><div class="sph-badge high">High demand</div></a>
-        <a href="skills.html" class="skill-pill-home"><div class="sph-icon">🤖</div><div class="sph-name">Prompt Engineering & AI</div><div class="sph-badge hot">🔥 Fastest growing</div></a>
-        <a href="skills.html" class="skill-pill-home"><div class="sph-icon">📱</div><div class="sph-name">Social Media</div><div class="sph-badge high">High demand</div></a>
-        <a href="skills.html" class="skill-pill-home"><div class="sph-icon">✍️</div><div class="sph-name">Content Writing</div><div class="sph-badge high">High demand</div></a>
-        <a href="skills.html" class="skill-pill-home"><div class="sph-icon">🔍</div><div class="sph-name">SEO Specialist</div><div class="sph-badge steady">Steady demand</div></a>
-        <a href="skills.html" class="skill-pill-home"><div class="sph-icon">💼</div><div class="sph-name">Project Management</div><div class="sph-badge high">High demand</div></a>
-        <a href="skills.html" class="skill-pill-home"><div class="sph-icon">🎨</div><div class="sph-name">UI/UX Design</div><div class="sph-badge high">High demand</div></a>
-        <a href="skills.html" class="skill-pill-home"><div class="sph-icon">📧</div><div class="sph-name">Email Marketing</div><div class="sph-badge steady">Steady demand</div></a>
-        <a href="skills.html" class="skill-pill-home"><div class="sph-icon">🔐</div><div class="sph-name">Cybersecurity</div><div class="sph-badge vhigh">Very high demand</div></a>
-        <a href="skills.html" class="skill-pill-home"><div class="sph-icon">📚</div><div class="sph-name">Online Tutoring</div><div class="sph-badge steady">Growing</div></a>
-        <a href="skills.html" class="skill-pill-home"><div class="sph-icon">💰</div><div class="sph-name">Bookkeeping</div><div class="sph-badge steady">Steady demand</div></a>
-        <a href="skills.html" class="skill-pill-home"><div class="sph-icon">🛒</div><div class="sph-name">E-Commerce</div><div class="sph-badge high">High demand</div></a>
-        <a href="skills.html" class="skill-pill-home"><div class="sph-icon">👥</div><div class="sph-name">HR & Recruitment</div><div class="sph-badge steady">Steady demand</div></a>
-      </div>
-      <div style="text-align:center">
-        <a href="skills.html" style="background:transparent;border:1.5px solid rgba(0,229,160,0.3);color:#00E5A0;padding:0.85rem 2rem;border-radius:9px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;text-decoration:none;display:inline-block;transition:all 0.2s">Explore All Skills & Roadmaps →</a>
-      </div>
-    </div>
+<!-- TABS -->
+<div class="tabs-section">
+  <div class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('how', this)">How It Works</button>
+    <button class="tab-btn" onclick="switchTab('skills', this)">Skill Paths</button>
+    <button class="tab-btn" onclick="switchTab('candidates', this)">For Candidates</button>
+    <button class="tab-btn" onclick="switchTab('employers', this)">For Employers</button>
   </div>
 
-  <!-- HOW IT WORKS -->
-  <div style="background: var(--bg);">
-  <section class="section" id="how">
-    <div class="section-label">The Process</div>
-    <h2 class="section-title">From Profile to<br/>Placed — Step by Step</h2>
-    <p class="section-sub">No guesswork. No cold applications into the void. A clear, verified pathway from where you are to where you want to be.</p>
-
-    <div class="steps">
-      <div class="step">
+  <!-- TAB 1: HOW IT WORKS -->
+  <div class="tab-panel active" id="tab-how">
+    <div class="steps-grid">
+      <div class="step-card">
         <div class="step-num">01</div>
-        <div class="step-icon">🧠</div>
-        <h3>Build Your Profile</h3>
-        <p>Answer questions in plain language. Our AI builds a Western-market-ready professional profile from your responses — degree, experience, and all.</p>
+        <div class="step-body">
+          <h3>Choose Your Skill Path</h3>
+          <p>Pick from 15 in-demand remote skills. Each comes with a full learning roadmap, free resources, and tool list so you know exactly what job-ready looks like.</p>
+          <a href="skills.html" class="step-cta">Explore Skills →</a>
+        </div>
       </div>
-      <div class="step">
+      <div class="step-card">
         <div class="step-num">02</div>
-        <div class="step-icon">📊</div>
-        <h3>Get Your Readiness Score</h3>
-        <p>AI assesses you honestly against real job requirements. You see exactly where you stand and what to improve before you apply.</p>
+        <div class="step-body">
+          <h3>Build Your Profile & Get Scored</h3>
+          <p>Answer 10 questions about your background and goals. VELA's AI gives you a Readiness Score out of 100 — honest, independent, not self-reported.</p>
+          <a href="profile.html" class="step-cta">Build Profile →</a>
+        </div>
       </div>
-      <div class="step">
+      <div class="step-card">
         <div class="step-num">03</div>
-        <div class="step-icon">🎯</div>
-        <h3>Train the Gap</h3>
-        <p>If skills are missing, our learning layer shows you exactly what to learn — focused, in-demand, and tied directly to the jobs you want.</p>
+        <div class="step-body">
+          <h3>Get Verified in 5 Layers</h3>
+          <p>Communication test, tool knowledge quiz, mock interview, task simulation, video introduction. Three scored by AI instantly. Your evidence profile is built automatically.</p>
+          <a href="verify.html" class="step-cta">Start Verification →</a>
+        </div>
       </div>
-      <div class="step">
+      <div class="step-card">
         <div class="step-num">04</div>
-        <div class="step-icon">✅</div>
-        <h3>Get Verified</h3>
-        <p>Complete assessments, mock interviews, and task simulations. Build an evidence profile employers can trust before they meet you.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">05</div>
-        <div class="step-icon">🌍</div>
-        <h3>Get Placed</h3>
-        <p>Matched to remote roles that fit your verified profile. Employers see your score, your evidence, your work — not just your CV.</p>
+        <div class="step-body">
+          <h3>Apply to Real Remote Jobs</h3>
+          <p>Build your portfolio, add real projects, and apply directly to remote jobs updated daily from companies hiring worldwide — matched to your skill path.</p>
+          <a href="jobs.html" class="step-cta">Browse Jobs →</a>
+        </div>
       </div>
     </div>
-  </section>
   </div>
 
-  <!-- FOR WHO -->
-  <div style="background: var(--bg);">
-  <section class="section" id="for-who" style="padding-top:0">
-    <div class="section-label">Who It's For</div>
-    <h2 class="section-title">Built for Both<br/>Sides of the Table</h2>
-    <p class="section-sub">Whether you're a talented African professional or a company looking for reliable remote talent — VELA works for you.</p>
+  <!-- TAB 2: SKILLS -->
+  <div class="tab-panel" id="tab-skills">
+    <div class="skills-intro">
+      <p>15 in-demand remote skill paths — each with a full roadmap, free learning resources, and live job matches.</p>
+    </div>
+    <div class="skills-grid">
+      <a href="skills.html" class="skill-pill"><div class="sp-icon">🎧</div><div class="sp-name">Customer Service</div><div class="sp-badge high">High demand</div></a>
+      <a href="skills.html" class="skill-pill"><div class="sp-icon">🤝</div><div class="sp-name">Virtual Assistant</div><div class="sp-badge hot">Very high</div></a>
+      <a href="skills.html" class="skill-pill"><div class="sp-icon">📊</div><div class="sp-name">Data Analysis</div><div class="sp-badge high">High demand</div></a>
+      <a href="skills.html" class="skill-pill"><div class="sp-icon">🤖</div><div class="sp-name">Prompt Engineering & AI</div><div class="sp-badge hot">🔥 Fastest growing</div></a>
+      <a href="skills.html" class="skill-pill"><div class="sp-icon">📱</div><div class="sp-name">Social Media</div><div class="sp-badge high">High demand</div></a>
+      <a href="skills.html" class="skill-pill"><div class="sp-icon">✍️</div><div class="sp-name">Content Writing</div><div class="sp-badge high">High demand</div></a>
+      <a href="skills.html" class="skill-pill"><div class="sp-icon">🔍</div><div class="sp-name">SEO Specialist</div><div class="sp-badge steady">Steady demand</div></a>
+      <a href="skills.html" class="skill-pill"><div class="sp-icon">💼</div><div class="sp-name">Project Management</div><div class="sp-badge high">High demand</div></a>
+      <a href="skills.html" class="skill-pill"><div class="sp-icon">🎨</div><div class="sp-name">UI/UX Design</div><div class="sp-badge high">High demand</div></a>
+      <a href="skills.html" class="skill-pill"><div class="sp-icon">📧</div><div class="sp-name">Email Marketing</div><div class="sp-badge steady">Steady demand</div></a>
+      <a href="skills.html" class="skill-pill"><div class="sp-icon">🔐</div><div class="sp-name">Cybersecurity</div><div class="sp-badge hot">Very high</div></a>
+      <a href="skills.html" class="skill-pill"><div class="sp-icon">📚</div><div class="sp-name">Online Tutoring</div><div class="sp-badge steady">Growing</div></a>
+      <a href="skills.html" class="skill-pill"><div class="sp-icon">💰</div><div class="sp-name">Bookkeeping</div><div class="sp-badge steady">Steady demand</div></a>
+      <a href="skills.html" class="skill-pill"><div class="sp-icon">🛒</div><div class="sp-name">E-Commerce</div><div class="sp-badge high">High demand</div></a>
+      <a href="skills.html" class="skill-pill"><div class="sp-icon">👥</div><div class="sp-name">HR & Recruitment</div><div class="sp-badge steady">Steady demand</div></a>
+    </div>
+    <div class="skills-cta">
+      <a href="skills.html" class="btn-outline">View All Skills & Roadmaps →</a>
+    </div>
+  </div>
 
-    <div class="audience">
+  <!-- TAB 3: FOR CANDIDATES -->
+  <div class="tab-panel" id="tab-candidates">
+    <div class="audience-grid">
       <div class="audience-card">
-        <h3>🌍 For African Professionals</h3>
-        <ul>
-          <li>Degree holders with no local opportunity</li>
-          <li>MSc and BSc graduates ready for global work</li>
-          <li>People learning in-demand skills right now</li>
-          <li>Anyone tired of applying and hearing nothing</li>
-          <li>Those who want to earn globally without relocating</li>
-        </ul>
+        <div class="audience-icon">🎓</div>
+        <div class="audience-title">Degree holders not getting callbacks</div>
+        <div class="audience-desc">You have the qualification. VELA gives you the verified proof that employers in the US, UK, and Europe can actually trust.</div>
       </div>
       <div class="audience-card">
-        <h3>🏢 For Remote Employers</h3>
-        <ul>
-          <li>Companies open to global remote hiring</li>
-          <li>Startups needing reliable VA and CS talent</li>
-          <li>Businesses frustrated with cold resume piles</li>
-          <li>Teams wanting pre-vetted, verified candidates</li>
-          <li>Employers who want to reduce hiring risk</li>
-        </ul>
+        <div class="audience-icon">📖</div>
+        <div class="audience-title">People learning a new skill</div>
+        <div class="audience-desc">VELA's skill roadmaps show you exactly what to learn, in what order, using free resources — then verify you when you're ready.</div>
+      </div>
+      <div class="audience-card">
+        <div class="audience-icon">💼</div>
+        <div class="audience-title">Professionals switching to remote</div>
+        <div class="audience-desc">Already working? VELA translates your existing experience into an internationally credible profile with independent scores.</div>
+      </div>
+      <div class="audience-card">
+        <div class="audience-icon">🌱</div>
+        <div class="audience-title">Fresh graduates with no experience</div>
+        <div class="audience-desc">Use VELA's volunteering and internship directory to build real portfolio evidence — then verify it and apply with confidence.</div>
       </div>
     </div>
-  </section>
+    <div>
+      <p style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:1rem">Your 5-layer verification</p>
+      <div class="verify-steps">
+        <div class="verify-step"><div class="vs-num">01</div><div><div class="vs-text">Communication Test</div><div class="vs-desc">Professional English, clarity, tone — scored by AI</div></div></div>
+        <div class="verify-step"><div class="vs-num">02</div><div><div class="vs-text">Tool Knowledge Quiz</div><div class="vs-desc">Skill-specific tools — 20 questions, instant score</div></div></div>
+        <div class="verify-step"><div class="vs-num">03</div><div><div class="vs-text">Mock Interview</div><div class="vs-desc">Real interview questions — AI-assessed response</div></div></div>
+        <div class="verify-step"><div class="vs-num">04</div><div><div class="vs-text">Task Simulation</div><div class="vs-desc">Do the actual work — show don't tell</div></div></div>
+        <div class="verify-step"><div class="vs-num">05</div><div><div class="vs-text">Video Introduction</div><div class="vs-desc">60-second video — employers see and hear you</div></div></div>
+      </div>
+      <div style="margin-top:1.5rem">
+        <a href="profile.html" class="btn-main">Start My Profile →</a>
+      </div>
+    </div>
   </div>
 
-  <!-- VERIFICATION -->
-  <div style="background: var(--bg);">
-  <section class="section" id="verify" style="padding-top:0">
-    <div class="section-label">The VELA Standard</div>
-    <h2 class="section-title">Every Candidate<br/>Comes with Evidence</h2>
-    <p class="section-sub">We don't just list people. We verify them. Employers make informed decisions — not leaps of faith.</p>
-
-    <div class="verify-grid">
-      <div class="verify-item">
-        <div class="verify-icon">🎥</div>
-        <h4>Video Introduction</h4>
-        <p>AI-scored communication clarity and professionalism</p>
+  <!-- TAB 4: FOR EMPLOYERS -->
+  <div class="tab-panel" id="tab-employers">
+    <div class="employer-hero">
+      <h3>Hire verified African talent — remotely, reliably.</h3>
+      <p>Stop reviewing CVs that tell you nothing. VELA candidates come with independent scores, skill evidence, and portfolio proof — before you meet them.</p>
+      <div class="employer-stats">
+        <div class="emp-stat"><div class="emp-stat-num">2,400+</div><div class="emp-stat-lbl">Verified Candidates</div></div>
+        <div class="emp-stat"><div class="emp-stat-num">54</div><div class="emp-stat-lbl">Countries</div></div>
+        <div class="emp-stat"><div class="emp-stat-num">94%</div><div class="emp-stat-lbl">Satisfaction Rate</div></div>
+        <div class="emp-stat"><div class="emp-stat-num">$0</div><div class="emp-stat-lbl">To Browse</div></div>
       </div>
-      <div class="verify-item">
-        <div class="verify-icon">📝</div>
-        <h4>Task Simulation</h4>
-        <p>Real role-specific tasks completed and evaluated</p>
+      <a href="employers.html" class="btn-employer">Browse Talent →</a>
+    </div>
+    <div class="employer-cards">
+      <div class="emp-card">
+        <div class="emp-card-icon">✅</div>
+        <div class="emp-card-title">Pre-verified profiles</div>
+        <div class="emp-card-desc">Every candidate has gone through 5 independent assessments before you see them.</div>
       </div>
-      <div class="verify-item">
-        <div class="verify-icon">🎤</div>
-        <h4>Interview Score</h4>
-        <p>Mock interview performance with detailed breakdown</p>
+      <div class="emp-card">
+        <div class="emp-card-icon">🌍</div>
+        <div class="emp-card-title">Global remote talent</div>
+        <div class="emp-card-desc">54 countries. English fluent. Timezone-flexible. Ready to work remotely from day one.</div>
       </div>
-      <div class="verify-item">
-        <div class="verify-icon">📈</div>
-        <h4>Skills Assessment</h4>
-        <p>Role-matched skill verification with percentile score</p>
-      </div>
-      <div class="verify-item">
-        <div class="verify-icon">🕐</div>
-        <h4>Reliability Score</h4>
-        <p>Timezone availability and response time track record</p>
-      </div>
-      <div class="verify-item">
-        <div class="verify-icon">🏅</div>
-        <h4>VELA Certified</h4>
-        <p>Verified badge that travels with every candidate profile</p>
+      <div class="emp-card">
+        <div class="emp-card-icon">💸</div>
+        <div class="emp-card-title">Free until you hire</div>
+        <div class="emp-card-desc">Browse all candidates free. Only pay $299 when you make a successful placement.</div>
       </div>
     </div>
-  </section>
   </div>
+</div>
 
-  <!-- CTA -->
-  <section class="cta-section">
-    <div class="cta-inner">
-      <h2>Your Talent Deserves<br/><em style="font-style:normal;background:linear-gradient(135deg,#00E5A0,#0096FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">a Global Stage</em></h2>
-      <p>Join the waitlist today. Free until you're placed. We're building this for you — and we want to hear from you while we build it.</p>
-      <div class="cta-buttons">
-        <button class="btn-primary" onclick="document.getElementById('email-input').focus();window.scrollTo({top:0,behavior:'smooth'})">Join the Waitlist</button>
-        <a href="https://facebook.com" target="_blank" class="btn-secondary">Join the Community</a>
-      </div>
-    </div>
-  </section>
+<!-- WAITLIST -->
+<div class="waitlist-section" id="waitlist">
+  <h2>Be first when VELA launches fully.</h2>
+  <p>Join the waitlist. We'll notify you when your skill path opens for verified placements.</p>
+  <div class="waitlist-form">
+    <input class="waitlist-input" type="email" placeholder="Enter your email address" id="waitlist-email"/>
+    <button class="waitlist-btn" onclick="joinWaitlist()">Join Waitlist</button>
+  </div>
+  <p class="waitlist-note" id="waitlist-msg">Free forever for candidates. No spam.</p>
+</div>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-logo">VELA</div>
-    <div class="footer-text">African Talent. Verified. Placed. Global.</div>
-    <div class="footer-text">© 2025 VELA. Building in public.</div>
-  </footer>
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">VELA</span>
+  <div class="footer-links">
+    <a href="skills.html">Skills</a>
+    <a href="experience.html">Get Experience</a>
+    <a href="jobs.html">Jobs</a>
+    <a href="employers.html">Employers</a>
+    <a href="profile.html">Get Started</a>
+  </div>
+  <span class="footer-copy">© 2026 VELA</span>
+</footer>
 
-  <script>
-    function handleWaitlist() {
-      const input = document.getElementById('email-input');
-      const msg = document.getElementById('success-msg');
-      const email = input.value.trim();
-      if (!email || !email.includes('@')) {
-        input.style.borderColor = '#ff4444';
-        setTimeout(() => input.style.borderColor = '', 1500);
-        return;
-      }
-      input.style.display = 'none';
-      document.querySelector('.btn-primary').style.display = 'none';
-      msg.style.display = 'block';
-      // In production: send email to your backend or Formspree
-      console.log('Waitlist signup:', email);
-    }
+<script>
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
 
-    document.getElementById('email-input').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') handleWaitlist();
-    });
-  </script>
+function joinWaitlist() {
+  const email = document.getElementById('waitlist-email').value.trim();
+  const msg = document.getElementById('waitlist-msg');
+  if (!email || !email.includes('@')) {
+    msg.style.color = '#FF6B6B';
+    msg.textContent = 'Please enter a valid email address.';
+    return;
+  }
+  msg.style.color = '#00E5A0';
+  msg.textContent = '✓ You\'re on the list! We\'ll be in touch soon.';
+  document.getElementById('waitlist-email').value = '';
+}
+</script>
 </body>
 </html>
