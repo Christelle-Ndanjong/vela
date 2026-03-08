@@ -3,473 +3,427 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>VELA — African Talent, Globally Placed</title>
+  <title>VELA — Remote Jobs for Africa</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #07090F;
-      --bg2: #0C1018;
-      --surface: #111827;
-      --border: rgba(255,255,255,0.07);
-      --accent: #00E5A0;
-      --accent2: #0096FF;
-      --text: #EEF2FF;
-      --muted: #64748B;
-      --card: #0E1521;
+      --bg: #080C12; --bg2: #0D1320; --surface: #111827;
+      --border: rgba(255,255,255,0.07); --accent: #00E5A0;
+      --accent2: #0096FF; --text: #F0F4FF; --muted: #6B7A99; --card: #0F1A2E;
     }
-    html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; min-height: 100vh; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
 
-    /* ── NAV ── */
+    /* NAV */
     nav {
       position: sticky; top: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 1.1rem 6%;
-      backdrop-filter: blur(24px);
-      background: rgba(7,9,15,0.88);
-      border-bottom: 1px solid var(--border);
+      padding: 1.1rem 5%; backdrop-filter: blur(20px);
+      background: rgba(8,12,18,0.92); border-bottom: 1px solid var(--border);
     }
-    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; letter-spacing: 0.1em; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
-    .nav-links { display: flex; gap: 1.75rem; list-style: none; align-items: center; }
-    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--text); }
-    .nav-cta { background: var(--accent) !important; color: #07090F !important; padding: 0.45rem 1.1rem; border-radius: 7px; font-weight: 700 !important; }
+    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem;
+      letter-spacing: 0.08em; background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      text-decoration: none; }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+    .nav-cta { background: var(--accent); color: #000 !important; padding: 0.45rem 1.1rem;
+      border-radius: 6px; font-weight: 700 !important; }
 
-    /* ── HERO ── */
-    .hero {
-      min-height: 88vh;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      text-align: center;
-      padding: 6rem 6% 5rem;
-      position: relative;
-      overflow: hidden;
+    /* HEADER */
+    .page-header {
+      padding: 3.5rem 5% 2rem; max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;
     }
-    .hero::before {
-      content: '';
-      position: absolute; top: -30%; left: 50%; transform: translateX(-50%);
-      width: 700px; height: 700px;
-      background: radial-gradient(circle, rgba(0,229,160,0.06) 0%, transparent 70%);
-      pointer-events: none;
+    .header-left h1 { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 800; color: var(--text); margin-bottom: 0.5rem; }
+    .header-left h1 span { background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .header-left p { color: var(--muted); font-size: 0.95rem; }
+    .update-badge { display: flex; align-items: center; gap: 0.5rem; background: rgba(0,229,160,0.08);
+      border: 1px solid rgba(0,229,160,0.15); color: var(--accent); font-size: 0.75rem;
+      font-weight: 600; padding: 0.4rem 0.9rem; border-radius: 100px; white-space: nowrap; }
+    .update-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
+
+    /* SEARCH & FILTERS */
+    .controls { padding: 0 5% 1.5rem; max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; }
+    .search-row { display: flex; gap: 0.75rem; }
+    .search-input {
+      flex: 1; background: var(--surface); border: 1px solid var(--border); color: var(--text);
+      padding: 0.75rem 1.1rem; border-radius: 10px; font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem; outline: none; transition: border-color 0.2s;
     }
-    .hero-pill {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      background: rgba(0,229,160,0.08); border: 1px solid rgba(0,229,160,0.2);
-      color: var(--accent); font-size: 0.75rem; font-weight: 700;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      padding: 0.35rem 0.9rem; border-radius: 20px; margin-bottom: 2rem;
+    .search-input:focus { border-color: var(--accent); }
+    .search-input::placeholder { color: var(--muted); }
+
+    .filter-scroll { display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.25rem; scrollbar-width: none; }
+    .filter-scroll::-webkit-scrollbar { display: none; }
+    .filter-btn {
+      background: var(--surface); border: 1px solid var(--border); color: var(--muted);
+      padding: 0.4rem 0.9rem; border-radius: 100px; font-size: 0.8rem; font-weight: 500;
+      cursor: pointer; white-space: nowrap; transition: all 0.2s; font-family: 'DM Sans', sans-serif;
     }
-    .hero-pill::before { content: '●'; font-size: 0.5rem; animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
-    h1 {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(2.6rem, 7vw, 5rem);
-      font-weight: 800;
-      color: var(--text);
-      line-height: 1.05;
-      letter-spacing: -0.02em;
-      margin-bottom: 1.5rem;
-      max-width: 800px;
+    .filter-btn:hover, .filter-btn.active { background: rgba(0,229,160,0.1); border-color: var(--accent); color: var(--accent); }
+
+    /* STATS BAR */
+    .stats-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5% 1.25rem; max-width: 1200px; margin: 0 auto;
+      color: var(--muted); font-size: 0.83rem; flex-wrap: wrap; gap: 0.5rem;
     }
-    h1 .green { background: linear-gradient(135deg, var(--accent), #00C48C); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    h1 .blue { background: linear-gradient(135deg, var(--accent2), #60A5FA); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .hero-sub { color: var(--muted); font-size: 1.05rem; max-width: 500px; margin: 0 auto 2.5rem; line-height: 1.75; }
-    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem; }
-    .btn-main { background: var(--accent); color: #07090F; padding: 0.9rem 2rem; border-radius: 10px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; text-decoration: none; transition: all 0.2s; }
-    .btn-main:hover { opacity: 0.9; transform: translateY(-1px); }
-    .btn-ghost { background: transparent; border: 1.5px solid rgba(255,255,255,0.12); color: var(--text); padding: 0.9rem 2rem; border-radius: 10px; font-family: 'Syne', sans-serif; font-weight: 600; font-size: 0.95rem; text-decoration: none; transition: all 0.2s; }
-    .btn-ghost:hover { border-color: rgba(255,255,255,0.25); }
-    .hero-stats {
-      display: flex; gap: 2.5rem; justify-content: center; flex-wrap: wrap;
-      padding-top: 2.5rem;
-      border-top: 1px solid var(--border);
-      width: 100%; max-width: 600px;
+    .jobs-count { color: var(--text); font-weight: 600; }
+
+    /* SORT */
+    .sort-select {
+      background: var(--surface); border: 1px solid var(--border); color: var(--muted);
+      padding: 0.35rem 0.75rem; border-radius: 6px; font-size: 0.8rem; cursor: pointer;
+      font-family: 'DM Sans', sans-serif; outline: none;
     }
-    .hero-stat-num { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800; color: var(--text); }
-    .hero-stat-lbl { font-size: 0.75rem; color: var(--muted); margin-top: 0.1rem; }
 
-    /* ── TABS ── */
-    .tabs-section { max-width: 1100px; margin: 0 auto; padding: 0 6% 6rem; }
-    .tabs-nav {
-      display: flex; gap: 0; margin-bottom: 2.5rem;
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 12px; padding: 0.35rem;
-      overflow-x: auto;
+    /* JOBS GRID */
+    .jobs-container { padding: 0 5% 5rem; max-width: 1200px; margin: 0 auto; }
+
+    /* SOURCE SECTION */
+    .source-section { margin-bottom: 2.5rem; }
+    .source-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+    .source-label { font-family: 'Syne', sans-serif; font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+    .source-line { flex: 1; height: 1px; background: var(--border); }
+    .source-count { font-size: 0.75rem; color: var(--muted); }
+
+    .jobs-list { display: flex; flex-direction: column; gap: 0.75rem; }
+
+    /* JOB CARD */
+    .job-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+      padding: 1.25rem 1.5rem; display: flex; align-items: center; gap: 1.25rem;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s; cursor: pointer;
+      text-decoration: none; color: inherit;
     }
-    .tab-btn {
-      flex: 1; background: none; border: none; color: var(--muted);
-      font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600;
-      padding: 0.7rem 1rem; border-radius: 9px; cursor: pointer;
-      transition: all 0.2s; white-space: nowrap;
+    .job-card:hover { border-color: rgba(0,229,160,0.3); transform: translateY(-2px); box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
+
+    .job-logo {
+      width: 48px; height: 48px; border-radius: 10px; background: var(--surface);
+      border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0; overflow: hidden;
     }
-    .tab-btn:hover { color: var(--text); }
-    .tab-btn.active { background: rgba(0,229,160,0.1); color: var(--accent); border: 1px solid rgba(0,229,160,0.2); }
-    .tab-panel { display: none; animation: fadeIn 0.25s ease; }
-    .tab-panel.active { display: block; }
-    @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+    .job-logo img { width: 100%; height: 100%; object-fit: cover; border-radius: 9px; }
 
-    /* ── HOW IT WORKS TAB ── */
-    .steps-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-    .step-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.75rem; display: flex; gap: 1.25rem; align-items: flex-start; transition: border-color 0.2s; }
-    .step-card:hover { border-color: rgba(0,229,160,0.2); }
-    .step-num { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: rgba(0,229,160,0.2); line-height: 1; flex-shrink: 0; width: 2.5rem; }
-    .step-body h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 0.4rem; }
-    .step-body p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
-    .step-cta { display: inline-block; margin-top: 0.75rem; font-size: 0.8rem; font-weight: 700; color: var(--accent); text-decoration: none; }
+    .job-main { flex: 1; min-width: 0; }
+    .job-title-row { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 0.3rem; }
+    .job-title { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--text); }
+    .job-new { background: rgba(0,229,160,0.12); color: var(--accent); font-size: 0.65rem;
+      font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.15rem 0.5rem;
+      border-radius: 4px; border: 1px solid rgba(0,229,160,0.2); }
+    .job-company { color: var(--muted); font-size: 0.85rem; margin-bottom: 0.5rem; }
+    .job-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .job-tag { background: var(--surface); border: 1px solid var(--border); color: var(--muted);
+      font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 4px; }
+    .skill-tag { background: rgba(0,150,255,0.08); border-color: rgba(0,150,255,0.2); color: var(--accent2); }
 
-    /* ── SKILLS TAB ── */
-    .skills-intro { text-align: center; margin-bottom: 2rem; }
-    .skills-intro p { color: var(--muted); font-size: 0.9rem; max-width: 500px; margin: 0.5rem auto 0; }
-    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 0.65rem; margin-bottom: 1.5rem; }
-    .skill-pill { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 0.9rem 0.75rem; text-align: center; text-decoration: none; display: block; transition: all 0.2s; }
-    .skill-pill:hover { border-color: rgba(0,229,160,0.3); background: rgba(0,229,160,0.04); transform: translateY(-2px); }
-    .sp-icon { font-size: 1.3rem; margin-bottom: 0.35rem; }
-    .sp-name { font-family: 'Syne', sans-serif; font-size: 0.78rem; font-weight: 700; color: var(--text); margin-bottom: 0.25rem; line-height: 1.3; }
-    .sp-badge { font-size: 0.65rem; font-weight: 700; }
-    .sp-badge.hot { color: var(--accent); }
-    .sp-badge.high { color: var(--accent2); }
-    .sp-badge.steady { color: var(--muted); }
-    .skills-cta { text-align: center; }
+    .job-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem; flex-shrink: 0; }
+    .job-salary { font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 700; color: var(--accent); }
+    .job-meta { color: var(--muted); font-size: 0.75rem; text-align: right; }
+    .job-source { display: flex; align-items: center; gap: 0.3rem; }
+    .source-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+    .apply-btn {
+      background: transparent; border: 1px solid rgba(0,229,160,0.3); color: var(--accent);
+      padding: 0.35rem 0.9rem; border-radius: 6px; font-size: 0.78rem; font-weight: 600;
+      cursor: pointer; font-family: 'Syne', sans-serif; transition: all 0.2s; white-space: nowrap;
+    }
+    .apply-btn:hover { background: rgba(0,229,160,0.1); }
 
-    /* ── FOR CANDIDATES TAB ── */
-    .audience-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
-    .audience-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; }
-    .audience-icon { font-size: 1.8rem; margin-bottom: 0.75rem; }
-    .audience-title { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 0.4rem; }
-    .audience-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.6; }
-    .verify-steps { display: flex; flex-direction: column; gap: 0.65rem; margin-top: 1.5rem; }
-    .verify-step { display: flex; align-items: center; gap: 1rem; background: rgba(0,229,160,0.04); border: 1px solid rgba(0,229,160,0.1); border-radius: 10px; padding: 0.85rem 1rem; }
-    .vs-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.85rem; color: var(--accent); width: 1.5rem; flex-shrink: 0; }
-    .vs-text { font-size: 0.85rem; color: var(--text); font-weight: 500; }
-    .vs-desc { font-size: 0.78rem; color: var(--muted); }
+    /* EMPTY STATE */
+    .empty-state { text-align: center; padding: 5rem 1rem; }
+    .empty-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .empty-state h3 { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text); }
+    .empty-state p { color: var(--muted); font-size: 0.9rem; }
 
-    /* ── FOR EMPLOYERS TAB ── */
-    .employer-hero { background: linear-gradient(135deg, rgba(0,150,255,0.08), rgba(0,229,160,0.05)); border: 1px solid rgba(0,150,255,0.15); border-radius: 16px; padding: 2rem; margin-bottom: 1.5rem; text-align: center; }
-    .employer-hero h3 { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 800; color: var(--text); margin-bottom: 0.5rem; }
-    .employer-hero p { color: var(--muted); font-size: 0.88rem; max-width: 500px; margin: 0 auto 1.25rem; }
-    .employer-stats { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.5rem; }
-    .emp-stat { text-align: center; }
-    .emp-stat-num { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--accent2); }
-    .emp-stat-lbl { font-size: 0.72rem; color: var(--muted); }
-    .employer-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
-    .emp-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; }
-    .emp-card-icon { font-size: 1.4rem; margin-bottom: 0.5rem; }
-    .emp-card-title { font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 700; color: var(--text); margin-bottom: 0.35rem; }
-    .emp-card-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
-    .btn-employer { display: inline-block; background: var(--accent2); color: #fff; padding: 0.75rem 1.75rem; border-radius: 9px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.88rem; text-decoration: none; transition: opacity 0.2s; margin-top: 1.25rem; }
+    /* LOADING */
+    .loading { text-align: center; padding: 4rem; }
+    .spinner { width: 36px; height: 36px; border: 2px solid var(--border);
+      border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 1rem; }
 
-    /* ── WAITLIST ── */
-    .waitlist-section { background: var(--bg2); border-top: 1px solid var(--border); padding: 5rem 6%; text-align: center; }
-    .waitlist-section h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 800; color: var(--text); margin-bottom: 0.75rem; }
-    .waitlist-section p { color: var(--muted); font-size: 0.95rem; margin-bottom: 2rem; }
-    .waitlist-form { display: flex; gap: 0.75rem; justify-content: center; max-width: 480px; margin: 0 auto; }
-    .waitlist-input { flex: 1; background: var(--card); border: 1.5px solid var(--border); color: var(--text); padding: 0.85rem 1rem; border-radius: 10px; font-size: 0.9rem; font-family: 'DM Sans', sans-serif; outline: none; transition: border-color 0.2s; }
-    .waitlist-input:focus { border-color: rgba(0,229,160,0.4); }
-    .waitlist-input::placeholder { color: var(--muted); }
-    .waitlist-btn { background: var(--accent); color: #07090F; border: none; padding: 0.85rem 1.5rem; border-radius: 10px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.88rem; cursor: pointer; white-space: nowrap; transition: opacity 0.2s; }
-    .waitlist-btn:hover { opacity: 0.88; }
-    .waitlist-note { font-size: 0.75rem; color: var(--muted); margin-top: 0.75rem; }
+    /* DEMO NOTICE */
+    .demo-notice {
+      background: rgba(255,165,0,0.08); border: 1px solid rgba(255,165,0,0.2);
+      border-radius: 10px; padding: 1rem 1.25rem; margin: 0 5% 1.5rem;
+      max-width: 1200px; margin-left: auto; margin-right: auto;
+      display: flex; align-items: center; gap: 0.75rem; font-size: 0.85rem; color: #FFA500;
+    }
 
-    /* ── FOOTER ── */
-    footer { padding: 2rem 6%; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); }
-    .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .footer-links { display: flex; gap: 1.5rem; }
-    .footer-links a { color: var(--muted); font-size: 0.8rem; text-decoration: none; transition: color 0.2s; }
-    .footer-links a:hover { color: var(--text); }
-    .footer-copy { font-size: 0.75rem; color: var(--muted); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
 
-    /* ── SHARED BTN ── */
-    .btn-outline { background: transparent; border: 1.5px solid rgba(0,229,160,0.25); color: var(--accent); padding: 0.75rem 1.75rem; border-radius: 9px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.88rem; text-decoration: none; transition: all 0.2s; display: inline-block; }
-    .btn-outline:hover { background: rgba(0,229,160,0.06); }
-
-    /* ── MOBILE ── */
     @media (max-width: 768px) {
       .nav-links { display: none; }
-      h1 { font-size: 2.4rem; }
-      .hero { padding: 5rem 5% 3.5rem; min-height: auto; }
-      .hero-stats { gap: 1.5rem; }
-      .hero-btns { flex-direction: column; align-items: center; }
-      .steps-grid { grid-template-columns: 1fr; }
-      .audience-grid { grid-template-columns: 1fr; }
-      .employer-cards { grid-template-columns: 1fr; }
-      .tabs-nav { gap: 0.25rem; }
-      .tab-btn { font-size: 0.78rem; padding: 0.6rem 0.75rem; }
-      .waitlist-form { flex-direction: column; }
-      .waitlist-input { width: 100%; }
-      footer { flex-direction: column; gap: 1rem; text-align: center; }
-      .skills-grid { grid-template-columns: repeat(2, 1fr); }
+      .page-header { padding: 2rem 4% 1.5rem; }
+      .controls { padding: 0 4% 1rem; flex-direction: column; gap: 0.5rem; }
+      .controls select { width: 100%; }
+      .stats-bar { padding: 0 4% 1rem; flex-wrap: wrap; gap: 0.5rem; }
+      .jobs-container { padding: 0 4% 4rem; }
+      .job-card { flex-wrap: wrap; padding: 1rem; gap: 0.85rem; }
+      .job-right { flex-direction: row; align-items: center; width: 100%; justify-content: space-between; }
+      .job-logo { width: 40px; height: 40px; font-size: 0.9rem; }
+      .job-title { font-size: 0.9rem; }
+      .filter-bar { flex-wrap: wrap; gap: 0.4rem; }
+      .filter-btn { font-size: 0.75rem; padding: 0.3rem 0.7rem; }
     }
     @media (max-width: 400px) {
-      h1 { font-size: 2rem; }
-      .hero-stat-num { font-size: 1.3rem; }
+      .job-card { padding: 0.85rem; }
+      .job-title { font-size: 0.85rem; }
     }
+
+    .type-badge { font-size:0.6rem; font-weight:700; padding:0.15rem 0.45rem; border-radius:4px; vertical-align:middle; margin-left:0.35rem; }
+    .type-badge.intern { background:rgba(0,150,255,0.15); color:#0096FF; }
+    .type-badge.vol { background:rgba(0,229,160,0.15); color:#00E5A0; }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <a class="logo" href="index.html">VELA</a>
   <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
     <li><a href="skills.html">Skills</a></li>
     <li><a href="experience.html">Get Experience</a></li>
-    <li><a href="jobs.html">Jobs</a></li>
-    <li><a href="portfolio.html">Portfolio</a></li>
-    <li><a href="employers.html">For Employers</a></li>
-    <li><a href="profile.html" class="nav-cta">Get Started</a></li>
+    <li><a href="jobs.html" class="active">Jobs</a></li>
+    <li><a href="index.html#waitlist" class="nav-cta">Join Waitlist</a></li>
   </ul>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-pill">Now in Beta · Join the Waitlist</div>
-  <h1>African Talent.<br/><span class="green">Verified.</span> <span class="blue">Placed.</span></h1>
-  <p class="hero-sub">VELA connects verified African professionals to remote jobs worldwide — with the skills, evidence, and credibility to get hired with confidence.</p>
-  <div class="hero-btns">
-    <a href="profile.html" class="btn-main">Build Your Profile →</a>
-    <a href="employers.html" class="btn-ghost">For Employers →</a>
+<div class="page-header">
+  <div class="header-left">
+    <h1>Remote Jobs <span>For Africa</span></h1>
+    <p>Curated daily from global job boards. Click any job to read the full description — then click <strong style="color:var(--accent)">Apply for this Job</strong> to submit your application directly to the employer.</p>
   </div>
-  <div class="hero-stats">
-    <div>
-      <div class="hero-stat-num">2,400+</div>
-      <div class="hero-stat-lbl">Candidates</div>
-    </div>
-    <div>
-      <div class="hero-stat-num">54</div>
-      <div class="hero-stat-lbl">Countries</div>
-    </div>
-    <div>
-      <div class="hero-stat-num">15</div>
-      <div class="hero-stat-lbl">Skill Paths</div>
-    </div>
-    <div>
-      <div class="hero-stat-num">Free</div>
-      <div class="hero-stat-lbl">Until Hired</div>
-    </div>
-  </div>
-</section>
-
-<!-- TABS -->
-<div class="tabs-section">
-  <div class="tabs-nav">
-    <button class="tab-btn active" onclick="switchTab('how', this)">How It Works</button>
-    <button class="tab-btn" onclick="switchTab('skills', this)">Skill Paths</button>
-    <button class="tab-btn" onclick="switchTab('candidates', this)">For Candidates</button>
-    <button class="tab-btn" onclick="switchTab('employers', this)">For Employers</button>
-  </div>
-
-  <!-- TAB 1: HOW IT WORKS -->
-  <div class="tab-panel active" id="tab-how">
-    <div class="steps-grid" style="grid-template-columns: repeat(2,1fr)">
-      <div class="step-card">
-        <div class="step-num">01</div>
-        <div class="step-body">
-          <h3>Choose Your Skill Path</h3>
-          <p>Pick from 15 in-demand remote skills. Each comes with a full learning roadmap, free resources, and tool list so you know exactly what job-ready looks like.</p>
-          <a href="skills.html" class="step-cta">Explore Skills →</a>
-        </div>
-      </div>
-      <div class="step-card">
-        <div class="step-num">02</div>
-        <div class="step-body">
-          <h3>Build Your Profile & Get Scored</h3>
-          <p>Answer 10 questions about your background and goals. VELA's AI gives you a Readiness Score out of 100 — honest, independent, not self-reported.</p>
-          <a href="profile.html" class="step-cta">Build Profile →</a>
-        </div>
-      </div>
-      <div class="step-card" style="border-color:rgba(0,229,160,0.2);background:rgba(0,229,160,0.03)">
-        <div class="step-num" style="color:rgba(0,229,160,0.4)">03</div>
-        <div class="step-body">
-          <h3>Get Experience 🌍</h3>
-          <p>No experience yet? Use VELA's curated directory of remote volunteering and internship platforms to build real portfolio evidence — before you apply anywhere.</p>
-          <a href="experience.html" class="step-cta">Find Opportunities →</a>
-        </div>
-      </div>
-      <div class="step-card">
-        <div class="step-num">04</div>
-        <div class="step-body">
-          <h3>Get Verified in 5 Layers</h3>
-          <p>Communication test, tool knowledge quiz, mock interview, task simulation, video introduction. Three scored by AI instantly. Your evidence profile is built automatically.</p>
-          <a href="verify.html" class="step-cta">Start Verification →</a>
-        </div>
-      </div>
-      <div class="step-card" style="grid-column: 1 / -1; background: linear-gradient(135deg, rgba(0,229,160,0.06), rgba(0,150,255,0.04)); border-color: rgba(0,229,160,0.15);">
-        <div class="step-num">05</div>
-        <div class="step-body">
-          <h3>Apply to Real Remote Jobs & Build Your Portfolio</h3>
-          <p>Add your verified work to your VELA portfolio, then apply directly to remote jobs updated daily from companies hiring worldwide — matched to every skill path you selected.</p>
-          <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:0.75rem">
-            <a href="jobs.html" class="step-cta">Browse Jobs →</a>
-            <a href="portfolio.html" class="step-cta" style="color:var(--accent2)">Build Portfolio →</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB 2: SKILLS -->
-  <div class="tab-panel" id="tab-skills">
-    <div class="skills-intro">
-      <p>15 in-demand remote skill paths — each with a full roadmap, free learning resources, and live job matches.</p>
-    </div>
-    <div class="skills-grid">
-      <a href="skills.html" class="skill-pill"><div class="sp-icon">🎧</div><div class="sp-name">Customer Service</div><div class="sp-badge high">High demand</div></a>
-      <a href="skills.html" class="skill-pill"><div class="sp-icon">🤝</div><div class="sp-name">Virtual Assistant</div><div class="sp-badge hot">Very high</div></a>
-      <a href="skills.html" class="skill-pill"><div class="sp-icon">📊</div><div class="sp-name">Data Analysis</div><div class="sp-badge high">High demand</div></a>
-      <a href="skills.html" class="skill-pill"><div class="sp-icon">🤖</div><div class="sp-name">Prompt Engineering & AI</div><div class="sp-badge hot">🔥 Fastest growing</div></a>
-      <a href="skills.html" class="skill-pill"><div class="sp-icon">📱</div><div class="sp-name">Social Media</div><div class="sp-badge high">High demand</div></a>
-      <a href="skills.html" class="skill-pill"><div class="sp-icon">✍️</div><div class="sp-name">Content Writing</div><div class="sp-badge high">High demand</div></a>
-      <a href="skills.html" class="skill-pill"><div class="sp-icon">🔍</div><div class="sp-name">SEO Specialist</div><div class="sp-badge steady">Steady demand</div></a>
-      <a href="skills.html" class="skill-pill"><div class="sp-icon">💼</div><div class="sp-name">Project Management</div><div class="sp-badge high">High demand</div></a>
-      <a href="skills.html" class="skill-pill"><div class="sp-icon">🎨</div><div class="sp-name">UI/UX Design</div><div class="sp-badge high">High demand</div></a>
-      <a href="skills.html" class="skill-pill"><div class="sp-icon">📧</div><div class="sp-name">Email Marketing</div><div class="sp-badge steady">Steady demand</div></a>
-      <a href="skills.html" class="skill-pill"><div class="sp-icon">🔐</div><div class="sp-name">Cybersecurity</div><div class="sp-badge hot">Very high</div></a>
-      <a href="skills.html" class="skill-pill"><div class="sp-icon">📚</div><div class="sp-name">Online Tutoring</div><div class="sp-badge steady">Growing</div></a>
-      <a href="skills.html" class="skill-pill"><div class="sp-icon">💰</div><div class="sp-name">Bookkeeping</div><div class="sp-badge steady">Steady demand</div></a>
-      <a href="skills.html" class="skill-pill"><div class="sp-icon">🛒</div><div class="sp-name">E-Commerce</div><div class="sp-badge high">High demand</div></a>
-      <a href="skills.html" class="skill-pill"><div class="sp-icon">👥</div><div class="sp-name">HR & Recruitment</div><div class="sp-badge steady">Steady demand</div></a>
-    </div>
-    <div class="skills-cta">
-      <a href="skills.html" class="btn-outline">View All Skills & Roadmaps →</a>
-    </div>
-  </div>
-
-  <!-- TAB 3: FOR CANDIDATES -->
-  <div class="tab-panel" id="tab-candidates">
-    <div class="audience-grid">
-      <div class="audience-card">
-        <div class="audience-icon">🎓</div>
-        <div class="audience-title">Degree holders not getting callbacks</div>
-        <div class="audience-desc">You have the qualification. VELA gives you the verified proof that employers in the US, UK, and Europe can actually trust.</div>
-      </div>
-      <div class="audience-card">
-        <div class="audience-icon">📖</div>
-        <div class="audience-title">People learning a new skill</div>
-        <div class="audience-desc">VELA's skill roadmaps show you exactly what to learn, in what order, using free resources — then verify you when you're ready.</div>
-      </div>
-      <div class="audience-card">
-        <div class="audience-icon">💼</div>
-        <div class="audience-title">Professionals switching to remote</div>
-        <div class="audience-desc">Already working? VELA translates your existing experience into an internationally credible profile with independent scores.</div>
-      </div>
-      <div class="audience-card">
-        <div class="audience-icon">🌱</div>
-        <div class="audience-title">Fresh graduates with no experience</div>
-        <div class="audience-desc">Use VELA's volunteering and internship directory to build real portfolio evidence — then verify it and apply with confidence.</div>
-      </div>
-    </div>
-    <div>
-      <p style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:1rem">Your 5-layer verification</p>
-      <div class="verify-steps">
-        <div class="verify-step"><div class="vs-num">01</div><div><div class="vs-text">Communication Test</div><div class="vs-desc">Professional English, clarity, tone — scored by AI</div></div></div>
-        <div class="verify-step"><div class="vs-num">02</div><div><div class="vs-text">Tool Knowledge Quiz</div><div class="vs-desc">Skill-specific tools — 20 questions, instant score</div></div></div>
-        <div class="verify-step"><div class="vs-num">03</div><div><div class="vs-text">Mock Interview</div><div class="vs-desc">Real interview questions — AI-assessed response</div></div></div>
-        <div class="verify-step"><div class="vs-num">04</div><div><div class="vs-text">Task Simulation</div><div class="vs-desc">Do the actual work — show don't tell</div></div></div>
-        <div class="verify-step"><div class="vs-num">05</div><div><div class="vs-text">Video Introduction</div><div class="vs-desc">60-second video — employers see and hear you</div></div></div>
-      </div>
-      <div style="margin-top:1.5rem">
-        <a href="profile.html" class="btn-main">Start My Profile →</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB 4: FOR EMPLOYERS -->
-  <div class="tab-panel" id="tab-employers">
-    <div class="employer-hero">
-      <h3>Hire verified African talent — remotely, reliably.</h3>
-      <p>Stop reviewing CVs that tell you nothing. VELA candidates come with independent scores, skill evidence, and portfolio proof — before you meet them.</p>
-      <div class="employer-stats">
-        <div class="emp-stat"><div class="emp-stat-num">2,400+</div><div class="emp-stat-lbl">Verified Candidates</div></div>
-        <div class="emp-stat"><div class="emp-stat-num">54</div><div class="emp-stat-lbl">Countries</div></div>
-        <div class="emp-stat"><div class="emp-stat-num">94%</div><div class="emp-stat-lbl">Satisfaction Rate</div></div>
-        <div class="emp-stat"><div class="emp-stat-num">$0</div><div class="emp-stat-lbl">To Browse</div></div>
-      </div>
-      <a href="employers.html" class="btn-employer">Browse Talent →</a>
-    </div>
-    <div class="employer-cards">
-      <div class="emp-card">
-        <div class="emp-card-icon">✅</div>
-        <div class="emp-card-title">Pre-verified profiles</div>
-        <div class="emp-card-desc">Every candidate has gone through 5 independent assessments before you see them.</div>
-      </div>
-      <div class="emp-card">
-        <div class="emp-card-icon">🌍</div>
-        <div class="emp-card-title">Global remote talent</div>
-        <div class="emp-card-desc">54 countries. English fluent. Timezone-flexible. Ready to work remotely from day one.</div>
-      </div>
-      <div class="emp-card">
-        <div class="emp-card-icon">💸</div>
-        <div class="emp-card-title">Free until you hire</div>
-        <div class="emp-card-desc">Browse all candidates free. Only pay $299 when you make a successful placement.</div>
-      </div>
-    </div>
+  <div class="update-badge">
+    <span class="update-dot"></span>
+    <span id="update-time">Updated daily</span>
   </div>
 </div>
 
-<!-- WAITLIST -->
-<div class="waitlist-section" id="waitlist">
-  <h2>Be first when VELA launches fully.</h2>
-  <p>Join the waitlist. We'll notify you when your skill path opens for verified placements.</p>
-  <div class="waitlist-form">
-    <input class="waitlist-input" type="email" placeholder="Enter your email address" id="waitlist-email"/>
-    <button class="waitlist-btn" onclick="joinWaitlist()">Join Waitlist</button>
-  </div>
-  <p class="waitlist-note" id="waitlist-msg">Free forever for candidates. No spam.</p>
+<div class="demo-notice" id="demo-notice">
+  ⚡ <strong>Demo Mode:</strong> Showing sample jobs. Run <code>python scraper.py</code> to populate with live data, then push <code>jobs.json</code> to GitHub.
 </div>
 
-<!-- FOOTER -->
-<footer>
-  <span class="footer-logo">VELA</span>
-  <div class="footer-links">
-    <a href="skills.html">Skills</a>
-    <a href="experience.html">Get Experience</a>
-    <a href="jobs.html">Jobs</a>
-    <a href="employers.html">Employers</a>
-    <a href="profile.html">Get Started</a>
+<div class="controls">
+  <div class="search-row">
+    <input class="search-input" id="search" placeholder="Search jobs, companies, skills..." oninput="render()"/>
   </div>
-  <span class="footer-copy">© 2026 VELA</span>
-</footer>
+  <div class="filter-scroll" id="skill-filters"></div>
+  <div class="filter-scroll" style="margin-top:0.5rem" id="type-filters">
+    <button class="filter-btn type-btn active" onclick="setType('all',this)">All Types</button>
+    <button class="filter-btn type-btn" onclick="setType('job',this)">💼 Full-time Jobs</button>
+    <button class="filter-btn type-btn" onclick="setType('internship',this)">🎓 Internships</button>
+    <button class="filter-btn type-btn" onclick="setType('volunteer',this)">🤝 Volunteering</button>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div><span class="jobs-count" id="jobs-count">0</span> remote jobs matched to VELA skills</div>
+  <select class="sort-select" id="sort" onchange="render()">
+    <option value="newest">Newest First</option>
+    <option value="company">By Company</option>
+    <option value="skill">By Skill</option>
+  </select>
+</div>
+
+<div class="jobs-container" id="jobs-container">
+  <div class="loading">
+    <div class="spinner"></div>
+    <p style="color:var(--muted);font-size:0.9rem">Loading jobs...</p>
+  </div>
+</div>
 
 <script>
-function switchTab(id, btn) {
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + id).classList.add('active');
-  btn.classList.add('active');
+// ─── DEMO DATA (used when jobs.json is not available) ──────────────────────
+const DEMO_JOBS = [
+  { id:"d1", title:"Customer Support Specialist", company:"Shopify", skill:"Customer Service", tags:["support","chat","email"], url:"https://shopify.com/careers", location:"Worldwide", salary:"$40k–$55k", posted:"2026-03-04", logo:"", source:"RemoteOK", remote:true },
+  { id:"d2", title:"Executive Virtual Assistant", company:"Boldly", skill:"Virtual Assistant", tags:["va","executive","admin"], url:"https://boldly.com", location:"Worldwide", salary:"$35k–$50k", posted:"2026-03-04", logo:"", source:"Jobicy", remote:true },
+  { id:"d3", title:"Data Analyst – Marketing", company:"HubSpot", skill:"Data Analysis", tags:["sql","tableau","analytics"], url:"https://hubspot.com/careers", location:"Worldwide", salary:"$60k–$85k", posted:"2026-03-03", logo:"", source:"Remotive", remote:true },
+  { id:"d4", title:"AI Prompt Engineer", company:"Scale AI", skill:"Prompt Engineering & AI", tags:["llm","chatgpt","ai"], url:"https://scale.com", location:"Worldwide", salary:"$70k–$110k", posted:"2026-03-03", logo:"", source:"RemoteOK", remote:true },
+  { id:"d5", title:"Social Media Manager", company:"Buffer", skill:"Social Media Management", tags:["instagram","content","scheduling"], url:"https://buffer.com/journey", location:"Worldwide", salary:"$45k–$65k", posted:"2026-03-02", logo:"", source:"Jobicy", remote:true },
+  { id:"d6", title:"SEO Content Specialist", company:"Ahrefs", skill:"Content Writing", tags:["seo","writing","content"], url:"https://ahrefs.com/jobs", location:"Worldwide", salary:"$40k–$60k", posted:"2026-03-02", logo:"", source:"Remotive", remote:true },
+  { id:"d7", title:"SEO Manager", company:"Semrush", skill:"SEO Specialist", tags:["seo","keyword","serp"], url:"https://semrush.com", location:"Worldwide", salary:"$55k–$80k", posted:"2026-03-01", logo:"", source:"RemoteOK", remote:true },
+  { id:"d8", title:"Project Manager – SaaS", company:"Basecamp", skill:"Project Management", tags:["agile","scrum","jira"], url:"https://basecamp.com/about/jobs", location:"Worldwide", salary:"$65k–$90k", posted:"2026-03-01", logo:"", source:"Jobicy", remote:true },
+  { id:"d9", title:"UI/UX Designer", company:"Figma", skill:"UI/UX Design", tags:["figma","ux","product design"], url:"https://figma.com/careers", location:"Worldwide", salary:"$70k–$100k", posted:"2026-02-28", logo:"", source:"Remotive", remote:true },
+  { id:"d10", title:"Email Marketing Specialist", company:"Klaviyo", skill:"Email Marketing", tags:["email","klaviyo","campaigns"], url:"https://klaviyo.com/careers", location:"Worldwide", salary:"$50k–$70k", posted:"2026-02-28", logo:"", source:"RemoteOK", remote:true },
+  { id:"d11", title:"SOC Security Analyst", company:"CrowdStrike", skill:"Cybersecurity", tags:["security","soc","infosec"], url:"https://crowdstrike.com/careers", location:"Worldwide", salary:"$65k–$95k", posted:"2026-02-27", logo:"", source:"Jobicy", remote:true },
+  { id:"d12", title:"Online Math Tutor", company:"Preply", skill:"Online Tutoring", tags:["tutor","math","education"], url:"https://preply.com/en/become-a-tutor", location:"Worldwide", salary:"$15–$40/hr", posted:"2026-02-27", logo:"", source:"Remotive", remote:true },
+  { id:"d13", title:"Remote Bookkeeper", company:"Belay", skill:"Bookkeeping", tags:["quickbooks","accounting","finance"], url:"https://belaysolutions.com", location:"Worldwide", salary:"$45k–$65k", posted:"2026-02-26", logo:"", source:"RemoteOK", remote:true },
+  { id:"d14", title:"Shopify E-Commerce Manager", company:"Thrasio", skill:"E-Commerce", tags:["shopify","ecommerce","amazon"], url:"https://thrasio.com/careers", location:"Worldwide", salary:"$50k–$75k", posted:"2026-02-26", logo:"", source:"Jobicy", remote:true },
+  { id:"d15", title:"Remote Talent Recruiter", company:"Deel", skill:"HR & Recruitment", tags:["recruiter","hr","talent"], url:"https://deel.com/careers", location:"Worldwide", salary:"$55k–$80k", posted:"2026-02-25", logo:"", source:"Remotive", remote:true },
+  { id:"d16", title:"Customer Success Manager", company:"Intercom", skill:"Customer Service", tags:["support","saas","cx"], url:"https://intercom.com/careers", location:"Worldwide", salary:"$55k–$75k", posted:"2026-02-25", logo:"", source:"RemoteOK", remote:true },
+  { id:"d17", title:"Virtual Executive Assistant", company:"Fancy Hands", skill:"Virtual Assistant", tags:["admin","scheduling","research"], url:"https://fancyhands.com", location:"Worldwide", salary:"$30k–$45k", posted:"2026-02-24", logo:"", source:"Jobicy", remote:true },
+  { id:"d18", title:"Business Intelligence Analyst", company:"Stripe", skill:"Data Analysis", tags:["sql","power bi","analytics"], url:"https://stripe.com/jobs", location:"Worldwide", salary:"$80k–$110k", posted:"2026-02-24", logo:"", source:"Remotive", remote:true },
+  { id:"i1", title:"Customer Support Intern (Remote)", company:"Intercom", skill:"Customer Service", tags:["intern","support","entry"], url:"https://intercom.com/careers", location:"Worldwide", salary:"Paid · $15/hr", posted:"2026-03-05", logo:"", source:"Remotive", remote:true, type:"internship" },
+  { id:"i2", title:"Data Analysis Internship", company:"DataCamp", skill:"Data Analysis", tags:["intern","sql","analytics"], url:"https://datacamp.com", location:"Worldwide", salary:"Paid · Stipend", posted:"2026-03-05", logo:"", source:"Jobicy", remote:true, type:"internship" },
+  { id:"i3", title:"Social Media Marketing Intern", company:"Hootsuite", skill:"Social Media Management", tags:["intern","social","content"], url:"https://hootsuite.com/about/careers", location:"Worldwide", salary:"Paid · $12/hr", posted:"2026-03-04", logo:"", source:"RemoteOK", remote:true, type:"internship" },
+  { id:"i4", title:"UX Design Intern", company:"Canva", skill:"UI/UX Design", tags:["intern","figma","ux"], url:"https://canva.com/careers", location:"Worldwide", salary:"Paid · Stipend", posted:"2026-03-04", logo:"", source:"Remotive", remote:true, type:"internship" },
+  { id:"i5", title:"Content Writing Intern", company:"HubSpot", skill:"Content Writing", tags:["intern","writing","seo"], url:"https://hubspot.com/careers", location:"Worldwide", salary:"Paid · $14/hr", posted:"2026-03-03", logo:"", source:"Jobicy", remote:true, type:"internship" },
+  { id:"v1", title:"Volunteer Social Media Manager", company:"African Tech Foundation", skill:"Social Media Management", tags:["volunteer","nonprofit","social"], url:"https://www.catchafire.org", location:"Worldwide", salary:"Volunteer · Portfolio Builder", posted:"2026-03-05", logo:"", source:"Catchafire", remote:true, type:"volunteer" },
+  { id:"v2", title:"Volunteer Data Analyst – NGO", company:"UN Volunteers", skill:"Data Analysis", tags:["volunteer","data","impact"], url:"https://www.onlinevolunteering.org", location:"Worldwide", salary:"Volunteer · Certificate", posted:"2026-03-04", logo:"", source:"UN Volunteers", remote:true, type:"volunteer" },
+  { id:"v3", title:"Volunteer Tutor – Mathematics", company:"Khan Academy", skill:"Online Tutoring", tags:["volunteer","math","education"], url:"https://www.khanacademy.org/contribute", location:"Worldwide", salary:"Volunteer · Impact Work", posted:"2026-03-04", logo:"", source:"Khan Academy", remote:true, type:"volunteer" },
+  { id:"v4", title:"Volunteer HR Coordinator", company:"Idealist", skill:"HR & Recruitment", tags:["volunteer","hr","nonprofit"], url:"https://www.idealist.org", location:"Worldwide", salary:"Volunteer · Portfolio Builder", posted:"2026-03-03", logo:"", source:"Idealist", remote:true, type:"volunteer" },
+];
+
+const SKILLS = [...new Set(DEMO_JOBS.map(j => j.skill))].sort();
+
+let allJobs = [];
+let activeSkill = "All";
+let activeType = "all";
+
+// ─── LOAD DATA ──────────────────────────────────────────────────────────────
+async function loadJobs() {
+  try {
+    const res = await fetch("jobs.json");
+    if (!res.ok) throw new Error("No jobs.json");
+    const data = await res.json();
+    allJobs = data.jobs || [];
+    document.getElementById("demo-notice").style.display = "none";
+    const d = new Date(data.updated);
+    document.getElementById("update-time").textContent = "Updated " + d.toLocaleDateString("en-GB", { day:"numeric", month:"short", year:"numeric" });
+  } catch {
+    // Fall back to demo data
+    allJobs = DEMO_JOBS;
+  }
+  buildFilters();
+  render();
 }
 
-function joinWaitlist() {
-  const email = document.getElementById('waitlist-email').value.trim();
-  const msg = document.getElementById('waitlist-msg');
-  if (!email || !email.includes('@')) {
-    msg.style.color = '#FF6B6B';
-    msg.textContent = 'Please enter a valid email address.';
+// ─── FILTER BUTTONS ─────────────────────────────────────────────────────────
+function buildFilters() {
+  const skills = ["All", ...new Set(allJobs.map(j => j.skill)).values()].sort((a,b) => a === "All" ? -1 : a.localeCompare(b));
+  const container = document.getElementById("skill-filters");
+  container.innerHTML = skills.map(s =>
+    `<button class="filter-btn ${s === activeSkill ? 'active' : ''}" onclick="setSkill('${s}', this)">${s}</button>`
+  ).join("");
+}
+
+function setSkill(skill, btn) {
+  activeSkill = skill;
+  document.querySelectorAll("#skill-filters .filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  render();
+}
+
+function setType(type, btn) {
+  activeType = type;
+  document.querySelectorAll("#type-filters .filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  render();
+}
+
+// ─── HELPERS ────────────────────────────────────────────────────────────────
+function isNew(dateStr) {
+  if (!dateStr) return false;
+  const d = new Date(dateStr);
+  const diff = (Date.now() - d.getTime()) / (1000 * 60 * 60 * 24);
+  return diff < 3;
+}
+
+function timeAgo(dateStr) {
+  if (!dateStr) return "";
+  const d = new Date(dateStr);
+  const diff = Math.floor((Date.now() - d.getTime()) / (1000 * 60 * 60 * 24));
+  if (diff === 0) return "Today";
+  if (diff === 1) return "Yesterday";
+  return `${diff}d ago`;
+}
+
+function logoFallback(company) {
+  return company ? company.charAt(0).toUpperCase() : "?";
+}
+
+// ─── RENDER ─────────────────────────────────────────────────────────────────
+function render() {
+  const query = document.getElementById("search").value.toLowerCase();
+  const sort  = document.getElementById("sort").value;
+
+  let jobs = allJobs.filter(j => {
+    const matchSkill = activeSkill === "All" || j.skill === activeSkill;
+    const matchQuery = !query ||
+      j.title.toLowerCase().includes(query) ||
+      j.company.toLowerCase().includes(query) ||
+      (j.tags || []).some(t => t.toLowerCase().includes(query)) ||
+      j.skill.toLowerCase().includes(query);
+    const jobType = j.type || "job";
+    const matchType = activeType === "all" || jobType === activeType;
+    return matchSkill && matchQuery && matchType;
+  });
+
+  if (sort === "newest") jobs.sort((a,b) => (b.posted||"").localeCompare(a.posted||""));
+  if (sort === "company") jobs.sort((a,b) => a.company.localeCompare(b.company));
+  if (sort === "skill")   jobs.sort((a,b) => a.skill.localeCompare(b.skill));
+
+  document.getElementById("jobs-count").textContent = jobs.length;
+
+  if (!jobs.length) {
+    document.getElementById("jobs-container").innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">🔍</div>
+        <h3>No jobs found</h3>
+        <p>Try a different search or skill filter</p>
+      </div>`;
     return;
   }
 
-  // Submit to Brevo
-  const brevoUrl = 'https://1824084c.sibforms.com/serve/MUIFADyoOno2zbs3q7dYakumYUYnv9Pi-UbLCYQznPAaEdloD6sNFLNHzDrNAcCcSjvVd4TvElXTmW1R5DIFAbVhy4crNoIkzyl57Dyn04OaTeR4afAE25yiqz13sxNZZrSVYqdCylWJ0l6_VxHV-76meFaI7rIAq_6HwIQtxmb5QIUStkswBoINEruS49X6c4joiDj7OuzJH9IOOA==';
-  const formData = new FormData();
-  formData.append('EMAIL', email);
-  formData.append('email_address_check', '');
-  formData.append('locale', 'en');
-
-  fetch(brevoUrl, {
-    method: 'POST',
-    body: formData,
-    mode: 'no-cors'
-  }).then(() => {
-    msg.style.color = '#00E5A0';
-    msg.textContent = '✓ You\'re on the list! Check your inbox for a confirmation email.';
-    document.getElementById('waitlist-email').value = '';
-  }).catch(() => {
-    // no-cors means we can't read response, but submission likely worked
-    msg.style.color = '#00E5A0';
-    msg.textContent = '✓ You\'re on the list! Check your inbox for a confirmation email.';
-    document.getElementById('waitlist-email').value = '';
+  // Group by source
+  const sources = {};
+  jobs.forEach(j => {
+    if (!sources[j.source]) sources[j.source] = [];
+    sources[j.source].push(j);
   });
+
+  const html = Object.entries(sources).map(([source, sourceJobs]) => `
+    <div class="source-section">
+      <div class="source-header">
+        <span class="source-dot" style="width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0"></span>
+        <span class="source-label">${source}</span>
+        <div class="source-line"></div>
+        <span class="source-count">${sourceJobs.length} jobs</span>
+      </div>
+      <div class="jobs-list">
+        ${sourceJobs.map(job => `
+          <a class="job-card" href="${job.url}" target="_blank" rel="noopener">
+            <div class="job-logo">
+              ${job.logo
+                ? `<img src="${job.logo}" alt="${job.company}" onerror="this.parentElement.textContent='${logoFallback(job.company)}'">`
+                : logoFallback(job.company)
+              }
+            </div>
+            <div class="job-main">
+              <div class="job-title-row">
+                <span class="job-title">${job.title}</span>
+                ${isNew(job.posted) ? '<span class="job-new">New</span>' : ''}
+              </div>
+              <div class="job-company">${job.company} · ${job.location || "Worldwide"}</div>
+              <div class="job-tags">
+                <span class="job-tag skill-tag">${job.skill}</span>
+                ${(job.tags||[]).slice(0,3).map(t => `<span class="job-tag">${t}</span>`).join("")}
+              </div>
+            </div>
+            <div class="job-right">
+              ${job.salary ? `<div class="job-salary">${job.salary}</div>` : ''}
+              <div class="job-meta">
+                <div>${timeAgo(job.posted)}</div>
+                <div class="job-source"><span class="source-dot"></span>${job.source}</div>
+              </div>
+              <button class="apply-btn" onclick="event.preventDefault();window.open('${job.url}','_blank')">Apply for this Job →</button>
+            </div>
+          </a>
+        `).join("")}
+      </div>
+    </div>
+  `).join("");
+
+  document.getElementById("jobs-container").innerHTML = html;
 }
+
+loadJobs();
 </script>
 </body>
 </html>
