@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>VELA — Browse Verified Talent</title>
+  <title>VELA for Employers — Hire Verified African Remote Talent</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -12,14 +12,15 @@
       --border: rgba(255,255,255,0.07); --accent: #0096FF;
       --accent2: #00E5A0; --text: #F0F4FF; --muted: #6B7A99; --card: #0C1220;
     }
-    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
 
-    /* NAV */
+    /* ── NAV ── */
     nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 1rem 5%; border-bottom: 1px solid var(--border);
-      background: rgba(7,9,15,0.95); position: sticky; top: 0; z-index: 100;
-      backdrop-filter: blur(20px);
+      padding: 1.1rem 5%; backdrop-filter: blur(20px);
+      background: rgba(7,9,15,0.9); border-bottom: 1px solid var(--border);
     }
     .logo-wrap { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
     .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem;
@@ -28,528 +29,638 @@
     .logo-tag { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
       color: var(--accent); background: rgba(0,150,255,0.1); border: 1px solid rgba(0,150,255,0.2);
       padding: 0.2rem 0.55rem; border-radius: 4px; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
     .nav-right { display: flex; gap: 0.75rem; align-items: center; }
     .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--muted);
-      padding: 0.45rem 1rem; border-radius: 7px; font-size: 0.83rem; font-weight: 500;
+      padding: 0.5rem 1.1rem; border-radius: 7px; font-size: 0.85rem; font-weight: 500;
       cursor: pointer; text-decoration: none; transition: all 0.2s; }
     .btn-ghost:hover { border-color: var(--accent); color: var(--text); }
-    .btn-cta { background: var(--accent); color: #fff; border: none; padding: 0.45rem 1.1rem;
-      border-radius: 7px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.83rem;
+    .btn-nav-cta { background: var(--accent); color: #fff; border: none; padding: 0.5rem 1.2rem;
+      border-radius: 7px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem;
       cursor: pointer; text-decoration: none; transition: opacity 0.2s; }
-    .btn-cta:hover { opacity: 0.88; }
-    .shortlist-btn { display: flex; align-items: center; gap: 0.4rem; }
-    .shortlist-count { background: var(--accent); color: #fff; border-radius: 50%;
-      width: 18px; height: 18px; font-size: 0.65rem; font-weight: 800;
-      display: flex; align-items: center; justify-content: center; }
+    .btn-nav-cta:hover { opacity: 0.88; }
 
-    /* LAYOUT */
-    .page-wrap { display: flex; min-height: calc(100vh - 60px); }
-
-    /* SIDEBAR */
-    .sidebar {
-      width: 280px; flex-shrink: 0; border-right: 1px solid var(--border);
-      padding: 1.75rem 1.5rem; background: var(--bg2); overflow-y: auto;
-      position: sticky; top: 60px; height: calc(100vh - 60px);
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center;
+      padding: 8rem 5% 5rem; position: relative; overflow: hidden;
     }
-    .sidebar-title { font-family: 'Syne', sans-serif; font-size: 0.75rem; font-weight: 700;
-      letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.25rem; }
-    .filter-section { margin-bottom: 1.75rem; }
-    .filter-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--muted); margin-bottom: 0.75rem; display: block; }
-    .filter-options { display: flex; flex-direction: column; gap: 0.4rem; }
-    .filter-opt { display: flex; align-items: center; gap: 0.6rem; cursor: pointer; user-select: none;
-      padding: 0.35rem 0.5rem; border-radius: 7px; transition: background 0.15s; }
-    .filter-opt:hover { background: rgba(255,255,255,0.03); }
-    .filter-opt input { accent-color: var(--accent); width: 14px; height: 14px; flex-shrink: 0; cursor: pointer; }
-    .filter-opt-label { font-size: 0.83rem; color: var(--muted); flex: 1; transition: color 0.15s; }
-    .filter-opt:has(input:checked) .filter-opt-label { color: var(--text); }
-    .filter-opt-count { font-size: 0.7rem; color: var(--muted); background: var(--surface);
-      padding: 0.1rem 0.45rem; border-radius: 100px; }
-    .filter-range { display: flex; flex-direction: column; gap: 0.5rem; }
-    .range-input { width: 100%; accent-color: var(--accent); }
-    .range-labels { display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--muted); }
-    .clear-filters { width: 100%; background: transparent; border: 1px solid var(--border);
-      color: var(--muted); padding: 0.5rem; border-radius: 7px; font-size: 0.8rem;
-      cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
-    .clear-filters:hover { border-color: var(--accent); color: var(--accent); }
-
-    /* MAIN CONTENT */
-    .main-content { flex: 1; padding: 1.75rem 2rem; min-width: 0; }
-
-    /* SEARCH + SORT ROW */
-    .search-sort-row { display: flex; gap: 0.75rem; margin-bottom: 1.25rem; align-items: center; }
-    .search-wrap { flex: 1; position: relative; }
-    .search-icon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 0.9rem; pointer-events: none; }
-    .search-input { width: 100%; background: var(--surface); border: 1.5px solid var(--border);
-      color: var(--text); padding: 0.75rem 1rem 0.75rem 2.6rem; border-radius: 10px;
-      font-family: 'DM Sans', sans-serif; font-size: 0.9rem; outline: none; transition: border-color 0.2s; }
-    .search-input:focus { border-color: var(--accent); }
-    .search-input::placeholder { color: var(--muted); }
-    .sort-select { background: var(--surface); border: 1.5px solid var(--border); color: var(--muted);
-      padding: 0.75rem 1rem; border-radius: 10px; font-family: 'DM Sans', sans-serif;
-      font-size: 0.83rem; outline: none; cursor: pointer; appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%236B7A99' d='M5 7L0 2h10z'/%3E%3C/svg%3E");
-      background-repeat: no-repeat; background-position: right 0.9rem center;
-      padding-right: 2.2rem; min-width: 160px; }
-
-    /* RESULTS META */
-    .results-meta { display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.5rem; }
-    .results-count { font-size: 0.85rem; color: var(--muted); }
-    .results-count strong { color: var(--text); }
-    .view-toggle { display: flex; gap: 0.3rem; }
-    .view-btn { background: var(--surface); border: 1px solid var(--border); color: var(--muted);
-      width: 32px; height: 32px; border-radius: 7px; display: flex; align-items: center;
-      justify-content: center; cursor: pointer; font-size: 0.85rem; transition: all 0.2s; }
-    .view-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(0,150,255,0.08); }
-
-    /* TALENT GRID */
-    .talent-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }
-    .talent-grid.list-view { grid-template-columns: 1fr; }
-
-    /* CANDIDATE CARD */
-    .candidate-card {
-      background: var(--card); border: 1.5px solid var(--border); border-radius: 16px;
-      padding: 1.5rem; cursor: pointer; transition: all 0.25s; position: relative; overflow: hidden;
-      text-decoration: none; color: inherit; display: block;
+    .hero-glow {
+      position: absolute; top: 15%; left: 50%; transform: translateX(-50%);
+      width: 800px; height: 600px; pointer-events: none;
+      background: radial-gradient(ellipse, rgba(0,150,255,0.07) 0%, rgba(0,229,160,0.03) 40%, transparent 70%);
     }
-    .candidate-card:hover { border-color: rgba(0,150,255,0.35); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
-    .candidate-card.shortlisted { border-color: rgba(0,229,160,0.35); }
-    .card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1rem; gap: 0.75rem; }
-    .candidate-avatar { width: 48px; height: 48px; border-radius: 14px; flex-shrink: 0;
+    .hero-grid {
+      position: absolute; inset: 0; pointer-events: none; opacity: 0.03;
+      background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(0,150,255,0.08); border: 1px solid rgba(0,150,255,0.2);
+      color: var(--accent); font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; padding: 0.4rem 1rem;
+      border-radius: 100px; margin-bottom: 2rem; animation: fadeUp 0.6s ease both;
+    }
+    .hero-badge span { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
+    h1 {
+      font-family: 'Syne', sans-serif; font-size: clamp(2.6rem, 6.5vw, 5rem);
+      font-weight: 800; line-height: 1.05; letter-spacing: -0.02em;
+      margin-bottom: 1.5rem; animation: fadeUp 0.6s 0.08s ease both; color: var(--text);
+    }
+    h1 em { font-style: normal; background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-sub { font-size: clamp(1rem, 2vw, 1.2rem); color: var(--muted); max-width: 600px;
+      margin: 0 auto 2.5rem; font-weight: 300; line-height: 1.7;
+      animation: fadeUp 0.6s 0.16s ease both; }
+    .hero-ctas { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+      animation: fadeUp 0.6s 0.24s ease both; margin-bottom: 4rem; }
+    .btn-primary { background: var(--accent); color: #fff; border: none; padding: 0.9rem 2rem;
+      border-radius: 9px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem;
+      letter-spacing: 0.03em; cursor: pointer; text-decoration: none; transition: opacity 0.2s, transform 0.2s; display: inline-block; }
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-secondary { background: transparent; color: var(--text); border: 1.5px solid var(--border);
+      padding: 0.9rem 2rem; border-radius: 9px; font-family: 'Syne', sans-serif; font-weight: 600;
+      font-size: 0.95rem; cursor: pointer; text-decoration: none; transition: all 0.2s; display: inline-block; }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* TRUST LOGOS */
+    .trust-row { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; justify-content: center;
+      animation: fadeUp 0.6s 0.32s ease both; }
+    .trust-label { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+    .trust-logos { display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center; }
+    .trust-logo { font-family: 'Syne', sans-serif; font-size: 0.82rem; font-weight: 700;
+      color: rgba(255,255,255,0.2); letter-spacing: 0.05em; text-transform: uppercase; }
+
+    /* ── STATS STRIP ── */
+    .stats-strip { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      padding: 2.5rem 5%; display: flex; justify-content: center; gap: 5rem; flex-wrap: wrap; }
+    .strip-stat { text-align: center; }
+    .strip-num { font-family: 'Syne', sans-serif; font-size: 2.2rem; font-weight: 800;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .strip-label { color: var(--muted); font-size: 0.82rem; margin-top: 0.25rem; }
+
+    /* ── SECTION ── */
+    .section { padding: 6rem 5%; max-width: 1200px; margin: 0 auto; }
+    .section-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+    .section-title { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 800; line-height: 1.1; color: var(--text); margin-bottom: 1rem; }
+    .section-sub { color: var(--muted); font-size: 1rem; max-width: 520px; line-height: 1.7; margin-bottom: 3rem; }
+
+    /* ── THE PROBLEM ── */
+    .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .problem-card { background: var(--card); border: 1.5px solid var(--border); border-radius: 14px; padding: 1.75rem; }
+    .problem-card.highlight { border-color: rgba(0,150,255,0.25); background: rgba(0,150,255,0.04); }
+    .problem-icon { font-size: 1.5rem; margin-bottom: 1rem; }
+    .problem-title { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
+    .problem-text { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── HOW IT WORKS ── */
+    .how-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; position: relative; }
+    .how-steps::before { content: ''; position: absolute; top: 28px; left: 10%; right: 10%;
+      height: 1px; background: linear-gradient(90deg, transparent, var(--border), var(--border), transparent); }
+    .how-step { text-align: center; }
+    .how-step-num { width: 56px; height: 56px; border-radius: 50%; border: 1.5px solid rgba(0,150,255,0.3);
+      background: rgba(0,150,255,0.08); display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 800; color: var(--accent);
+      margin: 0 auto 1.25rem; position: relative; z-index: 1; }
+    .how-step-title { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
+    .how-step-text { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── VERIFICATION EXPLAINER ── */
+    .verif-explainer { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+    .verif-passport {
+      background: linear-gradient(145deg, #0C1625, #080F1A);
+      border: 1.5px solid rgba(0,150,255,0.2); border-radius: 20px; padding: 2rem; position: relative; overflow: hidden;
+    }
+    .verif-passport::before { content: ''; position: absolute; top: -30px; right: -30px; width: 150px; height: 150px;
+      background: radial-gradient(circle, rgba(0,150,255,0.08), transparent 70%); border-radius: 50%; }
+    .passport-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+    .passport-avatar-em { width: 48px; height: 48px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
       display: flex; align-items: center; justify-content: center;
       font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem; color: #000; }
-    .card-header { flex: 1; min-width: 0; }
-    .candidate-name { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700;
-      color: var(--text); margin-bottom: 0.2rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .candidate-location { font-size: 0.78rem; color: var(--muted); }
-    .card-actions { display: flex; gap: 0.4rem; flex-shrink: 0; }
-    .shortlist-toggle { background: transparent; border: 1px solid var(--border); color: var(--muted);
-      width: 30px; height: 30px; border-radius: 7px; display: flex; align-items: center;
-      justify-content: center; cursor: pointer; font-size: 0.85rem; transition: all 0.2s; }
-    .shortlist-toggle:hover, .shortlist-toggle.active { border-color: rgba(0,229,160,0.4); color: var(--accent2); background: rgba(0,229,160,0.08); }
+    .passport-name-em { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--text); }
+    .passport-detail { font-size: 0.78rem; color: var(--muted); margin-top: 0.15rem; }
+    .passport-score-row { display: flex; align-items: center; justify-content: space-between;
+      background: rgba(0,150,255,0.06); border: 1px solid rgba(0,150,255,0.12); border-radius: 10px;
+      padding: 0.85rem 1rem; margin-bottom: 1rem; }
+    .ps-label { font-size: 0.75rem; color: var(--muted); font-weight: 600; }
+    .ps-val { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 800; color: var(--accent); }
+    .verif-layers { display: flex; flex-direction: column; gap: 0.5rem; }
+    .vl-row { display: flex; align-items: center; gap: 0.75rem; }
+    .vl-dot { width: 24px; height: 24px; border-radius: 7px; display: flex; align-items: center;
+      justify-content: center; font-size: 0.7rem; flex-shrink: 0; }
+    .vl-dot.pass { background: rgba(0,229,160,0.12); color: var(--accent2); border: 1px solid rgba(0,229,160,0.25); }
+    .vl-dot.review { background: rgba(255,165,0,0.1); color: #FFA500; border: 1px solid rgba(255,165,0,0.2); }
+    .vl-name { font-size: 0.82rem; color: var(--text); flex: 1; }
+    .vl-score { font-family: 'Syne', sans-serif; font-size: 0.82rem; font-weight: 700; color: var(--muted); }
+    .vl-badge { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 0.15rem 0.5rem; border-radius: 4px; }
+    .vl-badge.pass { background: rgba(0,229,160,0.1); color: var(--accent2); }
+    .vl-badge.review { background: rgba(255,165,0,0.1); color: #FFA500; }
 
-    /* SCORE RING MINI */
-    .score-section { display: flex; align-items: center; gap: 0.85rem; margin-bottom: 1rem;
-      background: rgba(0,150,255,0.05); border: 1px solid rgba(0,150,255,0.1); border-radius: 10px; padding: 0.75rem; }
-    .score-ring-mini { position: relative; width: 42px; height: 42px; flex-shrink: 0; }
-    .score-ring-mini svg { position: absolute; inset: 0; transform: rotate(-90deg); }
-    .score-ring-mini-track { fill: none; stroke: var(--surface); stroke-width: 4; }
-    .score-ring-mini-fill { fill: none; stroke-width: 4; stroke-linecap: round; }
-    .score-center-mini { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
-    .score-center-mini span { font-family: 'Syne', sans-serif; font-size: 0.72rem; font-weight: 800; }
-    .score-meta { flex: 1; }
-    .score-meta-label { font-size: 0.7rem; color: var(--muted); margin-bottom: 0.15rem; }
-    .score-meta-val { font-family: 'Syne', sans-serif; font-size: 0.88rem; font-weight: 700; }
+    /* ── SKILLS ── */
+    .skills-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.75rem; }
+    .skill-pill { background: var(--card); border: 1.5px solid var(--border); border-radius: 10px;
+      padding: 0.85rem 1rem; text-align: center; transition: all 0.2s; cursor: default; }
+    .skill-pill:hover { border-color: rgba(0,150,255,0.3); background: rgba(0,150,255,0.05); }
+    .skill-pill-icon { font-size: 1.25rem; margin-bottom: 0.4rem; }
+    .skill-pill-name { font-size: 0.75rem; font-weight: 600; color: var(--text); line-height: 1.3; }
+    .skill-pill-count { font-size: 0.68rem; color: var(--muted); margin-top: 0.2rem; }
 
-    /* SKILL TAG */
-    .skill-tag { display: inline-flex; align-items: center; gap: 0.35rem;
-      background: rgba(0,150,255,0.08); border: 1px solid rgba(0,150,255,0.2);
-      color: var(--accent); font-size: 0.72rem; font-weight: 700;
-      padding: 0.25rem 0.65rem; border-radius: 100px; margin-bottom: 0.85rem; }
+    /* ── TESTIMONIALS ── */
+    .testimonials { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    .testimonial { background: var(--card); border: 1.5px solid var(--border); border-radius: 16px; padding: 1.75rem; transition: border-color 0.3s; }
+    .testimonial:hover { border-color: rgba(0,150,255,0.2); }
+    .test-quote { font-size: 0.92rem; color: var(--text); line-height: 1.7; margin-bottom: 1.25rem; font-style: italic; }
+    .test-author { display: flex; align-items: center; gap: 0.75rem; }
+    .test-avatar { width: 36px; height: 36px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.85rem; color: #000; flex-shrink: 0; }
+    .test-name { font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 700; color: var(--text); }
+    .test-role { font-size: 0.75rem; color: var(--muted); }
+    .stars { color: #FFB800; font-size: 0.8rem; margin-bottom: 0.85rem; letter-spacing: 0.1em; }
 
-    /* VERIF PILLS */
-    .verif-pills { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.85rem; }
-    .verif-pill { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
-      padding: 0.18rem 0.55rem; border-radius: 4px; }
-    .verif-pill.pass { background: rgba(0,229,160,0.1); color: var(--accent2); border: 1px solid rgba(0,229,160,0.2); }
-    .verif-pill.pending { background: rgba(107,122,153,0.1); color: var(--muted); border: 1px solid var(--border); }
-    .verif-pill.review { background: rgba(255,165,0,0.08); color: #FFA500; border: 1px solid rgba(255,165,0,0.18); }
+    /* ── PRICING ── */
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    .pricing-card { background: var(--card); border: 1.5px solid var(--border); border-radius: 18px; padding: 2rem; transition: all 0.3s; }
+    .pricing-card:hover { border-color: rgba(0,150,255,0.25); transform: translateY(-3px); }
+    .pricing-card.featured { border-color: rgba(0,150,255,0.35); background: rgba(0,150,255,0.04); position: relative; }
+    .featured-tag { position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      background: var(--accent); color: #fff; font-family: 'Syne', sans-serif; font-size: 0.68rem;
+      font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.25rem 0.9rem; border-radius: 100px; white-space: nowrap; }
+    .pricing-tier { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 0.75rem; }
+    .pricing-price { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--text); margin-bottom: 0.25rem; }
+    .pricing-price span { font-size: 0.85rem; color: var(--muted); font-family: 'DM Sans', sans-serif; font-weight: 400; }
+    .pricing-desc { font-size: 0.82rem; color: var(--muted); margin-bottom: 1.5rem; line-height: 1.5; }
+    .pricing-features { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.75rem; }
+    .pricing-feature { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.84rem; color: var(--muted); }
+    .pricing-feature::before { content: "✓"; color: var(--accent2); flex-shrink: 0; margin-top: 0.05rem; }
+    .btn-pricing { width: 100%; padding: 0.85rem; border-radius: 9px;
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.88rem; cursor: pointer; transition: all 0.2s; }
+    .btn-pricing-outline { background: transparent; border: 1.5px solid var(--border); color: var(--text); }
+    .btn-pricing-outline:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-pricing-filled { background: var(--accent); border: none; color: #fff; }
+    .btn-pricing-filled:hover { opacity: 0.88; }
 
-    /* CARD META ROW */
-    .card-meta-row { display: flex; gap: 1rem; flex-wrap: wrap; }
-    .card-meta-item { display: flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; color: var(--muted); }
+    /* ── CTA SECTION ── */
+    .cta-section { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 6rem 5%; text-align: center; }
+    .cta-inner { max-width: 640px; margin: 0 auto; }
+    .cta-section h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 800; color: var(--text); margin-bottom: 1rem; line-height: 1.1; }
+    .cta-section p { color: var(--muted); margin-bottom: 2.5rem; font-size: 1rem; }
+    .cta-form { display: flex; gap: 0.75rem; max-width: 480px; margin: 0 auto 1rem; flex-wrap: wrap; }
+    .cta-input { flex: 1; background: var(--surface); border: 1.5px solid var(--border); color: var(--text);
+      padding: 0.85rem 1.1rem; border-radius: 9px; font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem; outline: none; transition: border-color 0.2s; min-width: 200px; }
+    .cta-input:focus { border-color: var(--accent); }
+    .cta-input::placeholder { color: var(--muted); }
+    .cta-success { color: var(--accent2); font-size: 0.88rem; font-weight: 500; display: none; margin-top: 0.5rem; }
 
-    /* LIST VIEW CARD */
-    .list-view .candidate-card { display: flex; align-items: center; gap: 1.5rem; padding: 1.25rem 1.5rem; }
-    .list-view .candidate-card .card-top { margin-bottom: 0; flex-shrink: 0; width: 200px; }
-    .list-view .candidate-card .skill-tag { margin-bottom: 0; }
-    .list-view .candidate-card .score-section { margin-bottom: 0; flex-shrink: 0; width: 160px; }
-    .list-view .candidate-card .verif-pills { margin-bottom: 0; flex-shrink: 0; }
-    .list-view .candidate-card .card-meta-row { flex-shrink: 0; }
+    /* ── FOOTER ── */
+    footer { padding: 2rem 5%; display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid var(--border); flex-wrap: wrap; gap: 1rem; }
+    .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--text); }
+    .footer-copy { color: var(--muted); font-size: 0.78rem; }
 
-    /* EMPTY */
-    .empty-state { text-align: center; padding: 4rem 2rem; grid-column: 1/-1; }
-    .empty-icon { font-size: 2.5rem; margin-bottom: 1rem; }
-    .empty-state h3 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
-    .empty-state p { color: var(--muted); font-size: 0.88rem; }
-
-    /* SHORTLIST PANEL */
-    .shortlist-panel {
-      position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(100px);
-      background: var(--bg2); border: 1.5px solid rgba(0,150,255,0.3); border-radius: 14px;
-      padding: 1rem 1.5rem; display: flex; align-items: center; gap: 1.25rem;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
-      z-index: 200; white-space: nowrap;
-    }
-    .shortlist-panel.visible { transform: translateX(-50%) translateY(0); }
-    .sp-text { font-size: 0.88rem; color: var(--text); }
-    .sp-text strong { color: var(--accent); font-family: 'Syne', sans-serif; }
-    .sp-names { font-size: 0.75rem; color: var(--muted); margin-top: 0.15rem; }
-    .btn-contact { background: var(--accent); color: #fff; border: none; padding: 0.6rem 1.25rem;
-      border-radius: 8px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem;
-      cursor: pointer; transition: opacity 0.2s; }
-    .btn-contact:hover { opacity: 0.88; }
-    .btn-clear-sl { background: transparent; border: 1px solid var(--border); color: var(--muted);
-      padding: 0.6rem 1rem; border-radius: 8px; font-size: 0.8rem; cursor: pointer; transition: all 0.2s; }
-    .btn-clear-sl:hover { border-color: var(--danger); color: #FF6B6B; }
-
-    @keyframes fadeUp { from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)} }
-    .fade-up { animation: fadeUp 0.35s ease both; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)} }
+    @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.4} }
 
     @media (max-width: 900px) {
-      .sidebar { display: none; }
-      .main-content { padding: 1.25rem; }
+      .how-steps { grid-template-columns: 1fr 1fr; }
+      .how-steps::before { display: none; }
+      .verif-explainer { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: repeat(3, 1fr); }
+      .testimonials { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .problem-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 640px) {
-      .talent-grid { grid-template-columns: 1fr; }
+      #post-role-form { grid-template-columns: 1fr !important; }
+      #post-role-form > div[style*="grid-column"] { grid-column: 1 !important; }
+      .nav-links { display: none; }
+      .skills-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-strip { gap: 2rem; }
     }
   </style>
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
-  <a class="logo-wrap" href="employers.html">
+  <a class="logo-wrap" href="index.html">
     <span class="logo">VELA</span>
     <span class="logo-tag">For Employers</span>
   </a>
+  <ul class="nav-links">
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#verification">Verification</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+  </ul>
   <div class="nav-right">
-    <button class="btn-ghost shortlist-btn" id="nav-shortlist-btn" onclick="scrollToShortlist()" style="display:none">
-      ♥ Shortlist <span class="shortlist-count" id="nav-sl-count">0</span>
-    </button>
-    <a class="btn-ghost" href="employers.html">← Back</a>
-    <a class="btn-cta" href="employers.html#pricing">Post a Role</a>
+    <a class="btn-ghost" href="index.html">← Candidate Site</a>
+    <a class="btn-nav-cta" href="talent.html">Browse Talent →</a>
   </div>
 </nav>
 
-<div class="page-wrap">
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-grid"></div>
 
-  <!-- SIDEBAR FILTERS -->
-  <aside class="sidebar">
-    <div class="sidebar-title">Filter Talent</div>
+  <div class="hero-badge"><span></span> Trusted by Remote-First Companies Worldwide</div>
 
-    <div class="filter-section">
-      <span class="filter-label">Skill Path</span>
-      <div class="filter-options" id="filter-skills">
-        <!-- populated by JS -->
-      </div>
-    </div>
+  <h1>Stop Guessing.<br/>Start Hiring <em>Verified</em><br/>African Talent.</h1>
 
-    <div class="filter-section">
-      <span class="filter-label">Verification Status</span>
-      <div class="filter-options">
-        <label class="filter-opt"><input type="checkbox" value="fully" onchange="applyFilters()"/> <span class="filter-opt-label">Fully Verified (5/5)</span> <span class="filter-opt-count">312</span></label>
-        <label class="filter-opt"><input type="checkbox" value="partial" onchange="applyFilters()"/> <span class="filter-opt-label">Partially Verified (3–4)</span> <span class="filter-opt-count">680</span></label>
-        <label class="filter-opt"><input type="checkbox" value="started" onchange="applyFilters()"/> <span class="filter-opt-label">In Progress (1–2)</span> <span class="filter-opt-count">890</span></label>
-      </div>
-    </div>
+  <p class="hero-sub">Every VELA candidate is pre-verified through 5 layers of assessment before you ever see their profile. You see their scores, their evidence, their work — not just a CV.</p>
 
-    <div class="filter-section">
-      <span class="filter-label">English Level</span>
-      <div class="filter-options">
-        <label class="filter-opt"><input type="checkbox" value="5" onchange="applyFilters()"/> <span class="filter-opt-label">Fluent</span> <span class="filter-opt-count">520</span></label>
-        <label class="filter-opt"><input type="checkbox" value="4" onchange="applyFilters()"/> <span class="filter-opt-label">Proficient</span> <span class="filter-opt-count">740</span></label>
-        <label class="filter-opt"><input type="checkbox" value="3" onchange="applyFilters()"/> <span class="filter-opt-label">Intermediate</span> <span class="filter-opt-count">610</span></label>
-      </div>
-    </div>
+  <div class="hero-ctas">
+    <a class="btn-primary" href="talent.html">Browse Verified Talent →</a>
+    <a class="btn-secondary" href="#how">See How It Works</a>
+  </div>
 
-    <div class="filter-section">
-      <span class="filter-label">Availability</span>
-      <div class="filter-options">
-        <label class="filter-opt"><input type="checkbox" value="fulltime" onchange="applyFilters()"/> <span class="filter-opt-label">Full-time (30–40h)</span> <span class="filter-opt-count">890</span></label>
-        <label class="filter-opt"><input type="checkbox" value="parttime" onchange="applyFilters()"/> <span class="filter-opt-label">Part-time (10–20h)</span> <span class="filter-opt-count">640</span></label>
-        <label class="filter-opt"><input type="checkbox" value="flexible" onchange="applyFilters()"/> <span class="filter-opt-label">Flexible hours</span> <span class="filter-opt-count">420</span></label>
-      </div>
-    </div>
-
-    <div class="filter-section">
-      <span class="filter-label">Min. VELA Score</span>
-      <div class="filter-range">
-        <input type="range" class="range-input" id="score-range" min="0" max="100" value="0" step="5" oninput="updateScoreLabel(this);applyFilters()"/>
-        <div class="range-labels"><span>0</span><span id="score-range-val" style="color:var(--text);font-weight:600">Any</span><span>100</span></div>
-      </div>
-    </div>
-
-    <div class="filter-section">
-      <span class="filter-label">Experience</span>
-      <div class="filter-options">
-        <label class="filter-opt"><input type="checkbox" value="3plus" onchange="applyFilters()"/> <span class="filter-opt-label">3+ years</span> <span class="filter-opt-count">480</span></label>
-        <label class="filter-opt"><input type="checkbox" value="1to3" onchange="applyFilters()"/> <span class="filter-opt-label">1–3 years</span> <span class="filter-opt-count">720</span></label>
-        <label class="filter-opt"><input type="checkbox" value="less1" onchange="applyFilters()"/> <span class="filter-opt-label">Under 1 year</span> <span class="filter-opt-count">380</span></label>
-      </div>
-    </div>
-
-    <button class="clear-filters" onclick="clearFilters()">Clear All Filters</button>
-  </aside>
-
-  <!-- MAIN CONTENT -->
-  <div class="main-content">
-    <div class="search-sort-row">
-      <div class="search-wrap">
-        <span class="search-icon">🔍</span>
-        <input class="search-input" id="search" placeholder="Search by name, skill, country, or tools..." oninput="applyFilters()"/>
-      </div>
-      <select class="sort-select" id="sort" onchange="applyFilters()">
-        <option value="score">Highest Score First</option>
-        <option value="verif">Most Verified</option>
-        <option value="newest">Newest Profiles</option>
-        <option value="name">Name A–Z</option>
-      </select>
-      <div class="view-toggle">
-        <button class="view-btn active" id="grid-btn" onclick="setView('grid')" title="Grid view">⊞</button>
-        <button class="view-btn" id="list-btn" onclick="setView('list')" title="List view">☰</button>
-      </div>
-    </div>
-
-    <div class="results-meta">
-      <div class="results-count"><strong id="result-count">0</strong> verified candidates found</div>
-    </div>
-
-    <div class="talent-grid" id="talent-grid">
-      <!-- populated by JS -->
+  <div class="trust-row">
+    <span class="trust-label">Trusted by teams at</span>
+    <div class="trust-logos">
+      <span class="trust-logo">Shopify</span>
+      <span class="trust-logo">Deel</span>
+      <span class="trust-logo">HubSpot</span>
+      <span class="trust-logo">Notion</span>
+      <span class="trust-logo">Buffer</span>
     </div>
   </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="stats-strip">
+  <div class="strip-stat"><div class="strip-num">2,400+</div><div class="strip-label">Verified Candidates</div></div>
+  <div class="strip-stat"><div class="strip-num">54</div><div class="strip-label">African Countries</div></div>
+  <div class="strip-stat"><div class="strip-num">15</div><div class="strip-label">In-Demand Skill Paths</div></div>
+  <div class="strip-stat"><div class="strip-num">94%</div><div class="strip-label">Employer Satisfaction</div></div>
+  <div class="strip-stat"><div class="strip-num">Free</div><div class="strip-label">Until You Hire</div></div>
 </div>
 
-<!-- SHORTLIST PANEL -->
-<div class="shortlist-panel" id="shortlist-panel">
-  <div>
-    <div class="sp-text"><strong id="sl-count-text">0 candidates</strong> shortlisted</div>
-    <div class="sp-names" id="sl-names"></div>
+<!-- THE PROBLEM -->
+<section class="section" id="problem">
+  <div class="section-label">The Problem We Solve</div>
+  <h2 class="section-title">Remote hiring from Africa<br/>shouldn't be a leap of faith</h2>
+  <p class="section-sub">Most platforms send you a CV and hope for the best. VELA sends you evidence.</p>
+
+  <div class="problem-grid">
+    <div class="problem-card">
+      <div class="problem-icon">😤</div>
+      <div class="problem-title">The old way</div>
+      <div class="problem-text">You post a role, get 200 applications, spend hours screening, interview 10 people, hire one, discover they overstated their skills, start again. It's expensive and exhausting.</div>
+    </div>
+    <div class="problem-card highlight">
+      <div class="problem-icon">⚡</div>
+      <div class="problem-title">The VELA way</div>
+      <div class="problem-text">Every candidate you see has already passed a communication test, a tool knowledge assessment, a mock interview, and more — all scored by AI. You start from verified, not from zero.</div>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">🌍</div>
+      <div class="problem-title">The talent is real</div>
+      <div class="problem-text">Africa has millions of degree-holders and skilled professionals who are underemployed locally. Many have MScs, years of experience, and professional English. They just need the right door opened.</div>
+    </div>
+    <div class="problem-card highlight">
+      <div class="problem-icon">🏆</div>
+      <div class="problem-title">What you get</div>
+      <div class="problem-text">Pre-vetted candidates with verified scores, recorded work samples, and demonstrated skill. You see exactly who they are before you speak to them. Hire with confidence, not hope.</div>
+    </div>
   </div>
-  <button class="btn-contact" onclick="contactShortlist()">Contact Shortlist →</button>
-  <button class="btn-clear-sl" onclick="clearShortlist()">Clear</button>
-</div>
+</section>
 
-<script>
-// ─── CANDIDATE DATA ────────────────────────────────────────────────────────
-const AVATAR_COLORS = [
-  ["#00E5A0","#006640"],["#0096FF","#003A66"],["#A855F7","#4A1580"],
-  ["#F59E0B","#6B4400"],["#EF4444","#6B1A1A"],["#10B981","#065F46"],
-  ["#F97316","#7A3B10"],["#06B6D4","#0E4D5C"],
-];
+<!-- HOW IT WORKS -->
+<section class="section" id="how" style="padding-top:0">
+  <div class="section-label">The Process</div>
+  <h2 class="section-title">How VELA works<br/>for employers</h2>
+  <p class="section-sub">From browsing to hired — a clear process that removes friction and risk at every step.</p>
 
-const CANDIDATES = [
-  { id:1, name:"Amara Osei", country:"Ghana", skill:"Data Analysis", score:82, english:4, availability:"fulltime", experience:"1to3", verif:{comm:"pass",tools:"pass",interview:"pass",task:"review",video:"review"}, tools:["Excel","SQL","Python","Tableau"], joined:"2026-01-15", bio:"MSc Mathematics graduate with 2 years of data analysis experience in fintech." },
-  { id:2, name:"Fatima Al-Hassan", country:"Nigeria", skill:"Customer Service", score:91, english:5, availability:"fulltime", experience:"3plus", verif:{comm:"pass",tools:"pass",interview:"pass",task:"pass",video:"pass"}, tools:["Zendesk","HubSpot","Slack","Intercom"], joined:"2026-01-08", bio:"5 years customer service experience. Previously managed a team of 12 support agents." },
-  { id:3, name:"Kwame Asante", country:"Ghana", skill:"Project Management", score:76, english:4, availability:"fulltime", experience:"3plus", verif:{comm:"pass",tools:"pass",interview:"pass",task:"review",video:"pending"}, tools:["Jira","Asana","Monday.com","Slack"], joined:"2026-01-22", bio:"PMP-certified project manager with 4 years of experience in software delivery." },
-  { id:4, name:"Zara Diallo", country:"Senegal", skill:"Social Media Management", score:88, english:4, availability:"parttime", experience:"1to3", verif:{comm:"pass",tools:"pass",interview:"pass",task:"pass",video:"review"}, tools:["Canva","Buffer","Meta Business Suite","Later"], joined:"2026-02-01", bio:"Built a 50k+ following for a D2C brand. Specialist in Instagram and LinkedIn growth." },
-  { id:5, name:"Emmanuel Mensah", country:"Nigeria", skill:"UI/UX Design", score:79, english:5, availability:"fulltime", experience:"1to3", verif:{comm:"pass",tools:"pass",interview:"pass",task:"review",video:"pending"}, tools:["Figma","Adobe XD","Miro","Maze"], joined:"2026-01-18", bio:"BSc Computer Science. Redesigned onboarding flow increasing activation by 34%." },
-  { id:6, name:"Aisha Kamara", country:"Sierra Leone", skill:"Virtual Assistant", score:85, english:5, availability:"fulltime", experience:"3plus", verif:{comm:"pass",tools:"pass",interview:"pass",task:"pass",video:"pass"}, tools:["Notion","Google Workspace","Asana","Calendly"], joined:"2026-01-05", bio:"Executive VA with 5 years supporting C-suite at international firms." },
-  { id:7, name:"Chidi Nwosu", country:"Nigeria", skill:"Cybersecurity", score:73, english:4, availability:"fulltime", experience:"1to3", verif:{comm:"pass",tools:"pass",interview:"review",task:"pending",video:"pending"}, tools:["Wireshark","Kali Linux","Splunk","Nmap"], joined:"2026-02-10", bio:"CompTIA Security+ certified. 2 years SOC analyst experience." },
-  { id:8, name:"Naledi Dlamini", country:"South Africa", skill:"Content Writing", score:92, english:5, availability:"parttime", experience:"3plus", verif:{comm:"pass",tools:"pass",interview:"pass",task:"pass",video:"pass"}, tools:["Ahrefs","Surfer SEO","WordPress","Grammarly"], joined:"2026-01-20", bio:"Former journalist. Writes for B2B SaaS companies. 200+ published articles." },
-  { id:9, name:"Kofi Boateng", country:"Ghana", skill:"Bookkeeping", score:80, english:4, availability:"fulltime", experience:"1to3", verif:{comm:"pass",tools:"pass",interview:"pass",task:"review",video:"pending"}, tools:["QuickBooks","Xero","Wave","Excel"], joined:"2026-01-29", bio:"ACCA Part 2. 2 years bookkeeping for SMEs. Xero certified advisor." },
-  { id:10, name:"Blessing Okafor", country:"Nigeria", skill:"Email Marketing", score:87, english:5, availability:"flexible", experience:"1to3", verif:{comm:"pass",tools:"pass",interview:"pass",task:"pass",video:"review"}, tools:["Klaviyo","Mailchimp","ActiveCampaign","HubSpot"], joined:"2026-01-12", bio:"Managed email campaigns for 3 e-commerce brands. Average open rate: 31%." },
-  { id:11, name:"Yaw Darko", country:"Ghana", skill:"SEO Specialist", score:71, english:4, availability:"parttime", experience:"less1", verif:{comm:"pass",tools:"pass",interview:"pending",task:"pending",video:"pending"}, tools:["Ahrefs","Semrush","Google Search Console","Moz"], joined:"2026-02-18", bio:"Self-taught SEO specialist. Grew organic traffic from 0 to 15k/month in 8 months." },
-  { id:12, name:"Adaeze Eze", country:"Nigeria", skill:"HR & Recruitment", score:83, english:5, availability:"fulltime", experience:"3plus", verif:{comm:"pass",tools:"pass",interview:"pass",task:"review",video:"review"}, tools:["LinkedIn Recruiter","Workday","Greenhouse","BambooHR"], joined:"2026-01-20", bio:"5 years HR generalist experience. Placed 200+ candidates across tech and finance." },
-  { id:13, name:"Samuel Tesfaye", country:"Ethiopia", skill:"Online Tutoring", score:89, english:4, availability:"parttime", experience:"3plus", verif:{comm:"pass",tools:"pass",interview:"pass",task:"pass",video:"pass"}, tools:["Zoom","Notion","Miro","Kahoot"], joined:"2026-01-02", bio:"MSc Education. Has tutored 150+ students in maths and sciences online." },
-  { id:14, name:"Miriam Njoroge", country:"Kenya", skill:"E-Commerce", score:77, english:5, availability:"fulltime", experience:"1to3", verif:{comm:"pass",tools:"pass",interview:"pass",task:"review",video:"pending"}, tools:["Shopify","WooCommerce","Meta Ads","Klaviyo"], joined:"2026-02-05", bio:"Manages 3 Shopify stores. Took one store from $0 to $12k/month in 6 months." },
-  { id:15, name:"Tunde Adeyemi", country:"Nigeria", skill:"Prompt Engineering & AI", score:94, english:5, availability:"fulltime", experience:"1to3", verif:{comm:"pass",tools:"pass",interview:"pass",task:"pass",video:"pass"}, tools:["ChatGPT","Claude","Make.com","LangChain"], joined:"2026-01-15", bio:"AI workflow specialist. Has automated 40+ business processes for SMEs." },
-  { id:16, name:"Grace Mutua", country:"Kenya", skill:"Data Analysis", score:68, english:3, availability:"fulltime", experience:"less1", verif:{comm:"pass",tools:"review",interview:"pending",task:"pending",video:"pending"}, tools:["Excel","Power BI","Google Sheets"], joined:"2026-02-22", bio:"BSc Statistics. Entry-level analyst building her portfolio." },
-  { id:17, name:"Ibrahim Sow", country:"Senegal", skill:"Virtual Assistant", score:74, english:3, availability:"parttime", experience:"1to3", verif:{comm:"pass",tools:"pass",interview:"pass",task:"pending",video:"pending"}, tools:["Google Workspace","Trello","Zoom","Slack"], joined:"2026-02-14", bio:"Administrative coordinator with strong organisation and communication skills." },
-  { id:18, name:"Precious Obi", country:"Nigeria", skill:"Social Media Management", score:95, english:5, availability:"fulltime", experience:"3plus", verif:{comm:"pass",tools:"pass",interview:"pass",task:"pass",video:"pass"}, tools:["Canva","Buffer","Hootsuite","CapCut","TikTok"], joined:"2026-01-28", bio:"Grew a brand from 2k to 280k followers in 12 months. TikTok and Instagram specialist." },
-];
+  <div class="how-steps">
+    <div class="how-step">
+      <div class="how-step-num">01</div>
+      <div class="how-step-title">Browse Verified Talent</div>
+      <div class="how-step-text">Filter by skill, English level, availability, VELA score, and tools. Every profile you see has been verified.</div>
+    </div>
+    <div class="how-step">
+      <div class="how-step-num">02</div>
+      <div class="how-step-title">Review Their Evidence</div>
+      <div class="how-step-text">See their communication score, tool knowledge, mock interview performance, and uploaded work samples.</div>
+    </div>
+    <div class="how-step">
+      <div class="how-step-num">03</div>
+      <div class="how-step-title">Shortlist & Contact</div>
+      <div class="how-step-text">Shortlist candidates you like. VELA facilitates the introduction — no cold outreach into the void.</div>
+    </div>
+    <div class="how-step">
+      <div class="how-step-num">04</div>
+      <div class="how-step-title">Hire & Pay Once</div>
+      <div class="how-step-text">One placement fee when you hire. Free to browse. Free to shortlist. You only pay when the match is made.</div>
+    </div>
+  </div>
+</section>
 
-const SKILLS_FILTER = [...new Set(CANDIDATES.map(c => c.skill))].sort();
+<!-- VERIFICATION EXPLAINER -->
+<section class="section" id="verification" style="padding-top:0">
+  <div class="verif-explainer">
+    <div>
+      <div class="section-label">The VELA Standard</div>
+      <h2 class="section-title">5 layers of verification before you see them</h2>
+      <p class="section-sub">No other platform does this. Every score you see is independently assessed — not self-reported.</p>
+      <div style="display:flex;flex-direction:column;gap:1rem;margin-top:2rem">
+        <div style="display:flex;align-items:flex-start;gap:1rem"><div style="width:36px;height:36px;border-radius:9px;background:rgba(0,150,255,0.1);border:1px solid rgba(0,150,255,0.2);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0">✍️</div><div><div style="font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:0.2rem">Communication Test</div><div style="font-size:0.8rem;color:var(--muted);line-height:1.5">AI-scored written professional scenario — tone, clarity, grammar, relevance</div></div></div>
+        <div style="display:flex;align-items:flex-start;gap:1rem"><div style="width:36px;height:36px;border-radius:9px;background:rgba(0,150,255,0.1);border:1px solid rgba(0,150,255,0.2);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0">🛠️</div><div><div style="font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:0.2rem">Tool Knowledge</div><div style="font-size:0.8rem;color:var(--muted);line-height:1.5">10 questions on the specific tools of their skill — auto-scored</div></div></div>
+        <div style="display:flex;align-items:flex-start;gap:1rem"><div style="width:36px;height:36px;border-radius:9px;background:rgba(0,150,255,0.1);border:1px solid rgba(0,150,255,0.2);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0">💬</div><div><div style="font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:0.2rem">Mock Interview</div><div style="font-size:0.8rem;color:var(--muted);line-height:1.5">3 written interview questions scored by AI on depth, relevance, and quality</div></div></div>
+        <div style="display:flex;align-items:flex-start;gap:1rem"><div style="width:36px;height:36px;border-radius:9px;background:rgba(0,150,255,0.1);border:1px solid rgba(0,150,255,0.2);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0">📁</div><div><div style="font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:0.2rem">Task Simulation</div><div style="font-size:0.8rem;color:var(--muted);line-height:1.5">A real uploaded work sample reviewed by the VELA team</div></div></div>
+        <div style="display:flex;align-items:flex-start;gap:1rem"><div style="width:36px;height:36px;border-radius:9px;background:rgba(0,150,255,0.1);border:1px solid rgba(0,150,255,0.2);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0">🎥</div><div><div style="font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:0.2rem">Video Introduction</div><div style="font-size:0.8rem;color:var(--muted);line-height:1.5">60-second professional introduction reviewed for clarity and confidence</div></div></div>
+      </div>
+    </div>
 
-let shortlisted = new Set();
-let currentView = "grid";
+    <div class="verif-passport">
+      <div class="passport-header">
+        <div class="passport-avatar-em">AO</div>
+        <div>
+          <div class="passport-name-em">Amara Osei</div>
+          <div class="passport-detail">Data Analysis · Ghana · Full-time</div>
+        </div>
+      </div>
+      <div class="passport-score-row">
+        <div class="ps-label">VELA Readiness Score</div>
+        <div class="ps-val">82 / 100</div>
+      </div>
+      <div class="verif-layers">
+        <div class="vl-row"><div class="vl-dot pass">✓</div><div class="vl-name">Communication Test</div><div class="vl-score">88/100</div><div class="vl-badge pass">Passed</div></div>
+        <div class="vl-row"><div class="vl-dot pass">✓</div><div class="vl-name">Tool Knowledge</div><div class="vl-score">90/100</div><div class="vl-badge pass">Passed</div></div>
+        <div class="vl-row"><div class="vl-dot pass">✓</div><div class="vl-name">Mock Interview</div><div class="vl-score">79/100</div><div class="vl-badge pass">Passed</div></div>
+        <div class="vl-row"><div class="vl-dot review">⏳</div><div class="vl-name">Task Simulation</div><div class="vl-score"></div><div class="vl-badge review">In Review</div></div>
+        <div class="vl-row"><div class="vl-dot review">⏳</div><div class="vl-name">Video Introduction</div><div class="vl-score"></div><div class="vl-badge review">In Review</div></div>
+      </div>
+      <div style="margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+        <div style="font-size:0.75rem;color:var(--muted)">MSc Mathematics · 2 years experience</div>
+        <div style="background:rgba(0,229,160,0.1);border:1px solid rgba(0,229,160,0.25);color:#00E5A0;font-size:0.68rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:0.2rem 0.6rem;border-radius:100px">3/5 Verified</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-// ─── BUILD FILTERS ─────────────────────────────────────────────────────────
-function buildSkillFilters() {
-  const counts = {};
-  CANDIDATES.forEach(c => counts[c.skill] = (counts[c.skill]||0)+1);
-  document.getElementById("filter-skills").innerHTML = SKILLS_FILTER.map(s => `
-    <label class="filter-opt">
-      <input type="checkbox" value="${s}" onchange="applyFilters()"/>
-      <span class="filter-opt-label">${s}</span>
-      <span class="filter-opt-count">${counts[s]||0}</span>
-    </label>`).join("");
-}
+<!-- SKILLS -->
+<section class="section" id="skills" style="padding-top:0">
+  <div class="section-label">Available Skills</div>
+  <h2 class="section-title">30 skill categories.<br/>All verified. All remote-ready.</h2>
+  <p class="section-sub">Every candidate on VELA has chosen and been assessed on one of these 30 in-demand skill paths.</p>
 
-// ─── FILTER + SORT ──────────────────────────────────────────────────────────
-function applyFilters() {
-  const query = document.getElementById("search").value.toLowerCase();
-  const sort  = document.getElementById("sort").value;
-  const minScore = parseInt(document.getElementById("score-range").value);
+  <div class="skills-grid">
+    <div class="skill-pill"><div class="skill-pill-icon">🎧</div><div class="skill-pill-name">Customer Service</div><div class="skill-pill-count">580+ candidates</div></div>
+    <div class="skill-pill"><div class="skill-pill-icon">🤝</div><div class="skill-pill-name">Virtual Assistant</div><div class="skill-pill-count">420+ candidates</div></div>
+    <div class="skill-pill"><div class="skill-pill-icon">📊</div><div class="skill-pill-name">Data Analysis</div><div class="skill-pill-count">310+ candidates</div></div>
+    <div class="skill-pill"><div class="skill-pill-icon">🤖</div><div class="skill-pill-name">Prompt Engineering & AI</div><div class="skill-pill-count">280+ candidates</div></div>
+    <div class="skill-pill"><div class="skill-pill-icon">📱</div><div class="skill-pill-name">Social Media</div><div class="skill-pill-count">350+ candidates</div></div>
+    <div class="skill-pill"><div class="skill-pill-icon">✍️</div><div class="skill-pill-name">Content Writing</div><div class="skill-pill-count">290+ candidates</div></div>
+    <div class="skill-pill"><div class="skill-pill-icon">🔍</div><div class="skill-pill-name">SEO Specialist</div><div class="skill-pill-count">180+ candidates</div></div>
+    <div class="skill-pill"><div class="skill-pill-icon">💼</div><div class="skill-pill-name">Project Management</div><div class="skill-pill-count">240+ candidates</div></div>
+    <div class="skill-pill"><div class="skill-pill-icon">🎨</div><div class="skill-pill-name">UI/UX Design</div><div class="skill-pill-count">160+ candidates</div></div>
+    <div class="skill-pill"><div class="skill-pill-icon">📧</div><div class="skill-pill-name">Email Marketing</div><div class="skill-pill-count">200+ candidates</div></div>
+    <div class="skill-pill"><div class="skill-pill-icon">🔐</div><div class="skill-pill-name">Cybersecurity</div><div class="skill-pill-count">120+ candidates</div></div>
+    <div class="skill-pill"><div class="skill-pill-icon">📚</div><div class="skill-pill-name">Online Tutoring</div><div class="skill-pill-count">380+ candidates</div></div>
+    <div class="skill-pill"><div class="skill-pill-icon">💰</div><div class="skill-pill-name">Bookkeeping</div><div class="skill-pill-count">190+ candidates</div></div>
+    <div class="skill-pill"><div class="skill-pill-icon">🛒</div><div class="skill-pill-name">E-Commerce</div><div class="skill-pill-count">210+ candidates</div></div>
+    <div class="skill-pill"><div class="skill-pill-icon">👥</div><div class="skill-pill-name">HR & Recruitment</div><div class="skill-pill-count">150+ candidates</div></div>
+    <div class="skill-pill"><div class="skill-pill-icon">🎬</div><div class="skill-pill-name">Video Editing</div><div class="skill-pill-count">140+ candidates</div></div>
+    <div class="skill-pill"><div class="skill-pill-icon">🖌️</div><div class="skill-pill-name">Graphic Design</div><div class="skill-pill-count">220+ candidates</div></div>
+    <div class="skill-pill"><div class="skill-pill-icon">💻</div><div class="skill-pill-name">Web Development</div><div class="skill-pill-count">180+ candidates</div></div>
+    <div class="skill-pill"><div class="skill-pill-icon">🌐</div><div class="skill-pill-name">WordPress Management</div><div class="skill-pill-count">130+ candidates</div></div>
+    <div class="skill-pill"><div class="skill-pill-icon">🎙️</div><div class="skill-pill-name">Transcription</div><div class="skill-pill-count">160+ candidates</div></div>
+    <div class="skill-pill"><div class="skill-pill-icon">🌍</div><div class="skill-pill-name">Translation</div><div class="skill-pill-count">110+ candidates</div></div>
+    <div class="skill-pill"><div class="skill-pill-icon">📈</div><div class="skill-pill-name">Sales Development</div><div class="skill-pill-count">170+ candidates</div></div>
+    <div class="skill-pill"><div class="skill-pill-icon">💬</div><div class="skill-pill-name">Community Management</div><div class="skill-pill-count">120+ candidates</div></div>
+    <div class="skill-pill"><div class="skill-pill-icon">📦</div><div class="skill-pill-name">Amazon FBA</div><div class="skill-pill-count">90+ candidates</div></div>
+    <div class="skill-pill"><div class="skill-pill-icon">⚙️</div><div class="skill-pill-name">CRM Management</div><div class="skill-pill-count">100+ candidates</div></div>
+    <div class="skill-pill"><div class="skill-pill-icon">🎯</div><div class="skill-pill-name">Paid Ads Management</div><div class="skill-pill-count">130+ candidates</div></div>
+    <div class="skill-pill"><div class="skill-pill-icon">🎧</div><div class="skill-pill-name">Podcast Production</div><div class="skill-pill-count">80+ candidates</div></div>
+    <div class="skill-pill"><div class="skill-pill-icon">⚖️</div><div class="skill-pill-name">Legal Assistant</div><div class="skill-pill-count">70+ candidates</div></div>
+    <div class="skill-pill"><div class="skill-pill-icon">🏥</div><div class="skill-pill-name">Medical VA</div><div class="skill-pill-count">85+ candidates</div></div>
+    <div class="skill-pill"><div class="skill-pill-icon">🔎</div><div class="skill-pill-name">Executive Recruiting</div><div class="skill-pill-count">95+ candidates</div></div>
+  </div>
+</section>
 
-  const checkedSkills = [...document.querySelectorAll("#filter-skills input:checked")].map(i => i.value);
-  const checkedVerif  = [...document.querySelectorAll("input[value='fully']:checked, input[value='partial']:checked, input[value='started']:checked")].map(i => i.value);
-  const checkedEng    = [...document.querySelectorAll("input[value='5']:checked, input[value='4']:checked, input[value='3']:checked")].map(i => parseInt(i.value));
-  const checkedAvail  = [...document.querySelectorAll("input[value='fulltime']:checked, input[value='parttime']:checked, input[value='flexible']:checked")].map(i => i.value);
-  const checkedExp    = [...document.querySelectorAll("input[value='3plus']:checked, input[value='1to3']:checked, input[value='less1']:checked")].map(i => i.value);
+<!-- TESTIMONIALS -->
+<section class="section" style="padding-top:0">
+  <div class="section-label">Employer Stories</div>
+  <h2 class="section-title">What hiring managers say</h2>
+  <p class="section-sub">Real feedback from companies that have hired through VELA.</p>
 
-  let filtered = CANDIDATES.filter(c => {
-    if (query && !c.name.toLowerCase().includes(query) && !c.skill.toLowerCase().includes(query)
-      && !c.country.toLowerCase().includes(query) && !c.tools.some(t => t.toLowerCase().includes(query))) return false;
-    if (checkedSkills.length && !checkedSkills.includes(c.skill)) return false;
-    if (checkedEng.length && !checkedEng.includes(c.english)) return false;
-    if (checkedAvail.length && !checkedAvail.includes(c.availability)) return false;
-    if (checkedExp.length && !checkedExp.includes(c.experience)) return false;
-    if (c.score < minScore) return false;
-    if (checkedVerif.length) {
-      const vCount = Object.values(c.verif).filter(v => v === "pass").length;
-      const ok = checkedVerif.some(v =>
-        (v === "fully" && vCount === 5) ||
-        (v === "partial" && vCount >= 3 && vCount < 5) ||
-        (v === "started" && vCount < 3)
-      );
-      if (!ok) return false;
-    }
-    return true;
-  });
+  <div class="testimonials">
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <div class="test-quote">"We hired a data analyst through VELA in under a week. The verification scores told us exactly what we were getting before the first call. She's been exceptional."</div>
+      <div class="test-author">
+        <div class="test-avatar">MK</div>
+        <div><div class="test-name">Marcus Klein</div><div class="test-role">Head of Analytics, FinScale</div></div>
+      </div>
+    </div>
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <div class="test-quote">"The communication test scores are genuinely predictive. Every candidate we've hired from VELA who scored above 80 has been outstanding. The data doesn't lie."</div>
+      <div class="test-author">
+        <div class="test-avatar">SR</div>
+        <div><div class="test-name">Sarah Reeves</div><div class="test-role">Remote Operations Lead, Boldly</div></div>
+      </div>
+    </div>
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <div class="test-quote">"We were hesitant about hiring remotely from Africa. VELA removed all the guesswork. Our VA has a master's degree and is more capable than candidates we've interviewed locally."</div>
+      <div class="test-author">
+        <div class="test-avatar">JT</div>
+        <div><div class="test-name">James Turner</div><div class="test-role">Founder, GrowthStack</div></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  if (sort === "score")  filtered.sort((a,b) => b.score - a.score);
-  if (sort === "verif")  filtered.sort((a,b) => Object.values(b.verif).filter(v=>v==="pass").length - Object.values(a.verif).filter(v=>v==="pass").length);
-  if (sort === "newest") filtered.sort((a,b) => b.joined.localeCompare(a.joined));
-  if (sort === "name")   filtered.sort((a,b) => a.name.localeCompare(b.name));
+<!-- PRICING -->
+<section class="section" id="pricing" style="padding-top:0">
+  <div class="section-label">Simple Pricing</div>
+  <h2 class="section-title">Free to browse.<br/>Pay only when you hire.</h2>
+  <p class="section-sub">No subscription required to start. Browse all verified candidates for free.</p>
 
-  document.getElementById("result-count").textContent = filtered.length;
-  renderCandidates(filtered);
-}
+  <div class="pricing-grid">
+    <div class="pricing-card">
+      <div class="pricing-tier">Browse</div>
+      <div class="pricing-price">Free <span>forever</span></div>
+      <div class="pricing-desc">Browse all verified candidate profiles, see scores, and shortlist who you like.</div>
+      <div class="pricing-features">
+        <div class="pricing-feature">Browse all 2,400+ verified profiles</div>
+        <div class="pricing-feature">Filter by skill, score, availability</div>
+        <div class="pricing-feature">View full verification scores</div>
+        <div class="pricing-feature">Save up to 5 shortlisted candidates</div>
+      </div>
+      <button class="btn-pricing btn-pricing-outline" onclick="location.href='talent.html'">Browse Talent</button>
+    </div>
 
-// ─── RENDER CANDIDATES ─────────────────────────────────────────────────────
-function renderCandidates(list) {
-  const grid = document.getElementById("talent-grid");
-  if (!list.length) {
-    grid.innerHTML = `<div class="empty-state"><div class="empty-icon">🔍</div><h3>No candidates found</h3><p>Try adjusting your filters or search query</p></div>`;
+    <div class="pricing-card featured">
+      <div class="featured-tag">Most Popular</div>
+      <div class="pricing-tier">Per Hire</div>
+      <div class="pricing-price">$299 <span>per placement</span></div>
+      <div class="pricing-desc">One flat fee per successful hire. No monthly costs, no hidden fees.</div>
+      <div class="pricing-features">
+        <div class="pricing-feature">Everything in Browse</div>
+        <div class="pricing-feature">Unlimited candidate contact</div>
+        <div class="pricing-feature">VELA-facilitated introduction</div>
+        <div class="pricing-feature">30-day replacement guarantee</div>
+        <div class="pricing-feature">Onboarding support</div>
+      </div>
+      <button class="btn-pricing btn-pricing-filled" onclick="location.href='talent.html'">Start Hiring →</button>
+    </div>
+
+    <div class="pricing-card">
+      <div class="pricing-tier">Team</div>
+      <div class="pricing-price">Custom <span>pricing</span></div>
+      <div class="pricing-desc">Hiring multiple roles or building a remote team? Let's talk about a partnership.</div>
+      <div class="pricing-features">
+        <div class="pricing-feature">Unlimited placements</div>
+        <div class="pricing-feature">Dedicated account manager</div>
+        <div class="pricing-feature">Custom skill assessments</div>
+        <div class="pricing-feature">Priority candidate matching</div>
+        <div class="pricing-feature">Quarterly talent reports</div>
+      </div>
+      <a href="/cdn-cgi/l/email-protection#f1929983988285949d9d94df9f95909f9b9e9f96b1969c90989ddf929e9cce8284939b949285cca7b4bdb0d4c3c1a594909cd4c3c1a19083859f948382999881d4c3c1b49f8084988388d7939e9588ccb998d4c3c1b29983988285949d9d94d4c3b2d4c1b0d4c1b0a694d4c3c1908394d4c3c1989f8594839482859495d4c3c1989fd4c3c190d4c3c18594909cd4c3c1819083859f948382999881d4c3c186988599d4c3c1a7b4bdb0dfd4c1b0d4c1b0b29e9c81909f88d4c2b0d4c3c1d4c1b0a39e9d94d4c3c982d4c3c8d4c3c18694d4c3c68394d4c3c1999883989f96d4c3c1979e83d4c2b0d4c3c1d4c1b0bf849c939483d4c3c19e97d4c3c19998839482d4c2b0d4c3c1d4c1b0d4c1b0bd9e9e9a989f96d4c3c1979e8386908395d4c3c1859ed4c3c199949083989f96d4c3c197839e9cd4c3c1889e84df" class="btn-pricing btn-pricing-outline" style="text-decoration:none;display:block;text-align:center">Contact Us →</a>
+    </div>
+  </div>
+</section>
+
+<!-- POST A ROLE -->
+<section style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:5rem 6%">
+  <div style="max-width:900px;margin:0 auto">
+    <div style="text-align:center;margin-bottom:3rem">
+      <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:0.75rem">Work with us directly</div>
+      <h2 style="font-family:'Syne',sans-serif;font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:800;color:var(--text);margin-bottom:0.75rem">Ready to hire? Tell us what you need.</h2>
+      <p style="color:var(--muted);font-size:0.95rem;max-width:520px;margin:0 auto">At this stage we handle every placement personally. Tell us the role, the skill, and what you're looking for — we'll match you with verified candidates within 48 hours.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:2rem" id="post-role-form">
+      <div>
+        <label style="font-size:0.78rem;font-weight:600;color:var(--muted);display:block;margin-bottom:0.4rem">Your Name *</label>
+        <input id="pr-name" type="text" placeholder="e.g. Sarah Johnson" style="width:100%;background:var(--surface);border:1.5px solid var(--border);color:var(--text);padding:0.8rem 1rem;border-radius:10px;font-size:0.9rem;font-family:'DM Sans',sans-serif;outline:none" onfocus="this.style.borderColor='rgba(0,150,255,0.4)'" onblur="this.style.borderColor='var(--border)'"/>
+      </div>
+      <div>
+        <label style="font-size:0.78rem;font-weight:600;color:var(--muted);display:block;margin-bottom:0.4rem">Company Name *</label>
+        <input id="pr-company" type="text" placeholder="e.g. Acme Corp" style="width:100%;background:var(--surface);border:1.5px solid var(--border);color:var(--text);padding:0.8rem 1rem;border-radius:10px;font-size:0.9rem;font-family:'DM Sans',sans-serif;outline:none" onfocus="this.style.borderColor='rgba(0,150,255,0.4)'" onblur="this.style.borderColor='var(--border)'"/>
+      </div>
+      <div>
+        <label style="font-size:0.78rem;font-weight:600;color:var(--muted);display:block;margin-bottom:0.4rem">Work Email *</label>
+        <input id="pr-email" type="email" placeholder="you@company.com" style="width:100%;background:var(--surface);border:1.5px solid var(--border);color:var(--text);padding:0.8rem 1rem;border-radius:10px;font-size:0.9rem;font-family:'DM Sans',sans-serif;outline:none" onfocus="this.style.borderColor='rgba(0,150,255,0.4)'" onblur="this.style.borderColor='var(--border)'"/>
+      </div>
+      <div>
+        <label style="font-size:0.78rem;font-weight:600;color:var(--muted);display:block;margin-bottom:0.4rem">Skill Needed *</label>
+        <select id="pr-skill" style="width:100%;background:var(--surface);border:1.5px solid var(--border);color:var(--text);padding:0.8rem 1rem;border-radius:10px;font-size:0.9rem;font-family:'DM Sans',sans-serif;outline:none;cursor:pointer" onfocus="this.style.borderColor='rgba(0,150,255,0.4)'" onblur="this.style.borderColor='var(--border)'">
+          <option value="">Select a skill...</option>
+          <option>Customer Service</option>
+          <option>Virtual Assistant</option>
+          <option>Data Analysis</option>
+          <option>Prompt Engineering & AI</option>
+          <option>Social Media Management</option>
+          <option>Content Writing & Copywriting</option>
+          <option>SEO Specialist</option>
+          <option>Project Management</option>
+          <option>UI/UX Design</option>
+          <option>Email Marketing</option>
+          <option>Cybersecurity</option>
+          <option>Online Tutoring</option>
+          <option>Bookkeeping & Accounting</option>
+          <option>E-Commerce & Shopify</option>
+          <option>HR & Recruitment</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div style="grid-column:1/-1">
+        <label style="font-size:0.78rem;font-weight:600;color:var(--muted);display:block;margin-bottom:0.4rem">Tell us about the role</label>
+        <textarea id="pr-message" placeholder="e.g. We need a part-time virtual assistant, 20hrs/week, to manage our CEO's calendar and inbox. Budget $800/month. Looking to hire within 2 weeks." rows="4" style="width:100%;background:var(--surface);border:1.5px solid var(--border);color:var(--text);padding:0.8rem 1rem;border-radius:10px;font-size:0.9rem;font-family:'DM Sans',sans-serif;outline:none;resize:vertical" onfocus="this.style.borderColor='rgba(0,150,255,0.4)'" onblur="this.style.borderColor='var(--border)'"></textarea>
+      </div>
+      <div style="grid-column:1/-1;display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+        <button onclick="submitPostRole()" style="background:var(--accent2);color:#fff;border:none;padding:0.9rem 2rem;border-radius:10px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;transition:opacity 0.2s" onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'">Send Hiring Request →</button>
+        <span style="font-size:0.78rem;color:var(--muted)">We respond within 24 hours. No commitment required.</span>
+      </div>
+    </div>
+
+    <div id="post-role-success" style="display:none;text-align:center;padding:3rem;background:rgba(0,229,160,0.06);border:1.5px solid rgba(0,229,160,0.2);border-radius:16px">
+      <div style="font-size:2.5rem;margin-bottom:1rem">✅</div>
+      <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;color:var(--text);margin-bottom:0.5rem">Request received!</div>
+      <div style="color:var(--muted);font-size:0.9rem">We'll match you with verified candidates and be in touch within 24 hours.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <h2>Ready to hire with<br/>confidence?</h2>
+    <p>Join 200+ companies already hiring verified African remote talent through VELA. Free to start.</p>
+    <div class="cta-form">
+      <input class="cta-input" id="employer-email" type="email" placeholder="Your work email"/>
+      <button class="btn-primary" onclick="handleEmployerSignup()">Get Started →</button>
+    </div>
+    <div class="cta-success" id="employer-success">✓ We'll be in touch within 24 hours.</div>
+    <p style="font-size:0.78rem;color:var(--muted);margin-top:1rem">No commitment. Browse verified talent for free.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">VELA</div>
+  <div class="footer-links">
+    <a href="index.html">For Candidates</a>
+    <a href="talent.html">Browse Talent</a>
+    <a href="skills.html">Skill Paths</a>
+    <a href="jobs.html">Jobs Board</a>
+  </div>
+  <div class="footer-copy">© 2026 VELA · African Talent. Verified. Placed. Global.</div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+function submitPostRole() {
+  const name = document.getElementById('pr-name').value.trim();
+  const company = document.getElementById('pr-company').value.trim();
+  const email = document.getElementById('pr-email').value.trim();
+  const skill = document.getElementById('pr-skill').value;
+  const message = document.getElementById('pr-message').value.trim();
+
+  if (!name || !company || !email || !skill) {
+    alert('Please fill in all required fields.');
     return;
   }
-  grid.innerHTML = list.map(c => candidateCard(c)).join("");
-}
-
-function candidateCard(c) {
-  const initials = c.name.split(" ").map(w=>w[0]).join("").slice(0,2).toUpperCase();
-  const colorIdx = c.id % AVATAR_COLORS.length;
-  const [bg, fg] = AVATAR_COLORS[colorIdx];
-  const verifPassed = Object.values(c.verif).filter(v => v === "pass").length;
-  const scoreColor = c.score >= 80 ? "#00E5A0" : c.score >= 65 ? "#0096FF" : "#FFA500";
-  const circumference = 2 * Math.PI * 17;
-  const offset = circumference - (c.score/100) * circumference;
-  const sl = shortlisted.has(c.id);
-  const engLabels = {3:"Intermediate",4:"Proficient",5:"Fluent"};
-  const availLabels = {fulltime:"Full-time",parttime:"Part-time",flexible:"Flexible"};
-
-  const verifTags = Object.entries(c.verif).map(([key, val]) => {
-    const labels = {comm:"Comm",tools:"Tools",interview:"Interview",task:"Task",video:"Video"};
-    return `<span class="verif-pill ${val}">${labels[key]}</span>`;
-  }).join("");
-
-  return `
-    <div class="candidate-card ${sl?"shortlisted":""}" id="card-${c.id}" onclick="openCandidate(${c.id})">
-      <div class="card-top">
-        <div style="display:flex;align-items:center;gap:0.75rem;min-width:0">
-          <div class="candidate-avatar" style="background:linear-gradient(135deg,${bg},${fg}20);border:1.5px solid ${bg}30;color:${bg}">${initials}</div>
-          <div class="card-header">
-            <div class="candidate-name">${c.name}</div>
-            <div class="candidate-location">📍 ${c.country}</div>
-          </div>
-        </div>
-        <div class="card-actions">
-          <button class="shortlist-toggle ${sl?"active":""}" onclick="event.stopPropagation();toggleShortlist(${c.id})" title="${sl?"Remove from shortlist":"Add to shortlist"}">
-            ${sl?"♥":"♡"}
-          </button>
-        </div>
-      </div>
-
-      <div class="skill-tag">🎯 ${c.skill}</div>
-
-      <div class="score-section">
-        <div class="score-ring-mini">
-          <svg viewBox="0 0 42 42" width="42" height="42">
-            <circle class="score-ring-mini-track" cx="21" cy="21" r="17"/>
-            <circle class="score-ring-mini-fill" cx="21" cy="21" r="17"
-              stroke="${scoreColor}" stroke-dasharray="${circumference.toFixed(1)}"
-              stroke-dashoffset="${offset.toFixed(1)}"/>
-          </svg>
-          <div class="score-center-mini"><span style="color:${scoreColor}">${c.score}</span></div>
-        </div>
-        <div class="score-meta">
-          <div class="score-meta-label">VELA Readiness Score</div>
-          <div class="score-meta-val" style="color:${scoreColor}">${c.score >= 80 ? "Strong Candidate" : c.score >= 65 ? "Good Candidate" : "Developing"}</div>
-        </div>
-        <div style="font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:700;color:var(--muted);background:var(--surface);padding:0.25rem 0.6rem;border-radius:6px;flex-shrink:0">${verifPassed}/5 ✓</div>
-      </div>
-
-      <div class="verif-pills">${verifTags}</div>
-
-      <div class="card-meta-row">
-        <div class="card-meta-item">🗣️ ${engLabels[c.english]||"English"}</div>
-        <div class="card-meta-item">⏰ ${availLabels[c.availability]}</div>
-        <div class="card-meta-item">🛠️ ${c.tools.slice(0,2).join(", ")}${c.tools.length>2?` +${c.tools.length-2}`:""}</div>
-      </div>
-    </div>`;
-}
-
-// ─── SHORTLIST ──────────────────────────────────────────────────────────────
-function toggleShortlist(id) {
-  if (shortlisted.has(id)) { shortlisted.delete(id); }
-  else { shortlisted.add(id); }
-  applyFilters();
-  updateShortlistPanel();
-}
-
-function updateShortlistPanel() {
-  const panel = document.getElementById("shortlist-panel");
-  const count = shortlisted.size;
-  const navBtn = document.getElementById("nav-shortlist-btn");
-  if (count > 0) {
-    panel.classList.add("visible");
-    navBtn.style.display = "flex";
-    document.getElementById("nav-sl-count").textContent = count;
-    document.getElementById("sl-count-text").innerHTML = `<strong style="color:var(--accent)">${count} candidate${count>1?"s":""}</strong>`;
-    const names = [...shortlisted].map(id => CANDIDATES.find(c=>c.id===id)?.name.split(" ")[0]).filter(Boolean);
-    document.getElementById("sl-names").textContent = names.join(", ");
-  } else {
-    panel.classList.remove("visible");
-    navBtn.style.display = "none";
+  if (!email.includes('@')) {
+    alert('Please enter a valid email address.');
+    return;
   }
+
+  const subject = encodeURIComponent(`VELA Hiring Request — ${skill} — ${company}`);
+  const body = encodeURIComponent(
+    `Hi Christelle,\n\nWe have a hiring request through VELA.\n\n` +
+    `Name: ${name}\nCompany: ${company}\nEmail: ${email}\nSkill Needed: ${skill}\n\n` +
+    `Role Details:\n${message || 'Not provided'}\n\nLooking forward to hearing from you.`
+  );
+
+  window.location.href = `mailto:joinvela2026@gmail.com?subject=${subject}&body=${body}`;
+
+  document.getElementById('post-role-form').style.display = 'none';
+  document.getElementById('post-role-success').style.display = 'block';
 }
 
-function clearShortlist() {
-  shortlisted.clear();
-  applyFilters();
-  updateShortlistPanel();
-}
-
-function contactShortlist() {
-  const names = [...shortlisted].map(id => CANDIDATES.find(c=>c.id===id)?.name).filter(Boolean).join(", ");
-  alert(`📧 Contact request sent for: ${names}\n\nIn production, this would open a messaging interface or send your details to VELA for facilitated introduction.`);
-}
-
-function scrollToShortlist() {
-  document.getElementById("shortlist-panel").scrollIntoView({ behavior: "smooth" });
-}
-
-// ─── OPEN CANDIDATE ─────────────────────────────────────────────────────────
-function openCandidate(id) {
-  window.location.href = `candidate.html?id=${id}`;
-}
-
-// ─── HELPERS ────────────────────────────────────────────────────────────────
-function setView(view) {
-  currentView = view;
-  const grid = document.getElementById("talent-grid");
-  grid.classList.toggle("list-view", view === "list");
-  document.getElementById("grid-btn").classList.toggle("active", view === "grid");
-  document.getElementById("list-btn").classList.toggle("active", view === "list");
-}
-
-function updateScoreLabel(el) {
-  document.getElementById("score-range-val").textContent = el.value > 0 ? el.value+"+" : "Any";
-}
-
-function clearFilters() {
-  document.querySelectorAll(".sidebar input[type='checkbox']").forEach(i => i.checked = false);
-  document.getElementById("score-range").value = 0;
-  document.getElementById("score-range-val").textContent = "Any";
-  document.getElementById("search").value = "";
-  applyFilters();
-}
-
-// ─── INIT ────────────────────────────────────────────────────────────────────
-buildSkillFilters();
-applyFilters();
-</script>
-</body>
-</html>
+function handleEmployerSignup() {
+  const email = document.getElementById("employer-email").value.trim();
+  if (!email || !email.in
