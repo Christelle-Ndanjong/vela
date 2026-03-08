@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VELA — Get Experience</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #080C12; --bg2: #0D1320; --surface: #111827;
+      --border: rgba(255,255,255,0.07); --accent: #00E5A0;
+      --accent2: #0096FF; --text: #F0F4FF; --muted: #6B7A99;
+      --card: #0F1A2E;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; min-height: 100vh; }
+
+    /* NAV */
+    nav { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 5%; backdrop-filter: blur(20px); background: rgba(8,12,18,0.92); border-bottom: 1px solid var(--border); }
+    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.5rem; letter-spacing: 0.08em; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+    .nav-cta { background: var(--accent); color: #080C12 !important; padding: 0.45rem 1.1rem; border-radius: 7px; font-weight: 700 !important; }
+
+    /* HERO */
+    .hero { padding: 5rem 5% 3rem; max-width: 900px; margin: 0 auto; text-align: center; }
+    .hero-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; }
+    .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800; color: var(--text); line-height: 1.1; margin-bottom: 1rem; }
+    .hero h1 span { background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-sub { color: var(--muted); font-size: 1rem; max-width: 580px; margin: 0 auto 2rem; line-height: 1.7; }
+
+    /* WHY SECTION */
+    .why-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; max-width: 900px; margin: 0 auto 4rem; padding: 0 5%; }
+    .why-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem; text-align: center; }
+    .why-icon { font-size: 1.8rem; margin-bottom: 0.75rem; }
+    .why-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; color: var(--text); margin-bottom: 0.4rem; }
+    .why-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+
+    /* FILTERS */
+    .filters-wrap { padding: 0 5%; max-width: 1200px; margin: 0 auto 2rem; }
+    .filters-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.75rem; }
+    .filter-row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .filter-btn { background: var(--card); border: 1.5px solid var(--border); color: var(--muted); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+    .filter-btn:hover { border-color: rgba(0,229,160,0.3); color: var(--text); }
+    .filter-btn.active { background: rgba(0,229,160,0.1); border-color: var(--accent); color: var(--accent); }
+
+    /* SECTION HEADERS */
+    .section-wrap { max-width: 1200px; margin: 0 auto; padding: 0 5% 5rem; }
+    .section-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+    .section-emoji { font-size: 1.4rem; }
+    .section-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.3rem; color: var(--text); }
+    .section-count { font-size: 0.75rem; color: var(--muted); background: var(--card); padding: 0.2rem 0.6rem; border-radius: 20px; border: 1px solid var(--border); }
+
+    /* PLATFORM CARDS */
+    .platforms-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem; margin-bottom: 3rem; }
+    .platform-card { background: var(--card); border: 1.5px solid var(--border); border-radius: 16px; padding: 1.5rem; transition: all 0.2s; display: flex; flex-direction: column; gap: 1rem; }
+    .platform-card:hover { border-color: rgba(0,229,160,0.25); background: #101e35; transform: translateY(-2px); }
+    .platform-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.75rem; }
+    .platform-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; }
+    .platform-info { flex: 1; }
+    .platform-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; color: var(--text); margin-bottom: 0.2rem; }
+    .platform-url { font-size: 0.75rem; color: var(--muted); }
+    .platform-type { font-size: 0.65rem; font-weight: 700; padding: 0.25rem 0.6rem; border-radius: 6px; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; }
+    .type-volunteer { background: rgba(0,229,160,0.12); color: var(--accent); border: 1px solid rgba(0,229,160,0.2); }
+    .type-internship { background: rgba(0,150,255,0.12); color: var(--accent2); border: 1px solid rgba(0,150,255,0.2); }
+    .type-both { background: rgba(255,165,0,0.12); color: #FFA500; border: 1px solid rgba(255,165,0,0.2); }
+    .platform-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+    .platform-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .platform-tag { font-size: 0.7rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--muted); padding: 0.2rem 0.55rem; border-radius: 5px; }
+    .platform-tag.hot { background: rgba(0,229,160,0.08); border-color: rgba(0,229,160,0.2); color: var(--accent); }
+    .platform-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 0.75rem; border-top: 1px solid var(--border); }
+    .platform-pay { font-size: 0.78rem; font-weight: 600; color: var(--text); }
+    .platform-pay span { color: var(--muted); font-weight: 400; }
+    .btn-visit { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #080C12; padding: 0.5rem 1.1rem; border-radius: 8px; font-size: 0.8rem; font-weight: 700; text-decoration: none; transition: opacity 0.2s; white-space: nowrap; }
+    .btn-visit:hover { opacity: 0.88; }
+
+    /* FEATURED CARD */
+    .featured-card { background: linear-gradient(135deg, rgba(0,229,160,0.08), rgba(0,150,255,0.08)); border: 1.5px solid rgba(0,229,160,0.25); border-radius: 16px; padding: 1.75rem; margin-bottom: 1.5rem; display: flex; gap: 1.5rem; align-items: flex-start; }
+    .featured-badge { font-size: 0.65rem; font-weight: 700; background: var(--accent); color: #080C12; padding: 0.2rem 0.6rem; border-radius: 5px; text-transform: uppercase; white-space: nowrap; }
+    .featured-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem; color: var(--text); margin-bottom: 0.4rem; }
+    .featured-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
+    .featured-highlights { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+    .highlight { font-size: 0.75rem; background: rgba(0,229,160,0.08); border: 1px solid rgba(0,229,160,0.2); color: var(--accent); padding: 0.25rem 0.65rem; border-radius: 6px; }
+
+    /* TIPS SECTION */
+    .tips-section { background: var(--bg2); border-top: 1px solid var(--border); padding: 4rem 5%; }
+    .tips-inner { max-width: 900px; margin: 0 auto; }
+    .tips-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; text-align: center; }
+    .tips-title { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--text); text-align: center; margin-bottom: 2.5rem; }
+    .tips-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+    .tip-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.25rem; }
+    .tip-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.8rem; color: rgba(0,229,160,0.2); margin-bottom: 0.5rem; }
+    .tip-text { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+    .tip-text strong { color: var(--text); }
+
+    /* CTA */
+    .bottom-cta { text-align: center; padding: 4rem 5%; }
+    .bottom-cta h2 { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--text); margin-bottom: 0.75rem; }
+    .bottom-cta p { color: var(--muted); font-size: 0.95rem; margin-bottom: 2rem; }
+    .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary { background: var(--accent); color: #080C12; padding: 0.85rem 2rem; border-radius: 10px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem; text-decoration: none; transition: opacity 0.2s; }
+    .btn-secondary { background: transparent; border: 1.5px solid rgba(0,229,160,0.3); color: var(--accent); padding: 0.85rem 2rem; border-radius: 10px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem; text-decoration: none; transition: all 0.2s; }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .why-strip { grid-template-columns: 1fr; gap: 0.75rem; }
+      .platforms-grid { grid-template-columns: 1fr; }
+      .featured-card { flex-direction: column; gap: 1rem; }
+      .tips-grid { grid-template-columns: 1fr; }
+      .hero { padding: 3.5rem 5% 2rem; }
+      .hero h1 { font-size: 1.9rem; }
+      .cta-buttons { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="index.html">VELA</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="skills.html">Skills</a></li>
+    <li><a href="experience.html" class="active">Get Experience</a></li>
+    <li><a href="jobs.html">Jobs</a></li>
+    <li><a href="profile.html" class="nav-cta">Build Profile</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">Build Real Experience</div>
+  <h1>No experience?<br/><span>Start here.</span></h1>
+  <p class="hero-sub">You don't need a job to build a portfolio. These platforms give you real remote work experience — volunteering, internships, and micro-projects — that you can verify on VELA and show to employers.</p>
+</div>
+
+<!-- WHY SECTION -->
+<div class="why-strip">
+  <div class="why-card">
+    <div class="why-icon">🏆</div>
+    <div class="why-title">Real work, real proof</div>
+    <div class="why-desc">Volunteer and internship work counts as portfolio evidence on VELA. Employers see what you actually did.</div>
+  </div>
+  <div class="why-card">
+    <div class="why-icon">🌍</div>
+    <div class="why-title">100% remote</div>
+    <div class="why-desc">Every platform here offers fully remote opportunities. Work from anywhere in Africa.</div>
+  </div>
+  <div class="why-card">
+    <div class="why-icon">💸</div>
+    <div class="why-title">Free to join</div>
+    <div class="why-desc">All platforms listed here are free to sign up. Some internships are paid. Volunteering builds your CV.</div>
+  </div>
+</div>
+
+<!-- FILTERS -->
+<div class="filters-wrap">
+  <div class="filters-label">Filter by type</div>
+  <div class="filter-row" id="type-filter">
+    <button class="filter-btn active" onclick="filterPlatforms('all', this)">All Platforms</button>
+    <button class="filter-btn" onclick="filterPlatforms('volunteer', this)">🤝 Volunteering</button>
+    <button class="filter-btn" onclick="filterPlatforms('internship', this)">🎓 Internships</button>
+    <button class="filter-btn" onclick="filterPlatforms('both', this)">⭐ Both</button>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="section-wrap">
+
+  <!-- FEATURED: FORAGE -->
+  <div class="section-header">
+    <span class="section-emoji">⭐</span>
+    <span class="section-title">Start Here — Most Recommended</span>
+  </div>
+
+  <div class="featured-card" data-type="internship">
+    <div style="flex:1">
+      <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem">
+        <div class="featured-badge">Top Pick for VELA Users</div>
+        <span class="platform-type type-internship">Internship</span>
+      </div>
+      <div class="featured-title">Forage — Virtual Work Experience</div>
+      <div class="featured-desc">Forage offers free, self-paced virtual internship programmes built by the world's top companies — Google, Microsoft, JPMorgan, Deloitte, Accenture, and more. You complete real tasks, get a certificate, and can list it on your CV. Takes 3–6 hours per programme. 100% free, 100% remote.</div>
+      <div class="featured-highlights">
+        <span class="highlight">✓ Free certificate on completion</span>
+        <span class="highlight">✓ Built by Google, Microsoft, JPMorgan</span>
+        <span class="highlight">✓ Self-paced — do it at your own speed</span>
+        <span class="highlight">✓ Counts as portfolio evidence on VELA</span>
+        <span class="highlight">✓ No experience required</span>
+      </div>
+      <a href="https://www.theforage.com" target="_blank" rel="noopener" class="btn-visit">Visit Forage →</a>
+    </div>
+  </div>
+
+  <!-- VOLUNTEERING -->
+  <div class="section-header" id="section-volunteer">
+    <span class="section-emoji">🤝</span>
+    <span class="section-title">Remote Volunteering Platforms</span>
+    <span class="section-count">5 platforms</span>
+  </div>
+
+  <div class="platforms-grid" id="grid-volunteer">
+
+    <div class="platform-card" data-type="volunteer">
+      <div class="platform-top">
+        <div class="platform-icon" style="background:rgba(0,229,160,0.1)">🌿</div>
+        <div class="platform-info">
+          <div class="platform-name">Catchafire</div>
+          <div class="platform-url">catchafire.org</div>
+        </div>
+        <span class="platform-type type-volunteer">Volunteer</span>
+      </div>
+      <div class="platform-desc">Matches skilled professionals to nonprofits that need help. Projects in social media, data analysis, writing, graphic design, web development. Short and long-term projects. Very active — new projects posted daily.</div>
+      <div class="platform-tags">
+        <span class="platform-tag hot">Social Media</span>
+        <span class="platform-tag hot">Data Analysis</span>
+        <span class="platform-tag">Content Writing</span>
+        <span class="platform-tag">Graphic Design</span>
+        <span class="platform-tag">Web Development</span>
+      </div>
+      <div class="platform-footer">
+        <div class="platform-pay">Free <span>· Portfolio builder</span></div>
+        <a href="https://www.catchafire.org" target="_blank" rel="noopener" class="btn-visit">Visit →</a>
+      </div>
+    </div>
+
+    <div class="platform-card" data-type="volunteer">
+      <div class="platform-top">
+        <div class="platform-icon" style="background:rgba(0,150,255,0.1)">🌐</div>
+        <div class="platform-info">
+          <div class="platform-name">UN Online Volunteering</div>
+          <div class="platform-url">onlinevolunteering.org</div>
+        </div>
+        <span class="platform-type type-volunteer">Volunteer</span>
+      </div>
+      <div class="platform-desc">United Nations programme connecting online volunteers to UN agencies and development organisations worldwide. Outstanding on a CV. Projects in research, translation, data, communications, and education.</div>
+      <div class="platform-tags">
+        <span class="platform-tag hot">UN Certificate</span>
+        <span class="platform-tag">Research</span>
+        <span class="platform-tag">Translation</span>
+        <span class="platform-tag">Data</span>
+        <span class="platform-tag">Education</span>
+      </div>
+      <div class="platform-footer">
+        <div class="platform-pay">Free <span>· UN Certificate</span></div>
+        <a href="https://www.onlinevolunteering.org" target="_blank" rel="noopener" class="btn-visit">Visit →</a>
+      </div>
+    </div>
+
+    <div class="platform-card" data-type="volunteer">
+      <div class="platform-top">
+        <div class="platform-icon" style="background:rgba(255,107,107,0.1)">💡</div>
+        <div class="platform-info">
+          <div class="platform-name">Idealist</div>
+          <div class="platform-url">idealist.org</div>
+        </div>
+        <span class="platform-type type-volunteer">Volunteer</span>
+      </div>
+      <div class="platform-desc">One of the largest platforms for nonprofit jobs, internships, and volunteer positions worldwide. Strong remote section. Great for HR, recruitment, project management, and communications volunteers.</div>
+      <div class="platform-tags">
+        <span class="platform-tag hot">HR & Recruitment</span>
+        <span class="platform-tag">Project Management</span>
+        <span class="platform-tag">Communications</span>
+        <span class="platform-tag">Education</span>
+      </div>
+      <div class="platform-footer">
+        <div class="platform-pay">Free <span>· Portfolio builder</span></div>
+        <a href="https://www.idealist.org" target="_blank" rel="noopener" class="btn-visit">Visit →</a>
+      </div>
+    </div>
+
+    <div class="platform-card" data-type="volunteer">
+      <div class="platform-top">
+        <div class="platform-icon" style="background:rgba(123,97,255,0.1)">🎯</div>
+        <div class="platform-info">
+          <div class="platform-name">Taproot Plus</div>
+          <div class="platform-url">taprootplus.org</div>
+        </div>
+        <span class="platform-type type-volunteer">Volunteer</span>
+      </div>
+      <div class="platform-desc">Pro bono skills-based volunteering for professionals. Nonprofits post specific projects needing skilled help. Ideal for people with real skills wanting to build portfolio evidence while making an impact.</div>
+      <div class="platform-tags">
+        <span class="platform-tag hot">Marketing</span>
+        <span class="platform-tag hot">Data Analysis</span>
+        <span class="platform-tag">Finance</span>
+        <span class="platform-tag">HR</span>
+        <span class="platform-tag">Strategy</span>
+      </div>
+      <div class="platform-footer">
+        <div class="platform-pay">Free <span>· Pro bono</span></div>
+        <a href="https://www.taprootplus.org" target="_blank" rel="noopener" class="btn-visit">Visit →</a>
+      </div>
+    </div>
+
+    <div class="platform-card" data-type="volunteer">
+      <div class="platform-top">
+        <div class="platform-icon" style="background:rgba(0,229,160,0.1)">📚</div>
+        <div class="platform-info">
+          <div class="platform-name">Khan Academy</div>
+          <div class="platform-url">khanacademy.org/contribute</div>
+        </div>
+        <span class="platform-type type-volunteer">Volunteer</span>
+      </div>
+      <div class="platform-desc">Volunteer as a tutor, translator, or content contributor. Perfect for teachers and educators wanting online tutoring portfolio evidence. Recognised globally as a credible education organisation.</div>
+      <div class="platform-tags">
+        <span class="platform-tag hot">Online Tutoring</span>
+        <span class="platform-tag">Translation</span>
+        <span class="platform-tag">Content</span>
+        <span class="platform-tag">Math & Science</span>
+      </div>
+      <div class="platform-footer">
+        <div class="platform-pay">Free <span>· Global impact</span></div>
+        <a href="https://www.khanacademy.org/contribute" target="_blank" rel="noopener" class="btn-visit">Visit →</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- INTERNSHIPS -->
+  <div class="section-header" id="section-internship">
+    <span class="section-emoji">🎓</span>
+    <span class="section-title">Remote Internship Platforms</span>
+    <span class="section-count">5 platforms</span>
+  </div>
+
+  <div class="platforms-grid" id="grid-internship">
+
+    <div class="platform-card" data-type="internship">
+      <div class="platform-top">
+        <div class="platform-icon" style="background:rgba(0,150,255,0.1)">⚡</div>
+        <div class="platform-info">
+          <div class="platform-name">Parker Dewey</div>
+          <div class="platform-url">parkerdewey.com</div>
+        </div>
+        <span class="platform-type type-internship">Internship</span>
+      </div>
+      <div class="platform-desc">Micro-internships — short paid projects from real companies. Projects take 5–40 hours and pay $150–$500. No long commitment needed. Perfect for building a portfolio of real company work fast.</div>
+      <div class="platform-tags">
+        <span class="platform-tag hot">Paid Projects</span>
+        <span class="platform-tag hot">$150–$500</span>
+        <span class="platform-tag">Marketing</span>
+        <span class="platform-tag">Data</span>
+        <span class="platform-tag">Research</span>
+      </div>
+      <div class="platform-footer">
+        <div class="platform-pay">Paid <span>· $150–$500/project</span></div>
+        <a href="https://www.parkerdewey.com" target="_blank" rel="noopener" class="btn-visit">Visit →</a>
+      </div>
+    </div>
+
+    <div class="platform-card" data-type="internship">
+      <div class="platform-top">
+        <div class="platform-icon" style="background:rgba(255,165,0,0.1)">🚀</div>
+        <div class="platform-info">
+          <div class="platform-name">Internshala</div>
+          <div class="platform-url">internshala.com</div>
+        </div>
+        <span class="platform-type type-internship">Internship</span>
+      </div>
+      <div class="platform-desc">One of the largest remote internship platforms globally. Thousands of listings in marketing, data, content, design, development, and HR. Active postings from real companies. Many are paid with stipends.</div>
+      <div class="platform-tags">
+        <span class="platform-tag hot">High Volume</span>
+        <span class="platform-tag">Marketing</span>
+        <span class="platform-tag">Data</span>
+        <span class="platform-tag">Design</span>
+        <span class="platform-tag">HR</span>
+      </div>
+      <div class="platform-footer">
+        <div class="platform-pay">Paid & Unpaid <span>· Stipend varies</span></div>
+        <a href="https://internshala.com" target="_blank" rel="noopener" class="btn-visit">Visit →</a>
+      </div>
+    </div>
+
+    <div class="platform-card" data-type="internship">
+      <div class="platform-top">
+        <div class="platform-icon" style="background:rgba(0,229,160,0.1)">🎯</div>
+        <div class="platform-info">
+          <div class="platform-name">Virtual Internships</div>
+          <div class="platform-url">virtualinternships.com</div>
+        </div>
+        <span class="platform-type type-internship">Internship</span>
+      </div>
+      <div class="platform-desc">Dedicated remote internship platform with opportunities across 150+ countries. Structured programmes with real companies. Particularly strong for customer service, marketing, business development, and data roles.</div>
+      <div class="platform-tags">
+        <span class="platform-tag hot">150+ Countries</span>
+        <span class="platform-tag">Customer Service</span>
+        <span class="platform-tag">Marketing</span>
+        <span class="platform-tag">Business Dev</span>
+      </div>
+      <div class="platform-footer">
+        <div class="platform-pay">Paid & Unpaid <span>· Certificate</span></div>
+        <a href="https://www.virtualinternships.com" target="_blank" rel="noopener" class="btn-visit">Visit →</a>
+      </div>
+    </div>
+
+    <div class="platform-card" data-type="internship">
+      <div class="platform-top">
+        <div class="platform-icon" style="background:rgba(123,97,255,0.1)">🌟</div>
+        <div class="platform-info">
+          <div class="platform-name">Extern</div>
+          <div class="platform-url">extern.com</div>
+        </div>
+        <span class="platform-type type-internship">Internship</span>
+      </div>
+      <div class="platform-desc">Short-term remote projects with real companies like Microsoft, NBC, and LinkedIn. 6-week structured programmes with mentorship. Aimed at early-career professionals wanting brand-name experience on their CV.</div>
+      <div class="platform-tags">
+        <span class="platform-tag hot">Microsoft · LinkedIn</span>
+        <span class="platform-tag">Mentorship</span>
+        <span class="platform-tag">6 Weeks</span>
+        <span class="platform-tag">Brand Names</span>
+      </div>
+      <div class="platform-footer">
+        <div class="platform-pay">Free to apply <span>· Stipend available</span></div>
+        <a href="https://www.extern.com" target="_blank" rel="noopener" class="btn-visit">Visit →</a>
+      </div>
+    </div>
+
+    <div class="platform-card" data-type="internship">
+      <div class="platform-top">
+        <div class="platform-icon" style="background:rgba(0,150,255,0.1)">💼</div>
+        <div class="platform-info">
+          <div class="platform-name">LinkedIn Internships</div>
+          <div class="platform-url">linkedin.com/jobs</div>
+        </div>
+        <span class="platform-type type-internship">Internship</span>
+      </div>
+      <div class="platform-desc">Search "remote internship" on LinkedIn Jobs. Thousands of listings from real companies. Filter by remote, entry-level, and internship. Apply directly. Your LinkedIn profile becomes your application — keep it updated.</div>
+      <div class="platform-tags">
+        <span class="platform-tag hot">Largest Volume</span>
+        <span class="platform-tag">All Skills</span>
+        <span class="platform-tag">Direct Apply</span>
+        <span class="platform-tag">Free</span>
+      </div>
+      <div class="platform-footer">
+        <div class="platform-pay">Paid & Unpaid <span>· Varies by role</span></div>
+        <a href="https://www.linkedin.com/jobs/internship-jobs" target="_blank" rel="noopener" class="btn-visit">Visit →</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOTH -->
+  <div class="section-header" id="section-both">
+    <span class="section-emoji">⭐</span>
+    <span class="section-title">Both Volunteering & Internships</span>
+    <span class="section-count">2 platforms</span>
+  </div>
+
+  <div class="platforms-grid" id="grid-both">
+
+    <div class="platform-card" data-type="both">
+      <div class="platform-top">
+        <div class="platform-icon" style="background:rgba(255,165,0,0.1)">🔥</div>
+        <div class="platform-info">
+          <div class="platform-name">Forage</div>
+          <div class="platform-url">theforage.com</div>
+        </div>
+        <span class="platform-type type-both">Both</span>
+      </div>
+      <div class="platform-desc">Free virtual work experience programmes from Google, Microsoft, JPMorgan, Deloitte, and 100+ top companies. Self-paced, 3–6 hours, free certificate. The single best first step for anyone with no work history.</div>
+      <div class="platform-tags">
+        <span class="platform-tag hot">Google</span>
+        <span class="platform-tag hot">Microsoft</span>
+        <span class="platform-tag hot">Free Certificate</span>
+        <span class="platform-tag">Self-paced</span>
+        <span class="platform-tag">All Skills</span>
+      </div>
+      <div class="platform-footer">
+        <div class="platform-pay">100% Free <span>· Certificate included</span></div>
+        <a href="https://www.theforage.com" target="_blank" rel="noopener" class="btn-visit">Visit →</a>
+      </div>
+    </div>
+
+    <div class="platform-card" data-type="both">
+      <div class="platform-top">
+        <div class="platform-icon" style="background:rgba(0,229,160,0.1)">🌍</div>
+        <div class="platform-info">
+          <div class="platform-name">Common Impact</div>
+          <div class="platform-url">commonimpact.org</div>
+        </div>
+        <span class="platform-type type-both">Both</span>
+      </div>
+      <div class="platform-desc">Skills-based volunteering and fellowship programmes connecting professionals to nonprofits. Structured projects with clear deliverables. Great for building evidence in data, marketing, HR, and strategy.</div>
+      <div class="platform-tags">
+        <span class="platform-tag hot">Structured Projects</span>
+        <span class="platform-tag">Data</span>
+        <span class="platform-tag">Marketing</span>
+        <span class="platform-tag">HR</span>
+        <span class="platform-tag">Strategy</span>
+      </div>
+      <div class="platform-footer">
+        <div class="platform-pay">Free <span>· Fellowship available</span></div>
+        <a href="https://www.commonimpact.org" target="_blank" rel="noopener" class="btn-visit">Visit →</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- TIPS -->
+<div class="tips-section">
+  <div class="tips-inner">
+    <div class="tips-label">Make it count</div>
+    <div class="tips-title">How to turn experience into a VELA portfolio</div>
+    <div class="tips-grid">
+      <div class="tip-card">
+        <div class="tip-num">01</div>
+        <div class="tip-text"><strong>Document everything.</strong> Screenshot your work, save outputs, record outcomes. Numbers matter — "grew nonprofit's Instagram by 340 followers in 4 weeks" beats "managed social media".</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-num">02</div>
+        <div class="tip-text"><strong>Ask for a reference letter.</strong> After any volunteer or internship project, ask the organisation for a short written reference. Even one paragraph. Employers value this.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-num">03</div>
+        <div class="tip-text"><strong>Add it to your VELA portfolio.</strong> Go to your VELA portfolio builder, add a project card for each experience, upload your outputs or screenshots, and write what you achieved.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-num">04</div>
+        <div class="tip-text"><strong>Start with Forage first.</strong> Complete at least one Forage programme before applying anywhere. It takes 3–6 hours and gives you a certificate from a top company with zero experience required.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-num">05</div>
+        <div class="tip-text"><strong>Pick platforms that match your skill.</strong> Don't apply randomly. Pick the platform where your skill category is strongest. Catchafire for social media and data. UN Volunteers for research and translation.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-num">06</div>
+        <div class="tip-text"><strong>Do 2–3 projects then apply for jobs.</strong> Two or three completed projects with documented results is enough portfolio evidence to apply for entry-level remote roles on VELA's jobs board.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM CTA -->
+<div class="bottom-cta">
+  <h2>Ready to turn experience into a verified profile?</h2>
+  <p>Complete your VELA profile and add your volunteer or internship work to your portfolio.</p>
+  <div class="cta-buttons">
+    <a href="profile.html" class="btn-primary">Build My VELA Profile →</a>
+    <a href="portfolio.html" class="btn-secondary">Add to Portfolio →</a>
+  </div>
+</div>
+
+<script>
+function filterPlatforms(type, btn) {
+  document.querySelectorAll('#type-filter .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const allCards = document.querySelectorAll('.platform-card, .featured-card');
+  allCards.forEach(card => {
+    const cardType = card.getAttribute('data-type');
+    if (type === 'all') {
+      card.style.display = '';
+    } else if (type === 'both') {
+      card.style.display = (cardType === 'both') ? '' : 'none';
+    } else {
+      card.style.display = (cardType === type || cardType === 'both') ? '' : 'none';
+    }
+  });
+
+  // Show/hide section headers
+  document.getElementById('section-volunteer').parentElement.style.display = '';
+  if (type === 'internship') {
+    document.getElementById('section-volunteer').style.display = 'none';
+    document.getElementById('grid-volunteer').style.display = 'none';
+  } else {
+    document.getElementById('section-volunteer').style.display = '';
+    document.getElementById('grid-volunteer').style.display = '';
+  }
+  if (type === 'volunteer') {
+    document.getElementById('section-internship').style.display = 'none';
+    document.getElementById('grid-internship').style.display = 'none';
+  } else {
+    document.getElementById('section-internship').style.display = '';
+    document.getElementById('grid-internship').style.display = '';
+  }
+}
+</script>
+
+</body>
+</html>
