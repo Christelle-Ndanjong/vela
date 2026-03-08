@@ -454,7 +454,7 @@ let profile = {
   name:"", country:"", email:"",
   education:"", field:"", institution:"",
   experience:"", expYears:"",
-  skill:"", selfLevel:0,
+  skills:[], skill:"", selfLevel:0,
   tools:[], english:0, availability:"", timezone:"",
   motivation:"", goal:"",
   quizAnswers:[], quizScore:0,
@@ -558,9 +558,18 @@ function toggleTool(tool, el) {
 }
 
 function selectSkill(name, el) {
-  profile.skill = name;
-  document.querySelectorAll(".skill-card").forEach(e => e.classList.remove("selected"));
-  el.classList.add("selected");
+  if (profile.skills.includes(name)) {
+    profile.skills = profile.skills.filter(s => s !== name);
+    el.classList.remove("selected");
+  } else {
+    profile.skills.push(name);
+    el.classList.add("selected");
+  }
+  // primary skill = first selected
+  profile.skill = profile.skills[0] || "";
+  // update count badge
+  const badge = document.getElementById("skill-count-badge");
+  if (badge) badge.textContent = profile.skills.length > 0 ? `${profile.skills.length} selected` : "Select all that apply";
 }
 
 function setScale(key, val, el, group) {
@@ -658,12 +667,15 @@ const steps = [
 
   // STEP 4 — Skill Choice
   () => `
-    <div class="step-num">Step 4 of 10 · Your Skill</div>
-    <h1 class="step-title">Choose your <span>skill path</span></h1>
-    <p class="step-sub">Pick the skill you want to build and get hired for. Choose based on what will get you a job — not just what sounds interesting. You can always come back and choose another later.</p>
+    <div class="step-num">Step 4 of 10 · Your Skills</div>
+    <h1 class="step-title">Choose your <span>skill paths</span></h1>
+    <p class="step-sub">Select every skill you have or are building. You can choose as many as you like — employers will see your full skill set.</p>
+    <div style="text-align:center;margin-bottom:1rem">
+      <span id="skill-count-badge" style="background:rgba(0,229,160,0.1);border:1px solid rgba(0,229,160,0.25);color:var(--accent);font-size:0.78rem;font-weight:700;padding:0.3rem 0.85rem;border-radius:20px">${profile.skills.length > 0 ? profile.skills.length + " selected" : "Select all that apply"}</span>
+    </div>
     <div class="skill-grid">
       ${SKILLS_15.map(s=>`
-        <div class="skill-card ${profile.skill===s.name?"selected":""}" onclick="selectSkill('${s.name}',this)">
+        <div class="skill-card ${profile.skills.includes(s.name)?"selected":""}" onclick="selectSkill('${s.name}',this)">
           <span class="skill-card-icon">${s.icon}</span>
           <span class="skill-card-name">${s.name}</span>
         </div>`).join("")}
@@ -820,7 +832,7 @@ function saveStep3() {
   next();
 }
 function saveStep4() {
-  if (!profile.skill) { alert("Please choose a skill path"); return; }
+  if (profile.skills.length === 0) { alert("Please choose at least one skill path"); return; }
   next();
 }
 function saveStep5() {
@@ -882,7 +894,7 @@ function showScore() {
 
       <h2 class="score-title">${passed ? "🎉 You're Ready, "+profile.name.split(" ")[0]+"!" : "Almost There, "+profile.name.split(" ")[0]+"!"}</h2>
       <p class="score-message">${passed
-        ? `Your VELA Readiness Score is <strong>${score}/100</strong>. You've cleared the bar. You're ready to see verified remote jobs matched to your ${profile.skill} skill path.`
+        ? `Your VELA Readiness Score is <strong>${score}/100</strong>. You've cleared the bar. You're ready to see verified remote jobs matched to your skill ${profile.skills.length > 1 ? "paths: " + profile.skills.join(", ") : "path: " + profile.skill}.`
         : `Your VELA Readiness Score is <strong>${score}/100</strong>. The pass mark is 60. You're not far — here's exactly what to improve to get placed.`
       }</p>
 
@@ -911,11 +923,12 @@ function showScore() {
         </div>` : ""}
 
       <div class="pass-actions">
+        <a class="btn-jobs" href="jobs.html">View Matched Jobs →</a>
+        <a class="btn-jobs" style="background:rgba(0,150,255,0.12);border:1.5px solid rgba(0,150,255,0.3);color:#0096FF;text-decoration:none;text-align:center" href="portfolio.html">Build Your Portfolio →</a>
         ${passed
-          ? `<a class="btn-jobs" href="jobs.html?skill=${encodeURIComponent(profile.skill)}">View ${profile.skill} Jobs →</a>
-             <button class="btn-retry" onclick="location.href='skills.html'">Explore Your Skill Roadmap</button>`
+          ? `<button class="btn-retry" onclick="location.href='skills.html'">Explore Skill Roadmaps</button>`
           : `<button class="btn-retry" onclick="retryQuiz()">Retake Knowledge Check</button>
-             <a class="btn-jobs" style="background:transparent;border:1.5px solid rgba(0,229,160,0.3);color:var(--accent);padding:0.9rem;border-radius:10px;font-family:'Syne',sans-serif;font-weight:600;font-size:0.9rem;cursor:pointer;text-align:center" href="skills.html?skill=${encodeURIComponent(profile.skill)}">Study Your Roadmap First</a>`
+             <a class="btn-jobs" style="background:transparent;border:1.5px solid rgba(0,229,160,0.3);color:var(--accent);padding:0.9rem;border-radius:10px;font-family:'Syne',sans-serif;font-weight:600;font-size:0.9rem;cursor:pointer;text-align:center" href="skills.html">Study Your Roadmap First</a>`
         }
       </div>
     </div>`;
