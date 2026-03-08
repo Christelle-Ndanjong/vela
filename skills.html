@@ -555,6 +555,27 @@
       .modal { padding: 1.5rem; }
       .modal-stats { grid-template-columns: repeat(3, 1fr); }
     }
+
+    .resources-list { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.75rem; }
+    .resource-item { display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 0.85rem 1rem; text-decoration: none; transition: all 0.2s; }
+    .resource-item:hover { background: rgba(0,229,160,0.07); border-color: rgba(0,229,160,0.25); }
+    .resource-left { display: flex; align-items: center; gap: 0.75rem; }
+    .resource-name { font-size: 0.88rem; font-weight: 600; color: #F0F4FF; margin-bottom: 0.1rem; }
+    .resource-source { font-size: 0.75rem; color: #6B7A99; }
+    .resource-arrow { color: #00E5A0; font-size: 1rem; }
+    .resource-type { font-size: 0.65rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 5px; text-transform: uppercase; white-space: nowrap; }
+    .resource-type.Free { background: rgba(0,229,160,0.15); color: #00E5A0; }
+    .resource-type.Course { background: rgba(0,150,255,0.15); color: #0096FF; }
+    .resource-type.YouTube { background: rgba(255,0,0,0.15); color: #ff6b6b; }
+    .resource-type.Cert { background: rgba(255,165,0,0.15); color: #FFA500; }
+    .resource-type.Practice { background: rgba(123,97,255,0.15); color: #7B61FF; }
+
+    .resources-list { display:flex; flex-direction:column; gap:0.5rem; margin-bottom:1.75rem; }
+    .resource-item { display:flex; align-items:center; justify-content:space-between; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:0.85rem 1rem; text-decoration:none; transition:all 0.2s; }
+    .resource-item:hover { background:rgba(0,229,160,0.07); border-color:rgba(0,229,160,0.25); transform:translateX(3px); }
+    .resource-name { font-size:0.88rem; font-weight:600; color:#F0F4FF; margin-bottom:0.15rem; }
+    .resource-source { font-size:0.75rem; color:#6B7A99; }
+    .resource-arrow { color:#00E5A0; font-size:1.1rem; flex-shrink:0; margin-left:0.5rem; }
   </style>
 </head>
 <body>
@@ -562,7 +583,9 @@
 <nav>
   <a class="logo" href="index.html">VELA</a>
   <div class="nav-right">
-    <span>Choose your path to get placed</span>
+    <a href="experience.html" style="color:#6B7A99;text-decoration:none;font-size:0.88rem;font-weight:500;transition:color 0.2s" onmouseover="this.style.color='#F0F4FF'" onmouseout="this.style.color='#6B7A99'">Get Experience</a>
+    <a href="jobs.html" style="color:#6B7A99;text-decoration:none;font-size:0.88rem;font-weight:500;margin-left:1.5rem;transition:color 0.2s" onmouseover="this.style.color='#F0F4FF'" onmouseout="this.style.color='#6B7A99'">Jobs</a>
+    <span style="margin-left:1.5rem">Choose your path to get placed</span>
   </div>
 </nav>
 
@@ -614,7 +637,13 @@ const skills = [
       { title: "Mock Assessment", desc: "VELA simulated customer interaction — scored and verified" },
       { title: "Job Ready", desc: "Matched to CS roles at tech companies, e-commerce, and SaaS businesses" }
     ],
-    steps: ["Communication", "Tools", "Simulation", "Verified", "Placed"]
+    steps: ["Communication", "Tools", "Simulation", "Verified", "Placed"],
+    resources: [
+      { title: "Customer Service Fundamentals", url: "https://www.coursera.org/learn/customer-service-fundamentals", source: "Coursera · Free" },
+      { title: "Zendesk Support Training", url: "https://training.zendesk.com", source: "Zendesk · Free" },
+      { title: "English Communication for Professionals", url: "https://www.coursera.org/learn/english-communication-professional", source: "Coursera · Free" },
+      { title: "HubSpot Customer Service Certification", url: "https://academy.hubspot.com/courses/customer-service-training", source: "HubSpot Academy · Free" }
+    ]
   },
   {
     id: 2,
@@ -637,7 +666,13 @@ const skills = [
       { title: "Executive Communication", desc: "Write on behalf of others, manage stakeholders, represent professionally" },
       { title: "VELA Verified", desc: "Task simulation scored — clients see your actual work quality" }
     ],
-    steps: ["Admin", "Tools", "AI Skills", "Executive Comms", "Placed"]
+    steps: ["Admin", "Tools", "AI Skills", "Executive Comms", "Placed"],
+    resources: [
+      { title: "Google Workspace Training", url: "https://workspace.google.com/intl/en/learning-center/", source: "Google · Free" },
+      { title: "Notion Essential Training", url: "https://www.notion.so/help/guides", source: "Notion · Free" },
+      { title: "Virtual Assistant Foundations", url: "https://www.udemy.com/course/virtual-assistant-for-beginners/", source: "Udemy · Free" },
+      { title: "ChatGPT for Beginners", url: "https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/", source: "DeepLearning.AI · Free" }
+    ]
   },
   {
     id: 3,
@@ -660,7 +695,14 @@ const skills = [
       { title: "Visualisation & Reporting", desc: "Tableau or Power BI — tell stories with data" },
       { title: "Portfolio Projects", desc: "3 real analysis projects for your GitHub — your proof of work" }
     ],
-    steps: ["Excel/SQL", "Python", "Visualisation", "Portfolio", "Placed"]
+    steps: ["Excel/SQL", "Python", "Visualisation", "Portfolio", "Placed"],
+    resources: [
+      { title: "Google Data Analytics Certificate", url: "https://www.coursera.org/professional-certificates/google-data-analytics", source: "Coursera · Free audit" },
+      { title: "SQL for Data Science", url: "https://www.coursera.org/learn/sql-for-data-science", source: "Coursera · Free audit" },
+      { title: "Python for Everybody", url: "https://www.coursera.org/specializations/python", source: "Coursera · Free audit" },
+      { title: "Tableau Public Training", url: "https://www.tableau.com/learn/training", source: "Tableau · Free" },
+      { title: "Khan Academy Statistics", url: "https://www.khanacademy.org/math/statistics-probability", source: "Khan Academy · Free" }
+    ]
   },
   {
     id: 4,
@@ -683,7 +725,13 @@ const skills = [
       { title: "Business Applications", desc: "Apply AI to customer service, content, data, and operations" },
       { title: "Certified AI Professional", desc: "VELA AI certification — verified and employer-ready" }
     ],
-    steps: ["AI Basics", "Prompting", "Automation", "Applied AI", "Certified"]
+    steps: ["AI Basics", "Prompting", "Automation", "Applied AI", "Certified"],
+    resources: [
+      { title: "ChatGPT Prompt Engineering for Developers", url: "https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/", source: "DeepLearning.AI · Free" },
+      { title: "AI For Everyone", url: "https://www.coursera.org/learn/ai-for-everyone", source: "Coursera · Free audit" },
+      { title: "Zapier Automation Basics", url: "https://zapier.com/learn", source: "Zapier · Free" },
+      { title: "Make.com Academy", url: "https://academy.make.com", source: "Make.com · Free" }
+    ]
   },
   {
     id: 5,
@@ -706,7 +754,13 @@ const skills = [
       { title: "Scheduling & Tools", desc: "Buffer, Hootsuite, Later — manage multiple accounts efficiently" },
       { title: "Portfolio", desc: "3 managed accounts or campaigns as proof of work" }
     ],
-    steps: ["Platforms", "Content", "Strategy", "Tools", "Portfolio"]
+    steps: ["Platforms", "Content", "Strategy", "Tools", "Portfolio"],
+    resources: [
+      { title: "Meta Social Media Marketing Certificate", url: "https://www.coursera.org/professional-certificates/facebook-social-media-marketing", source: "Coursera · Free audit" },
+      { title: "Hootsuite Social Media Training", url: "https://education.hootsuite.com", source: "Hootsuite · Free" },
+      { title: "Canva Design School", url: "https://www.canva.com/learn/", source: "Canva · Free" },
+      { title: "Buffer's Social Media Library", url: "https://buffer.com/library", source: "Buffer · Free" }
+    ]
   },
   {
     id: 6,
@@ -729,7 +783,13 @@ const skills = [
       { title: "Niche Specialisation", desc: "Pick a niche: tech, health, finance, SaaS — command higher rates" },
       { title: "Writing Portfolio", desc: "5 published or sample pieces across different formats" }
     ],
-    steps: ["Writing Basics", "Copywriting", "SEO", "Specialise", "Portfolio"]
+    steps: ["Writing Basics", "Copywriting", "SEO", "Specialise", "Portfolio"],
+    resources: [
+      { title: "HubSpot Content Marketing Certification", url: "https://academy.hubspot.com/courses/content-marketing", source: "HubSpot Academy · Free" },
+      { title: "Copywriting Course by CopyHackers", url: "https://copyhackers.com/copywriting-course/", source: "CopyHackers · Free intro" },
+      { title: "Coursera — Writing for the Web", url: "https://www.coursera.org/learn/writing-for-the-web", source: "Coursera · Free audit" },
+      { title: "Hemingway Editor", url: "https://hemingwayapp.com", source: "Hemingway · Free tool" }
+    ]
   },
   {
     id: 7,
@@ -752,7 +812,13 @@ const skills = [
       { title: "Link Building", desc: "Outreach, guest posting, authority building strategies" },
       { title: "SEO Audit Portfolio", desc: "Real website audits as proof of your analytical capability" }
     ],
-    steps: ["Fundamentals", "Keywords", "Technical", "Link Building", "Audit Portfolio"]
+    steps: ["Fundamentals", "Keywords", "Technical", "Link Building", "Audit Portfolio"],
+    resources: [
+      { title: "Google SEO Starter Guide", url: "https://developers.google.com/search/docs/fundamentals/seo-starter-guide", source: "Google · Free" },
+      { title: "Ahrefs SEO Course for Beginners", url: "https://ahrefs.com/academy/seo-training-course", source: "Ahrefs Academy · Free" },
+      { title: "Semrush SEO Crash Course", url: "https://www.semrush.com/academy/courses/semrush-seo-crash-course-with-brian-dean/", source: "Semrush · Free" },
+      { title: "Moz Beginner's Guide to SEO", url: "https://moz.com/beginners-guide-to-seo", source: "Moz · Free" }
+    ]
   },
   {
     id: 8,
@@ -775,7 +841,13 @@ const skills = [
       { title: "PMP or CAPM Prep", desc: "Entry certification that signals professional seriousness to employers" },
       { title: "Simulated PM Case", desc: "VELA project scenario — assessed on planning and execution quality" }
     ],
-    steps: ["PM Basics", "Agile", "Tools", "Certification", "Placed"]
+    steps: ["PM Basics", "Agile", "Tools", "Certification", "Placed"],
+    resources: [
+      { title: "Google Project Management Certificate", url: "https://www.coursera.org/professional-certificates/google-project-management", source: "Coursera · Free audit" },
+      { title: "Agile Fundamentals by Atlassian", url: "https://www.atlassian.com/agile", source: "Atlassian · Free" },
+      { title: "Asana Academy", url: "https://academy.asana.com", source: "Asana · Free" },
+      { title: "PMI CAPM Exam Prep", url: "https://www.pmi.org/certifications/certified-associate-capm", source: "PMI · Paid cert, free prep resources" }
+    ]
   },
   {
     id: 9,
@@ -798,7 +870,13 @@ const skills = [
       { title: "Case Study Projects", desc: "3 end-to-end design case studies solving real problems" },
       { title: "Portfolio Site", desc: "Professional design portfolio — your ticket to global remote roles" }
     ],
-    steps: ["Design Basics", "Figma", "UX Research", "Case Studies", "Portfolio"]
+    steps: ["Design Basics", "Figma", "UX Research", "Case Studies", "Portfolio"],
+    resources: [
+      { title: "Google UX Design Certificate", url: "https://www.coursera.org/professional-certificates/google-ux-design", source: "Coursera · Free audit" },
+      { title: "Figma for Beginners", url: "https://www.figma.com/resources/learn-design/", source: "Figma · Free" },
+      { title: "Interaction Design Foundation", url: "https://www.interaction-design.org/courses", source: "IDF · Free trial" },
+      { title: "Nielsen Norman UX Articles", url: "https://www.nngroup.com/articles/", source: "NN Group · Free" }
+    ]
   },
   {
     id: 10,
@@ -821,7 +899,13 @@ const skills = [
       { title: "A/B Testing & Analytics", desc: "Open rates, click rates, conversion — data-driven optimisation" },
       { title: "Campaign Portfolio", desc: "Real or simulated campaigns with documented results" }
     ],
-    steps: ["Strategy", "Copywriting", "Platforms", "Analytics", "Portfolio"]
+    steps: ["Strategy", "Copywriting", "Platforms", "Analytics", "Portfolio"],
+    resources: [
+      { title: "HubSpot Email Marketing Certification", url: "https://academy.hubspot.com/courses/email-marketing", source: "HubSpot Academy · Free" },
+      { title: "Mailchimp Email Marketing Guide", url: "https://mailchimp.com/resources/email-marketing-field-guide/", source: "Mailchimp · Free" },
+      { title: "Klaviyo Product Certifications", url: "https://www.klaviyo.com/academy", source: "Klaviyo · Free" },
+      { title: "Copyblogger Email Marketing", url: "https://copyblogger.com/email-marketing/", source: "Copyblogger · Free" }
+    ]
   },
   {
     id: 11,
@@ -844,7 +928,13 @@ const skills = [
       { title: "Hands-On Practice", desc: "TryHackMe and HackTheBox labs — real practice environments" },
       { title: "SOC Analyst Ready", desc: "Security Operations Center analyst role — most common entry point" }
     ],
-    steps: ["Networking", "Security Concepts", "Security+", "Lab Practice", "SOC Ready"]
+    steps: ["Networking", "Security Concepts", "Security+", "Lab Practice", "SOC Ready"],
+    resources: [
+      { title: "Google Cybersecurity Certificate", url: "https://www.coursera.org/professional-certificates/google-cybersecurity", source: "Coursera · Free audit" },
+      { title: "TryHackMe — Free Cyber Labs", url: "https://tryhackme.com", source: "TryHackMe · Free tier" },
+      { title: "CompTIA Security+ Study Guide", url: "https://www.comptia.org/certifications/security", source: "CompTIA · Free resources" },
+      { title: "Cybrary Free Courses", url: "https://www.cybrary.it", source: "Cybrary · Free tier" }
+    ]
   },
   {
     id: 12,
@@ -867,7 +957,13 @@ const skills = [
       { title: "First 10 Sessions", desc: "Build reviews and rating — social proof drives more bookings" },
       { title: "Niche & Scale", desc: "Specialise in exam prep, coding, or professional skills for higher rates" }
     ],
-    steps: ["Your Credentials", "Online Teaching", "Platforms", "First Reviews", "Scale"]
+    steps: ["Your Credentials", "Online Teaching", "Platforms", "First Reviews", "Scale"],
+    resources: [
+      { title: "Preply Tutor Academy", url: "https://preply.com/en/teach", source: "Preply · Free to join" },
+      { title: "Cambly Tutor Program", url: "https://www.cambly.com/en/tutors", source: "Cambly · Free to join" },
+      { title: "Coursera — Online Teaching", url: "https://www.coursera.org/learn/teach-online", source: "Coursera · Free audit" },
+      { title: "Khan Academy Teaching Resources", url: "https://www.khanacademy.org/teacher", source: "Khan Academy · Free" }
+    ]
   },
   {
     id: 13,
@@ -890,7 +986,13 @@ const skills = [
       { title: "QuickBooks Certification", desc: "Official certification that employers specifically look for" },
       { title: "First Clients", desc: "Start with small businesses — build a trusted track record" }
     ],
-    steps: ["Accounting Basics", "Software", "Payroll/Tax", "Certified", "Placed"]
+    steps: ["Accounting Basics", "Software", "Payroll/Tax", "Certified", "Placed"],
+    resources: [
+      { title: "Intuit QuickBooks Training", url: "https://quickbooks.intuit.com/learn-support/en-us/quickbooks-training/", source: "QuickBooks · Free" },
+      { title: "Xero Advisor Certification", url: "https://www.xero.com/us/training/", source: "Xero · Free" },
+      { title: "Coursera — Intro to Financial Accounting", url: "https://www.coursera.org/learn/wharton-accounting", source: "Coursera · Free audit" },
+      { title: "AccountingCoach Free Courses", url: "https://www.accountingcoach.com", source: "AccountingCoach · Free" }
+    ]
   },
   {
     id: 14,
@@ -913,7 +1015,13 @@ const skills = [
       { title: "Analytics & Optimisation", desc: "Conversion rate optimisation, analytics, improving performance" },
       { title: "E-Commerce Portfolio", desc: "A managed or built store as your core proof of work" }
     ],
-    steps: ["Foundations", "Shopify", "Paid Ads", "Analytics", "Portfolio"]
+    steps: ["Foundations", "Shopify", "Paid Ads", "Analytics", "Portfolio"],
+    resources: [
+      { title: "Shopify Academy — Free Courses", url: "https://www.shopify.com/learn", source: "Shopify · Free" },
+      { title: "Meta Blueprint — Ads Training", url: "https://www.facebook.com/business/learn", source: "Meta · Free" },
+      { title: "Google Digital Marketing Certificate", url: "https://grow.google/certificates/digital-marketing-ecommerce/", source: "Google · Free audit" },
+      { title: "Oberlo E-Commerce Guides", url: "https://www.oberlo.com/blog", source: "Oberlo · Free" }
+    ]
   },
   {
     id: 15,
@@ -936,7 +1044,13 @@ const skills = [
       { title: "ATS Systems", desc: "Greenhouse, Lever, Workday — tools every HR team uses" },
       { title: "SHRM-CP Prep", desc: "Entry HR certification that signals professional credibility globally" }
     ],
-    steps: ["HR Basics", "Recruitment", "LinkedIn", "ATS Tools", "Certified"]
+    steps: ["HR Basics", "Recruitment", "LinkedIn", "ATS Tools", "Certified"],
+    resources: [
+      { title: "SHRM HR Essentials", url: "https://www.shrm.org/LearningAndCareer/learning/Pages/default.aspx", source: "SHRM · Free resources" },
+      { title: "LinkedIn Recruiter Certification", url: "https://business.linkedin.com/talent-solutions/learning-center", source: "LinkedIn · Free" },
+      { title: "Coursera — Human Resource Management", url: "https://www.coursera.org/learn/human-resource-management", source: "Coursera · Free audit" },
+      { title: "HR University Free Courses", url: "https://hru.gov/Studio_Courses/Studio_Courses.aspx", source: "HR University · Free" }
+    ]
   }
 ];
 
@@ -1055,7 +1169,17 @@ function openModal(id) {
       ${s.tools.map(t => `<span class="tool-tag">${t}</span>`).join('')}
     </div>
 
-    <button class="modal-cta">Start This Path on VELA →</button>
+    <div class="modal-section-title">📚 Free Learning Resources</div>
+    <div style="display:flex;flex-direction:column;gap:0.6rem;margin-bottom:1.75rem">
+      ${(s.resources || []).map(r => `
+        <a href="${r.url}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:space-between;background:#0F1A2E;border:1.5px solid rgba(255,255,255,0.07);border-radius:10px;padding:0.85rem 1rem;text-decoration:none;transition:border-color 0.2s" onmouseover="this.style.borderColor='rgba(0,229,160,0.3)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)'">
+          <span style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:600;color:#F0F4FF">${r.title}</span>
+          <span style="font-size:0.72rem;font-weight:700;color:#00E5A0;white-space:nowrap;margin-left:0.75rem">${r.source} ↗</span>
+        </a>
+      `).join('')}
+    </div>
+
+    <button class="modal-cta" onclick="window.location.href='profile.html'">Start This Path on VELA →</button>
   `;
   
   document.getElementById('modal').classList.add('open');
