@@ -416,6 +416,12 @@
     <button class="waitlist-btn" onclick="joinWaitlist()">Join Waitlist</button>
   </div>
   <p class="waitlist-note" id="waitlist-msg">Free forever for candidates. No spam.</p>
+  <form id="brevo-form" action="https://1824084c.sibforms.com/serve/MUIFADyoOno2zbs3q7dYakumYUYnv9Pi-UbLCYQznPAaEdloD6sNFLNHzDrNAcCcSjvVd4TvElXTmW1R5DIFAbVhy4crNoIkzyl57Dyn04OaTeR4afAE25yiqz13sxNZZrSVYqdCylWJ0l6_VxHV-76meFaI7rIAq_6HwIQtxmb5QIUStkswBoINEruS49X6c4joiDj7OuzJH9IOOA==" method="POST" target="_blank" style="display:none">
+    <input type="email" name="EMAIL" id="brevo-email"/>
+    <input type="hidden" name="email_address_check" value=""/>
+    <input type="hidden" name="locale" value="en"/>
+    <button type="submit" id="brevo-submit"></button>
+  </form>
 </div>
 
 <!-- FOOTER -->
@@ -447,28 +453,13 @@ function joinWaitlist() {
     msg.textContent = 'Please enter a valid email address.';
     return;
   }
-
-  // Submit to Brevo
-  const brevoUrl = 'https://1824084c.sibforms.com/serve/MUIFADyoOno2zbs3q7dYakumYUYnv9Pi-UbLCYQznPAaEdloD6sNFLNHzDrNAcCcSjvVd4TvElXTmW1R5DIFAbVhy4crNoIkzyl57Dyn04OaTeR4afAE25yiqz13sxNZZrSVYqdCylWJ0l6_VxHV-76meFaI7rIAq_6HwIQtxmb5QIUStkswBoINEruS49X6c4joiDj7OuzJH9IOOA==';
-  const formData = new FormData();
-  formData.append('EMAIL', email);
-  formData.append('email_address_check', '');
-  formData.append('locale', 'en');
-
-  fetch(brevoUrl, {
-    method: 'POST',
-    body: formData,
-    mode: 'no-cors'
-  }).then(() => {
-    msg.style.color = '#00E5A0';
-    msg.textContent = '✓ You\'re on the list! Check your inbox for a confirmation email.';
-    document.getElementById('waitlist-email').value = '';
-  }).catch(() => {
-    // no-cors means we can't read response, but submission likely worked
-    msg.style.color = '#00E5A0';
-    msg.textContent = '✓ You\'re on the list! Check your inbox for a confirmation email.';
-    document.getElementById('waitlist-email').value = '';
-  });
+  // Copy email to hidden Brevo form and submit
+  document.getElementById('brevo-email').value = email;
+  document.getElementById('brevo-form').submit();
+  // Show success message
+  msg.style.color = '#00E5A0';
+  msg.textContent = '✓ You\'re on the list! Check your inbox for a confirmation email.';
+  document.getElementById('waitlist-email').value = '';
 }
 </script>
 </body>
