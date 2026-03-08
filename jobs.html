@@ -175,6 +175,10 @@
       .job-card { padding: 0.85rem; }
       .job-title { font-size: 0.85rem; }
     }
+
+    .type-badge { font-size:0.6rem; font-weight:700; padding:0.15rem 0.45rem; border-radius:4px; vertical-align:middle; margin-left:0.35rem; }
+    .type-badge.intern { background:rgba(0,150,255,0.15); color:#0096FF; }
+    .type-badge.vol { background:rgba(0,229,160,0.15); color:#00E5A0; }
   </style>
 </head>
 <body>
@@ -184,6 +188,7 @@
   <ul class="nav-links">
     <li><a href="index.html">Home</a></li>
     <li><a href="skills.html">Skills</a></li>
+    <li><a href="experience.html">Get Experience</a></li>
     <li><a href="jobs.html" class="active">Jobs</a></li>
     <li><a href="index.html#waitlist" class="nav-cta">Join Waitlist</a></li>
   </ul>
@@ -209,6 +214,12 @@
     <input class="search-input" id="search" placeholder="Search jobs, companies, skills..." oninput="render()"/>
   </div>
   <div class="filter-scroll" id="skill-filters"></div>
+  <div class="filter-scroll" style="margin-top:0.5rem" id="type-filters">
+    <button class="filter-btn type-btn active" onclick="setType('all',this)">All Types</button>
+    <button class="filter-btn type-btn" onclick="setType('job',this)">💼 Full-time Jobs</button>
+    <button class="filter-btn type-btn" onclick="setType('internship',this)">🎓 Internships</button>
+    <button class="filter-btn type-btn" onclick="setType('volunteer',this)">🤝 Volunteering</button>
+  </div>
 </div>
 
 <div class="stats-bar">
@@ -248,12 +259,22 @@ const DEMO_JOBS = [
   { id:"d16", title:"Customer Success Manager", company:"Intercom", skill:"Customer Service", tags:["support","saas","cx"], url:"https://intercom.com/careers", location:"Worldwide", salary:"$55k–$75k", posted:"2026-02-25", logo:"", source:"RemoteOK", remote:true },
   { id:"d17", title:"Virtual Executive Assistant", company:"Fancy Hands", skill:"Virtual Assistant", tags:["admin","scheduling","research"], url:"https://fancyhands.com", location:"Worldwide", salary:"$30k–$45k", posted:"2026-02-24", logo:"", source:"Jobicy", remote:true },
   { id:"d18", title:"Business Intelligence Analyst", company:"Stripe", skill:"Data Analysis", tags:["sql","power bi","analytics"], url:"https://stripe.com/jobs", location:"Worldwide", salary:"$80k–$110k", posted:"2026-02-24", logo:"", source:"Remotive", remote:true },
+  { id:"i1", title:"Customer Support Intern (Remote)", company:"Intercom", skill:"Customer Service", tags:["intern","support","entry"], url:"https://intercom.com/careers", location:"Worldwide", salary:"Paid · $15/hr", posted:"2026-03-05", logo:"", source:"Remotive", remote:true, type:"internship" },
+  { id:"i2", title:"Data Analysis Internship", company:"DataCamp", skill:"Data Analysis", tags:["intern","sql","analytics"], url:"https://datacamp.com", location:"Worldwide", salary:"Paid · Stipend", posted:"2026-03-05", logo:"", source:"Jobicy", remote:true, type:"internship" },
+  { id:"i3", title:"Social Media Marketing Intern", company:"Hootsuite", skill:"Social Media Management", tags:["intern","social","content"], url:"https://hootsuite.com/about/careers", location:"Worldwide", salary:"Paid · $12/hr", posted:"2026-03-04", logo:"", source:"RemoteOK", remote:true, type:"internship" },
+  { id:"i4", title:"UX Design Intern", company:"Canva", skill:"UI/UX Design", tags:["intern","figma","ux"], url:"https://canva.com/careers", location:"Worldwide", salary:"Paid · Stipend", posted:"2026-03-04", logo:"", source:"Remotive", remote:true, type:"internship" },
+  { id:"i5", title:"Content Writing Intern", company:"HubSpot", skill:"Content Writing", tags:["intern","writing","seo"], url:"https://hubspot.com/careers", location:"Worldwide", salary:"Paid · $14/hr", posted:"2026-03-03", logo:"", source:"Jobicy", remote:true, type:"internship" },
+  { id:"v1", title:"Volunteer Social Media Manager", company:"African Tech Foundation", skill:"Social Media Management", tags:["volunteer","nonprofit","social"], url:"https://www.catchafire.org", location:"Worldwide", salary:"Volunteer · Portfolio Builder", posted:"2026-03-05", logo:"", source:"Catchafire", remote:true, type:"volunteer" },
+  { id:"v2", title:"Volunteer Data Analyst – NGO", company:"UN Volunteers", skill:"Data Analysis", tags:["volunteer","data","impact"], url:"https://www.onlinevolunteering.org", location:"Worldwide", salary:"Volunteer · Certificate", posted:"2026-03-04", logo:"", source:"UN Volunteers", remote:true, type:"volunteer" },
+  { id:"v3", title:"Volunteer Tutor – Mathematics", company:"Khan Academy", skill:"Online Tutoring", tags:["volunteer","math","education"], url:"https://www.khanacademy.org/contribute", location:"Worldwide", salary:"Volunteer · Impact Work", posted:"2026-03-04", logo:"", source:"Khan Academy", remote:true, type:"volunteer" },
+  { id:"v4", title:"Volunteer HR Coordinator", company:"Idealist", skill:"HR & Recruitment", tags:["volunteer","hr","nonprofit"], url:"https://www.idealist.org", location:"Worldwide", salary:"Volunteer · Portfolio Builder", posted:"2026-03-03", logo:"", source:"Idealist", remote:true, type:"volunteer" },
 ];
 
 const SKILLS = [...new Set(DEMO_JOBS.map(j => j.skill))].sort();
 
 let allJobs = [];
 let activeSkill = "All";
+let activeType = "all";
 
 // ─── LOAD DATA ──────────────────────────────────────────────────────────────
 async function loadJobs() {
@@ -284,7 +305,14 @@ function buildFilters() {
 
 function setSkill(skill, btn) {
   activeSkill = skill;
-  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  document.querySelectorAll("#skill-filters .filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  render();
+}
+
+function setType(type, btn) {
+  activeType = type;
+  document.querySelectorAll("#type-filters .filter-btn").forEach(b => b.classList.remove("active"));
   btn.classList.add("active");
   render();
 }
@@ -322,7 +350,9 @@ function render() {
       j.company.toLowerCase().includes(query) ||
       (j.tags || []).some(t => t.toLowerCase().includes(query)) ||
       j.skill.toLowerCase().includes(query);
-    return matchSkill && matchQuery;
+    const jobType = j.type || "job";
+    const matchType = activeType === "all" || jobType === activeType;
+    return matchSkill && matchQuery && matchType;
   });
 
   if (sort === "newest") jobs.sort((a,b) => (b.posted||"").localeCompare(a.posted||""));
