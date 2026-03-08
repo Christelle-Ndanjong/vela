@@ -197,7 +197,7 @@
 <div class="page-header">
   <div class="header-left">
     <h1>Remote Jobs <span>For Africa</span></h1>
-    <p>Curated daily from global job boards. Filtered for the skills that get Africans hired.</p>
+    <p>Curated daily from global job boards. Click any job to read the full description — then click <strong style="color:var(--accent)">Apply for this Job</strong> to submit your application directly to the employer.</p>
   </div>
   <div class="update-badge">
     <span class="update-dot"></span>
@@ -412,7 +412,7 @@ function render() {
                 <div>${timeAgo(job.posted)}</div>
                 <div class="job-source"><span class="source-dot"></span>${job.source}</div>
               </div>
-              <button class="apply-btn" onclick="event.preventDefault();window.open('${job.url}','_blank')">Apply →</button>
+              <button class="apply-btn" onclick="event.preventDefault();window.open('${job.url}','_blank')">Apply for this Job →</button>
             </div>
           </a>
         `).join("")}
