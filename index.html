@@ -450,22 +450,7 @@ function switchTab(id, btn) {
   btn.classList.add('active');
 }
 
-function joinWaitlist() {
-  const email = document.getElementById('waitlist-email').value.trim();
-  const msg = document.getElementById('waitlist-msg');
-  if (!email || !email.includes('@')) {
-    msg.style.color = '#FF6B6B';
-    msg.textContent = 'Please enter a valid email address.';
-    return;
-  }
-  // Copy email to hidden Brevo form and submit
-  document.getElementById('brevo-email').value = email;
-  document.getElementById('brevo-form').submit();
-  // Show success message
-  msg.style.color = '#00E5A0';
-  msg.textContent = '✓ You\'re on the list! Check your inbox for a confirmation email.';
-  document.getElementById('waitlist-email').value = '';
-}
+// Brevo form handles submission natively
 </script>
 </body>
 </html>
