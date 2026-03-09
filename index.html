@@ -412,21 +412,33 @@
   <h2>Be first when VELA launches fully.</h2>
   <p>Join the waitlist. We'll notify you when your skill path opens for verified placements.</p>
   <div style="max-width:480px;margin:0 auto;">
-    <form id="sib-form" method="POST" action="https://1824084c.sibforms.com/serve/MUIFADyoOno2zbs3q7dYakumYUYnv9Pi-UbLCYQznPAaEdloD6sNFLNHzDrNAcCcSjvVd4TvElXTmW1R5DIFAbVhy4crNoIkzyl57Dyn04OaTeR4afAE25yiqz13sxNZZrSVYqdCylWJ0l6_VxHV-76meFaI7rIAq_6HwIQtxmb5QIUStkswBoINEruS49X6c4joiDj7OuzJH9IOOA==" data-type="subscription" style="display:flex;gap:0.75rem;flex-wrap:wrap;justify-content:center;">
-      <input type="email" name="EMAIL" placeholder="Enter your email address" required autocomplete="off"
+    <div style="display:flex;gap:0.75rem;flex-wrap:wrap;justify-content:center;">
+      <input type="email" id="wl-email" placeholder="Enter your email address"
         style="flex:1;min-width:220px;background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.12);color:#EEF2FF;padding:0.85rem 1.1rem;border-radius:10px;font-size:0.88rem;font-family:'DM Sans',sans-serif;outline:none;"/>
-      <input type="text" name="email_address_check" value="" style="display:none"/>
-      <input type="hidden" name="locale" value="en"/>
-      <button type="submit"
+      <button onclick="goToBrevo()"
         style="background:#00E5A0;color:#07090F;border:none;padding:0.85rem 1.5rem;border-radius:10px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;cursor:pointer;white-space:nowrap;">
         Join Waitlist →
       </button>
-    </form>
-    <div id="error-message" style="display:none;margin-top:0.75rem;color:#FF6B6B;font-size:0.82rem;text-align:center;">Your subscription could not be saved. Please try again.</div>
-    <div id="success-message" style="display:none;margin-top:0.75rem;color:#00E5A0;font-size:0.82rem;text-align:center;">✓ You're on the list! Check your inbox for a welcome email.</div>
+    </div>
+    <div id="wl-msg" style="margin-top:0.75rem;font-size:0.82rem;text-align:center;color:var(--muted);min-height:1.2rem;"></div>
   </div>
   <p class="waitlist-note" style="margin-top:0.75rem;">Free forever for candidates. No spam.</p>
-  <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
+  <script>
+  function goToBrevo() {
+    const email = document.getElementById('wl-email').value.trim();
+    const msg = document.getElementById('wl-msg');
+    if (!email || !email.includes('@')) {
+      msg.style.color = '#FF6B6B';
+      msg.textContent = 'Please enter a valid email address.';
+      return;
+    }
+    const url = 'https://1824084c.sibforms.com/serve/MUIFADyoOno2zbs3q7dYakumYUYnv9Pi-UbLCYQznPAaEdloD6sNFLNHzDrNAcCcSjvVd4TvElXTmW1R5DIFAbVhy4crNoIkzyl57Dyn04OaTeR4afAE25yiqz13sxNZZrSVYqdCylWJ0l6_VxHV-76meFaI7rIAq_6HwIQtxmb5QIUStkswBoINEruS49X6c4joiDj7OuzJH9IOOA==?EMAIL=' + encodeURIComponent(email);
+    window.open(url, '_blank');
+    msg.style.color = '#00E5A0';
+    msg.textContent = '✓ Complete your signup in the tab that just opened!';
+    document.getElementById('wl-email').value = '';
+  }
+  </script>
 </div>
 
 <!-- FOOTER -->
