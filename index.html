@@ -411,10 +411,22 @@
 <div class="waitlist-section" id="waitlist">
   <h2>Be first when VELA launches fully.</h2>
   <p>Join the waitlist. We'll notify you when your skill path opens for verified placements.</p>
-  <div style="display:flex;gap:0.75rem;justify-content:center;max-width:480px;margin:0 auto;flex-wrap:wrap;">
-    <a href="https://1824084c.sibforms.com/serve/MUIFADyoOno2zbs3q7dYakumYUYnv9Pi-UbLCYQznPAaEdloD6sNFLNHzDrNAcCcSjvVd4TvElXTmW1R5DIFAbVhy4crNoIkzyl57Dyn04OaTeR4afAE25yiqz13sxNZZrSVYqdCylWJ0l6_VxHV-76meFaI7rIAq_6HwIQtxmb5QIUStkswBoINEruS49X6c4joiDj7OuzJH9IOOA==" target="_blank" class="waitlist-btn" style="text-decoration:none;display:inline-block;padding:0.85rem 2rem;">Join the Waitlist →</a>
+  <div style="max-width:480px;margin:0 auto;">
+    <form id="sib-form" method="POST" action="https://1824084c.sibforms.com/serve/MUIFADyoOno2zbs3q7dYakumYUYnv9Pi-UbLCYQznPAaEdloD6sNFLNHzDrNAcCcSjvVd4TvElXTmW1R5DIFAbVhy4crNoIkzyl57Dyn04OaTeR4afAE25yiqz13sxNZZrSVYqdCylWJ0l6_VxHV-76meFaI7rIAq_6HwIQtxmb5QIUStkswBoINEruS49X6c4joiDj7OuzJH9IOOA==" data-type="subscription" style="display:flex;gap:0.75rem;flex-wrap:wrap;justify-content:center;">
+      <input type="email" name="EMAIL" placeholder="Enter your email address" required autocomplete="off"
+        style="flex:1;min-width:220px;background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.12);color:#EEF2FF;padding:0.85rem 1.1rem;border-radius:10px;font-size:0.88rem;font-family:'DM Sans',sans-serif;outline:none;"/>
+      <input type="text" name="email_address_check" value="" style="display:none"/>
+      <input type="hidden" name="locale" value="en"/>
+      <button type="submit"
+        style="background:#00E5A0;color:#07090F;border:none;padding:0.85rem 1.5rem;border-radius:10px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;cursor:pointer;white-space:nowrap;">
+        Join Waitlist →
+      </button>
+    </form>
+    <div id="error-message" style="display:none;margin-top:0.75rem;color:#FF6B6B;font-size:0.82rem;text-align:center;">Your subscription could not be saved. Please try again.</div>
+    <div id="success-message" style="display:none;margin-top:0.75rem;color:#00E5A0;font-size:0.82rem;text-align:center;">✓ You're on the list! Check your inbox for a welcome email.</div>
   </div>
-  <p class="waitlist-note">Free forever for candidates. No spam. Takes 10 seconds.</p>
+  <p class="waitlist-note" style="margin-top:0.75rem;">Free forever for candidates. No spam.</p>
+  <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
 </div>
 
 <!-- FOOTER -->
