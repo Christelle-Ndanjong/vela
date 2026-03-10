@@ -299,6 +299,10 @@
 <nav>
   <a class="logo" href="index.html">VELA</a>
   <span class="nav-step-info" id="nav-step-info">Building your profile</span>
+  <div style="display:flex;gap:0.5rem;align-items:center;">
+    <button onclick="saveProgress()" id="save-btn" style="background:transparent;border:1px solid rgba(0,229,160,0.25);color:var(--accent);padding:0.4rem 0.9rem;border-radius:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">💾 Save</button>
+    <button onclick="loadProgress()" id="load-btn" style="display:none;background:rgba(0,229,160,0.08);border:1px solid rgba(0,229,160,0.3);color:var(--accent);padding:0.4rem 0.9rem;border-radius:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">↩ Resume</button>
+  </div>
 </nav>
 
 <div class="progress-wrap">
@@ -460,6 +464,44 @@ let profile = {
   quizAnswers:[], quizScore:0,
 };
 let quizAnswers = {};
+
+// ─── SAVE & RESUME ───────────────────────────────────────────────────────────
+function saveProgress() {
+  try {
+    localStorage.setItem('vela_saved_profile', JSON.stringify(profile));
+    localStorage.setItem('vela_saved_step', currentStep);
+    localStorage.setItem('vela_saved_quiz', JSON.stringify(quizAnswers));
+    const btn = document.getElementById('save-btn');
+    btn.textContent = '✅ Saved!';
+    btn.style.borderColor = 'rgba(0,229,160,0.6)';
+    setTimeout(() => { btn.textContent = '💾 Save'; btn.style.borderColor = 'rgba(0,229,160,0.25)'; }, 2000);
+  } catch(e) { alert('Could not save. Please try again.'); }
+}
+
+function loadProgress() {
+  try {
+    const savedProfile = localStorage.getItem('vela_saved_profile');
+    const savedStep = localStorage.getItem('vela_saved_step');
+    const savedQuiz = localStorage.getItem('vela_saved_quiz');
+    if (savedProfile) {
+      profile = JSON.parse(savedProfile);
+      currentStep = parseInt(savedStep) || 0;
+      if (savedQuiz) quizAnswers = JSON.parse(savedQuiz);
+      renderStep();
+      document.getElementById('load-btn').style.display = 'none';
+    }
+  } catch(e) {}
+}
+
+// Check if saved progress exists on load
+window.addEventListener('DOMContentLoaded', function() {
+  try {
+    if (localStorage.getItem('vela_saved_profile')) {
+      const loadBtn = document.getElementById('load-btn');
+      if (loadBtn) loadBtn.style.display = 'block';
+    }
+  } catch(e) {}
+});
 
 // Restore session if user navigated away and came back
 try {
