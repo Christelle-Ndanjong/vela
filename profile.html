@@ -513,6 +513,8 @@ window.addEventListener('DOMContentLoaded', async function() {
   } else if (currentUser.user_metadata?.full_name) {
     profile.name = currentUser.user_metadata.full_name;
   }
+  // Always auto-fill email from logged in account
+  if (!profile.email) profile.email = currentUser.email || '';
 
   renderStep();
 });
