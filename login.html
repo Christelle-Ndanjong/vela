@@ -115,6 +115,15 @@ const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // Check if already logged in
+// Handle Supabase auth token from email confirmation redirect
+if (window.location.hash && window.location.hash.includes('access_token')) {
+  _supabase.auth.getSession().then(({ data: { session } }) => {
+    if (session) {
+      window.location.replace('https://christelle-ndanjong.github.io/vela/profile.html');
+    }
+  });
+}
+
 _supabase.auth.getSession().then(({ data: { session } }) => {
   if (session) window.location.href = 'profile.html';
 });
