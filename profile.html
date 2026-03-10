@@ -436,18 +436,14 @@ const QUIZ_BY_SKILL = {
   ],
   "Email Marketing": [
     { type:"mc", q:"Your email campaign has a 45% open rate but only 0.5% click rate. What does this tell you and what do you fix?", options:["The email list is bad — clean it","The subject line is great but the email body/CTA is failing — the content or offer is not compelling enough","Increase sending frequency","Change the sending time"], answer:1 },
-    { type:"short", q:"Write a 3-email welcome sequence for a new subscriber to a fitness coaching newsletter. Give the subject line and a 2-sentence summary of each email.", placeholder:"Email 1 — Subject: Welcome! Here is your free workout plan
-Summary:...", minWords:40 },
+    { type:"short", q:"Write a 3-email welcome sequence for a new subscriber to a fitness coaching newsletter. Give the subject line and a 2-sentence summary of each email.", placeholder:"Email 1 — Subject: Welcome! Here is your free workout plan. Summary: ...", minWords:40 },
     { type:"mc", q:"What is email list hygiene and why does it matter for deliverability?", options:["Formatting emails with clean design","Regularly removing inactive, invalid, and unengaged subscribers to maintain sender reputation and avoid spam filters","Sending emails at regular intervals","Using plain text instead of HTML"], answer:1 },
     { type:"mc", q:"You are A/B testing two subject lines. After 4 hours, version A has 32% open rate (500 recipients) and version B has 28% (500 recipients). Should you call the winner?", options:["Yes — A is clearly winning","No — 4 hours is too early and 500 recipients each may not be statistically significant","Yes — any difference means a winner","No — always wait exactly 48 hours"], answer:1 },
     { type:"short", q:"A client's emails keep landing in spam. Walk through your diagnostic process step by step.", placeholder:"First I would check the sender reputation using tools like...", minWords:30 },
   ],
   "Cybersecurity": [
     { type:"mc", q:"You discover an employee has been using their personal Gmail to send confidential client files for 6 months. What is your response?", options:["Immediately terminate the employee","Follow the incident response plan: contain, investigate, assess impact, notify stakeholders, remediate, document — do not act without process","Ignore it if no breach occurred","Simply block their Gmail access"], answer:1 },
-    { type:"short", q:"Explain what a SQL injection attack is and write an example of vulnerable code vs secure code to prevent it.", placeholder:"A SQL injection attack is...
-
-Vulnerable code:
-SELECT * FROM users WHERE...", minWords:30 },
+    { type:"short", q:"Explain what a SQL injection attack is and write an example of vulnerable code vs secure code to prevent it.", placeholder:"A SQL injection attack is...  Vulnerable code: SELECT * FROM users WHERE...", minWords:30 },
     { type:"mc", q:"What is the difference between symmetric and asymmetric encryption?", options:["Symmetric is stronger; asymmetric is weaker","Symmetric uses the same key for encryption and decryption; asymmetric uses a public/private key pair","Asymmetric is used for files; symmetric for emails","They are the same in modern systems"], answer:1 },
     { type:"mc", q:"A company stores passwords as plain text in their database. A developer says hashing is unnecessary overhead. You should:", options:["Agree if performance is a concern","Never agree — passwords must be hashed with a strong algorithm like bcrypt. Plain text passwords are a critical security vulnerability","Suggest encrypting instead of hashing","Implement rate limiting instead"], answer:1 },
     { type:"short", q:"What is the principle of least privilege? Give a real-world example of how you would apply it in a company with 50 employees.", placeholder:"The principle of least privilege means...", minWords:25 },
@@ -471,14 +467,11 @@ SELECT * FROM users WHERE...", minWords:30 },
     { type:"short", q:"A hiring manager says they want to hire someone who 'fits our culture' but cannot define what that means. How do you handle this conversation?", placeholder:"I would ask the hiring manager to...", minWords:30 },
     { type:"mc", q:"What is unconscious bias in hiring and give one specific intervention to reduce it?", options:["Bias that candidates bring to interviews","Bias that affects decisions without awareness — one intervention is blind CV screening where names and photos are removed","It does not affect structured interviews","Only affects final hiring decisions"], answer:1 },
     { type:"mc", q:"A top candidate accepts your offer, then asks for 15% more salary 2 days before their start date. What do you do?", options:["Immediately rescind the offer","Accept without question","Have an honest conversation — understand why, check if budget allows, and decide based on the business case not emotion","Ignore the request"], answer:2 },
-    { type:"short", q:"Write 3 behavioural interview questions for a remote customer success manager role. Explain what you are trying to assess with each.", placeholder:"Q1: Tell me about a time you managed a difficult client remotely...
-Assessing:...", minWords:40 },
+    { type:"short", q:"Write 3 behavioural interview questions for a remote customer success manager role. Explain what you are trying to assess with each.", placeholder:"Q1: Tell me about a time you managed a difficult client remotely... Assessing:...", minWords:40 },
   ],
   "Online Tutoring": [
     { type:"mc", q:"A student scores 40% on every test despite attending all sessions. What is the MOST likely root cause?", options:["The student is not trying","The teaching method is not matching the student's learning style — diagnosis before more content","The student needs more homework","The tests are too hard"], answer:1 },
-    { type:"short", q:"Design a 45-minute online lesson plan for teaching fractions to a 12-year-old who is struggling. Include tools, activities, and how you check understanding.", placeholder:"Lesson objective: Student can add simple fractions by the end.
-
-Minutes 0-10:...", minWords:50 },
+    { type:"short", q:"Design a 45-minute online lesson plan for teaching fractions to a 12-year-old who is struggling. Include tools, activities, and how you check understanding.", placeholder:"Lesson objective: Student can add simple fractions by the end.  Minutes 0-10:...", minWords:50 },
     { type:"mc", q:"A parent emails you upset that their child's grade dropped after starting your sessions. How do you respond?", options:["Defend yourself immediately","Apologise and agree their child is struggling","Acknowledge their concern, share your observations, request a 3-way meeting to align on approach and set clear goals","Ask the parent to wait another month"], answer:2 },
     { type:"mc", q:"What is the difference between formative and summative assessment?", options:["They are the same","Formative is ongoing assessment during learning to guide instruction; summative is final assessment of learning","Formative is done by students; summative by teachers","Summative is informal; formative is formal"], answer:1 },
     { type:"short", q:"A student says 'I hate maths, I'm just bad at it and always will be.' How do you respond in the moment and what is your long-term strategy?", placeholder:"In the moment, I would validate their feeling without agreeing with the belief...", minWords:30 },
@@ -514,39 +507,26 @@ let profile = {
   tools:[], english:0, availability:"", timezone:"",
   motivation:"", goal:"",
   quizAnswers:[], quizScore:0,
- = [
-  "Nigeria","Kenya","Ghana","South Africa","Ethiopia","Tanzania","Uganda","Rwanda",
-  "Senegal","Ivory Coast","Cameroon","Zimbabwe","Zambia","Mozambique","Botswana",
-  "Namibia","Sierra Leone","Liberia","Gambia","Togo","Benin","Mali","Burkina Faso",
-  "Niger","Chad","Sudan","Egypt","Morocco","Tunisia","Algeria","Libya","Somalia",
-  "Eritrea","Djibouti","Comoros","Madagascar","Mauritius","Seychelles","Angola",
-  "DR Congo","Congo","Gabon","Equatorial Guinea","Malawi","Lesotho","Swaziland",
-  "Other"
-].sort();
-
-// ─── STATE ────────────────────────────────────────────────────────────────────
-let currentStep = 0;
-let profile = {
-  name:"", country:"", email:"",
-  education:"", field:"", institution:"",
-  experience:"", expYears:"",
-  skills:[], skill:"", selfLevel:0,
-  tools:[], english:0, availability:"", timezone:"",
-  motivation:"", goal:"",
-  quizAnswers:[], quizScore:0,
 };
 let quizAnswers = {};
+
+
 
 // ─── SUPABASE ────────────────────────────────────────────────────────────────
 const SUPABASE_URL = 'https://xlpghpsowygekrwylhjf.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhscGdocHNvd3lnZWtyd3lsaGpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNTE5NjEsImV4cCI6MjA4ODcyNzk2MX0.10e6szZ_7oFdwRYrjuT-c6DXWTsapZ82f4BDWoTADlk';
-const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+let _supabase = null;
+try {
+  if (typeof supabase !== 'undefined') {
+    _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  }
+} catch(e) { _supabase = null; }
 let currentUser = null;
 
 // Check auth on load — redirect to login if not signed in
 window.addEventListener('DOMContentLoaded', async function() {
-  // If Supabase CDN failed, just render the form
-  if (!window._supabaseAvailable || typeof supabase === 'undefined') {
+  // If Supabase failed to load, just render the form directly
+  if (!_supabase) {
     renderStep();
     return;
   }
@@ -615,7 +595,7 @@ window.addEventListener('DOMContentLoaded', async function() {
 });
 
 async function saveToSupabase(extraData = {}) {
-  if (!currentUser || !window._supabaseAvailable) return;
+  if (!currentUser || !_supabase) return;
   try {
     await _supabase.from('profiles').upsert({
       id: currentUser.id,
@@ -640,7 +620,7 @@ async function saveToSupabase(extraData = {}) {
 }
 
 async function signOut() {
-  await _supabase.auth.signOut();
+  if (_supabase) await _supabase.auth.signOut();
   window.location.href = 'login.html';
 }
 
