@@ -360,91 +360,150 @@ const TOOLS_BY_SKILL = {
 };
 
 const QUIZ_BY_SKILL = {
+  "Data Analysis": [
+    { type:"mc", q:"You have a table with 500,000 rows of sales data. Which SQL query returns total revenue per country, sorted highest first?", options:["SELECT country, SUM(revenue) FROM sales GROUP BY country ORDER BY revenue DESC","SELECT country, COUNT(revenue) FROM sales ORDER BY SUM(revenue)","SELECT SUM(revenue), country FROM sales ORDER BY country","SELECT country, revenue FROM sales GROUP BY revenue"], answer:0 },
+    { type:"code", q:"Write a SQL query to find all customers who placed more than 3 orders in the last 30 days. Your table is called 'orders' with columns: customer_id, order_date, amount.", placeholder:"SELECT customer_id...", minWords:5 },
+    { type:"mc", q:"Your dataset has 10,000 rows. After cleaning, you notice 15% of values in a key column are NULL. What is the BEST approach?", options:["Delete all rows with NULL values","Replace all NULLs with 0","Investigate why they are missing — impute or drop based on the pattern","Ignore them and proceed"], answer:2 },
+    { type:"mc", q:"Which of these is NOT a measure of central tendency?", options:["Mean","Median","Standard deviation","Mode"], answer:2 },
+    { type:"short", q:"Explain the difference between a LEFT JOIN and an INNER JOIN. Give a real example of when you'd use each.", placeholder:"A LEFT JOIN returns all rows from the left table...", minWords:20 },
+  ],
   "Customer Service": [
-    { q:"A customer is angry about a delayed order. What's the BEST first response?", options:["Explain company policy immediately","Apologise and acknowledge their frustration first","Ask them to check their tracking number","Tell them delays are outside your control"], answer:1 },
-    { q:"What does CSAT stand for in customer support?", options:["Customer Service Action Team","Customer Satisfaction Score","Customer Support Analytics Tool","Centralised Service Assessment Test"], answer:1 },
-    { q:"A customer asks for a refund outside the policy window. You should:", options:["Refuse and cite policy","Ignore the request","Escalate to a supervisor and try to find a solution","Promise a refund you can't guarantee"], answer:2 },
+    { type:"mc", q:"A VIP customer threatens to cancel their $10,000 subscription over a billing error that was your company's fault. What is your FIRST action?", options:["Transfer to billing department immediately","Apologise, take full ownership, and offer an immediate resolution","Explain company policy on billing errors","Ask them to submit a formal complaint"], answer:1 },
+    { type:"short", q:"A customer sends this message: 'I ordered 3 weeks ago and nothing has arrived. I've emailed twice with no response. This is completely unacceptable.' Write your full response to this customer.", placeholder:"Dear [Customer Name]...", minWords:30 },
+    { type:"mc", q:"What is the difference between customer satisfaction (CSAT) and Net Promoter Score (NPS)?", options:["They measure the same thing","CSAT measures transaction satisfaction; NPS measures loyalty and likelihood to recommend","NPS is for B2B only; CSAT is for B2C","CSAT uses a 10-point scale; NPS uses a 5-point scale"], answer:1 },
+    { type:"mc", q:"You notice the same complaint appearing from 20 different customers this week. What should you do beyond resolving each individually?", options:["Nothing — just keep resolving them one by one","Escalate the pattern to the product or operations team so the root cause is fixed","Tell customers it is a known issue","Create a FAQ article"], answer:1 },
+    { type:"short", q:"Describe a situation where following the official policy would give a bad customer experience. What would you do and why?", placeholder:"There are situations where strict policy...", minWords:25 },
   ],
   "Virtual Assistant": [
-    { q:"Your manager asks you to 'block some time' on their calendar. What should you do first?", options:["Block every empty slot","Ask for the purpose and duration before scheduling","Send a calendar invite without checking","Block only mornings"], answer:1 },
-    { q:"Which tool is BEST for managing recurring tasks and project workflows?", options:["WhatsApp","Notion or Asana","Google Photos","Excel Charts"], answer:1 },
-    { q:"You accidentally sent a draft email from your manager's account. What do you do?", options:["Delete it and say nothing","Immediately inform your manager and assess the damage","Wait to see if anyone notices","Blame a technical error"], answer:1 },
-  ],
-  "Data Analysis": [
-    { q:"What does SQL stand for?", options:["Structured Query Language","Simple Question Logic","System Query Layer","Standard Question List"], answer:0 },
-    { q:"You have sales data for 12 months. Which chart best shows trends over time?", options:["Pie chart","Bar chart","Line chart","Scatter plot"], answer:2 },
-    { q:"What is the purpose of a pivot table in Excel?", options:["To create colourful charts","To summarise and analyse large datasets quickly","To send emails","To run Python scripts"], answer:1 },
+    { type:"mc", q:"Your manager asks you to prepare a report by 9am but at 8:45am you realise you have a data error that will take 30 minutes to fix. What do you do?", options:["Submit it with the error and fix it later","Wait until it is perfect even if late","Immediately notify your manager, explain the issue, and give a revised ETA","Ask a colleague to submit it for you"], answer:2 },
+    { type:"short", q:"Your manager receives 200+ emails daily. Describe your system for managing their inbox — how would you prioritise, organise, and ensure nothing important is missed?", placeholder:"To manage a high-volume inbox effectively...", minWords:30 },
+    { type:"mc", q:"You are scheduling a meeting between 5 people across New York (EST), London (GMT), Lagos (WAT), and Nairobi (EAT). What is the BEST time slot?", options:["9am New York time","3pm London time — which is 10am New York, 4pm Lagos, 6pm Nairobi","12pm Nairobi time","8am London time"], answer:1 },
+    { type:"mc", q:"Your manager discovers you made an error that caused a client to receive wrong information. What do you do?", options:["Fix it quietly without mentioning it","Blame a miscommunication","Tell your manager immediately, take ownership, correct the client, and explain what happened","Wait to see if the client notices"], answer:2 },
+    { type:"short", q:"You are asked to research 3 CRM tools for a small business under $50/month. What information would you gather and how would you present your findings?", placeholder:"I would evaluate each tool based on...", minWords:25 },
   ],
   "Prompt Engineering & AI": [
-    { q:"What is 'few-shot prompting'?", options:["Giving the AI very short instructions","Providing example input-output pairs in your prompt","Limiting the AI's response length","Using multiple AI tools at once"], answer:1 },
-    { q:"Which of these is a hallucination in AI?", options:["When AI refuses to answer","When AI generates confident but false information","When AI gives very long responses","When AI asks clarifying questions"], answer:1 },
-    { q:"What does 'temperature' control in an AI model?", options:["Server cooling","How fast the model responds","The randomness/creativity of the output","The number of tokens used"], answer:2 },
+    { type:"mc", q:"You need Claude to write a professional cold email for a SaaS product targeting HR managers. Which prompt will get the BEST result?", options:["Write a cold email for my product","Write a cold email. Product: AI hiring tool. Target: HR managers at 50-500 person companies. Tone: Professional but not stiff. Goal: Book a 15-min demo. Max 150 words.","Write me a sales email","Write a cold email and make it good"], answer:1 },
+    { type:"short", q:"Explain what 'hallucination' means in AI models and describe TWO practical techniques you use in your prompts to reduce it.", placeholder:"AI hallucination is when a model...", minWords:30 },
+    { type:"mc", q:"What is the key difference between zero-shot and few-shot prompting?", options:["Zero-shot uses no AI; few-shot uses multiple AI tools","Zero-shot gives no examples; few-shot provides example input-output pairs in the prompt","Zero-shot is faster; few-shot is more expensive","They are the same thing"], answer:1 },
+    { type:"code", q:"Write a system prompt for an AI customer service agent for an e-commerce store called 'ShopEasy'. It should be helpful, never make up order info, and escalate to humans when needed.", placeholder:"You are a customer service agent for ShopEasy...", minWords:30 },
+    { type:"mc", q:"A client wants to use AI to summarise 500 customer support tickets daily. What is the MOST important thing to include in your prompt design?", options:["Make it as short as possible","Include output format instructions, examples of good summaries, and define what 'important' means","Just ask the AI to summarise","Use the highest temperature setting"], answer:1 },
   ],
   "Social Media Management": [
-    { q:"What is the best time to post on LinkedIn for maximum reach?", options:["Late night weekends","Tuesday to Thursday, 8–10am or 12pm","Every hour daily","Only on Mondays"], answer:1 },
-    { q:"What does 'engagement rate' measure?", options:["Number of followers gained","How many people interact with your content relative to reach","Total impressions","Money earned from posts"], answer:1 },
-    { q:"A brand's post gets negative comments. You should:", options:["Delete all negative comments","Ignore them","Respond professionally and address the concern publicly","Post more content to push it down"], answer:2 },
+    { type:"mc", q:"A brand post accidentally goes viral for the wrong reason — thousands of negative comments in 2 hours. What is your immediate response plan?", options:["Delete the post immediately","Post more content to distract","Pause all scheduled content, assess the situation, inform management, then respond with a clear acknowledgement","Ignore it and wait for it to pass"], answer:2 },
+    { type:"short", q:"A client in the fitness industry wants to grow from 2,000 to 10,000 Instagram followers in 90 days with zero ad budget. Write your strategy.", placeholder:"To grow organically from 2K to 10K in 90 days...", minWords:40 },
+    { type:"mc", q:"You post the same content on LinkedIn and Instagram. The LinkedIn post gets 500 impressions, the Instagram post gets 50 likes. Which is performing better?", options:["Instagram — likes are more valuable","LinkedIn — impressions show more reach","You cannot compare them without knowing follower count and engagement rate","They are performing equally"], answer:2 },
+    { type:"mc", q:"What is the difference between reach and impressions?", options:["They are the same metric","Reach = unique accounts who saw it; Impressions = total times it was displayed","Impressions = unique viewers; Reach = total views","Reach measures paid performance; Impressions measure organic"], answer:1 },
+    { type:"short", q:"Write a LinkedIn post for a fintech startup announcing they just hit 10,000 users. Make it engaging, not corporate.", placeholder:"Something big just happened...", minWords:30 },
   ],
   "Content Writing": [
-    { q:"What is the AIDA copywriting framework?", options:["Analyse, Inform, Design, Act","Attention, Interest, Desire, Action","Audience, Idea, Draft, Approve","Assess, Implement, Distribute, Analyse"], answer:1 },
-    { q:"What is a meta description used for?", options:["Describing images on social media","Summarising a page for search engine results","Setting page loading speed","Defining page colours"], answer:1 },
-    { q:"When writing for online readers, you should:", options:["Use long dense paragraphs","Write in academic style","Use short paragraphs, subheadings, and clear language","Avoid using any examples"], answer:2 },
+    { type:"short", q:"Write the opening paragraph of a blog post titled: 'Why African Remote Workers Are the Most Underrated Talent in the World'. Hook the reader in the first sentence.", placeholder:"Every day, companies spend thousands on recruitment agencies...", minWords:40 },
+    { type:"mc", q:"A client's blog post has a 90% bounce rate. What is the MOST likely cause and fix?", options:["The post is too long — shorten it","The headline is misleading or the content doesn't match what readers expected","The font is wrong","There are no images"], answer:1 },
+    { type:"mc", q:"What is the E-E-A-T framework and why does it matter for SEO content?", options:["Engagement, Emotions, Authenticity, Traffic","Experience, Expertise, Authoritativeness, Trustworthiness — Google uses it to rank content quality","Edit, Enhance, Approve, Track","It does not matter for SEO"], answer:1 },
+    { type:"short", q:"Rewrite this sentence to be more engaging and clear: 'Our company provides solutions for businesses that need help with their marketing efforts in the digital space.'", placeholder:"We help businesses...", minWords:5 },
+    { type:"mc", q:"Your client sells project management software. Their target reader is a stressed startup founder. Which headline is strongest?", options:["Introducing Our New Project Management Tool","Project Management Software for Businesses","Stop Losing Hours to Chaos — How 500 Founders Got Their Time Back","Learn About Project Management"], answer:2 },
   ],
   "SEO Specialist": [
-    { q:"What is a backlink?", options:["An internal link on your own website","A link from another website pointing to yours","A broken link","A link in your email signature"], answer:1 },
-    { q:"What does 'search intent' mean?", options:["How fast a search query loads","The reason behind a user's search query","The number of keywords on a page","How often a keyword is searched"], answer:1 },
-    { q:"Which Google tool shows you how your site performs in search?", options:["Google Analytics","Google Ads","Google Search Console","Google Drive"], answer:2 },
+    { type:"mc", q:"A website has 10,000 monthly visitors but only 50 conversions. The SEO team is celebrating traffic growth. Why might this be misguided?", options:["Traffic is the only metric that matters","High traffic with low conversions means you are attracting the wrong audience or have a conversion problem — not just an SEO win","Conversions are irrelevant to SEO","50 conversions is actually very high"], answer:1 },
+    { type:"short", q:"A new e-commerce site selling handmade African jewellery wants to rank on Google. Write a keyword strategy for their first 3 months, explaining your approach.", placeholder:"For a new site, I would focus on long-tail keywords first...", minWords:35 },
+    { type:"mc", q:"What is keyword cannibalization and why is it a problem?", options:["Using too many keywords on one page","When multiple pages on your site compete for the same keyword, splitting ranking potential","When a keyword is too competitive","Using keywords from competitors"], answer:1 },
+    { type:"mc", q:"Google releases a core algorithm update and your client's traffic drops 40% overnight. What are your first 3 steps?", options:["Immediately rewrite all content","Check Google Search Console, analyse which pages dropped, compare content quality against top-ranking competitors","Buy backlinks immediately","Delete underperforming pages"], answer:1 },
+    { type:"short", q:"Explain the difference between on-page SEO and technical SEO. Give one specific action for each.", placeholder:"On-page SEO refers to...", minWords:25 },
   ],
   "Project Management": [
-    { q:"In Agile, what is a 'sprint'?", options:["A speed test for developers","A fixed time period to complete a set of tasks","A type of meeting","A risk assessment tool"], answer:1 },
-    { q:"What does a Gantt chart show?", options:["Team performance scores","Budget allocation","Project timeline and task dependencies","Customer satisfaction data"], answer:2 },
-    { q:"A project is falling behind schedule. First you should:", options:["Immediately request more budget","Assess the cause and impact before deciding next steps","Tell the client nothing","Add more tasks to the sprint"], answer:1 },
+    { type:"mc", q:"You are 3 weeks into a 10-week project. The team has used 60% of the budget but only completed 25% of work. Using Earned Value Management, what does this tell you?", options:["The project is on track","The project is over budget and behind schedule — Cost Performance Index and Schedule Performance Index are both below 1","The budget was set too high","The team is working efficiently"], answer:1 },
+    { type:"short", q:"A key developer on your team suddenly resigns 2 weeks before a major product launch. Describe your immediate action plan as project manager.", placeholder:"My immediate response would be...", minWords:35 },
+    { type:"mc", q:"What is the difference between a risk and an issue in project management?", options:["They are the same thing","A risk is a potential future problem; an issue is a problem that has already occurred","An issue is minor; a risk is major","Risks are tracked by developers; issues by managers"], answer:1 },
+    { type:"mc", q:"A stakeholder keeps requesting scope changes mid-project. What is the correct process?", options:["Accommodate all changes to keep the client happy","Refuse all changes","Log each change request, assess impact on timeline/budget/resources, get sign-off before implementing","Implement small changes without documentation"], answer:2 },
+    { type:"short", q:"What is a RACI matrix and when would you use it? Give a real example.", placeholder:"A RACI matrix stands for...", minWords:25 },
   ],
   "UI/UX Design": [
-    { q:"What is the primary purpose of a wireframe?", options:["Final visual design of a product","Low-fidelity layout to plan structure and flow","A colour palette guide","A coding framework"], answer:1 },
-    { q:"What does UX stand for?", options:["User Execution","Universal Experience","User Experience","Unique Extension"], answer:2 },
-    { q:"What is a 'user persona'?", options:["A fake social media account","A fictional representation of a target user based on research","A product logo","A server configuration"], answer:1 },
+    { type:"mc", q:"You conduct usability testing and 4 out of 5 users cannot find the checkout button. The developer says the design is fine. What do you do?", options:["Agree with the developer","Present the usability data — user testing beats opinion. Advocate for a redesign with evidence","Do more testing until someone finds it","Change the button colour only"], answer:1 },
+    { type:"short", q:"Explain the difference between UI and UX. Then describe how you would conduct a UX audit of an existing mobile app.", placeholder:"UI (User Interface) is the visual layer...", minWords:35 },
+    { type:"mc", q:"What is the purpose of a user journey map?", options:["To show the visual design of a product","To visualise the complete experience a user has with a product — including emotions, pain points, and touchpoints","To plan sprint timelines","To create wireframes faster"], answer:1 },
+    { type:"mc", q:"You are designing for a user base where 40% have low digital literacy. Which design principle is MOST critical?", options:["Minimalist aesthetics","Progressive disclosure and familiar patterns — reduce cognitive load, avoid jargon, use clear labels","Dark mode support","Advanced micro-animations"], answer:1 },
+    { type:"short", q:"A client asks you to add 5 new features to their app homepage. How do you push back professionally and what process do you recommend instead?", placeholder:"I would explain that adding features without user research...", minWords:30 },
   ],
   "Email Marketing": [
-    { q:"What is a good average email open rate for marketing emails?", options:["1–3%","5–10%","20–30%","60–80%"], answer:2 },
-    { q:"What does A/B testing in email marketing mean?", options:["Testing two versions of an email to see which performs better","Sending emails to A and B lists","Automating emails","Archiving and backing up emails"], answer:0 },
-    { q:"What is email segmentation?", options:["Deleting old email subscribers","Dividing your email list into groups based on specific criteria","Formatting email layouts","Scheduling emails at different times"], answer:1 },
+    { type:"mc", q:"Your email campaign has a 45% open rate but only 0.5% click rate. What does this tell you and what do you fix?", options:["The email list is bad — clean it","The subject line is great but the email body/CTA is failing — the content or offer is not compelling enough","Increase sending frequency","Change the sending time"], answer:1 },
+    { type:"short", q:"Write a 3-email welcome sequence for a new subscriber to a fitness coaching newsletter. Give the subject line and a 2-sentence summary of each email.", placeholder:"Email 1 — Subject: Welcome! Here is your free workout plan
+Summary:...", minWords:40 },
+    { type:"mc", q:"What is email list hygiene and why does it matter for deliverability?", options:["Formatting emails with clean design","Regularly removing inactive, invalid, and unengaged subscribers to maintain sender reputation and avoid spam filters","Sending emails at regular intervals","Using plain text instead of HTML"], answer:1 },
+    { type:"mc", q:"You are A/B testing two subject lines. After 4 hours, version A has 32% open rate (500 recipients) and version B has 28% (500 recipients). Should you call the winner?", options:["Yes — A is clearly winning","No — 4 hours is too early and 500 recipients each may not be statistically significant","Yes — any difference means a winner","No — always wait exactly 48 hours"], answer:1 },
+    { type:"short", q:"A client's emails keep landing in spam. Walk through your diagnostic process step by step.", placeholder:"First I would check the sender reputation using tools like...", minWords:30 },
   ],
   "Cybersecurity": [
-    { q:"What is phishing?", options:["A type of firewall","A fraudulent attempt to steal credentials via fake communications","A network speed test","An encryption method"], answer:1 },
-    { q:"What does CIA stand for in cybersecurity?", options:["Central Intelligence Agency","Confidentiality, Integrity, Availability","Cyber Intelligence Assessment","Computer Incident Analysis"], answer:1 },
-    { q:"What is two-factor authentication (2FA)?", options:["Using two passwords","A second layer of identity verification beyond a password","Two firewall systems","Two antivirus programs"], answer:1 },
-  ],
-  "Online Tutoring": [
-    { q:"A student keeps getting the same concept wrong. You should:", options:["Move on to the next topic","Give the same explanation louder","Try a different explanation method or use an analogy","Tell them to revise at home"], answer:2 },
-    { q:"Which tool is BEST for collaborative online whiteboards during lessons?", options:["WhatsApp","Excel","Miro or Mural","Dropbox"], answer:2 },
-    { q:"What is the most important factor in keeping online students engaged?", options:["Having a perfect background","Active participation and varied activity types","Speaking very quickly","Using lots of slides"], answer:1 },
+    { type:"mc", q:"You discover an employee has been using their personal Gmail to send confidential client files for 6 months. What is your response?", options:["Immediately terminate the employee","Follow the incident response plan: contain, investigate, assess impact, notify stakeholders, remediate, document — do not act without process","Ignore it if no breach occurred","Simply block their Gmail access"], answer:1 },
+    { type:"short", q:"Explain what a SQL injection attack is and write an example of vulnerable code vs secure code to prevent it.", placeholder:"A SQL injection attack is...
+
+Vulnerable code:
+SELECT * FROM users WHERE...", minWords:30 },
+    { type:"mc", q:"What is the difference between symmetric and asymmetric encryption?", options:["Symmetric is stronger; asymmetric is weaker","Symmetric uses the same key for encryption and decryption; asymmetric uses a public/private key pair","Asymmetric is used for files; symmetric for emails","They are the same in modern systems"], answer:1 },
+    { type:"mc", q:"A company stores passwords as plain text in their database. A developer says hashing is unnecessary overhead. You should:", options:["Agree if performance is a concern","Never agree — passwords must be hashed with a strong algorithm like bcrypt. Plain text passwords are a critical security vulnerability","Suggest encrypting instead of hashing","Implement rate limiting instead"], answer:1 },
+    { type:"short", q:"What is the principle of least privilege? Give a real-world example of how you would apply it in a company with 50 employees.", placeholder:"The principle of least privilege means...", minWords:25 },
   ],
   "Bookkeeping": [
-    { q:"What is the accounting equation?", options:["Revenue − Expenses = Profit","Assets = Liabilities + Equity","Cash + Debt = Capital","Income − Tax = Net Pay"], answer:1 },
-    { q:"What is a balance sheet?", options:["A daily cash record","A statement of a company's assets, liabilities, and equity at a point in time","A list of all invoices","A payroll document"], answer:1 },
-    { q:"What does reconciliation mean in bookkeeping?", options:["Paying all outstanding invoices","Matching internal financial records with external statements like bank records","Creating new accounts","Filing tax returns"], answer:1 },
+    { type:"mc", q:"A company has total assets of $250,000, total liabilities of $180,000. What is the owner's equity?", options:["$430,000","$70,000","$180,000","$250,000"], answer:1 },
+    { type:"short", q:"A client gives you their bank statement and internal cash records — they don't match. Walk through your reconciliation process step by step.", placeholder:"To reconcile the accounts, I would first...", minWords:30 },
+    { type:"mc", q:"What is the difference between accounts payable and accounts receivable?", options:["They are the same","AP is money you owe to suppliers; AR is money owed to you by customers","AP is for payroll; AR is for taxes","AR is a liability; AP is an asset"], answer:1 },
+    { type:"mc", q:"A client asks you to record a $5,000 equipment purchase as an expense instead of an asset to reduce their tax. What do you do?", options:["Do it — the client is always right","Explain that this is misrepresentation and potentially fraud. Record it correctly as an asset","Ask your manager first","Do it but note it in your records"], answer:1 },
+    { type:"short", q:"Explain the difference between cash basis and accrual accounting. Which is better for a growing business and why?", placeholder:"Cash basis accounting records transactions when money...", minWords:25 },
   ],
   "E-Commerce": [
-    { q:"What is a conversion rate in e-commerce?", options:["The exchange rate for international sales","The percentage of visitors who complete a purchase","The speed of page loading","The number of products in stock"], answer:1 },
-    { q:"What is dropshipping?", options:["Deleting unsold products","Selling products you hold in a warehouse","Selling products you don't physically hold — the supplier ships directly to the customer","Shipping products in bulk"], answer:2 },
-    { q:"Which metric best shows if your ad spend is profitable?", options:["Click-through rate","Number of impressions","Return on Ad Spend (ROAS)","Email open rate"], answer:2 },
+    { type:"mc", q:"Your Shopify store has 10,000 monthly visitors, 2% conversion rate, and average order value of $45. You want to hit $20,000 monthly revenue. Which lever gives fastest ROI?", options:["Double traffic to 20,000 visitors","Increase average order value from $45 to $90 through upsells and bundles","Increase conversion rate from 2% to 4.5%","Run paid ads immediately"], answer:2 },
+    { type:"short", q:"A product has 4.2 stars with 200 reviews. The top complaint is 'slow shipping'. You cannot change the shipping carrier. How do you address this to protect conversion rates?", placeholder:"I would tackle this by...", minWords:30 },
+    { type:"mc", q:"What is the difference between CAC and LTV and why does their ratio matter?", options:["They are both revenue metrics","CAC is Customer Acquisition Cost; LTV is Lifetime Value. If LTV is not significantly higher than CAC, the business model is unsustainable","CAC measures satisfaction; LTV measures traffic","LTV should always be lower than CAC"], answer:1 },
+    { type:"mc", q:"Your abandoned cart email has a 12% recovery rate. Industry average is 5%. Your manager wants you to add more emails. What do you say?", options:["Add 5 more emails immediately","12% is already well above average — adding more emails risks unsubscribes. Test one additional email cautiously before expanding","Remove emails entirely","Change the discount amount"], answer:1 },
+    { type:"short", q:"Describe your complete process for launching a new product on an existing e-commerce store — from pre-launch to first 30 days.", placeholder:"Before launch, I would...", minWords:40 },
   ],
   "HR & Recruitment": [
-    { q:"What is an ATS?", options:["Advanced Training System","Applicant Tracking System","Automated Tax Software","Annual Team Survey"], answer:1 },
-    { q:"What is the purpose of an onboarding process?", options:["To test new employees immediately","To help new hires integrate, understand culture and get productive faster","To reduce the number of new hires","To replace training programs"], answer:1 },
-    { q:"What does 'Boolean search' mean in recruiting?", options:["Searching only on LinkedIn","Using operators like AND, OR, NOT to find specific candidate profiles","A background check process","A payroll calculation method"], answer:1 },
+    { type:"mc", q:"You are screening 200 CVs for a remote data analyst role. What is your most efficient and fair approach?", options:["Read every CV fully in order","Define must-have criteria first, then screen for those systematically — use an ATS to filter before human review","Pick the best-looking CVs first","Shortlist only candidates with 5+ years experience"], answer:1 },
+    { type:"short", q:"A hiring manager says they want to hire someone who 'fits our culture' but cannot define what that means. How do you handle this conversation?", placeholder:"I would ask the hiring manager to...", minWords:30 },
+    { type:"mc", q:"What is unconscious bias in hiring and give one specific intervention to reduce it?", options:["Bias that candidates bring to interviews","Bias that affects decisions without awareness — one intervention is blind CV screening where names and photos are removed","It does not affect structured interviews","Only affects final hiring decisions"], answer:1 },
+    { type:"mc", q:"A top candidate accepts your offer, then asks for 15% more salary 2 days before their start date. What do you do?", options:["Immediately rescind the offer","Accept without question","Have an honest conversation — understand why, check if budget allows, and decide based on the business case not emotion","Ignore the request"], answer:2 },
+    { type:"short", q:"Write 3 behavioural interview questions for a remote customer success manager role. Explain what you are trying to assess with each.", placeholder:"Q1: Tell me about a time you managed a difficult client remotely...
+Assessing:...", minWords:40 },
+  ],
+  "Online Tutoring": [
+    { type:"mc", q:"A student scores 40% on every test despite attending all sessions. What is the MOST likely root cause?", options:["The student is not trying","The teaching method is not matching the student's learning style — diagnosis before more content","The student needs more homework","The tests are too hard"], answer:1 },
+    { type:"short", q:"Design a 45-minute online lesson plan for teaching fractions to a 12-year-old who is struggling. Include tools, activities, and how you check understanding.", placeholder:"Lesson objective: Student can add simple fractions by the end.
+
+Minutes 0-10:...", minWords:50 },
+    { type:"mc", q:"A parent emails you upset that their child's grade dropped after starting your sessions. How do you respond?", options:["Defend yourself immediately","Apologise and agree their child is struggling","Acknowledge their concern, share your observations, request a 3-way meeting to align on approach and set clear goals","Ask the parent to wait another month"], answer:2 },
+    { type:"mc", q:"What is the difference between formative and summative assessment?", options:["They are the same","Formative is ongoing assessment during learning to guide instruction; summative is final assessment of learning","Formative is done by students; summative by teachers","Summative is informal; formative is formal"], answer:1 },
+    { type:"short", q:"A student says 'I hate maths, I'm just bad at it and always will be.' How do you respond in the moment and what is your long-term strategy?", placeholder:"In the moment, I would validate their feeling without agreeing with the belief...", minWords:30 },
   ],
 };
 
 // Default fallback quiz
 const DEFAULT_QUIZ = [
-  { q:"What does remote work primarily require?", options:["Office presence","Reliable internet and self-discipline","Physical proximity to employer","Daily commute"], answer:1 },
-  { q:"Which communication tool is most commonly used by remote teams?", options:["Fax","In-person meetings","Slack or Microsoft Teams","Printed memos"], answer:2 },
-  { q:"What is the most important quality for a remote worker?", options:["Working the fastest","Self-motivation and time management","Having the latest laptop","Working only in the morning"], answer:1 },
+  { type:"mc", q:"You are working remotely and realise you have missed a deadline you thought was tomorrow but was actually today. Your manager hasn't said anything yet. What do you do?", options:["Wait and hope they don't notice","Proactively reach out, apologise, explain what happened, and give a clear revised delivery time","Submit incomplete work immediately","Blame a miscommunication"], answer:1 },
+  { type:"short", q:"Describe your ideal remote work setup. What tools, routines, and habits make you productive and reliable when working independently?", placeholder:"My remote work setup includes...", minWords:25 },
+  { type:"mc", q:"A colleague in a different timezone sends you an urgent request at 11pm your time. You see it at 7am. How do you respond?", options:["Ignore it since it was sent after hours","Respond immediately explaining you just saw it, address the request, and suggest better async communication going forward","Apologise profusely for not being available","Send a very short reply only"], answer:1 },
+  { type:"mc", q:"What is the most important quality for succeeding in a fully remote role?", options:["Having the fastest internet","Being available 24/7","Proactive communication and self-accountability","Working from a home office"], answer:2 },
+  { type:"short", q:"You have 3 urgent tasks all due today. Walk through how you decide what to work on first.", placeholder:"I would start by...", minWords:20 },
 ];
 
 const AFRICAN_COUNTRIES = [
+  "Nigeria","Kenya","Ghana","South Africa","Ethiopia","Tanzania","Uganda","Rwanda",
+  "Senegal","Ivory Coast","Cameroon","Zimbabwe","Zambia","Mozambique","Botswana",
+  "Namibia","Sierra Leone","Liberia","Gambia","Togo","Benin","Mali","Burkina Faso",
+  "Niger","Chad","Sudan","Egypt","Morocco","Tunisia","Algeria","Libya","Somalia",
+  "Eritrea","Djibouti","Comoros","Madagascar","Mauritius","Seychelles","Angola",
+  "DR Congo","Congo","Gabon","Equatorial Guinea","Malawi","Lesotho","Swaziland",
+  "Other"
+].sort();
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let currentStep = 0;
+let profile = {
+  name:"", country:"", email:"",
+  education:"", field:"", institution:"",
+  experience:"", expYears:"",
+  skills:[], skill:"", selfLevel:0,
+  tools:[], english:0, availability:"", timezone:"",
+  motivation:"", goal:"",
+  quizAnswers:[], quizScore:0,
+ = [
   "Nigeria","Kenya","Ghana","South Africa","Ethiopia","Tanzania","Uganda","Rwanda",
   "Senegal","Ivory Coast","Cameroon","Zimbabwe","Zambia","Mozambique","Botswana",
   "Namibia","Sierra Leone","Liberia","Gambia","Togo","Benin","Mali","Burkina Faso",
@@ -610,16 +669,45 @@ function calcScore() {
   // English (max 15) — 1–5 scale → 3,6,9,12,15
   score += (profile.english || 0) * 3;
 
-  // Quiz (max 20) — each correct = ~6.67pts
-  const quizTotal = Object.keys(quizAnswers).length;
-  const correct = Object.entries(quizAnswers).filter(([qi, ans]) => {
-    const quiz = (QUIZ_BY_SKILL[profile.skill] || DEFAULT_QUIZ);
-    return quiz[parseInt(qi)] && quiz[parseInt(qi)].answer === ans;
-  }).length;
-  profile.quizScore = correct;
-  score += Math.round((correct / Math.max(quizTotal,1)) * 20);
+  // Quiz (max 20) — MC correct = full points, text answers = points for effort/length
+  const quiz = (QUIZ_BY_SKILL[profile.skill] || DEFAULT_QUIZ);
+  let quizPoints = 0;
+  quiz.forEach((q, i) => {
+    const ans = quizAnswers[i];
+    if (q.type === 'mc') {
+      if (ans === q.answer) quizPoints += 4;
+    } else {
+      // Text/code answer — award points based on length and effort
+      const wordCount = ans ? ans.trim().split(/\s+/).length : 0;
+      if (wordCount >= (q.minWords || 20)) quizPoints += 4;
+      else if (wordCount >= 5) quizPoints += 2;
+    }
+  });
+  profile.quizScore = Math.round((quizPoints / (quiz.length * 4)) * 5); // normalize to 0-5
+  score += Math.min(quizPoints, 20);
 
   return Math.min(Math.round(score), 100);
+}
+
+function validateAndShowScore() {
+  const quiz = QUIZ_BY_SKILL[profile.skill] || DEFAULT_QUIZ;
+  for (let i = 0; i < quiz.length; i++) {
+    const q = quiz[i];
+    if (q.type === 'mc') {
+      if (quizAnswers[i] === undefined) {
+        showStepError(`Please answer Question ${i+1} before submitting.`);
+        return;
+      }
+    } else {
+      const ans = quizAnswers[i];
+      const wordCount = ans ? ans.trim().split(/\s+/).length : 0;
+      if (wordCount < 3) {
+        showStepError(`Question ${i+1} requires a written answer — please write at least a few sentences.`);
+        return;
+      }
+    }
+  }
+  showScore();
 }
 
 function getImproveItems(score) {
@@ -939,20 +1027,30 @@ const steps = [
     const quiz = QUIZ_BY_SKILL[profile.skill] || DEFAULT_QUIZ;
     return `
     <div class="step-num">Step 10 of 10 · Knowledge Check</div>
-    <h1 class="step-title">3 quick questions on <span>${profile.skill||"your skill"}</span></h1>
-    <p class="step-sub">This feeds directly into your VELA Readiness Score. Answer honestly — getting these right confirms you're ready for employers.</p>
+    <h1 class="step-title">Prove your <span>${profile.skill||"your skill"}</span> knowledge</h1>
+    <p class="step-sub">This is a rigorous assessment — not a formality. Answer every question fully. Your responses feed directly into your VELA Readiness Score and are reviewed by employers.</p>
     ${quiz.map((q,i)=>`
       <div class="quiz-question">
         <div class="q-text"><span class="q-num">Q${i+1}.</span>${q.q}</div>
+        ${q.type === 'mc' ? `
         <div class="q-options">
           ${q.options.map((opt,ai)=>`
             <div class="q-option ${quizAnswers[i]===ai?"selected":""}" onclick="answerQuiz(${i},${ai},this)">${opt}</div>
           `).join("")}
-        </div>
+        </div>` : `
+        <textarea
+          id="quiz-text-${i}"
+          class="textarea"
+          style="min-height:120px;font-family:'DM Sans',sans-serif;font-size:0.9rem;"
+          placeholder="${q.placeholder||"Write your answer here..."}"
+          oninput="quizAnswers[${i}]=this.value"
+        >${quizAnswers[i]||""}</textarea>
+        <div style="font-size:0.75rem;color:var(--muted);margin-top:0.4rem;">${q.type==='code'?'💻 Write your code or query below':'✍️ Write a detailed answer — vague responses score lower'}</div>
+        `}
       </div>`).join("")}
     <div class="btn-row">
       <button class="btn-back" onclick="back()">← Back</button>
-      <button class="btn-next" onclick="showScore()">Calculate My Score →</button>
+      <button class="btn-next" onclick="validateAndShowScore()">Calculate My Score →</button>
     </div>`; },
 ];
 
