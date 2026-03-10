@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VELA — Sign In</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #07090F; --bg2: #0C1018; --surface: #111827;
+      --card: #0E1521; --border: rgba(255,255,255,0.07);
+      --accent: #00E5A0; --blue: #0096FF;
+      --text: #EEF2FF; --muted: #64748B;
+    }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.5rem; }
+    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.8rem; background: linear-gradient(135deg, var(--accent), var(--blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.5rem; text-align: center; }
+    .tagline { font-size: 0.85rem; color: var(--muted); margin-bottom: 2.5rem; text-align: center; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; width: 100%; max-width: 420px; }
+    .tabs { display: flex; gap: 0; margin-bottom: 1.75rem; background: var(--surface); border-radius: 10px; padding: 4px; }
+    .tab { flex: 1; padding: 0.6rem; border: none; border-radius: 8px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; background: transparent; color: var(--muted); }
+    .tab.active { background: var(--accent); color: #07090F; }
+    .form-group { margin-bottom: 1.1rem; }
+    .form-label { display: block; font-size: 0.75rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4rem; }
+    .form-input { width: 100%; background: var(--surface); border: 1.5px solid var(--border); color: var(--text); padding: 0.75rem 1rem; border-radius: 10px; font-size: 0.9rem; font-family: 'DM Sans', sans-serif; outline: none; transition: border-color 0.2s; }
+    .form-input:focus { border-color: rgba(0,229,160,0.4); }
+    .btn-submit { width: 100%; background: var(--accent); color: #07090F; border: none; padding: 0.85rem; border-radius: 10px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; cursor: pointer; margin-top: 0.5rem; transition: opacity 0.2s; }
+    .btn-submit:hover { opacity: 0.88; }
+    .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+    .msg { text-align: center; font-size: 0.82rem; margin-top: 1rem; min-height: 1.2rem; }
+    .msg.error { color: #FF6B6B; }
+    .msg.success { color: var(--accent); }
+    .divider { height: 1px; background: var(--border); margin: 1.25rem 0; }
+    .back-link { text-align: center; margin-top: 1.5rem; font-size: 0.82rem; color: var(--muted); }
+    .back-link a { color: var(--accent); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<div class="logo">VELA</div>
+<div class="tagline">African Talent. Verified. Placed.</div>
+
+<div class="card">
+  <div class="tabs">
+    <button class="tab active" id="tab-login" onclick="switchTab('login')">Sign In</button>
+    <button class="tab" id="tab-register" onclick="switchTab('register')">Create Account</button>
+  </div>
+
+  <!-- LOGIN FORM -->
+  <div id="form-login">
+    <div class="form-group">
+      <label class="form-label">Email Address</label>
+      <input type="email" class="form-input" id="login-email" placeholder="your@email.com"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input type="password" class="form-input" id="login-password" placeholder="Your password"/>
+    </div>
+    <button class="btn-submit" id="btn-login" onclick="handleLogin()">Sign In →</button>
+    <div class="msg" id="login-msg"></div>
+    <div class="divider"></div>
+    <div style="text-align:center;font-size:0.8rem;color:var(--muted)">
+      <a href="#" onclick="showForgot()" style="color:var(--accent);text-decoration:none;">Forgot your password?</a>
+    </div>
+  </div>
+
+  <!-- REGISTER FORM -->
+  <div id="form-register" style="display:none">
+    <div class="form-group">
+      <label class="form-label">Full Name</label>
+      <input type="text" class="form-input" id="reg-name" placeholder="Your full name"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Email Address</label>
+      <input type="email" class="form-input" id="reg-email" placeholder="your@email.com"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input type="password" class="form-input" id="reg-password" placeholder="At least 6 characters"/>
+    </div>
+    <button class="btn-submit" id="btn-register" onclick="handleRegister()">Create Account →</button>
+    <div class="msg" id="register-msg"></div>
+  </div>
+
+  <!-- FORGOT PASSWORD FORM -->
+  <div id="form-forgot" style="display:none">
+    <div style="font-size:0.9rem;color:var(--muted);margin-bottom:1.25rem;line-height:1.6;">Enter your email and we'll send you a link to reset your password.</div>
+    <div class="form-group">
+      <label class="form-label">Email Address</label>
+      <input type="email" class="form-input" id="forgot-email" placeholder="your@email.com"/>
+    </div>
+    <button class="btn-submit" onclick="handleForgot()">Send Reset Link →</button>
+    <div class="msg" id="forgot-msg"></div>
+    <div class="divider"></div>
+    <div style="text-align:center;font-size:0.8rem;">
+      <a href="#" onclick="switchTab('login')" style="color:var(--accent);text-decoration:none;">← Back to Sign In</a>
+    </div>
+  </div>
+</div>
+
+<div class="back-link">
+  <a href="index.html">← Back to VELA</a>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://xlpghpsowygekrwylhjf.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhscGdocHNvd3lnZWtyd3lsaGpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNTE5NjEsImV4cCI6MjA4ODcyNzk2MX0.10e6szZ_7oFdwRYrjuT-c6DXWTsapZ82f4BDWoTADlk';
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// Check if already logged in
+supabase.auth.getSession().then(({ data: { session } }) => {
+  if (session) window.location.href = 'profile.html';
+});
+
+function switchTab(tab) {
+  document.getElementById('form-login').style.display = tab === 'login' ? 'block' : 'none';
+  document.getElementById('form-register').style.display = tab === 'register' ? 'block' : 'none';
+  document.getElementById('form-forgot').style.display = 'none';
+  document.getElementById('tab-login').classList.toggle('active', tab === 'login');
+  document.getElementById('tab-register').classList.toggle('active', tab === 'register');
+}
+
+function showForgot() {
+  document.getElementById('form-login').style.display = 'none';
+  document.getElementById('form-forgot').style.display = 'block';
+}
+
+async function handleLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
+  const msg = document.getElementById('login-msg');
+  const btn = document.getElementById('btn-login');
+
+  if (!email || !password) { msg.className = 'msg error'; msg.textContent = 'Please fill in all fields.'; return; }
+
+  btn.disabled = true; btn.textContent = 'Signing in...';
+  const { error } = await supabase.auth.signInWithPassword({ email, password });
+
+  if (error) {
+    msg.className = 'msg error';
+    msg.textContent = error.message === 'Invalid login credentials' ? 'Wrong email or password. Try again.' : error.message;
+    btn.disabled = false; btn.textContent = 'Sign In →';
+  } else {
+    msg.className = 'msg success';
+    msg.textContent = '✓ Signed in! Redirecting...';
+    setTimeout(() => window.location.href = 'profile.html', 1000);
+  }
+}
+
+async function handleRegister() {
+  const name = document.getElementById('reg-name').value.trim();
+  const email = document.getElementById('reg-email').value.trim();
+  const password = document.getElementById('reg-password').value;
+  const msg = document.getElementById('register-msg');
+  const btn = document.getElementById('btn-register');
+
+  if (!name || !email || !password) { msg.className = 'msg error'; msg.textContent = 'Please fill in all fields.'; return; }
+  if (password.length < 6) { msg.className = 'msg error'; msg.textContent = 'Password must be at least 6 characters.'; return; }
+
+  btn.disabled = true; btn.textContent = 'Creating account...';
+  const { data, error } = await supabase.auth.signUp({
+    email, password,
+    options: { data: { full_name: name } }
+  });
+
+  if (error) {
+    msg.className = 'msg error'; msg.textContent = error.message;
+    btn.disabled = false; btn.textContent = 'Create Account →';
+  } else {
+    msg.className = 'msg success';
+    msg.textContent = '✓ Account created! Redirecting to your profile...';
+    setTimeout(() => window.location.href = 'profile.html', 1500);
+  }
+}
+
+async function handleForgot() {
+  const email = document.getElementById('forgot-email').value.trim();
+  const msg = document.getElementById('forgot-msg');
+  if (!email) { msg.className = 'msg error'; msg.textContent = 'Please enter your email.'; return; }
+  const { error } = await supabase.auth.resetPasswordForEmail(email);
+  if (error) { msg.className = 'msg error'; msg.textContent = error.message; }
+  else { msg.className = 'msg success'; msg.textContent = '✓ Reset link sent! Check your inbox.'; }
+}
+
+// Allow Enter key to submit
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    if (document.getElementById('form-login').style.display !== 'none') handleLogin();
+    else if (document.getElementById('form-register').style.display !== 'none') handleRegister();
+  }
+});
+</script>
+</body>
+</html>
