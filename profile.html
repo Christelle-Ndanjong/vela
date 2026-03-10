@@ -676,7 +676,25 @@ function choose(key, val, el, group) {
   el.classList.add("selected");
 }
 
+function toggleNone(el) {
+  // If "None yet" selected, clear all other tools
+  if (profile.tools.includes("none")) {
+    profile.tools = [];
+    el.classList.remove("selected");
+  } else {
+    profile.tools = ["none"];
+    // Deselect all other chips
+    document.querySelectorAll(".tool-chip.selected").forEach(c => c.classList.remove("selected"));
+    el.classList.add("selected");
+  }
+}
+
 function toggleTool(tool, el) {
+  // Remove "none" if they start picking real tools
+  profile.tools = profile.tools.filter(t => t !== "none");
+  document.querySelectorAll(".tool-chip").forEach(c => {
+    if (c.textContent.includes("None yet")) c.classList.remove("selected");
+  });
   if (profile.tools.includes(tool)) {
     profile.tools = profile.tools.filter(t => t !== tool);
     el.classList.remove("selected");
@@ -845,6 +863,7 @@ const steps = [
     <div class="tools-grid">
       ${(TOOLS_BY_SKILL[profile.skill] || Object.values(TOOLS_BY_SKILL)[0]).map(t=>`
         <div class="tool-chip ${profile.tools.includes(t)?"selected":""}" onclick="toggleTool('${t}',this)">${t}</div>`).join("")}
+      <div class="tool-chip ${profile.tools.includes("none")?"selected":""}" onclick="toggleNone(this)" style="border-color:rgba(100,116,139,0.4);color:var(--muted)">🚫 None yet</div>
     </div>
     <div class="btn-row" style="margin-top:1.5rem">
       <button class="btn-back" onclick="back()">← Back</button>
@@ -970,7 +989,7 @@ function saveStep5() {
   next();
 }
 function saveStep6() {
-  if (profile.tools.length === 0) { showStepError("Please select at least one tool you know"); return; }
+  if (profile.tools.length === 0) { showStepError("Please select the tools you know, or choose 'None yet'"); return; }
   next();
 }
 function saveStep7() {
