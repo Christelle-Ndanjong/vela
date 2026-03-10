@@ -302,6 +302,7 @@
   <div style="display:flex;gap:0.5rem;align-items:center;">
     <button onclick="saveProgress()" id="save-btn" style="background:transparent;border:1px solid rgba(0,229,160,0.25);color:var(--accent);padding:0.4rem 0.9rem;border-radius:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">💾 Save</button>
     <button onclick="loadProgress()" id="load-btn" style="display:none;background:rgba(0,229,160,0.08);border:1px solid rgba(0,229,160,0.3);color:var(--accent);padding:0.4rem 0.9rem;border-radius:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">↩ Resume</button>
+    <button onclick="signOut()" style="background:transparent;border:1px solid rgba(255,100,100,0.25);color:#FF6B6B;padding:0.4rem 0.9rem;border-radius:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">Sign Out</button>
   </div>
 </nav>
 
@@ -542,6 +543,11 @@ async function saveToSupabase(extraData = {}) {
       ...extraData
     });
   } catch(e) { console.log('Save error:', e); }
+}
+
+async function signOut() {
+  await _supabase.auth.signOut();
+  window.location.href = 'login.html';
 }
 
 // ─── SAVE & RESUME ───────────────────────────────────────────────────────────
@@ -842,7 +848,7 @@ const steps = [
     </div>
     <div class="btn-row" style="margin-top:1.5rem">
       <button class="btn-back" onclick="back()">← Back</button>
-      <button class="btn-next" onclick="next()">Continue →</button>
+      <button class="btn-next" onclick="saveStep6()">Continue →</button>
     </div>`,
 
   // STEP 7 — English
@@ -945,38 +951,57 @@ function saveStep1() {
   next();
 }
 function saveStep2() {
-  if (!profile.education) { alert("Please select your education level"); return; }
-  profile.field = document.getElementById("f-field").value;
+  if (!profile.education) { showStepError("Please select your education level"); return; }
+  const field = document.getElementById("f-field") ? document.getElementById("f-field").value : "";
+  if (!field) { showStepError("Please enter your field of study"); return; }
+  profile.field = field;
   next();
 }
 function saveStep3() {
-  if (!profile.experience) { alert("Please select your experience level"); return; }
-  profile.expYears = document.getElementById("f-exp").value;
+  if (!profile.experience) { showStepError("Please select your experience level"); return; }
   next();
 }
 function saveStep4() {
-  if (profile.skills.length === 0) { alert("Please choose at least one skill path"); return; }
+  if (profile.skills.length === 0) { showStepError("Please choose at least one skill path"); return; }
   next();
 }
 function saveStep5() {
-  if (!profile.selfLevel) { alert("Please rate your current level"); return; }
+  if (!profile.selfLevel) { showStepError("Please rate your current level"); return; }
+  next();
+}
+function saveStep6() {
+  if (profile.tools.length === 0) { showStepError("Please select at least one tool you know"); return; }
   next();
 }
 function saveStep7() {
-  if (!profile.english) { alert("Please select your English level"); return; }
+  if (!profile.english) { showStepError("Please select your English level"); return; }
   next();
 }
 function saveStep8() {
   profile.availability = document.getElementById("f-avail").value;
   profile.timezone = document.getElementById("f-tz").value;
-  if (!profile.availability || !profile.timezone) { alert("Please select your availability and timezone"); return; }
+  if (!profile.availability) { showStepError("Please select your availability"); return; }
+  if (!profile.timezone) { showStepError("Please select your timezone"); return; }
   next();
 }
 function saveStep9() {
   profile.motivation = document.getElementById("f-motivation").value.trim();
   profile.goal = document.getElementById("f-goal").value.trim();
-  if (!profile.motivation) { alert("Please tell us why you want remote work"); return; }
+  if (!profile.motivation) { showStepError("Please tell us why you want remote work"); return; }
+  if (!profile.goal) { showStepError("Please tell us your 6-month goal"); return; }
   next();
+}
+
+function showStepError(msg) {
+  // Remove existing error if any
+  const existing = document.getElementById("inline-step-err");
+  if (existing) existing.remove();
+  const err = document.createElement("div");
+  err.id = "inline-step-err";
+  err.style.cssText = "color:#FF6B6B;font-size:0.82rem;font-weight:600;margin:-0.5rem 0 1rem;padding:0.6rem 1rem;background:rgba(255,107,107,0.08);border:1px solid rgba(255,107,107,0.2);border-radius:8px;";
+  err.textContent = "⚠ " + msg;
+  const btnRow = document.querySelector(".btn-row");
+  if (btnRow) btnRow.insertAdjacentElement("beforebegin", err);
 }
 
 // ─── SCORE SCREEN ─────────────────────────────────────────────────────────────
