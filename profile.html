@@ -461,6 +461,24 @@ let profile = {
 };
 let quizAnswers = {};
 
+// Restore session if user navigated away and came back
+try {
+  if (sessionStorage.getItem('vela_results_shown') === '1') {
+    const savedProfile = sessionStorage.getItem('vela_profile');
+    const savedScore = sessionStorage.getItem('vela_score');
+    if (savedProfile && savedScore) {
+      profile = JSON.parse(savedProfile);
+      // Jump straight to results after page loads
+      window.addEventListener('DOMContentLoaded', function() {
+        setTimeout(() => {
+          currentStep = 999; // skip to end
+          computeAndShow();
+        }, 100);
+      });
+    }
+  }
+} catch(e) {}
+
 const STEP_LABELS = [
   "Welcome","Education","Experience",
   "Your Skill","Current Level","Tools",
@@ -939,6 +957,14 @@ function showScore() {
         }
       </div>
     </div>`;
+
+  // Save profile results to sessionStorage so user can return
+  try {
+    sessionStorage.setItem('vela_profile', JSON.stringify(profile));
+    sessionStorage.setItem('vela_score', score);
+    sessionStorage.setItem('vela_passed', passed);
+    sessionStorage.setItem('vela_results_shown', '1');
+  } catch(e) {}
 
   // Animate ring and counter
   setTimeout(() => {
