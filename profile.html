@@ -986,6 +986,8 @@ function saveStep4() {
 }
 function saveStep5() {
   if (!profile.selfLevel) { showStepError("Please rate your current level"); return; }
+  // If never done it, auto-set tools to none
+  if (profile.selfLevel === 1) { profile.tools = ["none"]; }
   next();
 }
 function saveStep6() {
