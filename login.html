@@ -180,7 +180,13 @@ async function handleRegister() {
   });
 
   if (error) {
-    msg.className = 'msg error'; msg.textContent = error.message;
+    msg.className = 'msg error';
+    if (error.message.toLowerCase().includes('already registered') || error.message.toLowerCase().includes('already exists') || error.message.toLowerCase().includes('email address is already')) {
+      msg.textContent = '⚠ An account with this email already exists. Please sign in instead.';
+      setTimeout(() => switchTab('login'), 2500);
+    } else {
+      msg.textContent = error.message;
+    }
     btn.disabled = false; btn.textContent = 'Create Account →';
   } else {
     msg.className = 'msg success';
@@ -193,7 +199,9 @@ async function handleForgot() {
   const email = document.getElementById('forgot-email').value.trim();
   const msg = document.getElementById('forgot-msg');
   if (!email) { msg.className = 'msg error'; msg.textContent = 'Please enter your email.'; return; }
-  const { error } = await _supabase.auth.resetPasswordForEmail(email);
+  const { error } = await _supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: 'https://christelle-ndanjong.github.io/vela/reset-password.html'
+  });
   if (error) { msg.className = 'msg error'; msg.textContent = error.message; }
   else { msg.className = 'msg success'; msg.textContent = '✓ Reset link sent! Check your inbox.'; }
 }
