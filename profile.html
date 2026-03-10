@@ -534,49 +534,67 @@ let currentUser = null;
 
 // Check auth on load — redirect to login if not signed in
 window.addEventListener('DOMContentLoaded', async function() {
-  const { data: { session } } = await _supabase.auth.getSession();
-  if (!session) {
-    window.location.href = 'login.html';
-    return;
-  }
-  currentUser = session.user;
+  // Show loading indicator
+  document.getElementById('step-container').innerHTML = '<div style="text-align:center;padding:3rem;color:var(--muted)">Loading your profile...</div>';
 
-  // Load saved profile from Supabase if exists
-  const { data: savedProfile } = await _supabase
-    .from('profiles')
-    .select('*')
-    .eq('id', currentUser.id)
-    .single();
-
-  if (savedProfile && savedProfile.name) {
-    // Restore profile data
-    profile.name = savedProfile.name || '';
-    profile.country = savedProfile.country || '';
-    profile.education = savedProfile.education || '';
-    profile.experience = savedProfile.experience || '';
-    profile.skills = savedProfile.skills || [];
-    profile.skill = savedProfile.skill || '';
-    profile.selfLevel = savedProfile.self_level || 0;
-    profile.tools = savedProfile.tools || [];
-    profile.english = savedProfile.english || 0;
-    profile.availability = savedProfile.availability || '';
-    profile.motivation = savedProfile.motivation || '';
-    profile.goal = savedProfile.goal || '';
-    profile.quizScore = savedProfile.quiz_score || 0;
-
-    // If already completed, show results
-    if (savedProfile.completed && savedProfile.total_score) {
-      profile.quizScore = savedProfile.quiz_score || 0;
-      computeAndShow();
+  try {
+    // Add timeout — if Supabase takes too long, redirect to login
+    const sessionPromise = _supabase.auth.getSession();
+    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 8000));
+    
+    const { data: { session } } = await Promise.race([sessionPromise, timeoutPromise]);
+    
+    if (!session) {
+      window.location.href = 'login.html';
       return;
     }
-  } else if (currentUser.user_metadata?.full_name) {
-    profile.name = currentUser.user_metadata.full_name;
-  }
-  // Always auto-fill email from logged in account
-  if (!profile.email) profile.email = currentUser.email || '';
+    currentUser = session.user;
 
-  renderStep();
+    // Load saved profile from Supabase if exists
+    try {
+      const { data: savedProfile } = await _supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', currentUser.id)
+        .single();
+
+      if (savedProfile && savedProfile.name) {
+        profile.name = savedProfile.name || '';
+        profile.country = savedProfile.country || '';
+        profile.education = savedProfile.education || '';
+        profile.experience = savedProfile.experience || '';
+        profile.skills = savedProfile.skills || [];
+        profile.skill = savedProfile.skill || '';
+        profile.selfLevel = savedProfile.self_level || 0;
+        profile.tools = savedProfile.tools || [];
+        profile.english = savedProfile.english || 0;
+        profile.availability = savedProfile.availability || '';
+        profile.motivation = savedProfile.motivation || '';
+        profile.goal = savedProfile.goal || '';
+        profile.quizScore = savedProfile.quiz_score || 0;
+
+        if (savedProfile.completed && savedProfile.total_score) {
+          profile.quizScore = savedProfile.quiz_score || 0;
+          computeAndShow();
+          return;
+        }
+      } else if (currentUser.user_metadata?.full_name) {
+        profile.name = currentUser.user_metadata.full_name;
+      }
+    } catch(dbErr) {
+      // DB fetch failed — still render with what we have
+      if (currentUser.user_metadata?.full_name) {
+        profile.name = currentUser.user_metadata.full_name;
+      }
+    }
+
+    if (!profile.email) profile.email = currentUser.email || '';
+    renderStep();
+
+  } catch(err) {
+    // Session check failed or timed out — redirect to login
+    window.location.href = 'login.html';
+  }
 });
 
 async function saveToSupabase(extraData = {}) {
