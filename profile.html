@@ -465,12 +465,89 @@ let profile = {
 };
 let quizAnswers = {};
 
+// ─── SUPABASE ────────────────────────────────────────────────────────────────
+const SUPABASE_URL = 'https://xlpghpsowygekrwylhjf.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhscGdocHNvd3lnZWtyd3lsaGpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNTE5NjEsImV4cCI6MjA4ODcyNzk2MX0.10e6szZ_7oFdwRYrjuT-c6DXWTsapZ82f4BDWoTADlk';
+const _supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+let currentUser = null;
+
+// Check auth on load — redirect to login if not signed in
+window.addEventListener('DOMContentLoaded', async function() {
+  const { data: { session } } = await _supabase.auth.getSession();
+  if (!session) {
+    window.location.href = 'login.html';
+    return;
+  }
+  currentUser = session.user;
+
+  // Load saved profile from Supabase if exists
+  const { data: savedProfile } = await _supabase
+    .from('profiles')
+    .select('*')
+    .eq('id', currentUser.id)
+    .single();
+
+  if (savedProfile && savedProfile.name) {
+    // Restore profile data
+    profile.name = savedProfile.name || '';
+    profile.country = savedProfile.country || '';
+    profile.education = savedProfile.education || '';
+    profile.experience = savedProfile.experience || '';
+    profile.skills = savedProfile.skills || [];
+    profile.skill = savedProfile.skill || '';
+    profile.selfLevel = savedProfile.self_level || 0;
+    profile.tools = savedProfile.tools || [];
+    profile.english = savedProfile.english || 0;
+    profile.availability = savedProfile.availability || '';
+    profile.motivation = savedProfile.motivation || '';
+    profile.goal = savedProfile.goal || '';
+    profile.quizScore = savedProfile.quiz_score || 0;
+
+    // If already completed, show results
+    if (savedProfile.completed && savedProfile.total_score) {
+      profile.quizScore = savedProfile.quiz_score || 0;
+      computeAndShow();
+      return;
+    }
+  } else if (currentUser.user_metadata?.full_name) {
+    profile.name = currentUser.user_metadata.full_name;
+  }
+
+  renderStep();
+});
+
+async function saveToSupabase(extraData = {}) {
+  if (!currentUser) return;
+  try {
+    await _supabase.from('profiles').upsert({
+      id: currentUser.id,
+      email: currentUser.email,
+      name: profile.name,
+      country: profile.country,
+      education: profile.education,
+      experience: profile.experience,
+      skills: profile.skills,
+      skill: profile.skill,
+      self_level: profile.selfLevel,
+      tools: profile.tools,
+      english: profile.english,
+      availability: profile.availability,
+      motivation: profile.motivation,
+      goal: profile.goal,
+      quiz_score: profile.quizScore,
+      updated_at: new Date().toISOString(),
+      ...extraData
+    });
+  } catch(e) { console.log('Save error:', e); }
+}
+
 // ─── SAVE & RESUME ───────────────────────────────────────────────────────────
 function saveProgress() {
   try {
     localStorage.setItem('vela_saved_profile', JSON.stringify(profile));
     localStorage.setItem('vela_saved_step', currentStep);
     localStorage.setItem('vela_saved_quiz', JSON.stringify(quizAnswers));
+    saveToSupabase(); // also save to database
     const btn = document.getElementById('save-btn');
     btn.textContent = '✅ Saved!';
     btn.style.borderColor = 'rgba(0,229,160,0.6)';
@@ -493,15 +570,7 @@ function loadProgress() {
   } catch(e) {}
 }
 
-// Check if saved progress exists on load
-window.addEventListener('DOMContentLoaded', function() {
-  try {
-    if (localStorage.getItem('vela_saved_profile')) {
-      const loadBtn = document.getElementById('load-btn');
-      if (loadBtn) loadBtn.style.display = 'block';
-    }
-  } catch(e) {}
-});
+// Local save button visibility check (handled in auth check above)
 
 // Restore session if user navigated away and came back
 try {
@@ -1007,6 +1076,8 @@ function showScore() {
     sessionStorage.setItem('vela_passed', passed);
     sessionStorage.setItem('vela_results_shown', '1');
   } catch(e) {}
+  // Save completed results to Supabase
+  saveToSupabase({ total_score: score, passed: passed, completed: true });
 
   // Animate ring and counter
   setTimeout(() => {
