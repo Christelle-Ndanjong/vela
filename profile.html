@@ -319,6 +319,7 @@
   <div class="step-container" id="step-container"></div>
 </main>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 // ─── DATA ────────────────────────────────────────────────────────────────────
 const SKILLS_15 = [
@@ -468,7 +469,7 @@ let quizAnswers = {};
 // ─── SUPABASE ────────────────────────────────────────────────────────────────
 const SUPABASE_URL = 'https://xlpghpsowygekrwylhjf.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhscGdocHNvd3lnZWtyd3lsaGpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNTE5NjEsImV4cCI6MjA4ODcyNzk2MX0.10e6szZ_7oFdwRYrjuT-c6DXWTsapZ82f4BDWoTADlk';
-const _supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 let currentUser = null;
 
 // Check auth on load — redirect to login if not signed in
@@ -572,23 +573,7 @@ function loadProgress() {
 
 // Local save button visibility check (handled in auth check above)
 
-// Restore session if user navigated away and came back
-try {
-  if (sessionStorage.getItem('vela_results_shown') === '1') {
-    const savedProfile = sessionStorage.getItem('vela_profile');
-    const savedScore = sessionStorage.getItem('vela_score');
-    if (savedProfile && savedScore) {
-      profile = JSON.parse(savedProfile);
-      // Jump straight to results after page loads
-      window.addEventListener('DOMContentLoaded', function() {
-        setTimeout(() => {
-          currentStep = 999; // skip to end
-          computeAndShow();
-        }, 100);
-      });
-    }
-  }
-} catch(e) {}
+// Session restore handled by Supabase auth check above
 
 const STEP_LABELS = [
   "Welcome","Education","Experience",
@@ -1101,8 +1086,7 @@ function retryQuiz() {
   renderStep();
 }
 
-// ─── INIT ─────────────────────────────────────────────────────────────────────
-renderStep();
+// ─── INIT — handled by DOMContentLoaded auth check above ─────────────────────
 </script>
 </body>
 </html>
