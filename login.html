@@ -55,7 +55,10 @@
     </div>
     <div class="form-group">
       <label class="form-label">Password</label>
-      <input type="password" class="form-input" id="login-password" placeholder="Your password"/>
+      <div style="position:relative">
+        <input type="password" class="form-input" id="login-password" placeholder="Your password" style="padding-right:2.8rem"/>
+        <span onclick="togglePwd('login-password',this)" style="position:absolute;right:0.9rem;top:50%;transform:translateY(-50%);cursor:pointer;color:var(--muted);font-size:0.85rem;user-select:none;">👁</span>
+      </div>
     </div>
     <button class="btn-submit" id="btn-login" onclick="handleLogin()">Sign In →</button>
     <div class="msg" id="login-msg"></div>
@@ -77,7 +80,10 @@
     </div>
     <div class="form-group">
       <label class="form-label">Password</label>
-      <input type="password" class="form-input" id="reg-password" placeholder="At least 6 characters"/>
+      <div style="position:relative">
+        <input type="password" class="form-input" id="reg-password" placeholder="At least 6 characters" style="padding-right:2.8rem"/>
+        <span onclick="togglePwd('reg-password',this)" style="position:absolute;right:0.9rem;top:50%;transform:translateY(-50%);cursor:pointer;color:var(--muted);font-size:0.85rem;user-select:none;">👁</span>
+      </div>
     </div>
     <button class="btn-submit" id="btn-register" onclick="handleRegister()">Create Account →</button>
     <div class="msg" id="register-msg"></div>
@@ -181,6 +187,17 @@ async function handleForgot() {
   const { error } = await _supabase.auth.resetPasswordForEmail(email);
   if (error) { msg.className = 'msg error'; msg.textContent = error.message; }
   else { msg.className = 'msg success'; msg.textContent = '✓ Reset link sent! Check your inbox.'; }
+}
+
+function togglePwd(id, el) {
+  const input = document.getElementById(id);
+  if (input.type === 'password') {
+    input.type = 'text';
+    el.textContent = '🙈';
+  } else {
+    input.type = 'password';
+    el.textContent = '👁';
+  }
 }
 
 // Allow Enter key to submit
