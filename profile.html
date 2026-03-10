@@ -320,7 +320,18 @@
   <div class="step-container" id="step-container"></div>
 </main>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" onerror="supabaseLoadFailed()"></script>
+<script>
+function supabaseLoadFailed() {
+  // Supabase CDN failed — render the form anyway without auth
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('step-container').innerHTML = '';
+    window._supabaseAvailable = false;
+    renderStep();
+  });
+}
+window._supabaseAvailable = true;
+</script>
 <script>
 // ─── DATA ────────────────────────────────────────────────────────────────────
 const SKILLS_15 = [
@@ -534,6 +545,12 @@ let currentUser = null;
 
 // Check auth on load — redirect to login if not signed in
 window.addEventListener('DOMContentLoaded', async function() {
+  // If Supabase CDN failed, just render the form
+  if (!window._supabaseAvailable || typeof supabase === 'undefined') {
+    renderStep();
+    return;
+  }
+
   // Show loading indicator
   document.getElementById('step-container').innerHTML = '<div style="text-align:center;padding:3rem;color:var(--muted)">Loading your profile...</div>';
 
@@ -598,7 +615,7 @@ window.addEventListener('DOMContentLoaded', async function() {
 });
 
 async function saveToSupabase(extraData = {}) {
-  if (!currentUser) return;
+  if (!currentUser || !window._supabaseAvailable) return;
   try {
     await _supabase.from('profiles').upsert({
       id: currentUser.id,
