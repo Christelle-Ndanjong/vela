@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>VELA — Sign In</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -106,10 +106,10 @@
 <script>
 const SUPABASE_URL = 'https://xlpghpsowygekrwylhjf.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhscGdocHNvd3lnZWtyd3lsaGpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNTE5NjEsImV4cCI6MjA4ODcyNzk2MX0.10e6szZ_7oFdwRYrjuT-c6DXWTsapZ82f4BDWoTADlk';
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // Check if already logged in
-supabase.auth.getSession().then(({ data: { session } }) => {
+_supabase.auth.getSession().then(({ data: { session } }) => {
   if (session) window.location.href = 'profile.html';
 });
 
@@ -135,7 +135,7 @@ async function handleLogin() {
   if (!email || !password) { msg.className = 'msg error'; msg.textContent = 'Please fill in all fields.'; return; }
 
   btn.disabled = true; btn.textContent = 'Signing in...';
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  const { error } = await _supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
     msg.className = 'msg error';
@@ -159,7 +159,7 @@ async function handleRegister() {
   if (password.length < 6) { msg.className = 'msg error'; msg.textContent = 'Password must be at least 6 characters.'; return; }
 
   btn.disabled = true; btn.textContent = 'Creating account...';
-  const { data, error } = await supabase.auth.signUp({
+  const { data, error } = await _supabase.auth.signUp({
     email, password,
     options: { data: { full_name: name } }
   });
@@ -178,7 +178,7 @@ async function handleForgot() {
   const email = document.getElementById('forgot-email').value.trim();
   const msg = document.getElementById('forgot-msg');
   if (!email) { msg.className = 'msg error'; msg.textContent = 'Please enter your email.'; return; }
-  const { error } = await supabase.auth.resetPasswordForEmail(email);
+  const { error } = await _supabase.auth.resetPasswordForEmail(email);
   if (error) { msg.className = 'msg error'; msg.textContent = error.message; }
   else { msg.className = 'msg success'; msg.textContent = '✓ Reset link sent! Check your inbox.'; }
 }
