@@ -160,16 +160,6 @@
     .btn-employer { display: inline-block; background: var(--accent2); color: #fff; padding: 0.75rem 1.75rem; border-radius: 9px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.88rem; text-decoration: none; transition: opacity 0.2s; margin-top: 1.25rem; }
 
     /* ── WAITLIST ── */
-    .waitlist-section { background: var(--bg2); border-top: 1px solid var(--border); padding: 5rem 6%; text-align: center; }
-    .waitlist-section h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 800; color: var(--text); margin-bottom: 0.75rem; }
-    .waitlist-section p { color: var(--muted); font-size: 0.95rem; margin-bottom: 2rem; }
-    .waitlist-form { display: flex; gap: 0.75rem; justify-content: center; max-width: 480px; margin: 0 auto; }
-    .waitlist-input { flex: 1; background: var(--card); border: 1.5px solid var(--border); color: var(--text); padding: 0.85rem 1rem; border-radius: 10px; font-size: 0.9rem; font-family: 'DM Sans', sans-serif; outline: none; transition: border-color 0.2s; }
-    .waitlist-input:focus { border-color: rgba(0,229,160,0.4); }
-    .waitlist-input::placeholder { color: var(--muted); }
-    .waitlist-btn { background: var(--accent); color: #07090F; border: none; padding: 0.85rem 1.5rem; border-radius: 10px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.88rem; cursor: pointer; white-space: nowrap; transition: opacity 0.2s; }
-    .waitlist-btn:hover { opacity: 0.88; }
-    .waitlist-note { font-size: 0.75rem; color: var(--muted); margin-top: 0.75rem; }
 
     /* ── FOOTER ── */
     footer { padding: 2rem 6%; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); }
@@ -195,8 +185,6 @@
       .employer-cards { grid-template-columns: 1fr; }
       .tabs-nav { gap: 0.25rem; }
       .tab-btn { font-size: 0.78rem; padding: 0.6rem 0.75rem; }
-      .waitlist-form { flex-direction: column; }
-      .waitlist-input { width: 100%; }
       footer { flex-direction: column; gap: 1rem; text-align: center; }
       .skills-grid { grid-template-columns: repeat(2, 1fr); }
     }
@@ -223,11 +211,12 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-pill">Now in Beta · Join the Waitlist</div>
+  <div class="hero-pill">Now Live · Join the Community</div>
   <h1>African Talent.<br/><span class="green">Verified.</span> <span class="blue">Placed.</span></h1>
   <p class="hero-sub">VELA connects verified African professionals to remote jobs worldwide — with the skills, evidence, and credibility to get hired with confidence.</p>
   <div class="hero-btns">
     <a href="profile.html" class="btn-main">Build Your Profile →</a>
+    <a href="https://t.me/+5d8WDDcuocdkNjM0" target="_blank" class="btn-ghost">💬 Join Community →</a>
     <a href="employers.html" class="btn-ghost">For Employers →</a>
   </div>
   <div class="hero-stats">
@@ -407,38 +396,15 @@
   </div>
 </div>
 
-<!-- WAITLIST -->
-<div class="waitlist-section" id="waitlist">
-  <h2>Be first when VELA launches fully.</h2>
-  <p>Join the waitlist. We'll notify you when your skill path opens for verified placements.</p>
-  <div style="max-width:480px;margin:0 auto;">
-    <div style="display:flex;gap:0.75rem;flex-wrap:wrap;justify-content:center;">
-      <input type="email" id="wl-email" placeholder="Enter your email address"
-        style="flex:1;min-width:220px;background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.12);color:#EEF2FF;padding:0.85rem 1.1rem;border-radius:10px;font-size:0.88rem;font-family:'DM Sans',sans-serif;outline:none;"/>
-      <button onclick="goToBrevo()"
-        style="background:#00E5A0;color:#07090F;border:none;padding:0.85rem 1.5rem;border-radius:10px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;cursor:pointer;white-space:nowrap;">
-        Join Waitlist →
-      </button>
-    </div>
-    <div id="wl-msg" style="margin-top:0.75rem;font-size:0.82rem;text-align:center;color:var(--muted);min-height:1.2rem;"></div>
-  </div>
-  <p class="waitlist-note" style="margin-top:0.75rem;">Free forever for candidates. No spam.</p>
-  <script>
-  function goToBrevo() {
-    const email = document.getElementById('wl-email').value.trim();
-    const msg = document.getElementById('wl-msg');
-    if (!email || !email.includes('@')) {
-      msg.style.color = '#FF6B6B';
-      msg.textContent = 'Please enter a valid email address.';
-      return;
-    }
-    const url = 'https://1824084c.sibforms.com/serve/MUIFADyoOno2zbs3q7dYakumYUYnv9Pi-UbLCYQznPAaEdloD6sNFLNHzDrNAcCcSjvVd4TvElXTmW1R5DIFAbVhy4crNoIkzyl57Dyn04OaTeR4afAE25yiqz13sxNZZrSVYqdCylWJ0l6_VxHV-76meFaI7rIAq_6HwIQtxmb5QIUStkswBoINEruS49X6c4joiDj7OuzJH9IOOA==?EMAIL=' + encodeURIComponent(email);
-    window.open(url, '_blank');
-    msg.style.color = '#00E5A0';
-    msg.textContent = '✓ Complete your signup in the tab that just opened!';
-    document.getElementById('wl-email').value = '';
-  }
-  </script>
+<!-- COMMUNITY SECTION -->
+<div style="background:var(--bg2);border-top:1px solid var(--border);padding:5rem 6%;text-align:center;" id="community">
+  <p style="color:var(--accent);font-size:0.8rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.75rem;">VELA COMMUNITY</p>
+  <h2 style="font-family:'Syne',sans-serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;color:var(--text);margin-bottom:0.75rem;">You don't have to figure this out alone.</h2>
+  <p style="color:var(--muted);font-size:0.95rem;margin-bottom:2rem;max-width:480px;margin-left:auto;margin-right:auto;">Join African professionals who are already building their remote careers. Ask questions, share wins, get support — for free.</p>
+  <a href="https://t.me/+5d8WDDcuocdkNjM0" target="_blank" style="display:inline-flex;align-items:center;gap:0.75rem;background:#29B6F6;color:#07090F;padding:1rem 2.5rem;border-radius:12px;font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;text-decoration:none;transition:opacity 0.2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+    💬 Join the VELA Community on Telegram →
+  </a>
+  <p style="color:var(--muted);font-size:0.82rem;margin-top:1rem;">Free forever · No spam · Just real people building real careers</p>
 </div>
 
 <!-- FOOTER -->
