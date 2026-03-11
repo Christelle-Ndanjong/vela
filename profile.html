@@ -547,7 +547,26 @@ window.addEventListener('DOMContentLoaded', async function() {
     }
     currentUser = session.user;
 
-    // Load saved profile from Supabase if exists
+    // Try localStorage first — most reliable
+    const localSaved = localStorage.getItem('vela_saved_profile');
+    const localStep = localStorage.getItem('vela_saved_step');
+    const localQuiz = localStorage.getItem('vela_saved_quiz');
+    if (localSaved) {
+      try {
+        const localProfile = JSON.parse(localSaved);
+        // Only restore if it belongs to this user
+        if (localProfile.email === currentUser.email) {
+          profile = localProfile;
+          currentStep = parseInt(localStep) || 0;
+          if (localQuiz) quizAnswers = JSON.parse(localQuiz);
+          if (!profile.email) profile.email = currentUser.email || '';
+          renderStep();
+          return;
+        }
+      } catch(e) {}
+    }
+
+    // Fall back to Supabase DB restore
     try {
       const { data: savedProfile } = await _supabase
         .from('profiles')
@@ -631,10 +650,24 @@ async function signOut() {
 // ─── SAVE & RESUME ───────────────────────────────────────────────────────────
 function saveProgress() {
   try {
+    // Capture any currently visible typed fields before saving
+    const nameEl = document.getElementById('f-name');
+    const emailEl = document.getElementById('f-email');
+    const fieldEl = document.getElementById('f-field');
+    const expEl = document.getElementById('f-exp');
+    const motivationEl = document.getElementById('f-motivation');
+    const goalEl = document.getElementById('f-goal');
+    if (nameEl) profile.name = nameEl.value.trim();
+    if (emailEl) profile.email = emailEl.value.trim();
+    if (fieldEl) profile.field = fieldEl.value.trim();
+    if (expEl) profile.expYears = expEl.value.trim();
+    if (motivationEl) profile.motivation = motivationEl.value.trim();
+    if (goalEl) profile.goal = goalEl.value.trim();
+
     localStorage.setItem('vela_saved_profile', JSON.stringify(profile));
     localStorage.setItem('vela_saved_step', currentStep);
     localStorage.setItem('vela_saved_quiz', JSON.stringify(quizAnswers));
-    saveToSupabase(); // also save to database
+    saveToSupabase();
     const btn = document.getElementById('save-btn');
     btn.textContent = '✅ Saved!';
     btn.style.borderColor = 'rgba(0,229,160,0.6)';
