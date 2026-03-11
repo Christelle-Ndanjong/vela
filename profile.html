@@ -327,6 +327,7 @@ function supabaseLoadFailed() {
   document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('step-container').innerHTML = '';
     window._supabaseAvailable = false;
+    applyTheme();
     renderStep();
   });
 }
@@ -822,6 +823,52 @@ function toggleTool(tool, el) {
   }
 }
 
+function toggleTheme() {
+  const body = document.body;
+  const btn = document.getElementById('theme-btn');
+  body.classList.toggle('light-mode');
+  const isLight = body.classList.contains('light-mode');
+  btn.textContent = isLight ? '☀️' : '🌙';
+  localStorage.setItem('vela_theme', isLight ? 'light' : 'dark');
+}
+
+function applyTheme() {
+  const saved = localStorage.getItem('vela_theme');
+  if (saved === 'light') {
+    document.body.classList.add('light-mode');
+    const btn = document.getElementById('theme-btn');
+    if (btn) btn.textContent = '☀️';
+  }
+}
+
+function addCustomSkill() {
+  const input = document.getElementById('custom-skill-input');
+  const val = input.value.trim();
+  if (!val) return;
+  if (profile.skills.includes(val)) { input.value = ''; return; }
+  profile.skills.push(val);
+  if (!profile.skill) profile.skill = val;
+  input.value = '';
+  // Update badge and re-render custom display
+  const badge = document.getElementById('skill-count-badge');
+  if (badge) badge.textContent = profile.skills.length + ' selected';
+  const display = document.getElementById('custom-skills-display');
+  if (display) {
+    const span = document.createElement('span');
+    span.style.cssText = 'background:rgba(0,229,160,0.1);border:1px solid rgba(0,229,160,0.3);color:var(--accent);padding:0.35rem 0.85rem;border-radius:20px;font-size:0.82rem;font-weight:600';
+    span.innerHTML = `${val} <span onclick="removeCustomSkill('${val}')" style="cursor:pointer;margin-left:0.4rem;opacity:0.7">✕</span>`;
+    display.appendChild(span);
+  }
+}
+
+function removeCustomSkill(name) {
+  profile.skills = profile.skills.filter(s => s !== name);
+  if (profile.skill === name) profile.skill = profile.skills[0] || '';
+  const badge = document.getElementById('skill-count-badge');
+  if (badge) badge.textContent = profile.skills.length > 0 ? profile.skills.length + ' selected' : 'Select all that apply';
+  renderStep();
+}
+
 function selectSkill(name, el) {
   if (profile.skills.includes(name)) {
     profile.skills = profile.skills.filter(s => s !== name);
@@ -1058,6 +1105,12 @@ const steps = [
     return `
     <div class="step-num">Step 10 of 10 · Knowledge Check</div>
     <h1 class="step-title">Prove your <span>${profile.skill||"your skill"}</span> knowledge</h1>
+    ${profile.skills.length > 1 ? `<div style="margin-bottom:1.25rem">
+      <p style="color:var(--muted);font-size:0.85rem;margin-bottom:0.6rem">You selected multiple skills — choose which one to be assessed on:</p>
+      <div style="display:flex;flex-wrap:wrap;gap:0.5rem">
+        ${profile.skills.map(s=>`<div onclick="profile.skill='${s}';renderStep()" style="padding:0.45rem 1rem;border-radius:20px;border:1.5px solid ${profile.skill===s?'var(--accent)':'var(--border)'};background:${profile.skill===s?'rgba(0,229,160,0.1)':'transparent'};color:${profile.skill===s?'var(--accent)':'var(--muted)'};cursor:pointer;font-size:0.85rem;font-weight:600">${s}</div>`).join('')}
+      </div>
+    </div>` : ''}
     <p class="step-sub">This is a rigorous assessment — not a formality. Answer every question fully. Your responses feed directly into your VELA Readiness Score and are reviewed by employers.</p>
     ${quiz.map((q,i)=>`
       <div class="quiz-question">
