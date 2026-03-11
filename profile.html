@@ -531,86 +531,65 @@ window.addEventListener('DOMContentLoaded', async function() {
     return;
   }
 
-  // Show loading indicator
-  document.getElementById('step-container').innerHTML = '<div style="text-align:center;padding:3rem;color:var(--muted)">Loading your profile...</div>';
+  document.getElementById('step-container').innerHTML = '<div style="text-align:center;padding:3rem;color:var(--muted)">Loading...</div>';
 
   try {
-    // Add timeout — if Supabase takes too long, redirect to login
     const sessionPromise = _supabase.auth.getSession();
-    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 8000));
-    
-    const { data: { session } } = await Promise.race([sessionPromise, timeoutPromise]);
-    
-    if (!session) {
-      window.location.href = 'login.html';
-      return;
-    }
+    const timeout = new Promise((_, r) => setTimeout(() => r(new Error('timeout')), 8000));
+    const { data: { session } } = await Promise.race([sessionPromise, timeout]);
+
+    if (!session) { window.location.href = 'login.html'; return; }
     currentUser = session.user;
 
-    // Try localStorage first — most reliable
-    const localSaved = localStorage.getItem('vela_saved_profile');
-    const localStep = localStorage.getItem('vela_saved_step');
-    const localQuiz = localStorage.getItem('vela_saved_quiz');
-    if (localSaved) {
+    // Use email-keyed localStorage as primary store
+    const key = 'vela_' + currentUser.email;
+    const keyStep = 'vela_step_' + currentUser.email;
+    const keyQuiz = 'vela_quiz_' + currentUser.email;
+
+    const saved = localStorage.getItem(key);
+    if (saved) {
       try {
-        const localProfile = JSON.parse(localSaved);
-        // Only restore if it belongs to this user
-        if (localProfile.email === currentUser.email) {
-          profile = localProfile;
-          currentStep = parseInt(localStep) || 0;
-          if (localQuiz) quizAnswers = JSON.parse(localQuiz);
-          if (!profile.email) profile.email = currentUser.email || '';
-          renderStep();
-          return;
-        }
+        profile = JSON.parse(saved);
+        currentStep = parseInt(localStorage.getItem(keyStep)) || 0;
+        const sq = localStorage.getItem(keyQuiz);
+        if (sq) quizAnswers = JSON.parse(sq);
+        if (!profile.email) profile.email = currentUser.email;
+        // If completed, show results
+        if (profile._completed) { computeAndShow(); return; }
+        renderStep();
+        return;
       } catch(e) {}
     }
 
-    // Fall back to Supabase DB restore
+    // No local save — try Supabase DB
     try {
-      const { data: savedProfile } = await _supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', currentUser.id)
-        .single();
-
-      if (savedProfile && savedProfile.name) {
-        profile.name = savedProfile.name || '';
-        profile.country = savedProfile.country || '';
-        profile.education = savedProfile.education || '';
-        profile.field = savedProfile.field || '';
-        profile.experience = savedProfile.experience || '';
-        profile.expYears = savedProfile.exp_years || '';
-        profile.skills = savedProfile.skills || [];
-        profile.skill = savedProfile.skill || '';
-        profile.selfLevel = savedProfile.self_level || 0;
-        profile.tools = savedProfile.tools || [];
-        profile.english = savedProfile.english || 0;
-        profile.availability = savedProfile.availability || '';
-        profile.motivation = savedProfile.motivation || '';
-        profile.goal = savedProfile.goal || '';
-        profile.quizScore = savedProfile.quiz_score || 0;
-
-        if (savedProfile.completed && savedProfile.total_score) {
-          profile.quizScore = savedProfile.quiz_score || 0;
-          computeAndShow();
-          return;
-        }
-      } else if (currentUser.user_metadata?.full_name) {
-        profile.name = currentUser.user_metadata.full_name;
+      const { data: sp } = await _supabase.from('profiles').select('*').eq('id', currentUser.id).single();
+      if (sp && sp.name) {
+        profile.name = sp.name || '';
+        profile.country = sp.country || '';
+        profile.education = sp.education || '';
+        profile.field = sp.field || '';
+        profile.experience = sp.experience || '';
+        profile.expYears = sp.exp_years || '';
+        profile.skills = sp.skills || [];
+        profile.skill = sp.skill || '';
+        profile.selfLevel = sp.self_level || 0;
+        profile.tools = sp.tools || [];
+        profile.english = sp.english || 0;
+        profile.availability = sp.availability || '';
+        profile.motivation = sp.motivation || '';
+        profile.goal = sp.goal || '';
+        profile.quizScore = sp.quiz_score || 0;
+        if (sp.completed && sp.total_score) { computeAndShow(); return; }
       }
-    } catch(dbErr) {
-      // DB fetch failed — still render with what we have
-      if (currentUser.user_metadata?.full_name) {
-        profile.name = currentUser.user_metadata.full_name;
-      }
-    }
+    } catch(e) {}
 
+    // Fresh start
+    if (!profile.name && currentUser.user_metadata?.full_name) profile.name = currentUser.user_metadata.full_name;
     if (!profile.email) profile.email = currentUser.email || '';
     renderStep();
 
   } catch(err) {
-    // Session check failed or timed out — redirect to login
     window.location.href = 'login.html';
   }
 });
@@ -648,25 +627,24 @@ async function signOut() {
 }
 
 // ─── SAVE & RESUME ───────────────────────────────────────────────────────────
+function captureTypedFields() {
+  const els = {
+    'f-name': 'name', 'f-email': 'email', 'f-field': 'field',
+    'f-exp': 'expYears', 'f-motivation': 'motivation', 'f-goal': 'goal'
+  };
+  Object.entries(els).forEach(([id, key]) => {
+    const el = document.getElementById(id);
+    if (el) profile[key] = el.value.trim();
+  });
+}
+
 function saveProgress() {
   try {
-    // Capture any currently visible typed fields before saving
-    const nameEl = document.getElementById('f-name');
-    const emailEl = document.getElementById('f-email');
-    const fieldEl = document.getElementById('f-field');
-    const expEl = document.getElementById('f-exp');
-    const motivationEl = document.getElementById('f-motivation');
-    const goalEl = document.getElementById('f-goal');
-    if (nameEl) profile.name = nameEl.value.trim();
-    if (emailEl) profile.email = emailEl.value.trim();
-    if (fieldEl) profile.field = fieldEl.value.trim();
-    if (expEl) profile.expYears = expEl.value.trim();
-    if (motivationEl) profile.motivation = motivationEl.value.trim();
-    if (goalEl) profile.goal = goalEl.value.trim();
-
-    localStorage.setItem('vela_saved_profile', JSON.stringify(profile));
-    localStorage.setItem('vela_saved_step', currentStep);
-    localStorage.setItem('vela_saved_quiz', JSON.stringify(quizAnswers));
+    captureTypedFields();
+    const email = currentUser ? currentUser.email : (profile.email || 'guest');
+    localStorage.setItem('vela_' + email, JSON.stringify(profile));
+    localStorage.setItem('vela_step_' + email, currentStep);
+    localStorage.setItem('vela_quiz_' + email, JSON.stringify(quizAnswers));
     saveToSupabase();
     const btn = document.getElementById('save-btn');
     btn.textContent = '✅ Saved!';
