@@ -844,16 +844,16 @@ const steps = [
     <h1 class="step-title">Let's build your <span>VELA profile</span></h1>
     <p class="step-sub">10 quick steps. We get to know the real you — your background, your skill, your goal. At the end, you'll get a VELA Readiness Score and your path to getting placed.</p>
     <div class="field"><label>Full Name</label>
-      <input class="input" id="f-name" placeholder="Your full name" value="${profile.name}"/>
+      <input class="input" id="f-name" placeholder="Your full name" value="${profile.name}" oninput="profile.name=this.value"/>
     </div>
     <div class="field"><label>Country</label>
-      <select class="select" id="f-country">
+      <select class="select" id="f-country" onchange="profile.country=this.value">
         <option value="">Select your country</option>
         ${AFRICAN_COUNTRIES.map(c=>`<option value="${c}" ${profile.country===c?"selected":""}>${c}</option>`).join("")}
       </select>
     </div>
     <div class="field"><label>Email Address</label>
-      <input class="input" id="f-email" type="email" placeholder="you@email.com" value="${profile.email}"/>
+      <input class="input" id="f-email" type="email" placeholder="you@email.com" value="${profile.email}" oninput="profile.email=this.value"/>
     </div>
     <span class="error-msg" id="step1-err">Please fill in all fields correctly.</span>
     <div class="btn-row">
@@ -882,7 +882,7 @@ const steps = [
         </div>`).join("")}
     </div>
     <div class="field" style="margin-top:1.25rem"><label>Field of Study</label>
-      <input class="input" id="f-field" placeholder="e.g. Mathematics, Business, Engineering" value="${profile.field}"/>
+      <input class="input" id="f-field" placeholder="e.g. Mathematics, Business, Engineering" value="${profile.field}" oninput="profile.field=this.value"/>
     </div>
     <div class="btn-row">
       <button class="btn-back" onclick="back()">← Back</button>
@@ -908,7 +908,7 @@ const steps = [
         </div>`).join("")}
     </div>
     <div class="field"><label>Briefly describe your experience (optional)</label>
-      <textarea class="textarea" id="f-exp" placeholder="e.g. Worked as a math teacher for 2 years, did some freelance admin work...">${profile.expYears}</textarea>
+      <textarea class="textarea" id="f-exp" placeholder="e.g. Worked as a math teacher for 2 years, did some freelance admin work..." oninput="profile.expYears=this.value">${profile.expYears}</textarea>
     </div>
     <div class="btn-row">
       <button class="btn-back" onclick="back()">← Back</button>
@@ -1027,10 +1027,10 @@ const steps = [
     <h1 class="step-title">Why do you want <span>remote work</span>?</h1>
     <p class="step-sub">Your story matters. This becomes part of your candidate profile that employers see — be genuine. This is your voice.</p>
     <div class="field"><label>What is driving you to get a remote job?</label>
-      <textarea class="textarea" id="f-motivation" placeholder="Tell us why this matters to you. What would change in your life if you landed a remote job?" style="min-height:120px">${profile.motivation}</textarea>
+      <textarea class="textarea" id="f-motivation" placeholder="Tell us why this matters to you. What would change in your life if you landed a remote job?" style="min-height:120px" oninput="profile.motivation=this.value">${profile.motivation}</textarea>
     </div>
     <div class="field"><label>What is your goal in the next 12 months?</label>
-      <textarea class="textarea" id="f-goal" placeholder="e.g. I want to earn $800/month remotely, build my skills in data analysis, and eventually..." style="min-height:100px">${profile.goal}</textarea>
+      <textarea class="textarea" id="f-goal" placeholder="e.g. I want to earn $800/month remotely, build my skills in data analysis, and eventually..." style="min-height:100px" oninput="profile.goal=this.value">${profile.goal}</textarea>
     </div>
     <div class="btn-row">
       <button class="btn-back" onclick="back()">← Back</button>
