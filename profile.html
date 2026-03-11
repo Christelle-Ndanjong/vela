@@ -559,7 +559,9 @@ window.addEventListener('DOMContentLoaded', async function() {
         profile.name = savedProfile.name || '';
         profile.country = savedProfile.country || '';
         profile.education = savedProfile.education || '';
+        profile.field = savedProfile.field || '';
         profile.experience = savedProfile.experience || '';
+        profile.expYears = savedProfile.exp_years || '';
         profile.skills = savedProfile.skills || [];
         profile.skill = savedProfile.skill || '';
         profile.selfLevel = savedProfile.self_level || 0;
@@ -603,7 +605,9 @@ async function saveToSupabase(extraData = {}) {
       name: profile.name,
       country: profile.country,
       education: profile.education,
+      field: profile.field,
       experience: profile.experience,
+      exp_years: profile.expYears,
       skills: profile.skills,
       skill: profile.skill,
       self_level: profile.selfLevel,
