@@ -368,8 +368,18 @@
       <div class="welcome-name">Welcome back, <span id="display-name">Candidate</span></div>
       <div class="welcome-sub" id="welcome-sub">Here's where you stand today</div>
     </div>
-    <div class="verified-badge" id="verified-badge" style="display:none">
-      <span class="verified-dot"></span> VELA Verified
+    <div style="display:flex;align-items:center;gap:0.6rem;flex-wrap:wrap;">
+      <div class="verified-badge" id="verified-badge" style="display:none">
+        <span class="verified-dot"></span> VELA Verified
+      </div>
+      <button onclick="shareProfile()"
+        style="background:transparent;border:1px solid var(--border);color:var(--muted);
+        padding:0.45rem 0.9rem;border-radius:8px;font-size:0.78rem;font-family:'DM Sans',sans-serif;
+        cursor:pointer;display:flex;align-items:center;gap:0.4rem;transition:all 0.2s;"
+        onmouseover="this.style.borderColor='rgba(0,229,160,0.35)';this.style.color='var(--accent)'"
+        onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">
+        🔗 Share My Progress
+      </button>
     </div>
   </div>
 
@@ -957,5 +967,122 @@ document.addEventListener('keydown', function(e) {
 });
 
 </script>
+
+<script>
+// ── MILESTONE CELEBRATIONS ───────────────────────────────────────────────────
+function showMilestoneToast(emoji, title, sub, shareText) {
+  // Remove existing toast
+  const existing = document.getElementById('milestone-toast');
+  if (existing) existing.remove();
+
+  const toast = document.createElement('div');
+  toast.id = 'milestone-toast';
+  toast.className = 'milestone-toast';
+  toast.innerHTML = `
+    <div style="font-size:2rem;margin-bottom:0.5rem">${emoji}</div>
+    <div class="milestone-toast-title">${title}</div>
+    <div class="milestone-toast-sub">${sub}</div>
+    <div class="milestone-toast-actions">
+      ${shareText ? `<button class="milestone-toast-btn primary" onclick="shareFromToast('${shareText.replace(/'/g,"\'")}')">Share on LinkedIn</button>` : ''}
+      <button class="milestone-toast-btn secondary" onclick="document.getElementById('milestone-toast').remove();document.body.style.overflow=''">Dismiss</button>
+    </div>`;
+  document.body.appendChild(toast);
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => toast.classList.add('show'), 50);
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => { toast.remove(); document.body.style.overflow = ''; }, 450);
+  }, 7000);
+}
+
+function shareFromToast(text) {
+  const linkedinUrl = 'https://www.linkedin.com/sharing/share-offsite/?url=' +
+    encodeURIComponent('https://christelle-ndanjong.github.io/vela/') +
+    '&summary=' + encodeURIComponent(text);
+  window.open(linkedinUrl, '_blank');
+}
+
+function checkMilestones() {
+  const score   = profile.score || 0;
+  const skill   = profile.skill || '';
+  const name    = (profile.name || '').split(' ')[0] || 'I';
+  const verifState = JSON.parse(localStorage.getItem('vela_verif') || '{}');
+  const verifCount = Object.values(verifState).filter(v => v === 'passed').length;
+  const profileDone = score > 0;
+
+  const milestones = [
+    {
+      key: 'profile_complete',
+      condition: profileDone && score > 0,
+      emoji: '🎯',
+      title: 'Profile Complete!',
+      sub: 'Your VELA Readiness Score is ' + score + '/100. Now start your verification.',
+      share: name + ' just built a verified remote career profile on VELA and scored ' + score + '/100. Building my remote career — join me! 🌍 #RemoteWork #Africa #VELA'
+    },
+    {
+      key: 'first_verif',
+      condition: verifCount >= 1,
+      emoji: '⚡',
+      title: 'First Verification Passed!',
+      sub: verifCount + ' of 5 layers done. Keep going — each one builds your credibility.',
+      share: name + ' just passed the first verification layer on VELA! ' + verifCount + '/5 complete. Building a verified remote career. 🌍 #VELA #RemoteWork #AfricanTalent'
+    },
+    {
+      key: 'three_verif',
+      condition: verifCount >= 3,
+      emoji: '🚀',
+      title: 'Halfway Verified!',
+      sub: '3 out of 5 verification layers complete. You're in the top tier of candidates.',
+      share: name + ' is 60% VELA Verified — 3/5 verification layers complete! Getting closer to global remote work. 🌍 #VELA #AfricanTalent'
+    },
+    {
+      key: 'fully_verified',
+      condition: verifCount >= 5,
+      emoji: '🏆',
+      title: 'VELA Verified!',
+      sub: 'All 5 layers complete. Your profile is now live to employers worldwide.',
+      share: name + ' is now VELA Verified ✅ — completed all 5 verification layers and ready for global remote work! 🌍 #VELAVerified #AfricanTalent #RemoteWork'
+    },
+  ];
+
+  for (const m of milestones) {
+    const shownKey = 'vela_milestone_' + m.key;
+    if (m.condition && !localStorage.getItem(shownKey)) {
+      localStorage.setItem(shownKey, '1');
+      setTimeout(() => showMilestoneToast(m.emoji, m.title, m.sub, m.share), 1200);
+      break; // Only show one at a time
+    }
+  }
+}
+
+// ── SHARE PROFILE ───────────────────────────────────────────────────────────
+function shareProfile() {
+  const name  = profile.name || 'VELA Professional';
+  const skill = profile.skill || 'Remote Work';
+  const score = profile.score || 0;
+  const first = name.split(' ')[0];
+
+  const text = first + ' is building a verified remote career on VELA 🌍\n\nSkill: ' + skill + '\nReadiness Score: ' + score + '/100\n\nJoin the platform helping African professionals get verified and placed globally.\nhttps://christelle-ndanjong.github.io/vela/ #VELA #AfricanTalent #RemoteWork';
+
+  if (navigator.share) {
+    navigator.share({ title: 'My VELA Profile', text: text, url: 'https://christelle-ndanjong.github.io/vela/' })
+      .catch(() => copyToClipboard(text));
+  } else {
+    copyToClipboard(text);
+  }
+}
+
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    showMilestoneToast('🔗', 'Copied to clipboard!', 'Paste it on LinkedIn, Twitter, or WhatsApp to share your VELA journey.', null);
+  }).catch(() => {
+    showMilestoneToast('🔗', 'Share VELA', 'Visit christelle-ndanjong.github.io/vela and share your progress!', null);
+  });
+}
+
+// Run milestone check after page renders (give render() time to complete)
+setTimeout(checkMilestones, 2000);
+</script>
+
 </body>
 </html>
