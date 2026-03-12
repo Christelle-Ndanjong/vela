@@ -272,25 +272,35 @@
 
     @media (max-width: 600px) {
       .choice-grid { grid-template-columns: 1fr; }
-      .choice-grid.cols-2 { grid-template-columns: 1fr; }
-      .skill-grid { grid-template-columns: 1fr 1fr; }
+      .choice-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+      .skill-grid { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
       .score-breakdown { grid-template-columns: 1fr; }
       .scale-options { flex-wrap: wrap; }
-      .profile-card { padding: 1.5rem 1.25rem; margin: 0 0.5rem; }
-      .step-title { font-size: 1.3rem; }
-      .step-sub { font-size: 0.88rem; }
-      .btn-next { width: 100%; padding: 0.9rem; font-size: 0.95rem; }
-      .btn-back { width: 100%; padding: 0.9rem; font-size: 0.95rem; }
-      .nav-actions { flex-direction: column-reverse; gap: 0.5rem; }
+      .profile-card { padding: 1.25rem 1rem; margin: 0; border-radius: 0; border-left: none; border-right: none; }
+      .step-title { font-size: 1.25rem; }
+      .step-sub { font-size: 0.85rem; }
+      .btn-next { width: 100%; padding: 1rem; font-size: 1rem; }
+      .btn-back { width: 100%; padding: 1rem; font-size: 1rem; }
+      .btn-row { flex-direction: column-reverse; gap: 0.5rem; }
+      .nav-actions { gap: 0.35rem; }
+      .nav-actions button { padding: 0.35rem 0.6rem; font-size: 0.72rem; }
       .score-big { font-size: 3.5rem; }
       .score-card { padding: 2rem 1.25rem; }
       .breakdown-item { padding: 0.85rem; }
-      .skill-grid { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
-      nav { padding: 0.9rem 4%; }
+      nav { padding: 0.75rem 4%; }
+      .page { padding: 1rem 0; }
+      .step-container { padding: 0; }
+      .score-screen { padding: 1rem 0; }
+      .pass-actions { gap: 0.6rem; }
+      .btn-jobs { padding: 0.85rem 1rem; font-size: 0.88rem; }
+      .q-text { font-size: 0.9rem; }
+      .q-option { font-size: 0.85rem; padding: 0.7rem 0.9rem; }
+      textarea.textarea { font-size: 0.88rem; }
     }
     @media (max-width: 380px) {
       .skill-grid { grid-template-columns: 1fr; }
       .score-big { font-size: 3rem; }
+      .choice-grid.cols-2 { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -1207,12 +1217,169 @@ function showStepError(msg) {
 }
 
 // ─── SCORE SCREEN ─────────────────────────────────────────────────────────────
+// ─── PORTFOLIO PROJECTS BY SKILL ─────────────────────────────────────────────
+const PORTFOLIO_BY_SKILL = {
+  "Data Analysis": [
+    { title:"Sales Dashboard", desc:"Analyse 12 months of sales data in Excel or Google Sheets. Build charts showing trends, top products, and regional performance.", tool:"Excel / Google Sheets" },
+    { title:"SQL Customer Report", desc:"Write SQL queries on a public dataset (e.g. Northwind or Kaggle) to answer 5 business questions. Document your queries and findings.", tool:"SQL / MySQL" },
+    { title:"Python Data Story", desc:"Use Python + Pandas to clean a messy CSV dataset, then visualise 3 insights with matplotlib or seaborn. Publish on GitHub.", tool:"Python / Pandas" },
+  ],
+  "Customer Service": [
+    { title:"Mock Support Portfolio", desc:"Write 5 sample customer service responses covering: refund request, angry customer, billing error, product complaint, escalation.", tool:"Google Docs" },
+    { title:"Process Improvement Case Study", desc:"Pick a real customer service scenario and write a 1-page case study on how you would improve the process.", tool:"Google Docs / Notion" },
+    { title:"CSAT Tracker", desc:"Build a simple Excel/Sheets tracker that logs customer issues, resolution time, and calculates a CSAT score.", tool:"Excel / Google Sheets" },
+  ],
+  "Virtual Assistant": [
+    { title:"Executive Inbox System", desc:"Document your system for managing a 200+ email inbox: labels, filters, priority tiers, and response templates.", tool:"Gmail / Notion" },
+    { title:"SOP Document", desc:"Write a Standard Operating Procedure for 3 common VA tasks: scheduling meetings, researching vendors, preparing reports.", tool:"Notion / Google Docs" },
+    { title:"CRM Comparison Report", desc:"Research and compare 3 CRM tools under $50/month. Present findings in a structured 1-page report with a recommendation.", tool:"Google Docs / Canva" },
+  ],
+  "Social Media Management": [
+    { title:"30-Day Content Calendar", desc:"Build a full month content calendar for a fictional brand in your niche — includes post type, caption, hashtags, and posting time.", tool:"Notion / Google Sheets / Canva" },
+    { title:"Brand Audit Report", desc:"Pick any real brand, audit their last 30 days of social media, and write a 1-page report with 3 specific improvement recommendations.", tool:"Google Docs" },
+    { title:"Growth Case Study", desc:"Document a 90-day organic growth strategy for a business from 0 to 1000 followers. Include content pillars, posting frequency, engagement tactics.", tool:"Canva / Google Docs" },
+  ],
+  "Content Writing": [
+    { title:"SEO Blog Post", desc:"Write a 1000-word SEO-optimised blog post on a topic in your chosen niche. Include keyword research, meta description, and subheadings.", tool:"Google Docs / Surfer SEO" },
+    { title:"Email Sequence", desc:"Write a 5-email welcome sequence for a fictional brand. Include subject lines, preview text, and a clear CTA in each email.", tool:"Google Docs" },
+    { title:"Portfolio Website Copy", desc:"Write the full copy for a 5-page website: Home, About, Services, Blog, Contact — for a fictional freelancer or business.", tool:"Google Docs / Notion" },
+  ],
+  "Prompt Engineering & AI": [
+    { title:"Prompt Library", desc:"Build a library of 20 high-quality prompts for 5 different use cases (copywriting, research, coding, customer service, analysis). Document what makes each one work.", tool:"Notion / Google Docs" },
+    { title:"AI Automation Case Study", desc:"Design a complete AI workflow for a real business problem using ChatGPT or Claude + Make.com or Zapier. Document each step.", tool:"Make.com / Notion" },
+    { title:"Chatbot System Prompt", desc:"Build and document a full system prompt for an AI customer service agent. Include persona, rules, escalation logic, and example conversations.", tool:"ChatGPT / Claude" },
+  ],
+  "SEO Specialist": [
+    { title:"Site Audit Report", desc:"Run a technical SEO audit on any website using free tools. Identify 10 issues and write actionable recommendations for each.", tool:"Screaming Frog / Google Search Console" },
+    { title:"Keyword Strategy Document", desc:"Build a full keyword strategy for a fictional e-commerce store — including seed keywords, long-tail variations, search intent, and priority ranking.", tool:"Ahrefs Free / Ubersuggest" },
+    { title:"Content Gap Analysis", desc:"Compare a site against 2 competitors. Identify 10 topics the competitors rank for but the site doesn't. Prioritise by opportunity.", tool:"Semrush / Ahrefs" },
+  ],
+  "Project Management": [
+    { title:"Project Plan Template", desc:"Build a full project plan for a real or fictional project: scope, WBS, Gantt chart, RACI matrix, risk register, and communication plan.", tool:"Notion / Excel / ClickUp" },
+    { title:"Post-Mortem Report", desc:"Write a post-mortem for a fictional failed project. Identify what went wrong, root causes, and what you would do differently.", tool:"Google Docs" },
+    { title:"Agile Sprint Board", desc:"Set up and document a complete 2-week sprint for a 4-person team using Trello or Notion. Include backlog, sprint goals, and daily standup template.", tool:"Trello / Notion" },
+  ],
+  "UI/UX Design": [
+    { title:"Mobile App Redesign", desc:"Pick any app with poor UX. Document the problems with screenshots, then redesign 3 key screens in Figma with annotations explaining your decisions.", tool:"Figma" },
+    { title:"User Research Report", desc:"Conduct 3 user interviews for a fictional product. Document findings, create 2 user personas, and write a UX recommendations report.", tool:"Google Docs / Figma" },
+    { title:"Design System", desc:"Build a basic design system for a fictional brand: color palette, typography, button states, form elements, and component library.", tool:"Figma" },
+  ],
+  "Email Marketing": [
+    { title:"Welcome Sequence", desc:"Design and write a 5-email onboarding sequence for a SaaS product. Include subject lines, body copy, CTAs, and timing strategy.", tool:"Google Docs / Mailchimp" },
+    { title:"Campaign Performance Report", desc:"Using sample data, build an email campaign report that tracks open rate, CTR, conversions, and revenue. Include recommendations.", tool:"Google Sheets / Canva" },
+    { title:"A/B Test Strategy", desc:"Design an A/B test for 3 elements of an email campaign. Document hypothesis, test setup, success metrics, and how you'd interpret results.", tool:"Google Docs" },
+  ],
+  "Cybersecurity": [
+    { title:"Security Audit Checklist", desc:"Build a comprehensive security audit checklist for a 50-person company. Cover: access control, passwords, devices, cloud tools, incident response.", tool:"Google Docs / Notion" },
+    { title:"Incident Response Plan", desc:"Write a full incident response plan for a data breach scenario. Include detection, containment, notification, recovery, and post-incident review.", tool:"Google Docs" },
+    { title:"Phishing Awareness Training", desc:"Design a 10-slide phishing awareness training presentation with real examples, red flags to spot, and what to do when you suspect an attack.", tool:"Google Slides / Canva" },
+  ],
+  "Bookkeeping": [
+    { title:"Monthly Bookkeeping Report", desc:"Using sample financial data, prepare a complete monthly report: income statement, balance sheet, cash flow summary, and 3 observations.", tool:"Excel / Google Sheets" },
+    { title:"Chart of Accounts", desc:"Build a full chart of accounts for a fictional small business. Categorise all accounts correctly and explain your logic.", tool:"Excel / QuickBooks" },
+    { title:"Bank Reconciliation", desc:"Using sample bank and ledger data, perform a complete bank reconciliation and document every step of your process.", tool:"Excel / Google Sheets" },
+  ],
+  "E-Commerce": [
+    { title:"Product Launch Plan", desc:"Write a full go-to-market plan for launching a new product on an existing Shopify store: pre-launch, launch day, and 30-day post-launch.", tool:"Google Docs / Notion" },
+    { title:"Store Audit Report", desc:"Audit any e-commerce store for conversion rate optimisation. Identify 10 issues across product pages, checkout, and UX. Give specific fixes.", tool:"Google Docs" },
+    { title:"Ad Performance Dashboard", desc:"Build a dashboard that tracks key e-commerce ad metrics: ROAS, CPA, CTR, revenue per campaign. Use sample data.", tool:"Google Sheets / Looker Studio" },
+  ],
+  "HR & Recruitment": [
+    { title:"Job Description Pack", desc:"Write 3 complete job descriptions for different roles. Include responsibilities, requirements, nice-to-haves, and a compelling company intro.", tool:"Google Docs" },
+    { title:"Interview Guide", desc:"Build a structured interview guide for a remote customer success role: 10 behavioural questions, scoring rubric, and evaluation framework.", tool:"Google Docs / Notion" },
+    { title:"Onboarding Checklist", desc:"Design a 30-60-90 day onboarding plan for a new remote hire. Include tools setup, training, check-ins, and success milestones.", tool:"Notion / Google Docs" },
+  ],
+};
+
+function getTier(score) {
+  if (score >= 75) return "ready";
+  if (score >= 50) return "midway";
+  return "notready";
+}
+
+function getTierMessage(score, name) {
+  const first = name ? name.split(" ")[0] : "there";
+  const skill = profile.skill || "your chosen skill";
+  const tier = getTier(score);
+  if (tier === "ready") return {
+    emoji: "🚀",
+    headline: `You're ready to apply, ${first}!`,
+    color: "#00E5A0",
+    verdict: "READY TO APPLY",
+    verdictColor: "rgba(0,229,160,0.15)",
+    verdictBorder: "rgba(0,229,160,0.4)",
+    verdictText: "#00E5A0",
+    message: `Your score of <strong>${score}/100</strong> shows you have solid foundations in <strong>${skill}</strong>. Employers would consider your profile. Your next move is to build a strong portfolio so you stand out above other applicants — don't apply without one.`,
+    actions: [
+      { label:"💼 View Matched Jobs", href:"jobs.html", style:"primary" },
+      { label:"🗂️ Build Your Portfolio Now", href:"portfolio.html", style:"blue", urgent:true },
+      { label:"📚 Strengthen Your Skills", href:"skills.html", style:"ghost" },
+      { label:"💬 Join the Community", href:"https://t.me/+5d8WDDcuocdkNjM0", style:"teal", external:true },
+    ]
+  };
+  if (tier === "midway") return {
+    emoji: "⚡",
+    headline: `You're on your way, ${first} — not quite there yet`,
+    color: "#FFA500",
+    verdict: "ALMOST READY",
+    verdictColor: "rgba(255,165,0,0.12)",
+    verdictBorder: "rgba(255,165,0,0.4)",
+    verdictText: "#FFA500",
+    message: `Your score of <strong>${score}/100</strong> shows real potential, but you're not yet ready to compete for remote jobs in <strong>${skill}</strong>. Applying now with this score means getting ignored. Spend 4–8 weeks on the steps below, then retest.`,
+    actions: [
+      { label:"📚 Study Your Skill Roadmap", href:"skills.html", style:"primary" },
+      { label:"🌐 Get Free Experience First", href:"experience.html", style:"blue" },
+      { label:"🗂️ Start Building Your Portfolio", href:"portfolio.html", style:"ghost" },
+      { label:"💬 Get Support in the Community", href:"https://t.me/+5d8WDDcuocdkNjM0", style:"teal", external:true },
+    ]
+  };
+  return {
+    emoji: "🌱",
+    headline: `You're just getting started, ${first} — and that's okay`,
+    color: "#FF6B6B",
+    verdict: "NOT READY YET",
+    verdictColor: "rgba(255,107,107,0.12)",
+    verdictBorder: "rgba(255,107,107,0.4)",
+    verdictText: "#FF6B6B",
+    message: `Your score of <strong>${score}/100</strong> tells us you're early in your journey with <strong>${skill}</strong>. Don't apply to jobs yet — employers will reject you and that will hurt your confidence. Follow the steps below first. Many VELA members went from 0 to job-ready in 90 days.`,
+    actions: [
+      { label:"📚 Start Your Learning Roadmap", href:"skills.html", style:"primary" },
+      { label:"🌐 Build Experience for Free", href:"experience.html", style:"blue" },
+      { label:"💬 Join the Community — Get Guided", href:"https://t.me/+5d8WDDcuocdkNjM0", style:"teal", external:true },
+    ]
+  };
+}
+
+function getDetailedFeedback(score) {
+  const items = [];
+  const tier = getTier(score);
+  const skill = profile.skill || "your skill";
+  const eduMap = {"secondary":4,"diploma":8,"bachelor":14,"master":18,"phd":20,"other":6};
+
+  // Knowledge check feedback
+  if (profile.quizScore < 3) items.push({ icon:"📝", title:`Your ${skill} knowledge needs work`, detail:"You missed key questions in the knowledge check. This means employers will catch gaps quickly. Study the fundamentals before applying.", action:"Study Roadmap →", href:"skills.html" });
+  // Tools feedback
+  if (profile.tools.length < 2 || profile.tools.includes("none")) items.push({ icon:"🛠️", title:"Learn the core tools employers expect", detail:`For ${skill}, employers expect you to know at least 3-4 tools. Start with the free versions — most have tutorials on YouTube.`, action:"See Tools in Roadmap →", href:"skills.html" });
+  // Experience feedback
+  if (!profile.experience || profile.experience === "none") items.push({ icon:"🌐", title:"You have no remote experience yet — fix this first", detail:"Free platforms like UN Volunteers, Catchafire, and Parker Dewey let you do real work for real organisations. This builds your CV and portfolio at the same time.", action:"Get Free Experience →", href:"experience.html" });
+  // English feedback
+  if ((profile.english||0) < 3) items.push({ icon:"🗣️", title:"Strengthen your professional English", detail:"Most remote jobs require strong written English. Take BBC Learning English (free) or Coursera's Business English course. Practice writing emails and reports.", action:"Free English Resources →", href:"skills.html" });
+  // Portfolio — always show if not ready or midway
+  if (tier !== "ready" || true) items.push({ icon:"🗂️", title:"Build a portfolio before you apply", detail:`Without a portfolio, you're invisible. Build 2-3 projects in ${skill} that prove what you can do. See the sample projects below — pick one and start today.`, action:"Build Portfolio →", href:"portfolio.html" });
+  // Skill level feedback
+  if ((profile.selfLevel||0) <= 2) items.push({ icon:"📈", title:"Your self-rated skill level is too basic to compete", detail:`You rated yourself as beginner/basic in ${skill}. Spend 6-8 weeks deepening your knowledge before applying. Use the skill roadmap to guide what to learn next.`, action:"View Roadmap →", href:"skills.html" });
+
+  return items.slice(0, 5);
+}
+
 function showScore() {
   const score = calcScore();
-  const passed = score >= 60;
+  const tier = getTier(score);
   const circumference = 2 * Math.PI * 56;
   const offset = circumference - (score / 100) * circumference;
-  const color = score >= 60 ? "#00E5A0" : score >= 40 ? "#FFA500" : "#FF6B6B";
+  const tierData = getTierMessage(score, profile.name);
+  const feedback = getDetailedFeedback(score);
+  const portfolioProjects = PORTFOLIO_BY_SKILL[profile.skill] || PORTFOLIO_BY_SKILL["Data Analysis"];
 
   const eduScores = {"secondary":4,"diploma":8,"bachelor":14,"master":18,"phd":20,"other":6};
   const expScores = {"none":0,"less1":5,"1to3":10,"3plus":15};
@@ -1223,15 +1390,22 @@ function showScore() {
   const engS = (profile.english||0)*3;
   const quizS = Math.round((profile.quizScore/3)*20);
 
-  const improveItems = !passed ? getImproveItems(score) : [];
+  const btnStyles = {
+    primary: `background:var(--accent);color:#07090F;border:none`,
+    blue: `background:rgba(0,150,255,0.12);border:1.5px solid rgba(0,150,255,0.3);color:#0096FF`,
+    ghost: `background:transparent;border:1.5px solid rgba(0,229,160,0.3);color:var(--accent)`,
+    teal: `background:rgba(41,182,246,0.12);border:1.5px solid rgba(41,182,246,0.3);color:#29B6F6`,
+  };
 
   document.getElementById("step-container").innerHTML = `
     <div class="score-screen">
+
+      <!-- SCORE RING -->
       <div class="score-ring">
         <svg viewBox="0 0 120 120" width="160" height="160">
           <circle class="score-ring-track" cx="60" cy="60" r="56"/>
           <circle class="score-ring-fill" cx="60" cy="60" r="56"
-            stroke="${color}"
+            stroke="${tierData.color}"
             stroke-dasharray="${circumference}"
             stroke-dashoffset="${circumference}"
             id="ring-fill"/>
@@ -1242,13 +1416,14 @@ function showScore() {
         </div>
       </div>
 
-      <h2 class="score-title">${passed ? "🎉 You're Ready, "+profile.name.split(" ")[0]+"!" : "Almost There, "+profile.name.split(" ")[0]+"!"}</h2>
-      <p class="score-message">${passed
-        ? `Your VELA Readiness Score is <strong>${score}/100</strong>. You've cleared the bar. You're ready to see verified remote jobs matched to your skill ${profile.skills.length > 1 ? "paths: " + profile.skills.join(", ") : "path: " + profile.skill}.`
-        : `Your VELA Readiness Score is <strong>${score}/100</strong>. The pass mark is 60. You're not far — here's exactly what to improve to get placed.`
-      }</p>
+      <!-- VERDICT BADGE -->
+      <div style="display:inline-block;background:${tierData.verdictColor};border:1.5px solid ${tierData.verdictBorder};color:${tierData.verdictText};font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:800;letter-spacing:0.1em;padding:0.4rem 1.1rem;border-radius:20px;margin-bottom:1rem">${tierData.emoji} ${tierData.verdict}</div>
 
-      <div class="score-breakdown">
+      <h2 class="score-title">${tierData.headline}</h2>
+      <p class="score-message" style="margin-bottom:1.5rem">${tierData.message}</p>
+
+      <!-- SCORE BREAKDOWN -->
+      <div class="score-breakdown" style="margin-bottom:1.75rem">
         ${[
           {label:"Education",val:eduS,max:20},
           {label:"Experience",val:expS,max:15},
@@ -1259,42 +1434,63 @@ function showScore() {
         ].map(b=>`
           <div class="breakdown-item">
             <div class="breakdown-label">${b.label}</div>
-            <div class="breakdown-val" style="color:${b.val/b.max>=0.6?'var(--accent)':b.val/b.max>=0.3?'var(--warn)':'var(--danger)'}">${b.val} <span style="font-size:0.7rem;color:var(--muted);font-weight:400">/ ${b.max}</span></div>
+            <div class="breakdown-val" style="color:${b.val/b.max>=0.6?'var(--accent)':b.val/b.max>=0.3?'var(--warn)':'var(--danger)'}">${b.val}<span style="font-size:0.7rem;color:var(--muted);font-weight:400">/${b.max}</span></div>
             <div class="breakdown-bar"><div class="breakdown-fill" style="width:${Math.round((b.val/b.max)*100)}%"></div></div>
           </div>`).join("")}
       </div>
 
-      ${!passed ? `
-        <div style="text-align:left;margin-bottom:1.5rem">
-          <div class="modal-section-title" style="font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--warn);margin-bottom:1rem">What to improve</div>
-          <div class="improve-list">
-            ${improveItems.map(i=>`<div class="improve-item">${i}</div>`).join("")}
-          </div>
-        </div>` : ""}
+      <!-- PERSONALISED FEEDBACK -->
+      ${feedback.length > 0 ? `
+      <div style="text-align:left;margin-bottom:1.75rem">
+        <div style="font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:${tierData.color};margin-bottom:1rem">Your Personal Action Plan</div>
+        <div style="display:flex;flex-direction:column;gap:0.75rem">
+          ${feedback.map((f,i)=>`
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1rem 1.1rem;display:flex;gap:0.85rem;align-items:flex-start">
+              <span style="font-size:1.3rem;flex-shrink:0">${f.icon}</span>
+              <div style="flex:1">
+                <div style="font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:0.3rem">${i+1}. ${f.title}</div>
+                <div style="font-size:0.82rem;color:var(--muted);line-height:1.55;margin-bottom:0.5rem">${f.detail}</div>
+                <a href="${f.href}" style="font-size:0.8rem;font-weight:700;color:${tierData.color};text-decoration:none">${f.action}</a>
+              </div>
+            </div>`).join("")}
+        </div>
+      </div>` : ""}
 
-      <div class="pass-actions">
-        <a class="btn-jobs" href="jobs.html">View Matched Jobs →</a>
-        <a class="btn-jobs" style="background:rgba(0,150,255,0.12);border:1.5px solid rgba(0,150,255,0.3);color:#0096FF;text-decoration:none;text-align:center" href="portfolio.html">Build Your Portfolio →</a>
-        <a class="btn-jobs" style="background:rgba(41,182,246,0.12);border:1.5px solid rgba(41,182,246,0.3);color:#29B6F6;text-decoration:none;text-align:center" href="https://t.me/+5d8WDDcuocdkNjM0" target="_blank">💬 Join the VELA Community →</a>
-        ${passed
-          ? `<button class="btn-retry" onclick="location.href='skills.html'">Explore Skill Roadmaps</button>`
-          : `<button class="btn-retry" onclick="retryQuiz()">Retake Knowledge Check</button>
-             <a class="btn-jobs" style="background:transparent;border:1.5px solid rgba(0,229,160,0.3);color:var(--accent);padding:0.9rem;border-radius:10px;font-family:'Syne',sans-serif;font-weight:600;font-size:0.9rem;cursor:pointer;text-align:center" href="skills.html">Study Your Roadmap First</a>`
-        }
+      <!-- SAMPLE PORTFOLIO PROJECTS -->
+      <div style="text-align:left;margin-bottom:1.75rem">
+        <div style="font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#0096FF;margin-bottom:0.5rem">Sample Portfolio Projects for ${profile.skill||"Your Skill"}</div>
+        <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem">Pick one and build it. A real project beats a CV every time.</p>
+        <div style="display:flex;flex-direction:column;gap:0.75rem">
+          ${portfolioProjects.map((p,i)=>`
+            <div style="background:var(--card);border:1px solid rgba(0,150,255,0.2);border-radius:12px;padding:1rem 1.1rem">
+              <div style="font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:0.3rem">Project ${i+1}: ${p.title}</div>
+              <div style="font-size:0.82rem;color:var(--muted);line-height:1.55;margin-bottom:0.5rem">${p.desc}</div>
+              <span style="background:rgba(0,150,255,0.1);border:1px solid rgba(0,150,255,0.25);color:#0096FF;font-size:0.75rem;font-weight:700;padding:0.25rem 0.7rem;border-radius:20px">🛠️ ${p.tool}</span>
+            </div>`).join("")}
+        </div>
       </div>
+
+      <!-- ACTION BUTTONS -->
+      <div class="pass-actions">
+        ${tierData.actions.map(a=>`
+          <a class="btn-jobs" style="${btnStyles[a.style]};text-decoration:none;text-align:center;${a.urgent?'animation:pulse 2s infinite':''}" href="${a.href}" ${a.external?'target="_blank"':''}>${a.label}</a>
+        `).join("")}
+        ${tier !== "notready" ? `<button class="btn-retry" onclick="location.href='jobs.html'">View Matched Jobs →</button>` : ""}
+        <button class="btn-retry" onclick="retryQuiz()" style="margin-top:0.5rem;opacity:0.7;font-size:0.82rem">Retake Knowledge Check</button>
+      </div>
+
     </div>`;
 
-  // Save profile results to sessionStorage so user can return
+  // Save
   try {
-    sessionStorage.setItem('vela_profile', JSON.stringify(profile));
+    profile._completed = true;
+    const email = currentUser ? currentUser.email : (profile.email || 'guest');
+    localStorage.setItem('vela_' + email, JSON.stringify(profile));
     sessionStorage.setItem('vela_score', score);
-    sessionStorage.setItem('vela_passed', passed);
-    sessionStorage.setItem('vela_results_shown', '1');
   } catch(e) {}
-  // Save completed results to Supabase
-  saveToSupabase({ total_score: score, passed: passed, completed: true });
+  saveToSupabase({ total_score: score, passed: tier === "ready", completed: true });
 
-  // Animate ring and counter
+  // Animate ring
   setTimeout(() => {
     document.getElementById("ring-fill").style.strokeDashoffset = offset;
     let count = 0;
