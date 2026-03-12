@@ -276,6 +276,14 @@
 </div>
 
 
+<!-- JOB DETAIL MODAL -->
+<div id="job-modal-overlay" class="job-modal-overlay" onclick="if(event.target===this)closeJobModal()">
+  <div class="job-modal" id="job-modal-content">
+    <!-- filled by JS -->
+  </div>
+</div>
+
+
 <div class="page-header">
   <div class="header-left">
     <h1>Remote Jobs <span>For Africa</span></h1>
@@ -490,6 +498,80 @@ function logoFallback(company) {
 // ─── RENDER ─────────────────────────────────────────────────────────────────
 
 
+
+function openJobModal(job) {
+  const userSkill = localStorage.getItem('vela_skill') || '';
+  const ms = getMatchScore(job);
+  const matchBadge = (userSkill && ms > 0)
+    ? `<span style="font-size:0.75rem;font-weight:700;color:${ms>=70?'var(--accent)':ms>=40?'#FFA500':'var(--muted)'};background:rgba(0,0,0,0.2);padding:0.2rem 0.6rem;border-radius:100px;border:1px solid currentColor;margin-left:0.5rem">${ms}% match</span>`
+    : '';
+
+  const tips = {
+    'Virtual Assistant':      'Highlight your organisational skills, communication, and any tools you know (Notion, Trello, Slack). Mention your availability and timezone.',
+    'Data Analysis':          'Mention specific tools — SQL, Excel, Tableau, Power BI. Link any dashboards or analyses you've built. Show you can tell a story with data.',
+    'Customer Service':       'Lead with your communication style. Share examples of how you've handled difficult situations or improved a customer experience.',
+    'Social Media Management':'Include links to accounts you've managed or content you've created. Metrics (followers gained, engagement rate) matter a lot here.',
+    'Content Writing':        'Always send writing samples. Match the tone of the company's existing content. Show range — blogs, emails, social, technical.',
+    'UI/UX Design':           'Lead with your portfolio link. Show your design process, not just final screens. Explain the problem you were solving.',
+    'Web Development':        'Link to GitHub or live projects. Mention the stack. Show you can ship — employers care about delivery, not just code.',
+    'SEO Specialist':         'Share specific SEO wins — traffic growth, ranking improvements. Mention tools: Ahrefs, SEMrush, Search Console.',
+    'Project Management':     'Mention methodologies (Agile, Scrum) and tools (Jira, Asana, Monday). Show you've shipped projects on time.',
+    'Email Marketing':        'Share open rates, click rates, or revenue figures from campaigns. Mention platforms: Klaviyo, Mailchimp, ActiveCampaign.',
+  };
+  const tip = tips[job.skill] || `Highlight your ${job.skill} skills and mention any verified experience from your VELA profile. Show specific results, not just responsibilities.`;
+
+  const logoHtml = job.logo
+    ? `<img src="${job.logo}" alt="${job.company}" onerror="this.parentElement.textContent='${logoFallback(job.company)}'">`
+    : logoFallback(job.company);
+
+  document.getElementById('job-modal-content').innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.25rem;">
+      <div class="job-modal-header" style="margin-bottom:0;flex:1;">
+        <div class="job-modal-logo">${logoHtml}</div>
+        <div>
+          <div class="job-modal-title">${job.title}${matchBadge}</div>
+          <div class="job-modal-company">${job.company} · ${job.location || 'Worldwide'}</div>
+        </div>
+      </div>
+      <button onclick="closeJobModal()" style="background:transparent;border:none;color:var(--muted);font-size:1.2rem;cursor:pointer;padding:0.25rem;flex-shrink:0;margin-left:0.5rem;">✕</button>
+    </div>
+
+    <div class="job-modal-meta">
+      <span>📍 ${job.location || 'Worldwide'}</span>
+      ${job.salary ? `<span>💰 ${job.salary}</span>` : ''}
+      <span>🕐 ${timeAgo(job.posted)}</span>
+      <span>📌 ${job.source}</span>
+    </div>
+
+    <div class="job-modal-tags">
+      <span class="job-modal-tag" style="color:var(--accent);border-color:rgba(0,229,160,0.25);">${job.skill}</span>
+      ${(job.tags||[]).map(t => `<span class="job-modal-tag">${t}</span>`).join('')}
+    </div>
+
+    <div class="job-modal-tip">
+      <div class="job-modal-tip-label">💡 VELA tip for this role</div>
+      <div style="font-size:0.85rem;color:var(--text);line-height:1.65;">${tip}</div>
+    </div>
+
+    <div class="job-modal-actions">
+      <a href="${job.url}" target="_blank" rel="noopener" class="job-modal-apply" onclick="closeJobModal()">Apply Now →</a>
+      <button class="job-modal-close" onclick="closeJobModal()">Close</button>
+    </div>
+  `;
+
+  document.getElementById('job-modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeJobModal() {
+  document.getElementById('job-modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeJobModal();
+});
+
 function toggleSaveJob(jobId, btn) {
   const saved = JSON.parse(localStorage.getItem('vela_saved_jobs') || '[]');
   const id = String(jobId);
@@ -578,7 +660,7 @@ function render() {
       </div>
       <div class="jobs-list">
         ${sourceJobs.map(job => `
-          <a class="job-card" href="${job.url}" target="_blank" rel="noopener">
+          <a class="job-card" href="${job.url}" target="_blank" rel="noopener" onclick="event.preventDefault();openJobModal(job)">
             <div class="job-logo">
               ${job.logo
                 ? `<img src="${job.logo}" alt="${job.company}" onerror="this.parentElement.textContent='${logoFallback(job.company)}'">`
