@@ -294,6 +294,29 @@
       .btn-share { display: none; }
     }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script>
+  (function() {
+    var SURL = 'https://xlpghpsowygekrwylhjf.supabase.co';
+    var SKEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhscGdocHNvd3lnZWtyd3lsaGpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNTE5NjEsImV4cCI6MjA4ODcyNzk2MX0.10e6szZ_7oFdwRYrjuT-c6DXWTsapZ82f4BDWoTADlk';
+    function waitForSupabase(cb, tries) {
+      tries = tries || 0;
+      if (typeof supabase !== 'undefined') { cb(); }
+      else if (tries < 40) { setTimeout(function(){ waitForSupabase(cb, tries+1); }, 100); }
+      else { window.location.href = 'login.html'; }
+    }
+    waitForSupabase(function() {
+      var _sb = supabase.createClient(SURL, SKEY);
+      _sb.auth.getSession().then(function(res) {
+        if (!res.data || !res.data.session) {
+          window.location.href = 'login.html';
+        }
+      }).catch(function() {
+        window.location.href = 'login.html';
+      });
+    });
+  })();
+  </script>
 </head>
 <body>
 
@@ -310,7 +333,33 @@
     <button class="btn-share" onclick="copyLink()">🔗 Copy Portfolio Link</button>
     <button class="btn-preview" onclick="openPreview()">Preview as Employer →</button>
   </div>
+
+  <button class="hamburger-btn" onclick="toggleMobileNav()" aria-label="Open menu">☰</button>
+
+  <button class="hamburger-btn" onclick="toggleMobileNav()" aria-label="Open menu">☰</button>
 </nav>
+<div id="mobile-nav-overlay" class="mobile-nav-overlay">
+  <button class="mobile-nav-close" onclick="toggleMobileNav()">✕</button>
+  <a href="index.html" onclick="toggleMobileNav()">Home</a>
+  <a href="skills.html" onclick="toggleMobileNav()">Skills</a>
+  <a href="experience.html" onclick="toggleMobileNav()">Get Experience</a>
+  <a href="jobs.html" onclick="toggleMobileNav()">Jobs</a>
+  <a href="verify.html" onclick="toggleMobileNav()">Verify</a>
+  <a href="portfolio.html" class="active" onclick="toggleMobileNav()">Portfolio</a>
+  <a href="dashboard.html" class="mobile-nav-cta" onclick="toggleMobileNav()">Dashboard →</a>
+</div>
+
+<div id="mobile-nav-overlay" class="mobile-nav-overlay">
+  <button class="mobile-nav-close" onclick="toggleMobileNav()">✕</button>
+  <a href="index.html" onclick="toggleMobileNav()">Home</a>
+  <a href="skills.html" onclick="toggleMobileNav()">Skills</a>
+  <a href="experience.html" onclick="toggleMobileNav()">Get Experience</a>
+  <a href="jobs.html" onclick="toggleMobileNav()">Jobs</a>
+  <a href="verify.html" onclick="toggleMobileNav()">Verify</a>
+  <a href="portfolio.html" class="active" onclick="toggleMobileNav()">Portfolio</a>
+  <a href="dashboard.html" class="mobile-nav-cta" onclick="toggleMobileNav()">Dashboard →</a>
+</div>
+
 
 <div class="page">
 
@@ -696,6 +745,38 @@ function showToast(msg) {
 
 // ─── RUN ──────────────────────────────────────────────────────────────────
 init();
+</script>
+<script>
+
+function toggleMobileNav() {
+  var overlay = document.getElementById('mobile-nav-overlay');
+  var isOpen = overlay.classList.contains('open');
+  overlay.classList.toggle('open');
+  document.body.style.overflow = isOpen ? '' : 'hidden';
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    var overlay = document.getElementById('mobile-nav-overlay');
+    if (overlay) { overlay.classList.remove('open'); document.body.style.overflow = ''; }
+  }
+});
+
+</script>
+<script>
+
+function toggleMobileNav() {
+  var overlay = document.getElementById('mobile-nav-overlay');
+  var isOpen = overlay.classList.contains('open');
+  overlay.classList.toggle('open');
+  document.body.style.overflow = isOpen ? '' : 'hidden';
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    var overlay = document.getElementById('mobile-nav-overlay');
+    if (overlay) { overlay.classList.remove('open'); document.body.style.overflow = ''; }
+  }
+});
+
 </script>
 </body>
 </html>
