@@ -1379,7 +1379,15 @@ function showScore() {
   const offset = circumference - (score / 100) * circumference;
   const tierData = getTierMessage(score, profile.name);
   const feedback = getDetailedFeedback(score);
-  const portfolioProjects = PORTFOLIO_BY_SKILL[profile.skill] || PORTFOLIO_BY_SKILL["Data Analysis"];
+  // Find portfolio for actual selected skill — try each selected skill until one matches
+  let portfolioSkill = profile.skill;
+  let portfolioProjects = PORTFOLIO_BY_SKILL[portfolioSkill];
+  if (!portfolioProjects) {
+    for (const s of (profile.skills || [])) {
+      if (PORTFOLIO_BY_SKILL[s]) { portfolioSkill = s; portfolioProjects = PORTFOLIO_BY_SKILL[s]; break; }
+    }
+  }
+  if (!portfolioProjects) { portfolioSkill = "Virtual Assistant"; portfolioProjects = PORTFOLIO_BY_SKILL["Virtual Assistant"]; }
 
   const eduScores = {"secondary":4,"diploma":8,"bachelor":14,"master":18,"phd":20,"other":6};
   const expScores = {"none":0,"less1":5,"1to3":10,"3plus":15};
@@ -1458,7 +1466,7 @@ function showScore() {
 
       <!-- SAMPLE PORTFOLIO PROJECTS -->
       <div style="text-align:left;margin-bottom:1.75rem">
-        <div style="font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#0096FF;margin-bottom:0.5rem">Sample Portfolio Projects for ${profile.skill||"Your Skill"}</div>
+        <div style="font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#0096FF;margin-bottom:0.5rem">Sample Portfolio Projects for ${portfolioSkill}</div>
         <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem">Pick one and build it. A real project beats a CV every time.</p>
         <div style="display:flex;flex-direction:column;gap:0.75rem">
           ${portfolioProjects.map((p,i)=>`
