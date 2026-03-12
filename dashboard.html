@@ -13,7 +13,7 @@
       --accent2: #0096FF; --text: #F0F4FF; --muted: #6B7A99;
       --card: #0F1A2E; --danger: #FF6B6B; --warn: #FFA500;
     }
-    html { scroll-behavior: smooth; }
+    html, body { scroll-behavior: smooth; overflow-x: hidden; max-width: 100%; }
     body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
 
     /* ── NAV ── */
@@ -260,7 +260,14 @@
       .welcome-name { font-size: 1.3rem; }
     }
 
-  body.light-mode { --bg: #F0F4FF; --bg2: #E2E8F0; --card: #FFFFFF; --border: rgba(0,0,0,0.1); --text: #0F172A; --muted: #64748B; }
+  body.light-mode {
+    --bg: #FAF7F2;
+    --bg2: #F2EDE4;
+    --card: #FFFDF9;
+    --border: rgba(0,0,0,0.08);
+    --text: #1A1510;
+    --muted: #6B6358;
+  }
   </style>
 </head>
 <body>
