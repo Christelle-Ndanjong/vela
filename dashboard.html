@@ -259,6 +259,8 @@
       .stats-grid { grid-template-columns: 1fr; }
       .welcome-name { font-size: 1.3rem; }
     }
+
+  body.light-mode { --bg: #F0F4FF; --bg2: #E2E8F0; --card: #FFFFFF; --border: rgba(0,0,0,0.1); --text: #0F172A; --muted: #64748B; }
   </style>
 </head>
 <body>
@@ -279,9 +281,11 @@
     <li><a href="verify.html">Verify</a></li>
     <li><a href="dashboard.html" class="active">Dashboard</a></li>
   </ul>
-  <div class="nav-right">
+  <div class="nav-right" style="display:flex;align-items:center;gap:0.5rem">
+    <button id="theme-btn" onclick="toggleTheme()" title="Toggle theme" style="background:transparent;border:1.5px solid rgba(255,255,255,0.12);color:var(--text);padding:0.4rem 0.75rem;border-radius:8px;cursor:pointer;font-size:0.9rem;font-family:'DM Sans',sans-serif;">🌙</button>
     <div class="nav-avatar" id="nav-avatar">?</div>
   </div>
+  <a href="login.html" onclick="velaSignOut(event)" style="background:transparent;border:1px solid rgba(255,100,100,0.25);color:#FF6B6B;padding:0.4rem 0.9rem;border-radius:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;">Sign Out</a>
 </nav>
 
 <!-- PAGE -->
@@ -313,17 +317,18 @@
   </a>
 </div>
 
-<!-- TELEGRAM COMMUNITY BANNER — TOP -->
-  <a href="https://t.me/+5d8WDDcuocdkNjM0" target="_blank" class="fade-up" style="display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,rgba(41,182,246,0.12),rgba(41,182,246,0.05));border:2px solid rgba(41,182,246,0.4);border-radius:16px;padding:1.1rem 1.4rem;text-decoration:none;margin-bottom:1rem;animation-delay:0.02s">
+<div style="max-width:1200px;margin:1rem auto 0;padding:0 4%">
+  <a href="https://t.me/+5d8WDDcuocdkNjM0" target="_blank" style="display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,rgba(41,182,246,0.15),rgba(41,182,246,0.06));border:2px solid rgba(41,182,246,0.5);border-radius:16px;padding:1.1rem 1.4rem;text-decoration:none;margin-bottom:1rem;">
     <div style="display:flex;align-items:center;gap:1rem">
       <span style="font-size:2rem">💬</span>
       <div>
-        <div style="color:#29B6F6;font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;letter-spacing:0.01em;">Join the VELA Community on Telegram</div>
+        <div style="color:#29B6F6;font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;">Join the VELA Community on Telegram</div>
         <div style="color:#94A3B8;font-size:0.82rem;margin-top:3px;">Connect with other African remote professionals. Ask questions, share wins, get support.</div>
       </div>
     </div>
-    <span style="background:#29B6F6;color:#07090F;font-size:0.82rem;font-weight:800;white-space:nowrap;margin-left:1rem;padding:0.5rem 1rem;border-radius:8px;">Join Free →</span>
+    <span style="background:#29B6F6;color:#07090F;font-size:0.82rem;font-weight:800;white-space:nowrap;margin-left:1rem;padding:0.5rem 1rem;border-radius:8px;flex-shrink:0;">Join Free →</span>
   </a>
+</div>
 
   <!-- NEXT ACTION -->
   <div class="next-action fade-up" id="next-action" style="animation-delay:0.05s">
@@ -819,6 +824,36 @@ function buildActivity() {
 
 // ─── INIT ─────────────────────────────────────────────────────────────────
 render();
+</script>
+
+<script>
+function toggleTheme() {
+  document.body.classList.toggle('light-mode');
+  const isLight = document.body.classList.contains('light-mode');
+  const btn = document.getElementById('theme-btn');
+  if (btn) btn.textContent = isLight ? '☀️' : '🌙';
+  localStorage.setItem('vela_theme', isLight ? 'light' : 'dark');
+}
+function applyTheme() {
+  if (localStorage.getItem('vela_theme') === 'light') {
+    document.body.classList.add('light-mode');
+    const btn = document.getElementById('theme-btn');
+    if (btn) btn.textContent = '☀️';
+  }
+}
+async function velaSignOut(e) {
+  e.preventDefault();
+  try {
+    const SUPABASE_URL = 'https://xlpghpsowygekrwylhjf.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhscGdocHNvd3lnZWtyd3lsaGpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNTE5NjEsImV4cCI6MjA4ODcyNzk2MX0.10e6szZ_7oFdwRYrjuT-c6DXWTsapZ82f4BDWoTADlk';
+    if (typeof supabase !== 'undefined') {
+      const _sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      await _sb.auth.signOut();
+    }
+  } catch(e) {}
+  window.location.href = 'login.html';
+}
+document.addEventListener('DOMContentLoaded', applyTheme);
 </script>
 </body>
 </html>
