@@ -4,6 +4,21 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>VELA — Remote Jobs for Africa</title>
+  <meta name="description" content="Browse curated remote jobs, internships and volunteering for African professionals. 15 skill paths, updated daily from global job boards. Free."/>
+  <meta name="keywords" content="remote jobs Africa, remote work Nigeria, remote jobs Kenya, remote jobs Ghana, African freelance jobs, online jobs Africa"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Remote Jobs For Africa — VELA"/>
+  <meta property="og:description" content="Browse curated remote jobs, internships and volunteering for African professionals. 15 skill paths, updated daily from global job boards. Free."/>
+  <meta property="og:url" content="https://christelle-ndanjong.github.io/vela/jobs.html"/>
+  <meta property="og:image" content="https://christelle-ndanjong.github.io/vela/og-image.png"/>
+  <meta property="og:site_name" content="VELA"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Remote Jobs For Africa — VELA"/>
+  <meta name="twitter:description" content="Browse curated remote jobs, internships and volunteering for African professionals. 15 skill paths, updated daily from global job boards. Free."/>
+  <meta name="twitter:image" content="https://christelle-ndanjong.github.io/vela/og-image.png"/>
+  <link rel="canonical" href="https://christelle-ndanjong.github.io/vela/jobs.html"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>"/>
+
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
   <style>
     html, body { overflow-x: hidden; max-width: 100%; }
@@ -416,6 +431,12 @@ async function loadJobs() {
   } catch {
     // Fall back to demo data
     allJobs = DEMO_JOBS;
+    const notice = document.getElementById('demo-notice');
+    if (notice) {
+      notice.className = 'demo-notice';
+      notice.style.display = 'flex';
+      notice.innerHTML = '<span style="font-size:1.1rem">⚠️</span><div><strong style="color:#FFA500">Showing sample jobs</strong> — live job feed not loaded. <a href="https://github.com/christelle-ndanjong/vela" target="_blank" style="color:#FFA500;font-weight:600;">Run the scraper</a> and upload jobs.json to see real listings.</div>';
+    }
   }
   buildFilters();
   render();
