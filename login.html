@@ -7,6 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <style>
+    html, body { overflow-x: hidden; max-width: 100%; }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --bg: #07090F; --bg2: #0C1018; --surface: #111827;
@@ -35,7 +36,14 @@
     .back-link { text-align: center; margin-top: 1.5rem; font-size: 0.82rem; color: var(--muted); }
     .back-link a { color: var(--accent); text-decoration: none; }
 
-  body.light-mode { --bg: #F0F4FF; --bg2: #E2E8F0; --card: #FFFFFF; --border: rgba(0,0,0,0.1); --text: #0F172A; --muted: #64748B; }
+  body.light-mode {
+    --bg: #FAF7F2;
+    --bg2: #F2EDE4;
+    --card: #FFFDF9;
+    --border: rgba(0,0,0,0.08);
+    --text: #1A1510;
+    --muted: #6B6358;
+  }
   </style>
 </head>
 <body>
