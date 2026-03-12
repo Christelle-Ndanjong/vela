@@ -18,7 +18,7 @@
       --muted: #64748B;
       --card: #0E1521;
     }
-    html { scroll-behavior: smooth; }
+    html, body { scroll-behavior: smooth; overflow-x: hidden; max-width: 100%; }
     body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; min-height: 100vh; }
 
     /* ── NAV ── */
@@ -49,7 +49,7 @@
     .hero::before {
       content: '';
       position: absolute; top: -30%; left: 50%; transform: translateX(-50%);
-      width: 700px; height: 700px;
+      width: min(700px, 100vw); height: min(700px, 100vw);
       background: radial-gradient(circle, rgba(0,229,160,0.06) 0%, transparent 70%);
       pointer-events: none;
     }
@@ -176,6 +176,9 @@
     /* ── MOBILE ── */
     @media (max-width: 768px) {
       .nav-links { display: none; }
+      nav { padding: 0.75rem 4%; gap: 0.5rem; }
+      nav > div { gap: 0.35rem; }
+      nav > div button, nav > div a { padding: 0.3rem 0.5rem; font-size: 0.7rem; }
       h1 { font-size: 2.4rem; }
       .hero { padding: 5rem 5% 3.5rem; min-height: auto; }
       .hero-stats { gap: 1.5rem; }
@@ -193,7 +196,14 @@
       .hero-stat-num { font-size: 1.3rem; }
     }
 
-  body.light-mode { --bg: #F0F4FF; --bg2: #E2E8F0; --card: #FFFFFF; --border: rgba(0,0,0,0.1); --text: #0F172A; --muted: #64748B; }
+  body.light-mode {
+    --bg: #FAF7F2;
+    --bg2: #F2EDE4;
+    --card: #FFFDF9;
+    --border: rgba(0,0,0,0.08);
+    --text: #1A1510;
+    --muted: #6B6358;
+  }
   </style>
 </head>
 <body>
