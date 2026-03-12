@@ -231,24 +231,33 @@
 
     @media (max-width: 768px) {
       .nav-links { display: none; }
-      .passport { flex-direction: column; gap: 1rem; }
-      .verif-header { flex-wrap: wrap; gap: 0.5rem; }
-      .verif-container { padding: 1.25rem 4%; }
-      .verif-card { padding: 1.25rem; border-radius: 14px; }
-      .verif-card-header { padding: 1rem; flex-wrap: wrap; gap: 0.5rem; }
-      .verif-card-body { padding: 1.25rem; }
-      .score-display { font-size: 2.5rem; }
-      .feedback-box { padding: 1rem; }
-      .options-grid { grid-template-columns: 1fr; }
-      textarea { font-size: 0.95rem; }
-      .btn-submit { width: 100%; padding: 0.9rem; }
-      .passport-layers { gap: 0.4rem; }
-    }
-    @media (max-width: 400px) {
-      .verif-card-header h3 { font-size: 0.85rem; }
-      .passport-score { font-size: 1.8rem; }
+      .passport { flex-direction: column; }
+      .verif-header { flex-wrap: wrap; }
     }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script>
+  (function() {
+    var SURL = 'https://xlpghpsowygekrwylhjf.supabase.co';
+    var SKEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhscGdocHNvd3lnZWtyd3lsaGpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNTE5NjEsImV4cCI6MjA4ODcyNzk2MX0.10e6szZ_7oFdwRYrjuT-c6DXWTsapZ82f4BDWoTADlk';
+    function waitForSupabase(cb, tries) {
+      tries = tries || 0;
+      if (typeof supabase !== 'undefined') { cb(); }
+      else if (tries < 40) { setTimeout(function(){ waitForSupabase(cb, tries+1); }, 100); }
+      else { window.location.href = 'login.html'; }
+    }
+    waitForSupabase(function() {
+      var _sb = supabase.createClient(SURL, SKEY);
+      _sb.auth.getSession().then(function(res) {
+        if (!res.data || !res.data.session) {
+          window.location.href = 'login.html';
+        }
+      }).catch(function() {
+        window.location.href = 'login.html';
+      });
+    });
+  })();
+  </script>
 </head>
 <body>
 
@@ -257,13 +266,35 @@
   <ul class="nav-links">
     <li><a href="index.html">Home</a></li>
     <li><a href="skills.html">Skills</a></li>
-    <li><a href="experience.html">Get Experience</a></li>
     <li><a href="jobs.html">Jobs</a></li>
-    <li><a href="portfolio.html">Portfolio</a></li>
     <li><a href="profile.html">Profile</a></li>
     <li><a href="verify.html" class="active">Verify</a></li>
   </ul>
+
+  <button class="hamburger-btn" onclick="toggleMobileNav()" aria-label="Open menu">☰</button>
+
+  <button class="hamburger-btn" onclick="toggleMobileNav()" aria-label="Open menu">☰</button>
 </nav>
+<div id="mobile-nav-overlay" class="mobile-nav-overlay">
+  <button class="mobile-nav-close" onclick="toggleMobileNav()">✕</button>
+  <a href="index.html" onclick="toggleMobileNav()">Home</a>
+  <a href="skills.html" onclick="toggleMobileNav()">Skills</a>
+  <a href="experience.html" onclick="toggleMobileNav()">Get Experience</a>
+  <a href="jobs.html" onclick="toggleMobileNav()">Jobs</a>
+  <a href="verify.html" class="active" onclick="toggleMobileNav()">Verify</a>
+  <a href="profile.html" class="mobile-nav-cta" onclick="toggleMobileNav()">My Profile →</a>
+</div>
+
+<div id="mobile-nav-overlay" class="mobile-nav-overlay">
+  <button class="mobile-nav-close" onclick="toggleMobileNav()">✕</button>
+  <a href="index.html" onclick="toggleMobileNav()">Home</a>
+  <a href="skills.html" onclick="toggleMobileNav()">Skills</a>
+  <a href="experience.html" onclick="toggleMobileNav()">Get Experience</a>
+  <a href="jobs.html" onclick="toggleMobileNav()">Jobs</a>
+  <a href="verify.html" class="active" onclick="toggleMobileNav()">Verify</a>
+  <a href="profile.html" class="mobile-nav-cta" onclick="toggleMobileNav()">My Profile →</a>
+</div>
+
 
 <!-- PAGE HEADER -->
 <div class="page-header">
@@ -854,6 +885,38 @@ renderCards();
 // Auto-open first incomplete layer
 const firstIncomplete = LAYERS.find(l => !verifState[l.id] || verifState[l.id].status === "failed");
 if (firstIncomplete) setTimeout(() => toggleCard(firstIncomplete.id), 300);
+</script>
+<script>
+
+function toggleMobileNav() {
+  var overlay = document.getElementById('mobile-nav-overlay');
+  var isOpen = overlay.classList.contains('open');
+  overlay.classList.toggle('open');
+  document.body.style.overflow = isOpen ? '' : 'hidden';
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    var overlay = document.getElementById('mobile-nav-overlay');
+    if (overlay) { overlay.classList.remove('open'); document.body.style.overflow = ''; }
+  }
+});
+
+</script>
+<script>
+
+function toggleMobileNav() {
+  var overlay = document.getElementById('mobile-nav-overlay');
+  var isOpen = overlay.classList.contains('open');
+  overlay.classList.toggle('open');
+  document.body.style.overflow = isOpen ? '' : 'hidden';
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    var overlay = document.getElementById('mobile-nav-overlay');
+    if (overlay) { overlay.classList.remove('open'); document.body.style.overflow = ''; }
+  }
+});
+
 </script>
 </body>
 </html>
