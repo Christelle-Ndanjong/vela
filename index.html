@@ -110,8 +110,9 @@
       display: flex; gap: 0; margin-bottom: 2.5rem;
       background: var(--card); border: 1px solid var(--border);
       border-radius: 12px; padding: 0.35rem;
-      overflow-x: auto;
+      overflow-x: auto; scrollbar-width: none;
     }
+    .tabs-nav::-webkit-scrollbar { display: none; }
     .tab-btn {
       flex: 1; background: none; border: none; color: var(--muted);
       font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600;
@@ -201,8 +202,8 @@
       .steps-grid { grid-template-columns: 1fr; }
       .audience-grid { grid-template-columns: 1fr; }
       .employer-cards { grid-template-columns: 1fr; }
-      .tabs-nav { gap: 0.25rem; }
-      .tab-btn { font-size: 0.78rem; padding: 0.6rem 0.75rem; }
+      .tabs-nav { gap: 0.25rem; display: grid; grid-template-columns: 1fr 1fr; overflow-x: visible; -webkit-mask: none; mask: none; }
+      .tab-btn { font-size: 0.75rem; padding: 0.55rem 0.5rem; text-align: center; }
       footer { flex-direction: column; gap: 1rem; text-align: center; }
       .skills-grid { grid-template-columns: repeat(2, 1fr); }
     }
@@ -272,9 +273,11 @@
   <h1>African Talent.<br/><span class="green">Verified.</span> <span class="blue">Placed.</span></h1>
   <p class="hero-sub">VELA connects verified African professionals to remote jobs worldwide — with the skills, evidence, and credibility to get hired with confidence.</p>
   <div class="hero-btns">
-    <a href="profile.html" class="btn-main">Build Your Profile →</a>
-    <a href="https://t.me/+5d8WDDcuocdkNjM0" target="_blank" class="btn-ghost">💬 Join Community →</a>
-    <a href="employers.html" class="btn-ghost">For Employers →</a>
+    <a href="profile.html" class="btn-main" style="font-size:1.05rem;padding:1rem 2.5rem;">Build Your Free Profile →</a>
+  </div>
+  <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;margin-bottom:3rem;">
+    <a href="https://t.me/+5d8WDDcuocdkNjM0" target="_blank" class="btn-ghost" style="font-size:0.85rem;padding:0.65rem 1.4rem;">💬 Community</a>
+    <a href="employers.html" class="btn-ghost" style="font-size:0.85rem;padding:0.65rem 1.4rem;">For Employers →</a>
   </div>
   <div class="hero-stats">
     <div>
@@ -347,6 +350,19 @@
   .testimonials-grid { grid-template-columns: 1fr !important; }
 }
 </style>
+
+
+<!-- SOURCES BAR -->
+<div style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1.5rem 6%;text-align:center;">
+  <p style="font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:1.25rem;">Jobs curated from</p>
+  <div style="display:flex;gap:2rem;justify-content:center;align-items:center;flex-wrap:wrap;opacity:0.55;">
+    <span style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.88rem;color:var(--text);">Remotive</span>
+    <span style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.88rem;color:var(--text);">RemoteOK</span>
+    <span style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.88rem;color:var(--text);">Jobicy</span>
+    <span style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.88rem;color:var(--text);">Himalayas</span>
+    <span style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.88rem;color:var(--text);">Arbeitnow</span>
+  </div>
+</div>
 
 <!-- TABS -->
 <div class="tabs-section">
@@ -502,6 +518,65 @@
         <div class="emp-card-desc">Browse all candidates free. Only pay $299 when you make a successful placement.</div>
       </div>
     </div>
+  </div>
+</div>
+
+
+<!-- FAQ SECTION -->
+<div style="padding:5rem 6%;max-width:780px;margin:0 auto;" id="faq">
+  <p style="font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);text-align:center;margin-bottom:0.75rem;">GOT QUESTIONS?</p>
+  <h2 style="font-family:'Syne',sans-serif;font-size:clamp(1.5rem,3.5vw,2rem);font-weight:800;color:var(--text);text-align:center;margin-bottom:2.5rem;">Common Questions</h2>
+
+  <div style="display:flex;flex-direction:column;gap:0.65rem;">
+
+    <details style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;cursor:pointer;">
+      <summary style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:var(--text);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+        Is VELA really free?
+        <span style="color:var(--accent);font-size:1.1rem;transition:transform 0.2s;">+</span>
+      </summary>
+      <p style="color:var(--muted);font-size:0.88rem;margin-top:0.85rem;line-height:1.7;">Yes — completely free for job seekers. You pay nothing until you are hired. Employers pay a small placement fee only when they successfully hire someone through VELA.</p>
+    </details>
+
+    <details style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;cursor:pointer;">
+      <summary style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:var(--text);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+        Do I need a degree to join?
+        <span style="color:var(--accent);font-size:1.1rem;">+</span>
+      </summary>
+      <p style="color:var(--muted);font-size:0.88rem;margin-top:0.85rem;line-height:1.7;">No degree required. No connections required. No money required. VELA is built for anyone with skills and the willingness to prove them. Your verification score speaks louder than your certificate.</p>
+    </details>
+
+    <details style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;cursor:pointer;">
+      <summary style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:var(--text);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+        Which African countries can join?
+        <span style="color:var(--accent);font-size:1.1rem;">+</span>
+      </summary>
+      <p style="color:var(--muted);font-size:0.88rem;margin-top:0.85rem;line-height:1.7;">All 54 African countries. VELA was built for the entire continent — Nigeria, Kenya, Ghana, South Africa, Ethiopia, Tanzania, Rwanda, Senegal, Côte d'Ivoire, Cameroon, and every other African country.</p>
+    </details>
+
+    <details style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;cursor:pointer;">
+      <summary style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:var(--text);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+        How long does verification take?
+        <span style="color:var(--accent);font-size:1.1rem;">+</span>
+      </summary>
+      <p style="color:var(--muted);font-size:0.88rem;margin-top:0.85rem;line-height:1.7;">Most candidates complete all 5 verification layers in under 2 hours. Three layers are scored by AI instantly — communication test, tool quiz, and mock interview. The task simulation and video introduction are reviewed within 24 hours.</p>
+    </details>
+
+    <details style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;cursor:pointer;">
+      <summary style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:var(--text);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+        What happens after I get verified?
+        <span style="color:var(--accent);font-size:1.1rem;">+</span>
+      </summary>
+      <p style="color:var(--muted);font-size:0.88rem;margin-top:0.85rem;line-height:1.7;">Your VELA Verified profile goes live to employers worldwide. You can also browse and apply directly to daily job listings matched to your skill. Employers can shortlist you and VELA facilitates the introduction.</p>
+    </details>
+
+    <details style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;cursor:pointer;">
+      <summary style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:var(--text);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+        What if I have no experience yet?
+        <span style="color:var(--accent);font-size:1.1rem;">+</span>
+      </summary>
+      <p style="color:var(--muted);font-size:0.88rem;margin-top:0.85rem;line-height:1.7;">VELA has a dedicated <a href="experience.html" style="color:var(--accent);text-decoration:none;font-weight:600;">Get Experience</a> section — a curated directory of free remote volunteering and internship platforms like UN Volunteers, Catchafire, and Parker Dewey. Build real portfolio evidence before you apply.</p>
+    </details>
+
   </div>
 </div>
 
