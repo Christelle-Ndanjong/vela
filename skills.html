@@ -577,6 +577,29 @@
     .resource-source { font-size:0.75rem; color:#6B7A99; }
     .resource-arrow { color:#00E5A0; font-size:1.1rem; flex-shrink:0; margin-left:0.5rem; }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script>
+  (function() {
+    var SURL = 'https://xlpghpsowygekrwylhjf.supabase.co';
+    var SKEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhscGdocHNvd3lnZWtyd3lsaGpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNTE5NjEsImV4cCI6MjA4ODcyNzk2MX0.10e6szZ_7oFdwRYrjuT-c6DXWTsapZ82f4BDWoTADlk';
+    function waitForSupabase(cb, tries) {
+      tries = tries || 0;
+      if (typeof supabase !== 'undefined') { cb(); }
+      else if (tries < 40) { setTimeout(function(){ waitForSupabase(cb, tries+1); }, 100); }
+      else { window.location.href = 'login.html'; }
+    }
+    waitForSupabase(function() {
+      var _sb = supabase.createClient(SURL, SKEY);
+      _sb.auth.getSession().then(function(res) {
+        if (!res.data || !res.data.session) {
+          window.location.href = 'login.html';
+        }
+      }).catch(function() {
+        window.location.href = 'login.html';
+      });
+    });
+  })();
+  </script>
 </head>
 <body>
 
@@ -587,7 +610,31 @@
     <a href="jobs.html" style="color:#6B7A99;text-decoration:none;font-size:0.88rem;font-weight:500;margin-left:1.5rem;transition:color 0.2s" onmouseover="this.style.color='#F0F4FF'" onmouseout="this.style.color='#6B7A99'">Jobs</a>
     <span style="margin-left:1.5rem">Choose your path to get placed</span>
   </div>
+
+  <button class="hamburger-btn" onclick="toggleMobileNav()" aria-label="Open menu">☰</button>
+
+  <button class="hamburger-btn" onclick="toggleMobileNav()" aria-label="Open menu">☰</button>
 </nav>
+<div id="mobile-nav-overlay" class="mobile-nav-overlay">
+  <button class="mobile-nav-close" onclick="toggleMobileNav()">✕</button>
+  <a href="index.html" onclick="toggleMobileNav()">Home</a>
+  <a href="skills.html" class="active" onclick="toggleMobileNav()">Skills</a>
+  <a href="experience.html" onclick="toggleMobileNav()">Get Experience</a>
+  <a href="jobs.html" onclick="toggleMobileNav()">Jobs</a>
+  <a href="verify.html" onclick="toggleMobileNav()">Verify</a>
+  <a href="profile.html" class="mobile-nav-cta" onclick="toggleMobileNav()">My Profile →</a>
+</div>
+
+<div id="mobile-nav-overlay" class="mobile-nav-overlay">
+  <button class="mobile-nav-close" onclick="toggleMobileNav()">✕</button>
+  <a href="index.html" onclick="toggleMobileNav()">Home</a>
+  <a href="skills.html" class="active" onclick="toggleMobileNav()">Skills</a>
+  <a href="experience.html" onclick="toggleMobileNav()">Get Experience</a>
+  <a href="jobs.html" onclick="toggleMobileNav()">Jobs</a>
+  <a href="verify.html" onclick="toggleMobileNav()">Verify</a>
+  <a href="profile.html" class="mobile-nav-cta" onclick="toggleMobileNav()">My Profile →</a>
+</div>
+
 
 <div class="header">
   <div class="header-badge">15 In-Demand Skills · 2026–2027</div>
@@ -1204,6 +1251,38 @@ renderCards();
 const style = document.createElement('style');
 style.textContent = `@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }`;
 document.head.appendChild(style);
+</script>
+<script>
+
+function toggleMobileNav() {
+  var overlay = document.getElementById('mobile-nav-overlay');
+  var isOpen = overlay.classList.contains('open');
+  overlay.classList.toggle('open');
+  document.body.style.overflow = isOpen ? '' : 'hidden';
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    var overlay = document.getElementById('mobile-nav-overlay');
+    if (overlay) { overlay.classList.remove('open'); document.body.style.overflow = ''; }
+  }
+});
+
+</script>
+<script>
+
+function toggleMobileNav() {
+  var overlay = document.getElementById('mobile-nav-overlay');
+  var isOpen = overlay.classList.contains('open');
+  overlay.classList.toggle('open');
+  document.body.style.overflow = isOpen ? '' : 'hidden';
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    var overlay = document.getElementById('mobile-nav-overlay');
+    if (overlay) { overlay.classList.remove('open'); document.body.style.overflow = ''; }
+  }
+});
+
 </script>
 </body>
 </html>
