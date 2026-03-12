@@ -196,6 +196,28 @@
     --muted: #6B6358;
   }
   </style>
+  <script>
+  (function() {
+    var SURL = 'https://xlpghpsowygekrwylhjf.supabase.co';
+    var SKEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhscGdocHNvd3lnZWtyd3lsaGpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNTE5NjEsImV4cCI6MjA4ODcyNzk2MX0.10e6szZ_7oFdwRYrjuT-c6DXWTsapZ82f4BDWoTADlk';
+    function waitForSupabase(cb, tries) {
+      tries = tries || 0;
+      if (typeof supabase !== 'undefined') { cb(); }
+      else if (tries < 40) { setTimeout(function(){ waitForSupabase(cb, tries+1); }, 100); }
+      else { window.location.href = 'login.html'; }
+    }
+    waitForSupabase(function() {
+      var _sb = supabase.createClient(SURL, SKEY);
+      _sb.auth.getSession().then(function(res) {
+        if (!res.data || !res.data.session) {
+          window.location.href = 'login.html';
+        }
+      }).catch(function() {
+        window.location.href = 'login.html';
+      });
+    });
+  })();
+  </script>
 </head>
 <body>
 
@@ -209,8 +231,35 @@
     <li><a href="profile.html" style="color:var(--accent);font-size:0.82rem;font-weight:600;text-decoration:none;border:1px solid rgba(0,229,160,0.25);padding:0.4rem 0.9rem;border-radius:8px;">← My Results</a></li>
     <li><a href="profile.html" class="nav-cta">My Profile</a></li>
   </ul>
-  <div style="display:flex;gap:0.5rem;align-items:center"><button id="theme-btn" onclick="toggleTheme()" title="Toggle theme" style="background:transparent;border:1.5px solid rgba(255,255,255,0.12);color:var(--text);padding:0.4rem 0.75rem;border-radius:8px;cursor:pointer;font-size:0.9rem;font-family:'DM Sans',sans-serif;">🌙</button><a href="login.html" onclick="velaSignOut(event)" style="background:transparent;border:1px solid rgba(255,100,100,0.25);color:#FF6B6B;padding:0.4rem 0.9rem;border-radius:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;">Sign Out</a></div>
+  <div style="display:flex;gap:0.5rem;align-items:center">
+    <button id="theme-btn" onclick="toggleTheme()" title="Toggle theme" style="background:transparent;border:1.5px solid rgba(255,255,255,0.12);color:var(--text);padding:0.4rem 0.75rem;border-radius:8px;cursor:pointer;font-size:0.9rem;font-family:'DM Sans',sans-serif;">🌙</button>
+    <a id="nav-auth-btn" href="login.html" style="background:transparent;border:1px solid rgba(0,229,160,0.25);color:var(--accent);padding:0.4rem 0.9rem;border-radius:8px;font-size:0.78rem;font-weight:600;text-decoration:none;">Sign In</a>
+  </div>
+
+  <button class="hamburger-btn" onclick="toggleMobileNav()" aria-label="Open menu">☰</button>
+
+  <button class="hamburger-btn" onclick="toggleMobileNav()" aria-label="Open menu">☰</button>
 </nav>
+<div id="mobile-nav-overlay" class="mobile-nav-overlay">
+  <button class="mobile-nav-close" onclick="toggleMobileNav()">✕</button>
+  <a href="index.html" onclick="toggleMobileNav()">Home</a>
+  <a href="skills.html" onclick="toggleMobileNav()">Skills</a>
+  <a href="experience.html" onclick="toggleMobileNav()">Get Experience</a>
+  <a href="jobs.html" class="active" onclick="toggleMobileNav()">Jobs</a>
+  <a href="verify.html" onclick="toggleMobileNav()">Verify</a>
+  <a href="profile.html" class="mobile-nav-cta" onclick="toggleMobileNav()">My Profile →</a>
+</div>
+
+<div id="mobile-nav-overlay" class="mobile-nav-overlay">
+  <button class="mobile-nav-close" onclick="toggleMobileNav()">✕</button>
+  <a href="index.html" onclick="toggleMobileNav()">Home</a>
+  <a href="skills.html" onclick="toggleMobileNav()">Skills</a>
+  <a href="experience.html" onclick="toggleMobileNav()">Get Experience</a>
+  <a href="jobs.html" class="active" onclick="toggleMobileNav()">Jobs</a>
+  <a href="verify.html" onclick="toggleMobileNav()">Verify</a>
+  <a href="profile.html" class="mobile-nav-cta" onclick="toggleMobileNav()">My Profile →</a>
+</div>
+
 
 <div class="page-header">
   <div class="header-left">
@@ -533,5 +582,69 @@ async function velaSignOut(e) {
 }
 document.addEventListener('DOMContentLoaded', applyTheme);
 </script>
+<script>
+
+function toggleMobileNav() {
+  var overlay = document.getElementById('mobile-nav-overlay');
+  var isOpen = overlay.classList.contains('open');
+  overlay.classList.toggle('open');
+  document.body.style.overflow = isOpen ? '' : 'hidden';
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    var overlay = document.getElementById('mobile-nav-overlay');
+    if (overlay) { overlay.classList.remove('open'); document.body.style.overflow = ''; }
+  }
+});
+
+</script>
+<script>
+
+function toggleMobileNav() {
+  var overlay = document.getElementById('mobile-nav-overlay');
+  var isOpen = overlay.classList.contains('open');
+  overlay.classList.toggle('open');
+  document.body.style.overflow = isOpen ? '' : 'hidden';
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    var overlay = document.getElementById('mobile-nav-overlay');
+    if (overlay) { overlay.classList.remove('open'); document.body.style.overflow = ''; }
+  }
+});
+
+</script>
+
+<script>
+(function() {
+  var SURL = 'https://xlpghpsowygekrwylhjf.supabase.co';
+  var SKEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhscGdocHNvd3lnZWtyd3lsaGpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNTE5NjEsImV4cCI6MjA4ODcyNzk2MX0.10e6szZ_7oFdwRYrjuT-c6DXWTsapZ82f4BDWoTADlk';
+  function waitForSupabase(cb, tries) {
+    tries = tries || 0;
+    if (typeof supabase !== 'undefined') cb();
+    else if (tries < 40) setTimeout(function(){ waitForSupabase(cb, tries+1); }, 100);
+  }
+  waitForSupabase(function() {
+    var _sb = supabase.createClient(SURL, SKEY);
+    _sb.auth.getSession().then(function(res) {
+      var btn = document.getElementById('nav-auth-btn');
+      if (!btn) return;
+      if (res.data && res.data.session) {
+        btn.textContent = 'Sign Out';
+        btn.style.borderColor = 'rgba(255,100,100,0.25)';
+        btn.style.color = '#FF6B6B';
+        btn.onclick = function(e) {
+          e.preventDefault();
+          _sb.auth.signOut().then(function(){ window.location.href = 'login.html'; });
+        };
+      } else {
+        btn.textContent = 'Sign In';
+        btn.href = 'login.html';
+      }
+    });
+  });
+})();
+</script>
+
 </body>
 </html>
