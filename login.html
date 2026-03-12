@@ -73,6 +73,10 @@
     </div>
     <button class="btn-submit" id="btn-login" onclick="handleLogin()">Sign In →</button>
     <div class="msg" id="login-msg"></div>
+    <div id="resend-wrap" style="display:none;text-align:center;margin-top:0.75rem;">
+      <span style="font-size:0.8rem;color:var(--muted)">Didn't get the email? </span>
+      <a href="#" onclick="resendConfirmation()" style="font-size:0.8rem;color:var(--accent);text-decoration:none;font-weight:600;">Resend confirmation →</a>
+    </div>
     <div class="divider"></div>
     <div style="text-align:center;font-size:0.8rem;color:var(--muted)">
       <a href="#" onclick="showForgot()" style="color:var(--accent);text-decoration:none;">Forgot your password?</a>
@@ -152,6 +156,15 @@ function showForgot() {
   document.getElementById('form-forgot').style.display = 'block';
 }
 
+async function resendConfirmation() {
+  const email = document.getElementById('login-email').value.trim();
+  const msg = document.getElementById('login-msg');
+  if (!email) { msg.className = 'msg error'; msg.textContent = 'Enter your email above first.'; return; }
+  const { error } = await _supabase.auth.resend({ type: 'signup', email });
+  if (error) { msg.className = 'msg error'; msg.textContent = error.message; }
+  else { msg.className = 'msg success'; msg.textContent = '📧 Confirmation email resent! Check your inbox (and spam folder).'; }
+}
+
 async function handleLogin() {
   const email = document.getElementById('login-email').value.trim();
   const password = document.getElementById('login-password').value;
@@ -161,11 +174,32 @@ async function handleLogin() {
   if (!email || !password) { msg.className = 'msg error'; msg.textContent = 'Please fill in all fields.'; return; }
 
   btn.disabled = true; btn.textContent = 'Signing in...';
+
+  // Show "still working" message if Supabase is slow (free tier cold start)
+  const slowTimer = setTimeout(() => {
+    if (btn.disabled) msg.className = 'msg'; msg.textContent = '⏳ Still connecting... Supabase can be slow on first load. Please wait.';
+  }, 4000);
+
   const { error } = await _supabase.auth.signInWithPassword({ email, password });
+  clearTimeout(slowTimer);
 
   if (error) {
     msg.className = 'msg error';
-    msg.textContent = error.message === 'Invalid login credentials' ? 'Wrong email or password. Try again.' : error.message;
+    const m = error.message.toLowerCase();
+    if (m.includes('invalid login') || m.includes('invalid credentials') || m.includes('wrong password')) {
+      msg.textContent = '✗ Wrong email or password. Please try again.';
+    } else if (m.includes('email not confirmed') || m.includes('not confirmed')) {
+      msg.textContent = '📧 Please check your email and click the confirmation link before signing in.';
+      document.getElementById('resend-wrap').style.display = 'block';
+    } else if (m.includes('too many requests') || m.includes('rate limit')) {
+      msg.textContent = '⏳ Too many attempts. Please wait a few minutes and try again.';
+    } else if (m.includes('user not found') || m.includes('no user')) {
+      msg.textContent = '✗ No account found with this email. Please create an account first.';
+    } else if (m.includes('network') || m.includes('fetch')) {
+      msg.textContent = '🌐 Connection error. Please check your internet and try again.';
+    } else {
+      msg.textContent = error.message;
+    }
     btn.disabled = false; btn.textContent = 'Sign In →';
   } else {
     msg.className = 'msg success';
@@ -192,17 +226,32 @@ async function handleRegister() {
 
   if (error) {
     msg.className = 'msg error';
-    if (error.message.toLowerCase().includes('already registered') || error.message.toLowerCase().includes('already exists') || error.message.toLowerCase().includes('email address is already')) {
-      msg.textContent = '⚠ An account with this email already exists. Please sign in instead.';
+    const m = error.message.toLowerCase();
+    if (m.includes('already registered') || m.includes('already exists') || m.includes('email address is already') || m.includes('user already')) {
+      msg.textContent = '⚠ An account with this email already exists. Switching to Sign In...';
       setTimeout(() => switchTab('login'), 2500);
+    } else if (m.includes('password') && m.includes('short')) {
+      msg.textContent = '✗ Password too short — must be at least 6 characters.';
+    } else if (m.includes('invalid email') || m.includes('valid email')) {
+      msg.textContent = '✗ Please enter a valid email address.';
+    } else if (m.includes('network') || m.includes('fetch')) {
+      msg.textContent = '🌐 Connection error. Please check your internet and try again.';
     } else {
       msg.textContent = error.message;
     }
     btn.disabled = false; btn.textContent = 'Create Account →';
   } else {
-    msg.className = 'msg success';
-    msg.textContent = '✓ Account created! Redirecting to your profile...';
-    setTimeout(() => window.location.href = 'profile.html', 1500);
+    // Check if email confirmation is required (identities array is empty = unconfirmed)
+    const needsConfirm = data?.user && data.user.identities && data.user.identities.length === 0;
+    if (needsConfirm) {
+      msg.className = 'msg success';
+      msg.innerHTML = '📧 <strong>Check your email!</strong> We sent a confirmation link to <strong>' + email + '</strong>. Click it to activate your account, then come back to sign in.';
+      btn.disabled = false; btn.textContent = 'Create Account →';
+    } else {
+      msg.className = 'msg success';
+      msg.textContent = '✓ Account created! Taking you to your profile...';
+      setTimeout(() => window.location.href = 'profile.html', 1500);
+    }
   }
 }
 
