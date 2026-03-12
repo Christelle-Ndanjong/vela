@@ -296,6 +296,7 @@
   <div class="filter-scroll" id="skill-filters"></div>
   <div class="filter-scroll" style="margin-top:0.5rem" id="type-filters">
     <button class="filter-btn type-btn active" onclick="setType('all',this)">All Types</button>
+    <button class="filter-btn type-btn" onclick="setType('saved',this)">🔖 Saved</button>
     <button class="filter-btn type-btn" onclick="setType('job',this)">💼 Full-time Jobs</button>
     <button class="filter-btn type-btn" onclick="setType('internship',this)">🎓 Internships</button>
     <button class="filter-btn type-btn" onclick="setType('volunteer',this)">🤝 Volunteering</button>
@@ -487,6 +488,45 @@ function logoFallback(company) {
 }
 
 // ─── RENDER ─────────────────────────────────────────────────────────────────
+
+
+function toggleSaveJob(jobId, btn) {
+  const saved = JSON.parse(localStorage.getItem('vela_saved_jobs') || '[]');
+  const id = String(jobId);
+  if (saved.includes(id)) {
+    const updated = saved.filter(x => x !== id);
+    localStorage.setItem('vela_saved_jobs', JSON.stringify(updated));
+    if (btn) btn.textContent = '🔖';
+  } else {
+    saved.push(id);
+    localStorage.setItem('vela_saved_jobs', JSON.stringify(saved));
+    if (btn) { btn.textContent = '✅'; btn.style.transform = 'scale(1.3)'; setTimeout(() => btn.style.transform = 'scale(1)', 200); }
+  }
+}
+
+function getMatchScore(job) {
+  const userSkill  = localStorage.getItem('vela_skill') || '';
+  const userTools  = JSON.parse(localStorage.getItem('vela_tools') || '[]');
+  const userEnglish = parseInt(localStorage.getItem('vela_english') || '0');
+  let score = 0;
+  if (job.skill && userSkill && job.skill === userSkill) score += 55;
+  const jobTags = (job.tags || []).map(t => t.toLowerCase());
+  const matched = userTools.filter(tool =>
+    jobTags.some(tag => tag.includes(tool.toLowerCase()) || tool.toLowerCase().includes(tag))
+  );
+  score += Math.min(matched.length * 10, 30);
+  if (userEnglish >= 3) score += 10;
+  if (userEnglish >= 4) score += 5;
+  return Math.min(score, 100);
+}
+
+function highlight(text, query) {
+  if (!query || query.length < 2) return text;
+  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return text.replace(new RegExp('(' + escaped + ')', 'gi'),
+    '<mark style="background:rgba(0,229,160,0.18);color:var(--accent);border-radius:2px;padding:0 1px;">$1</mark>');
+}
+
 function render() {
   const query = document.getElementById("search").value.toLowerCase();
   const sort  = document.getElementById("sort").value;
@@ -499,7 +539,9 @@ function render() {
       (j.tags || []).some(t => t.toLowerCase().includes(query)) ||
       j.skill.toLowerCase().includes(query);
     const jobType = j.type || "job";
-    const matchType = activeType === "all" || jobType === activeType;
+    const savedJobs = JSON.parse(localStorage.getItem('vela_saved_jobs') || '[]');
+    const matchType = activeType === "all" || jobType === activeType ||
+      (activeType === "saved" && savedJobs.includes(String(j.id)));
     return matchSkill && matchQuery && matchType;
   });
 
@@ -545,8 +587,16 @@ function render() {
             </div>
             <div class="job-main">
               <div class="job-title-row">
-                <span class="job-title">${job.title}</span>
+                <span class="job-title">${highlight(job.title, query)}</span>
                 ${isNew(job.posted) ? '<span class="job-new">New</span>' : ''}
+                ${(function(){
+                  const userSkill = localStorage.getItem('vela_skill');
+                  if (!userSkill) return '';
+                  const ms = getMatchScore(job);
+                  if (ms === 0) return '';
+                  const col = ms >= 70 ? 'var(--accent)' : ms >= 40 ? '#FFA500' : 'var(--muted)';
+                  return '<span style="font-size:0.68rem;font-weight:700;color:' + col + ';background:rgba(0,0,0,0.15);padding:0.15rem 0.5rem;border-radius:100px;border:1px solid currentColor;">' + ms + '% match</span>';
+                })()}
               </div>
               <div class="job-company">${job.company} · ${job.location || "Worldwide"}</div>
               <div class="job-tags">
@@ -560,7 +610,14 @@ function render() {
                 <div>${timeAgo(job.posted)}</div>
                 <div class="job-source"><span class="source-dot"></span>${job.source}</div>
               </div>
-              <button class="apply-btn" onclick="event.preventDefault();window.open('${job.url}','_blank')">Apply for this Job →</button>
+              <div style="display:flex;align-items:center;gap:0.5rem;margin-top:0.5rem;">
+                <button style="background:transparent;border:none;cursor:pointer;font-size:1rem;padding:0.25rem;transition:transform 0.15s;flex-shrink:0;" title="Save job"
+                  id="save-${job.id}"
+                  onclick="event.preventDefault();event.stopPropagation();toggleSaveJob('${job.id}', this)">
+                  ${(JSON.parse(localStorage.getItem('vela_saved_jobs')||'[]')).includes(String(job.id)) ? '✅' : '🔖'}
+                </button>
+                <button class="apply-btn" style="flex:1;" onclick="event.preventDefault();event.stopPropagation();window.open('${job.url}','_blank')">Apply →</button>
+              </div>
             </div>
           </a>
         `).join("")}
