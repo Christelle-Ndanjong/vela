@@ -610,6 +610,20 @@
   }
   </style>
     <script src="config.js"></script>
+
+<script>
+// Session guard — redirect to login if not signed in
+(async function() {
+  try {
+    if (typeof supabase === 'undefined') return;
+    const cfg = window.VELA_CONFIG || {};
+    if (!cfg.SUPABASE_URL) return;
+    const _sb = supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_KEY);
+    const { data } = await _sb.auth.getSession();
+    if (!data.session) window.location.href = 'login.html';
+  } catch(e) {}
+})();
+</script>
 </head>
 <body>
 
