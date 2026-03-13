@@ -4,6 +4,11 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>VELA — Browse Verified Talent</title>
+  <meta name="description" content="Browse verified African remote talent. Filter by skill, score, availability and experience. Pre-verified through 5 layers — free to browse."/>
+  <meta property="og:title" content="Browse Verified African Talent — VELA"/>
+  <meta property="og:description" content="Pre-verified African professionals ready for remote work. Filter by skill, score, and availability. Free to browse."/>
+  <link rel="canonical" href="https://christelle-ndanjong.github.io/vela/talent.html"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>"/>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -205,6 +210,7 @@
       .talent-grid { grid-template-columns: 1fr; }
     }
   </style>
+  <script src="config.js"></script>
 </head>
 <body>
 
@@ -217,10 +223,19 @@
     <button class="btn-ghost shortlist-btn" id="nav-shortlist-btn" onclick="scrollToShortlist()" style="display:none">
       ♥ Shortlist <span class="shortlist-count" id="nav-sl-count">0</span>
     </button>
-    <a class="btn-ghost" href="employers.html">← Back</a>
+    <a class="btn-ghost" href="employers.html" style="display:none" id="back-btn">← Back</a>
+    <button id="theme-btn" onclick="toggleTheme()" style="background:transparent;border:1.5px solid rgba(255,255,255,0.12);color:var(--text);padding:0.4rem 0.75rem;border-radius:8px;cursor:pointer;font-size:0.9rem;">🌙</button>
     <a class="btn-cta" href="employers.html#pricing">Post a Role</a>
+    <button class="hamburger-btn" onclick="toggleMobileNav()">☰</button>
   </div>
 </nav>
+<div id="mobile-nav-overlay" class="mobile-nav-overlay">
+  <button class="mobile-nav-close" onclick="toggleMobileNav()">✕</button>
+  <a href="index.html" onclick="toggleMobileNav()">Home</a>
+  <a href="employers.html" onclick="toggleMobileNav()">For Employers</a>
+  <a href="talent.html" onclick="toggleMobileNav()">Browse Talent</a>
+  <a href="employers.html#pricing" class="mobile-nav-cta" onclick="toggleMobileNav()">Post a Role →</a>
+</div>
 
 <div class="page-wrap">
 
@@ -551,5 +566,35 @@ function clearFilters() {
 buildSkillFilters();
 applyFilters();
 </script>
+
+<script>
+function toggleMobileNav() {
+  var overlay = document.getElementById('mobile-nav-overlay');
+  overlay.classList.toggle('open');
+  document.body.style.overflow = overlay.classList.contains('open') ? 'hidden' : '';
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') { var o = document.getElementById('mobile-nav-overlay'); if(o){o.classList.remove('open'); document.body.style.overflow='';} }
+});
+</script>
+
+<script>
+function toggleTheme() {
+  document.body.classList.toggle('light-mode');
+  const isLight = document.body.classList.contains('light-mode');
+  const btn = document.getElementById('theme-btn');
+  if (btn) btn.textContent = isLight ? '☀️' : '🌙';
+  localStorage.setItem('vela_theme', isLight ? 'light' : 'dark');
+}
+function applyTheme() {
+  if (localStorage.getItem('vela_theme') === 'light') {
+    document.body.classList.add('light-mode');
+    const btn = document.getElementById('theme-btn');
+    if (btn) btn.textContent = '☀️';
+  }
+}
+document.addEventListener('DOMContentLoaded', applyTheme);
+</script>
+
 </body>
 </html>
