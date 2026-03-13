@@ -1486,6 +1486,104 @@ function showStepError(msg) {
 
 // ─── SCORE SCREEN ─────────────────────────────────────────────────────────────
 // ─── PORTFOLIO PROJECTS BY SKILL ─────────────────────────────────────────────
+
+// ─── CAREER RECOMMENDATIONS ──────────────────────────────────────────────────
+const CAREER_PATHS = {
+  "Data Analysis": {
+    easilyHired: ["Data Entry Specialist","Reporting Analyst","Excel/Sheets Specialist","Junior BI Analyst"],
+    standOut: ["SQL Data Analyst","Business Intelligence Developer","Data Storyteller","Analytics Engineer"],
+    adjacent: ["Product Analyst","Growth Analyst","Marketing Analyst","Operations Analyst"],
+    tip: "SQL + one visualisation tool (Power BI or Tableau) + a public portfolio project = hireable. Most companies hiring data analysts care more about your SQL than your degree."
+  },
+  "Customer Service": {
+    easilyHired: ["Customer Support Agent","Live Chat Agent","Email Support Specialist","Help Desk Agent"],
+    standOut: ["Customer Success Manager","Account Manager","Support Team Lead","CX Operations"],
+    adjacent: ["Community Manager","Sales Development Rep","Technical Support","QA Analyst"],
+    tip: "A CRM certificate (HubSpot free) + sample support response portfolio = strong application. Zendesk and Intercom experience is highly valued."
+  },
+  "Virtual Assistant": {
+    easilyHired: ["General Virtual Assistant","Admin Assistant","Data Entry VA","Scheduling Assistant"],
+    standOut: ["Executive Virtual Assistant","Operations VA","OBM (Online Business Manager)","Chief of Staff VA"],
+    adjacent: ["Project Coordinator","EA to CEO","Ops Coordinator","Systems Manager"],
+    tip: "Specialise. General VAs earn $8–12/hr. Executive VAs with Notion + project management earn $25–45/hr. Pick a niche — legal VA, real estate VA, or tech startup VA."
+  },
+  "Social Media Management": {
+    easilyHired: ["Social Media Assistant","Content Scheduler","Community Moderator","Instagram Manager"],
+    standOut: ["Social Media Strategist","Brand Content Manager","Head of Social","Social Media Director"],
+    adjacent: ["Influencer Marketing","Content Creator","Digital Marketing Manager","Brand Partnerships"],
+    tip: "Metrics win jobs. Show follower growth %, engagement rate, and reach improvements. One case study showing 10K growth beats 5 pages of claims."
+  },
+  "Content Writing": {
+    easilyHired: ["Blog Writer","Article Writer","Social Media Copywriter","Email Writer"],
+    standOut: ["SEO Content Strategist","Technical Writer","UX Writer","Content Marketing Manager"],
+    adjacent: ["Brand Copywriter","Ghostwriter","Newsletter Writer","Thought Leadership Writer"],
+    tip: "SEO knowledge multiplies your value 3x. Learn keyword research basics + use Surfer SEO free plan. Specialise in one industry (SaaS, finance, health) for premium rates."
+  },
+  "Prompt Engineering & AI": {
+    easilyHired: ["AI Content Specialist","Prompt Writer","AI Trainer","LLM Data Annotator"],
+    standOut: ["AI Automation Engineer","Prompt Engineer","AI Product Specialist","LLM Developer"],
+    adjacent: ["AI Consultant","Automation Freelancer","No-Code AI Builder","AI Customer Success"],
+    tip: "Build 3 automation workflows with Make.com or Zapier + AI. Document them. That portfolio gets you $40–80/hr as a freelancer immediately."
+  },
+  "SEO Specialist": {
+    easilyHired: ["SEO Assistant","Link Builder","On-Page SEO Specialist","Content SEO Writer"],
+    standOut: ["SEO Manager","Technical SEO Specialist","SEO Strategist","Head of SEO"],
+    adjacent: ["Digital Marketing Manager","Growth Hacker","Content Marketing Lead","SEM Specialist"],
+    tip: "Technical SEO (site audits, Core Web Vitals, schema markup) pays 2x more than basic on-page SEO. Learn Screaming Frog + Google Search Console deeply."
+  },
+  "Project Management": {
+    easilyHired: ["Project Coordinator","Scrum Master (Junior)","Project Administrator","PMO Analyst"],
+    standOut: ["Senior Project Manager","Program Manager","Agile Coach","Head of Delivery"],
+    adjacent: ["Operations Manager","Product Manager","Business Analyst","Change Manager"],
+    tip: "PMP or PRINCE2 certification dramatically increases hire rate. PMI-ACP (Agile) is faster to get. Even a Jira + Scrum certification from Coursera helps significantly."
+  },
+  "UI/UX Design": {
+    easilyHired: ["Junior UI Designer","Visual Designer","Wireframe Designer","UI Prototype Builder"],
+    standOut: ["Product Designer","UX Researcher","Design Systems Designer","Lead UX Designer"],
+    adjacent: ["Frontend Developer","Brand Designer","Motion Designer","No-Code Builder"],
+    tip: "3 polished Figma case studies > 20 mediocre ones. Each case study needs: problem → research → wireframes → final design → results. Quality wins."
+  },
+  "Email Marketing": {
+    easilyHired: ["Email Marketing Assistant","Email Copywriter","ESP Manager","Campaign Coordinator"],
+    standOut: ["Email Marketing Manager","Lifecycle Marketing Specialist","CRM Marketing Manager","Retention Specialist"],
+    adjacent: ["Marketing Automation Specialist","Growth Marketer","Digital Marketing Manager","Klaviyo Specialist"],
+    tip: "Klaviyo and ActiveCampaign certifications (both free) + a portfolio of 3 live email sequences = strong entry point. E-commerce email pays best."
+  },
+  "Cybersecurity": {
+    easilyHired: ["SOC Analyst Tier 1","IT Security Assistant","Security Awareness Trainer","Compliance Assistant"],
+    standOut: ["Penetration Tester","Cloud Security Engineer","Incident Response Analyst","Security Engineer"],
+    adjacent: ["IT Auditor","Risk Analyst","Compliance Manager","DevSecOps Engineer"],
+    tip: "TryHackMe or HackTheBox profile + CompTIA Security+ = entry into SOC roles. CEH and OSCP certifications unlock senior roles. Bug bounty programs build real portfolio."
+  },
+  "Bookkeeping": {
+    easilyHired: ["Bookkeeping Assistant","Accounts Payable/Receivable","Payroll Assistant","Data Entry Accountant"],
+    standOut: ["Full-Charge Bookkeeper","Controller","Accounting Manager","CFO (Fractional)"],
+    adjacent: ["Tax Preparer","Financial Analyst","Accounts Manager","FP&A Analyst"],
+    tip: "QuickBooks ProAdvisor (free certification from Intuit) + Xero Advisor certification = strong credentials. Many remote bookkeeping firms hire certified candidates immediately."
+  },
+  "E-Commerce": {
+    easilyHired: ["E-Commerce Assistant","Product Lister","Order Fulfillment Specialist","Customer Service (E-Com)"],
+    standOut: ["E-Commerce Manager","DTC Growth Manager","Shopify Specialist","Amazon Brand Manager"],
+    adjacent: ["Digital Marketing Manager","Performance Marketer","Marketplace Manager","Supply Chain Analyst"],
+    tip: "Shopify Partner certification (free) + one live store case study showing revenue growth = strong hire signal. Meta Ads + email automation is the highest-value combo."
+  },
+  "HR & Recruitment": {
+    easilyHired: ["HR Assistant","Recruitment Coordinator","Talent Sourcer","People Ops Admin"],
+    standOut: ["Technical Recruiter","HR Business Partner","Talent Acquisition Manager","Chief People Officer"],
+    adjacent: ["L&D Specialist","Compensation Analyst","DEI Manager","Employer Branding Manager"],
+    tip: "LinkedIn Recruiter Lite experience + an ATS (Greenhouse or Lever) + SHRM-CP certification = ready for senior remote HR roles. Tech recruiting pays 40% more than general HR."
+  },
+};
+
+function getCareerRecommendations() {
+  const recs = [];
+  const skills = profile.skills.length > 0 ? profile.skills : [profile.skill];
+  skills.forEach(s => {
+    if (CAREER_PATHS[s]) recs.push({ skill: s, ...CAREER_PATHS[s] });
+  });
+  return recs;
+}
+
 const PORTFOLIO_BY_SKILL = {
   "Data Analysis": [
     { title:"Sales Dashboard", desc:"Analyse 12 months of sales data in Excel or Google Sheets. Build charts showing trends, top products, and regional performance.", tool:"Excel / Google Sheets" },
@@ -1731,6 +1829,35 @@ function showScore() {
             </div>`).join("")}
         </div>
       </div>` : ""}
+
+      <!-- CAREER RECOMMENDATIONS -->
+      ${(() => {
+        const careerRecs = getCareerRecommendations();
+        if (careerRecs.length === 0) return "";
+        return `
+        <div style="text-align:left;margin-bottom:1.75rem">
+          <div style="font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#9333EA;margin-bottom:0.5rem">🎯 Career Recommendations For You</div>
+          <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem">Based on your skills — here is what you can get hired for right now, and what will make you stand out.</p>
+          ${careerRecs.map(rec => `
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.1rem 1.25rem;margin-bottom:0.85rem">
+              <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem;color:var(--text);margin-bottom:0.85rem">📌 ${rec.skill}</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:0.85rem">
+                <div>
+                  <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);margin-bottom:0.4rem">✅ Easily get hired as</div>
+                  ${rec.easilyHired.map(r=>`<div style="font-size:0.8rem;color:var(--muted);padding:0.2rem 0;border-bottom:1px solid var(--border)">${r}</div>`).join("")}
+                </div>
+                <div>
+                  <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#0096FF;margin-bottom:0.4rem">🚀 Stand out as</div>
+                  ${rec.standOut.map(r=>`<div style="font-size:0.8rem;color:var(--muted);padding:0.2rem 0;border-bottom:1px solid var(--border)">${r}</div>`).join("")}
+                </div>
+              </div>
+              <div style="font-size:0.78rem;color:var(--muted);margin-bottom:0.5rem"><strong style="color:var(--text)">Also explore:</strong> ${rec.adjacent.join(" · ")}</div>
+              <div style="background:rgba(147,51,234,0.07);border:1px solid rgba(147,51,234,0.2);border-radius:8px;padding:0.7rem 0.9rem;font-size:0.8rem;color:var(--muted);line-height:1.55">
+                💡 <strong style="color:var(--text)">Pro tip:</strong> ${rec.tip}
+              </div>
+            </div>`).join("")}
+        </div>`;
+      })()}
 
       <!-- SAMPLE PORTFOLIO PROJECTS -->
       <div style="text-align:left;margin-bottom:1.75rem">
