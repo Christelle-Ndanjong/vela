@@ -1,9 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SHKH39MCXB"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-SHKH39MCXB');
+  </script>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>VELA — Sign In</title>
+  <link rel="icon" type="image/png" href="favicon.png"/>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
     <script src="config.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -56,7 +65,7 @@
 <body>
 
 <div style="position:fixed;top:1rem;right:1rem;z-index:100"><button id="theme-btn" onclick="toggleTheme()" title="Toggle theme" style="background:transparent;border:1.5px solid rgba(255,255,255,0.12);color:var(--text);padding:0.4rem 0.75rem;border-radius:8px;cursor:pointer;font-size:0.9rem;font-family:'DM Sans',sans-serif;">🌙</button></div>
-<div class="logo">VELA</div>
+<div class="logo" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;"><img src="logo.png" alt="VELA" style="width:32px;height:32px;object-fit:contain;"/>VELA</div>
 <div class="tagline">African Talent. Verified. Placed.</div>
 
 <div class="card">
