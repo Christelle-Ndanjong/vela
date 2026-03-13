@@ -17,10 +17,18 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #080C12; --bg2: #0D1320; --surface: #111827;
-      --border: rgba(255,255,255,0.07); --accent: #00E5A0;
-      --accent2: #0096FF; --text: #F0F4FF; --muted: #6B7A99;
-      --card: #0F1A2E; --danger: #FF6B6B; --warn: #FFA500;
+      --bg: #060A14;
+      --bg2: #0B1120;
+      --surface: #0F1829;
+      --card: #111E30;
+      --border: rgba(255,255,255,0.08);
+      --accent: #00D48E;
+      --accent2: #3B9EFF;
+      --text: #E8EEFF;
+      --muted: #7A8AAD;
+      --danger: #FF5E5E;
+      --warn: #FFB347;
+      --success: #00D48E;
     }
     html, body { scroll-behavior: smooth; overflow-x: hidden; max-width: 100%; }
     body {
@@ -312,12 +320,15 @@
       .choice-grid.cols-2 { grid-template-columns: 1fr; }
     }
   body.light-mode {
-    --bg: #FAF7F2;
-    --bg2: #F2EDE4;
-    --card: #FFFDF9;
-    --border: rgba(0,0,0,0.08);
-    --text: #1A1510;
-    --muted: #6B6358;
+    --bg: #F5F0E8;
+    --bg2: #EDE6D8;
+    --card: #FDFAF5;
+    --surface: #EDE6D8;
+    --border: rgba(0,0,0,0.09);
+    --text: #15110A;
+    --muted: #6B5F4E;
+    --accent: #00A86B;
+    --accent2: #1A6FCC;
   }
   </style>
 </head>
@@ -1935,6 +1946,7 @@ function showScore() {
           <a class="btn-jobs" style="${btnStyles[a.style]};text-decoration:none;text-align:center;${a.urgent?'animation:pulse 2s infinite':''}" href="${a.href}" ${a.external?'target="_blank"':''}>${a.label}</a>
         `).join("")}
         <button class="btn-jobs" onclick="generateCV()" style="background:rgba(147,51,234,0.12);border:1.5px solid rgba(147,51,234,0.3);color:#9333EA;text-align:center;cursor:pointer;font-family:'Syne',sans-serif;font-weight:600;font-size:0.9rem;padding:0.9rem;border-radius:10px;width:100%">📄 Generate & Download My CV</button>
+        <a class="btn-jobs" href="ats-customiser.html" style="background:rgba(255,179,71,0.1);border:1.5px solid rgba(255,179,71,0.3);color:#FFB347;text-decoration:none;text-align:center;font-family:'Syne',sans-serif;font-weight:600;font-size:0.9rem;padding:0.9rem;border-radius:10px;display:block">🎯 Customise CV for a Specific Job →</a>
         ${tier !== "notready" ? `<button class="btn-retry" onclick="location.href='jobs.html'">View Matched Jobs →</button>` : ""}
         <button class="btn-retry" onclick="retryQuiz()" style="margin-top:0.5rem;opacity:0.7;font-size:0.82rem">Retake Knowledge Check</button>
       </div>
