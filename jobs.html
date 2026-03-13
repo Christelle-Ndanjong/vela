@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script src="config.js"></script>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script src="config.js"></script>
   <title>VELA — Remote Jobs for Africa</title>
   <meta name="description" content="Browse curated remote jobs, internships and volunteering for African professionals. 15 skill paths, updated daily from global job boards. Free."/>
   <meta name="keywords" content="remote jobs Africa, remote work Nigeria, remote jobs Kenya, remote jobs Ghana, African freelance jobs, online jobs Africa"/>
@@ -214,16 +214,14 @@
   </style>
   <script>
   (function() {
-    var SURL = window.VELA_CONFIG.SUPABASE_URL;
-    var SKEY = window.VELA_CONFIG.SUPABASE_KEY;
-    function waitForSupabase(cb, tries) {
+    function waitForConfig(cb, tries) {
       tries = tries || 0;
-      if (typeof supabase !== 'undefined') { cb(); }
-      else if (tries < 40) { setTimeout(function(){ waitForSupabase(cb, tries+1); }, 100); }
+      if (window.VELA_CONFIG && typeof supabase !== 'undefined') { cb(); }
+      else if (tries < 60) { setTimeout(function(){ waitForConfig(cb, tries+1); }, 100); }
       else { window.location.href = 'login.html'; }
     }
-    waitForSupabase(function() {
-      var _sb = supabase.createClient(SURL, SKEY);
+    waitForConfig(function() {
+      var _sb = supabase.createClient(window.VELA_CONFIG.SUPABASE_URL, window.VELA_CONFIG.SUPABASE_KEY);
       _sb.auth.getSession().then(function(res) {
         if (!res.data || !res.data.session) {
           window.location.href = 'login.html';
