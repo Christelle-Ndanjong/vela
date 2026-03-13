@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>VELA — Sign In</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+    <script src="config.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <style>
     html, body { overflow-x: hidden; max-width: 100%; }
@@ -125,8 +126,8 @@
 </div>
 
 <script>
-const SUPABASE_URL = 'https://xlpghpsowygekrwylhjf.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhscGdocHNvd3lnZWtyd3lsaGpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNTE5NjEsImV4cCI6MjA4ODcyNzk2MX0.10e6szZ_7oFdwRYrjuT-c6DXWTsapZ82f4BDWoTADlk';
+const SUPABASE_URL = window.VELA_CONFIG.SUPABASE_URL;
+const SUPABASE_KEY = window.VELA_CONFIG.SUPABASE_KEY;
 const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // Check if already logged in
@@ -260,7 +261,7 @@ async function handleForgot() {
   const msg = document.getElementById('forgot-msg');
   if (!email) { msg.className = 'msg error'; msg.textContent = 'Please enter your email.'; return; }
   const { error } = await _supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: 'https://christelle-ndanjong.github.io/vela/reset-password.html'
+    redirectTo: window.VELA_CONFIG.RESET_PASSWORD_URL
   });
   if (error) { msg.className = 'msg error'; msg.textContent = error.message; }
   else { msg.className = 'msg success'; msg.textContent = '✓ Reset link sent! Check your inbox.'; }
@@ -304,8 +305,8 @@ function applyTheme() {
 async function velaSignOut(e) {
   e.preventDefault();
   try {
-    const SUPABASE_URL = 'https://xlpghpsowygekrwylhjf.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhscGdocHNvd3lnZWtyd3lsaGpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNTE5NjEsImV4cCI6MjA4ODcyNzk2MX0.10e6szZ_7oFdwRYrjuT-c6DXWTsapZ82f4BDWoTADlk';
+    const SUPABASE_URL = window.VELA_CONFIG.SUPABASE_URL;
+    const SUPABASE_KEY = window.VELA_CONFIG.SUPABASE_KEY;
     if (typeof supabase !== 'undefined') {
       const _sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
       await _sb.auth.signOut();
