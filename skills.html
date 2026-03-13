@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SHKH39MCXB"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-SHKH39MCXB');
+  </script>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>VELA — Choose Your Path</title>
@@ -603,27 +611,6 @@
   }
   </style>
     <script src="config.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-  <script>
-  (function() {
-    function waitForConfig(cb, tries) {
-      tries = tries || 0;
-      if (window.VELA_CONFIG && typeof supabase !== 'undefined') { cb(); }
-      else if (tries < 60) { setTimeout(function(){ waitForConfig(cb, tries+1); }, 100); }
-      else { window.location.href = 'login.html'; }
-    }
-    waitForConfig(function() {
-      var _sb = supabase.createClient(window.VELA_CONFIG.SUPABASE_URL, window.VELA_CONFIG.SUPABASE_KEY);
-      _sb.auth.getSession().then(function(res) {
-        if (!res.data || !res.data.session) {
-          window.location.href = 'login.html';
-        }
-      }).catch(function() {
-        window.location.href = 'login.html';
-      });
-    });
-  })();
-  </script>
 </head>
 <body>
 
