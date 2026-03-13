@@ -744,7 +744,7 @@ function getNextAction() {
   if (verif < 3)   return { icon:"🏆", text:`${verif}/5 verifications done — keep going to unlock VELA Verified status`, btn:"Continue Verification →", url:"verify.html" };
   if (verif < 5)   return { icon:"🔐", text:`Almost there — ${5-verif} more verification${5-verif>1?"s":""} needed for the full badge`, btn:"Finish Verification →", url:"verify.html" };
   if (roadmap < 50) return { icon:"📚", text:`Work through your ${profile.skill} roadmap — you're ${roadmap}% through`, btn:"Continue Learning →", url:"skills.html" };
-  return { icon:"💼", text:"You're verified and skilled — time to apply to matched remote jobs", btn:"View Jobs →", url:`jobs.html${profile.skill?`?skill=${encodeURIComponent(profile.skill)}`:""}` };
+  return { icon:"💼", text:"You are verified and skilled — time to apply to matched remote jobs", btn:"View Jobs →", url:`jobs.html${profile.skill?`?skill=${encodeURIComponent(profile.skill)}`:""}` };
 }
 
 function getScoreColor(s) {
@@ -795,7 +795,7 @@ function render() {
   document.getElementById("score-status").textContent = label;
   document.getElementById("score-status").style.color = color;
   document.getElementById("score-hint").textContent = score >= 60
-    ? "You've cleared the pass mark. Keep improving to stand out more."
+    ? "You have cleared the pass mark. Keep improving to stand out more."
     : score > 0 ? "Pass mark is 60. Complete more verifications to boost your score."
     : "Complete your profile to calculate your score.";
 
@@ -1066,7 +1066,7 @@ function renderTracker() {
   if (!wrap) return;
   const apps = getApplications();
   if (!apps.length) {
-    wrap.innerHTML = '<div class="tracker-empty">No applications tracked yet.<br>Hit <strong>+ Add Application</strong> to start tracking where you've applied.</div>';
+    wrap.innerHTML = '<div class="tracker-empty">No applications tracked yet.<br>Hit <strong>+ Add Application</strong> to start tracking where you have applied.</div>';
     return;
   }
   wrap.innerHTML = '<div class="tracker-list">' + apps.map(a => {
@@ -1156,7 +1156,7 @@ function checkMilestones() {
       condition: verifCount >= 3,
       emoji: '🚀',
       title: 'Halfway Verified!',
-      sub: '3 out of 5 verification layers complete. You're in the top tier of candidates.',
+      sub: "3 out of 5 verification layers complete. You are in the top tier of candidates.",
       share: name + ' is 60% VELA Verified — 3/5 verification layers complete! Getting closer to global remote work. 🌍 #VELA #AfricanTalent'
     },
     {
