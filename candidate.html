@@ -4,6 +4,10 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>VELA — Candidate Profile</title>
+  <meta name="description" content="View verified VELA candidate profile — readiness score, verification layers, skills, tools, and work samples."/>
+  <meta property="og:title" content="Candidate Profile — VELA"/>
+  <meta name="robots" content="noindex"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>"/>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -181,6 +185,7 @@
       .hero-score-row { grid-template-columns: 1fr; }
     }
   </style>
+  <script src="config.js"></script>
 </head>
 <body>
 
@@ -191,9 +196,17 @@
   </a>
   <div class="nav-right">
     <a class="btn-ghost" href="talent.html">← Browse Talent</a>
+    <button id="theme-btn" onclick="toggleTheme()" style="background:transparent;border:1.5px solid rgba(255,255,255,0.12);color:var(--text);padding:0.4rem 0.75rem;border-radius:8px;cursor:pointer;font-size:0.9rem;">🌙</button>
     <button class="btn-primary" onclick="contactCandidate()">Contact Candidate →</button>
+    <button class="hamburger-btn" onclick="toggleMobileNav()">☰</button>
   </div>
 </nav>
+<div id="mobile-nav-overlay" class="mobile-nav-overlay">
+  <button class="mobile-nav-close" onclick="toggleMobileNav()">✕</button>
+  <a href="employers.html" onclick="toggleMobileNav()">For Employers</a>
+  <a href="talent.html" onclick="toggleMobileNav()">Browse Talent</a>
+  <a href="employers.html#pricing" class="mobile-nav-cta" onclick="toggleMobileNav()">Post a Role →</a>
+</div>
 
 <div class="page" id="page">
   <div style="text-align:center;padding:4rem;color:var(--muted);grid-column:1/-1">Loading candidate profile...</div>
@@ -477,5 +490,35 @@ function contactCandidate() {
 
 init();
 </script>
+
+<script>
+function toggleMobileNav() {
+  var overlay = document.getElementById('mobile-nav-overlay');
+  overlay.classList.toggle('open');
+  document.body.style.overflow = overlay.classList.contains('open') ? 'hidden' : '';
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') { var o = document.getElementById('mobile-nav-overlay'); if(o){o.classList.remove('open'); document.body.style.overflow='';} }
+});
+</script>
+
+<script>
+function toggleTheme() {
+  document.body.classList.toggle('light-mode');
+  const isLight = document.body.classList.contains('light-mode');
+  const btn = document.getElementById('theme-btn');
+  if (btn) btn.textContent = isLight ? '☀️' : '🌙';
+  localStorage.setItem('vela_theme', isLight ? 'light' : 'dark');
+}
+function applyTheme() {
+  if (localStorage.getItem('vela_theme') === 'light') {
+    document.body.classList.add('light-mode');
+    const btn = document.getElementById('theme-btn');
+    if (btn) btn.textContent = '☀️';
+  }
+}
+document.addEventListener('DOMContentLoaded', applyTheme);
+</script>
+
 </body>
 </html>
