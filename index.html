@@ -281,13 +281,51 @@
   <div class="hero-pill">Now Live · Join the Community</div>
   <h1>African Talent.<br/><span class="green">Verified.</span> <span class="blue">Placed.</span></h1>
   <p class="hero-sub">VELA connects verified African professionals to remote jobs worldwide — with the skills, evidence, and credibility to get hired with confidence.</p>
-  <div class="hero-btns">
-    <a href="profile.html" class="btn-main" style="font-size:1.05rem;padding:1rem 2.5rem;">Build Your Free Profile →</a>
+  <!-- ROLE SELECTOR -->
+  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem;width:100%;max-width:560px;margin-left:auto;margin-right:auto">
+
+    <!-- JOB SEEKER CARD -->
+    <div id="card-seeker" onclick="selectRole('seeker')"
+      style="flex:1;min-width:220px;background:rgba(0,229,160,0.06);border:2px solid rgba(0,229,160,0.25);border-radius:16px;padding:1.5rem 1.25rem;cursor:pointer;transition:all 0.25s;text-align:left;position:relative">
+      <div style="font-size:2rem;margin-bottom:0.6rem">🌍</div>
+      <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:var(--text);margin-bottom:0.35rem">I am looking for work</div>
+      <div style="font-size:0.82rem;color:var(--muted);line-height:1.5">Build your verified profile, get scored, and get matched to remote jobs worldwide</div>
+      <div style="margin-top:1rem;background:var(--accent);color:#07090F;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;padding:0.55rem 1.1rem;border-radius:8px;display:inline-block">Build My Profile →</div>
+    </div>
+
+    <!-- RECRUITER CARD -->
+    <div id="card-recruiter" onclick="selectRole('recruiter')"
+      style="flex:1;min-width:220px;background:rgba(0,150,255,0.06);border:2px solid rgba(0,150,255,0.2);border-radius:16px;padding:1.5rem 1.25rem;cursor:pointer;transition:all 0.25s;text-align:left;position:relative">
+      <div style="font-size:2rem;margin-bottom:0.6rem">🏢</div>
+      <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:var(--text);margin-bottom:0.35rem">I am hiring talent</div>
+      <div style="font-size:0.82rem;color:var(--muted);line-height:1.5">Browse verified African professionals, filter by skill, score and availability — hire with confidence</div>
+      <div style="margin-top:1rem;background:#0096FF;color:#fff;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;padding:0.55rem 1.1rem;border-radius:8px;display:inline-block">Browse Talent →</div>
+    </div>
+
   </div>
+
   <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;margin-bottom:3rem;">
     <a href="https://t.me/+5d8WDDcuocdkNjM0" target="_blank" class="btn-ghost" style="font-size:0.85rem;padding:0.65rem 1.4rem;">💬 Community</a>
-    <a href="employers.html" class="btn-ghost" style="font-size:0.85rem;padding:0.65rem 1.4rem;">For Employers →</a>
   </div>
+
+  <script>
+  function selectRole(role) {
+    localStorage.setItem('vela_role', role);
+    // Highlight selected card
+    document.getElementById('card-seeker').style.borderColor = role === 'seeker' ? 'var(--accent)' : 'rgba(0,229,160,0.25)';
+    document.getElementById('card-recruiter').style.borderColor = role === 'recruiter' ? '#0096FF' : 'rgba(0,150,255,0.2)';
+    // Small delay so user sees the selection, then navigate
+    setTimeout(() => {
+      window.location.href = role === 'seeker' ? 'login.html?role=seeker' : 'login.html?role=recruiter';
+    }, 200);
+  }
+  // Restore selection if coming back
+  document.addEventListener('DOMContentLoaded', () => {
+    const saved = localStorage.getItem('vela_role');
+    if (saved === 'seeker') document.getElementById('card-seeker').style.borderColor = 'var(--accent)';
+    if (saved === 'recruiter') document.getElementById('card-recruiter').style.borderColor = '#0096FF';
+  });
+  </script>
   <div class="hero-stats">
     <div>
       <div class="hero-stat-num">Growing</div>
