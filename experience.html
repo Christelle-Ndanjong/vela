@@ -31,10 +31,18 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #080C12; --bg2: #0D1320; --surface: #111827;
-      --border: rgba(255,255,255,0.07); --accent: #00E5A0;
-      --accent2: #0096FF; --text: #F0F4FF; --muted: #6B7A99;
-      --card: #0F1A2E;
+      --bg: #060A14;
+      --bg2: #0B1120;
+      --surface: #0F1829;
+      --card: #111E30;
+      --border: rgba(255,255,255,0.08);
+      --accent: #00D48E;
+      --accent2: #3B9EFF;
+      --text: #E8EEFF;
+      --muted: #7A8AAD;
+      --danger: #FF5E5E;
+      --warn: #FFB347;
+      --success: #00D48E;
     }
     html { scroll-behavior: smooth; }
     body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; min-height: 100vh; }
@@ -139,12 +147,15 @@
     }
   
   body.light-mode {
-    --bg: #FAF7F2;
-    --bg2: #F2EDE4;
-    --card: #FFFDF9;
-    --border: rgba(0,0,0,0.08);
-    --text: #1A1510;
-    --muted: #6B6358;
+    --bg: #F5F0E8;
+    --bg2: #EDE6D8;
+    --card: #FDFAF5;
+    --surface: #EDE6D8;
+    --border: rgba(0,0,0,0.09);
+    --text: #15110A;
+    --muted: #6B5F4E;
+    --accent: #00A86B;
+    --accent2: #1A6FCC;
   }
   </style>
     <script src="config.js"></script>
