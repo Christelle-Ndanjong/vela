@@ -330,7 +330,8 @@
   <div class="step-container" id="step-container"></div>
 </main>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" onerror="supabaseLoadFailed()"></script>
+  <script src="config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" onerror="supabaseLoadFailed()"></script>
 <script>
 function supabaseLoadFailed() {
   // Supabase CDN failed — render the form anyway without auth
@@ -524,8 +525,8 @@ let quizAnswers = {};
 
 
 // ─── SUPABASE ────────────────────────────────────────────────────────────────
-const SUPABASE_URL = 'https://xlpghpsowygekrwylhjf.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhscGdocHNvd3lnZWtyd3lsaGpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNTE5NjEsImV4cCI6MjA4ODcyNzk2MX0.10e6szZ_7oFdwRYrjuT-c6DXWTsapZ82f4BDWoTADlk';
+const SUPABASE_URL = window.VELA_CONFIG.SUPABASE_URL;
+const SUPABASE_KEY = window.VELA_CONFIG.SUPABASE_KEY;
 let _supabase = null;
 try {
   if (typeof supabase !== 'undefined') {
