@@ -390,18 +390,28 @@
     </div>
   </div>
 
-  <!-- PORTFOLIO CTA -->
-<div style="max-width:1200px;margin:1rem auto 0;padding:0 4%">
+  <!-- PORTFOLIO + CV CTA -->
+<div style="max-width:1200px;margin:1rem auto 0;padding:0 4%;display:grid;grid-template-columns:1fr 1fr;gap:0.75rem">
   <a href="portfolio.html" style="display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,rgba(0,150,255,0.1),rgba(0,229,160,0.06));border:1.5px solid rgba(0,150,255,0.25);border-radius:14px;padding:1.25rem 1.5rem;text-decoration:none;transition:all 0.2s" onmouseover="this.style.borderColor='rgba(0,150,255,0.5)'" onmouseout="this.style.borderColor='rgba(0,150,255,0.25)'">
-    <div style="display:flex;align-items:center;gap:1rem">
-      <div style="font-size:1.8rem">🗂️</div>
+    <div style="display:flex;align-items:center;gap:0.85rem">
+      <div style="font-size:1.6rem">🗂️</div>
       <div>
-        <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:var(--text);margin-bottom:0.2rem">Build Your Portfolio</div>
-        <div style="font-size:0.8rem;color:var(--muted)">Add your projects, work samples, and evidence — employers see your real work</div>
+        <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;color:var(--text);margin-bottom:0.2rem">Build Portfolio</div>
+        <div style="font-size:0.75rem;color:var(--muted)">Add projects & work samples</div>
       </div>
     </div>
-    <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.85rem;color:#0096FF;white-space:nowrap">Build Now →</div>
+    <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;color:#0096FF;white-space:nowrap">Build →</div>
   </a>
+  <div onclick="generateCV()" style="display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,rgba(147,51,234,0.1),rgba(147,51,234,0.04));border:1.5px solid rgba(147,51,234,0.25);border-radius:14px;padding:1.25rem 1.5rem;cursor:pointer;transition:all 0.2s" onmouseover="this.style.borderColor='rgba(147,51,234,0.5)'" onmouseout="this.style.borderColor='rgba(147,51,234,0.25)'">
+    <div style="display:flex;align-items:center;gap:0.85rem">
+      <div style="font-size:1.6rem">📄</div>
+      <div>
+        <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;color:var(--text);margin-bottom:0.2rem">Generate My CV</div>
+        <div style="font-size:0.75rem;color:var(--muted)">ATS-ready PDF from your profile</div>
+      </div>
+    </div>
+    <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;color:#9333EA;white-space:nowrap">Download →</div>
+  </div>
 </div>
 
 
@@ -1208,5 +1218,52 @@ function copyToClipboard(text) {
 setTimeout(checkMilestones, 2000);
 </script>
 
+
+<script>
+function generateCV() {
+  // Load profile from localStorage
+  let p = {};
+  try {
+    // Try to get current user email from Supabase session
+    const keys = Object.keys(localStorage).filter(k => k.startsWith('vela_') && !k.includes('_step') && !k.includes('_quiz') && !k.includes('_theme') && !k.includes('_skill') && !k.includes('_tool') && !k.includes('_saved'));
+    if (keys.length > 0) p = JSON.parse(localStorage.getItem(keys[0]) || '{}');
+  } catch(e) {}
+  if (!p.name) { alert('Please complete your profile first to generate a CV.'); window.location.href='profile.html'; return; }
+  
+  const skillsList = (p.skills||[]).join(' · ') || p.skill || 'Remote Professional';
+  const toolsList = (p.tools||[]).filter(t=>t!=='none').join(', ') || '';
+  const expLabel = {none:'Entry Level',less1:'Under 1 Year','1to3':'1–3 Years','3plus':'3+ Years'}[p.experience] || '';
+  const eduLabel = {secondary:'Secondary School',diploma:'Diploma / HND',bachelor:"Bachelor's Degree",master:"Master's Degree",phd:'PhD / Doctorate',other:'Professional Certification'}[p.education] || '';
+  const engLabel = {1:'Basic',2:'Conversational',3:'Intermediate',4:'Proficient',5:'Fluent'}[p.english] || '';
+
+  const cvHTML = `<!DOCTYPE html><html><head><meta charset="UTF-8"/><title>${p.name} — CV</title><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:Arial,sans-serif;font-size:11pt;color:#1a1a1a;background:#fff;padding:2cm;max-width:21cm;margin:0 auto}.cv-name{font-size:22pt;font-weight:900;color:#07090F;letter-spacing:-0.5px}.cv-title{font-size:12pt;color:#00C48C;font-weight:700;margin-top:0.2rem}.cv-contact{font-size:9.5pt;color:#555;margin-top:0.5rem;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:3px solid #00C48C}.cv-sec-title{font-size:10pt;font-weight:900;text-transform:uppercase;letter-spacing:0.12em;color:#07090F;border-bottom:1.5px solid #eee;padding-bottom:0.3rem;margin:1.25rem 0 0.7rem}.cv-text{font-size:10.5pt;line-height:1.6;color:#333}.cv-tag{display:inline-block;background:#f0fdf9;border:1px solid #00C48C;color:#007a5e;font-size:9pt;font-weight:700;padding:0.2rem 0.6rem;border-radius:4px;margin:0.15rem}.vela-badge{margin-top:2rem;text-align:center;font-size:8pt;color:#aaa;border-top:1px solid #eee;padding-top:0.75rem}@media print{body{padding:1cm}}</style></head>
+<body>
+<div class="cv-name">${p.name.toUpperCase()}</div>
+<div class="cv-title">${skillsList}</div>
+<div class="cv-contact">${p.email?'✉ '+p.email+'&nbsp;&nbsp;':''}${p.country?'📍 '+p.country+'&nbsp;&nbsp;':''}${p.timezone?'🕐 '+p.timezone:''}${p.availability?'&nbsp;&nbsp;⏱ '+p.availability:''}</div>
+${p.motivation?`<div class="cv-sec-title">Professional Summary</div><div class="cv-text">${p.motivation}</div>`:''}
+<div class="cv-sec-title">Core Skills</div>
+<div>${(p.skills||[]).map(s=>`<span class="cv-tag">${s}</span>`).join('')}</div>
+${toolsList?`<div class="cv-sec-title">Tools & Platforms</div><div class="cv-text">${toolsList}</div>`:''}
+<div class="cv-sec-title">Education</div>
+<div style="font-weight:700">${eduLabel}</div>${p.field?`<div class="cv-text">${p.field}</div>`:''}
+<div class="cv-sec-title">Experience</div>
+<div style="font-weight:700">${expLabel}</div>${p.expYears?`<div class="cv-text">${p.expYears}</div>`:''}
+${engLabel?`<div class="cv-sec-title">Languages</div><div class="cv-text">English — ${engLabel}</div>`:''}
+${p.goal?`<div class="cv-sec-title">Career Goal</div><div class="cv-text">${p.goal}</div>`:''}
+<div class="vela-badge">Generated by VELA · African Talent, Verified & Placed · ${new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})}</div>
+</body></html>`;
+
+  const win = window.open('','_blank');
+  win.document.write(cvHTML);
+  win.document.close();
+  setTimeout(()=>{
+    const d=win.document.createElement('div');
+    d.style.cssText='position:fixed;top:1rem;right:1rem;display:flex;gap:0.5rem;z-index:999';
+    d.innerHTML=`<button onclick="window.print()" style="background:#00C48C;color:#fff;border:none;padding:0.6rem 1.2rem;border-radius:8px;font-weight:700;cursor:pointer">🖨️ Print / Save PDF</button><button onclick="window.close()" style="background:#eee;color:#333;border:none;padding:0.6rem 1rem;border-radius:8px;font-weight:700;cursor:pointer">✕ Close</button>`;
+    win.document.body.appendChild(d);
+  },300);
+}
+</script>
 </body>
 </html>
