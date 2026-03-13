@@ -34,8 +34,10 @@
     .tab.active { background: var(--accent); color: #07090F; }
     .form-group { margin-bottom: 1.1rem; }
     .form-label { display: block; font-size: 0.75rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4rem; }
-    .form-input { width: 100%; background: var(--surface); border: 1.5px solid var(--border); color: var(--text); padding: 0.75rem 1rem; border-radius: 10px; font-size: 0.9rem; font-family: 'DM Sans', sans-serif; outline: none; transition: border-color 0.2s; }
+    .form-input { width: 100%; background: var(--surface); border: 1.5px solid var(--border); color: var(--text); -webkit-text-fill-color: var(--text); padding: 0.75rem 1rem; border-radius: 10px; font-size: 0.9rem; font-family: 'DM Sans', sans-serif; outline: none; transition: border-color 0.2s; }
     .form-input:focus { border-color: rgba(0,229,160,0.4); }
+    .form-input::placeholder { color: var(--muted); opacity: 1; }
+    .form-input:-webkit-autofill { -webkit-box-shadow: 0 0 0 100px var(--surface) inset !important; -webkit-text-fill-color: var(--text) !important; }
     .btn-submit { width: 100%; background: var(--accent); color: #07090F; border: none; padding: 0.85rem; border-radius: 10px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; cursor: pointer; margin-top: 0.5rem; transition: opacity 0.2s; }
     .btn-submit:hover { opacity: 0.88; }
     .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -68,6 +70,9 @@
 <div class="logo" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;"><img src="logo.png" alt="VELA" style="width:32px;height:32px;object-fit:contain;"/>VELA</div>
 <div class="tagline">African Talent. Verified. Placed.</div>
 
+<!-- ROLE BANNER — shown based on URL param or localStorage -->
+<div id="role-banner" style="display:none;width:100%;max-width:420px;margin-bottom:1rem;border-radius:12px;padding:0.85rem 1.25rem;text-align:center;font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem"></div>
+
 <div class="card">
   <div class="tabs">
     <button class="tab active" id="tab-login" onclick="switchTab('login')">Sign In</button>
@@ -84,7 +89,6 @@
     <div class="form-group">
       <label class="form-label">Email Address</label>
       <input type="email" class="form-input" id="login-email" placeholder="your@email.com"/>
-    </div>
     </div>
     <div class="form-group">
       <label class="form-label">Password</label>
