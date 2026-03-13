@@ -614,29 +614,41 @@ window.addEventListener('DOMContentLoaded', async function() {
 
 async function saveToSupabase(extraData = {}) {
   if (!currentUser || !_supabase) return;
+  // Show saving indicator
+  const saveBtn = document.getElementById('save-btn');
+  if (saveBtn) { saveBtn.textContent = '💾 Saving...'; saveBtn.style.opacity = '0.6'; }
   try {
-    await _supabase.from('profiles').upsert({
+    const payload = {
       id: currentUser.id,
       email: currentUser.email,
-      name: profile.name,
-      country: profile.country,
-      education: profile.education,
-      field: profile.field,
-      experience: profile.experience,
-      exp_years: profile.expYears,
-      skills: profile.skills,
-      skill: profile.skill,
-      self_level: profile.selfLevel,
-      tools: profile.tools,
-      english: profile.english,
-      availability: profile.availability,
-      motivation: profile.motivation,
-      goal: profile.goal,
-      quiz_score: profile.quizScore,
+      name: profile.name || '',
+      country: profile.country || '',
+      education: profile.education || '',
+      field: profile.field || '',
+      experience: profile.experience || '',
+      exp_years: profile.expYears || '',
+      skills: profile.skills || [],
+      skill: profile.skill || '',
+      self_level: profile.selfLevel || 0,
+      tools: profile.tools || [],
+      english: profile.english || 0,
+      availability: profile.availability || '',
+      timezone: profile.timezone || '',
+      motivation: profile.motivation || '',
+      goal: profile.goal || '',
+      quiz_score: profile.quizScore || 0,
+      current_step: currentStep,
       updated_at: new Date().toISOString(),
       ...extraData
-    });
-  } catch(e) { console.log('Save error:', e); }
+    };
+    const { error } = await _supabase.from('profiles').upsert(payload, { onConflict: 'id' });
+    if (error) console.warn('Supabase save warning:', error.message);
+    if (saveBtn) { saveBtn.textContent = '✓ Saved'; saveBtn.style.opacity = '1'; setTimeout(() => { saveBtn.textContent = '💾 Save'; }, 2000); }
+  } catch(e) {
+    console.warn('saveToSupabase failed (offline?):', e.message);
+    if (saveBtn) { saveBtn.textContent = '💾 Save'; saveBtn.style.opacity = '1'; }
+    // Silent fail — localStorage already has the data as backup
+  }
 }
 
 async function signOut() {
@@ -789,14 +801,41 @@ function renderStep() {
     container.style.animation = "";
     container.innerHTML = steps[currentStep]();
     window.scrollTo({ top: 0, behavior: "smooth" });
+    // Autosave when user types or changes any field
+    container.querySelectorAll('input, textarea, select').forEach(el => {
+      el.addEventListener('change', autoSave);
+      el.addEventListener('blur', autoSave);
+    });
   });
 }
 
+// Debounced autosave — fires 800ms after last change, avoids hammering Supabase
+let _saveTimer = null;
+function autoSave() {
+  clearTimeout(_saveTimer);
+  _saveTimer = setTimeout(() => {
+    captureTypedFields();
+    const email = currentUser ? currentUser.email : (profile.email || 'guest');
+    localStorage.setItem('vela_' + email, JSON.stringify(profile));
+    localStorage.setItem('vela_step_' + email, currentStep);
+    localStorage.setItem('vela_quiz_' + email, JSON.stringify(quizAnswers));
+    saveToSupabase();
+  }, 800);
+}
+
 function next() {
-  if (currentStep < steps.length - 1) { currentStep++; renderStep(); }
+  if (currentStep < steps.length - 1) {
+    currentStep++;
+    renderStep();
+    autoSave();
+  }
 }
 function back() {
-  if (currentStep > 0) { currentStep--; renderStep(); }
+  if (currentStep > 0) {
+    currentStep--;
+    renderStep();
+    autoSave();
+  }
 }
 
 function choose(key, val, el, group) {
