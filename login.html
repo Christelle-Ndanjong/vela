@@ -74,6 +74,12 @@
 <div id="role-banner" style="display:none;width:100%;max-width:420px;margin-bottom:1rem;border-radius:12px;padding:0.85rem 1.25rem;text-align:center;font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem"></div>
 
 <div class="card">
+  <!-- Dynamic role header -->
+  <div id="role-card-header" style="text-align:center;margin-bottom:1.25rem">
+    <div id="role-icon" style="font-size:2rem;margin-bottom:0.4rem">🌍</div>
+    <div id="role-label" style="font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:var(--text);margin-bottom:0.2rem">Welcome back</div>
+    <div id="role-sub" style="font-size:0.8rem;color:var(--muted)">Sign in to your VELA account</div>
+  </div>
   <div class="tabs">
     <button class="tab active" id="tab-login" onclick="switchTab('login')">Sign In</button>
     <button class="tab" id="tab-register" onclick="switchTab('register')">Create Account</button>
@@ -162,16 +168,59 @@ const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // Check if already logged in
 // Handle Supabase auth token from email confirmation redirect
+// ── ROLE DETECTION ─────────────────────────────────────────────────────────
+const urlParams = new URLSearchParams(window.location.search);
+const urlRole = urlParams.get('role');
+if (urlRole) localStorage.setItem('vela_role', urlRole);
+const currentRole = localStorage.getItem('vela_role') || 'seeker';
+
+function getRedirectUrl() {
+  return currentRole === 'recruiter' ? 'employers.html' : 'profile.html';
+}
+
+function applyRoleBanner() {
+  const banner = document.getElementById('role-banner');
+  if (!banner) return;
+  if (currentRole === 'recruiter') {
+    banner.style.display = 'block';
+    banner.style.background = 'rgba(0,150,255,0.1)';
+    banner.style.border = '1.5px solid rgba(0,150,255,0.3)';
+    banner.style.color = '#0096FF';
+    banner.innerHTML = '🏢 Recruiter account — you will be taken to the Employer Dashboard';
+  } else {
+    banner.style.display = 'block';
+    banner.style.background = 'rgba(0,229,160,0.08)';
+    banner.style.border = '1.5px solid rgba(0,229,160,0.25)';
+    banner.style.color = 'var(--accent)';
+    banner.innerHTML = '🌍 Job Seeker account — you will be taken to your profile';
+  }
+}
+document.addEventListener('DOMContentLoaded', () => {
+  applyRoleBanner();
+  // Update card header based on role
+  const icon = document.getElementById('role-icon');
+  const label = document.getElementById('role-label');
+  const sub = document.getElementById('role-sub');
+  if (currentRole === 'recruiter') {
+    if (icon) icon.textContent = '🏢';
+    if (label) label.textContent = 'Recruiter Portal';
+    if (sub) sub.textContent = 'Sign in to access your employer dashboard';
+  } else {
+    if (icon) icon.textContent = '🌍';
+    if (label) label.textContent = 'Job Seeker Portal';
+    if (sub) sub.textContent = 'Sign in to build your profile and get placed';
+  }
+});
+
+// ── SESSION CHECK ───────────────────────────────────────────────────────────
 if (window.location.hash && window.location.hash.includes('access_token')) {
   _supabase.auth.getSession().then(({ data: { session } }) => {
-    if (session) {
-      window.location.replace('https://christelle-ndanjong.github.io/vela/profile.html');
-    }
+    if (session) window.location.replace(getRedirectUrl());
   });
 }
 
 _supabase.auth.getSession().then(({ data: { session } }) => {
-  if (session) window.location.href = 'profile.html';
+  if (session) window.location.href = getRedirectUrl();
 });
 
 function switchTab(tab) {
@@ -253,7 +302,7 @@ async function handleLogin() {
   } else {
     msg.className = 'msg success';
     msg.textContent = '✓ Signed in! Redirecting...';
-    setTimeout(() => window.location.href = 'profile.html', 1000);
+    setTimeout(() => window.location.href = getRedirectUrl(), 1000);
   }
 }
 
@@ -299,7 +348,7 @@ async function handleRegister() {
     } else {
       msg.className = 'msg success';
       msg.textContent = '✓ Account created! Taking you to your profile...';
-      setTimeout(() => window.location.href = 'profile.html', 1500);
+      setTimeout(() => window.location.href = getRedirectUrl(), 1500);
     }
   }
 }
