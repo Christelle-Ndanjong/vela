@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VELA — ATS CV Customiser</title>
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <script src="config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <style>
+    html, body { overflow-x: hidden; max-width: 100%; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #060A14; --bg2: #0B1120; --surface: #0F1829;
+      --card: #111E30; --border: rgba(255,255,255,0.08);
+      --accent: #00D48E; --accent2: #3B9EFF;
+      --text: #E8EEFF; --muted: #7A8AAD;
+      --danger: #FF5E5E; --warn: #FFB347;
+    }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+    body.light-mode { --bg: #F5F0E8; --bg2: #EDE6D8; --card: #FDFAF5; --surface: #EDE6D8; --border: rgba(0,0,0,0.09); --text: #15110A; --muted: #6B5F4E; --accent: #00A86B; --accent2: #1A6FCC; }
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 1rem 5%; border-bottom: 1px solid var(--border); }
+    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.3rem; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
+    .page { max-width: 900px; margin: 0 auto; padding: 2.5rem 5%; }
+    h1 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.8rem; margin-bottom: 0.5rem; }
+    h1 span { background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .sub { color: var(--muted); font-size: 0.95rem; margin-bottom: 2rem; line-height: 1.6; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem; }
+    label { display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.6rem; }
+    textarea { width: 100%; background: var(--surface); border: 1.5px solid var(--border); color: var(--text); padding: 0.9rem 1rem; border-radius: 10px; font-size: 0.88rem; font-family: 'DM Sans', sans-serif; outline: none; resize: vertical; transition: border-color 0.2s; -webkit-text-fill-color: var(--text); }
+    textarea:focus { border-color: rgba(0,212,142,0.4); }
+    textarea::placeholder { color: var(--muted); opacity: 1; }
+    .btn-main { width: 100%; background: var(--accent); color: #060A14; border: none; padding: 1rem; border-radius: 10px; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem; cursor: pointer; transition: opacity 0.2s; margin-bottom: 0.75rem; }
+    .btn-main:hover { opacity: 0.88; }
+    .btn-main:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn-secondary { width: 100%; background: transparent; border: 1.5px solid var(--border); color: var(--text); padding: 0.85rem; border-radius: 10px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: all 0.2s; }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+    .status { text-align: center; padding: 1rem; border-radius: 10px; font-size: 0.88rem; margin-bottom: 1rem; display: none; }
+    .status.loading { background: rgba(59,158,255,0.1); color: var(--accent2); border: 1px solid rgba(59,158,255,0.2); display: block; }
+    .status.error { background: rgba(255,94,94,0.1); color: var(--danger); border: 1px solid rgba(255,94,94,0.2); display: block; }
+    .result-section { display: none; }
+    .result-section.visible { display: block; }
+    .cv-preview { background: #fff; color: #111; border-radius: 12px; padding: 2.5rem; font-family: Arial, sans-serif; font-size: 10.5pt; line-height: 1.6; }
+    .cv-name { font-size: 20pt; font-weight: 900; color: #060A14; letter-spacing: -0.5px; margin-bottom: 0.2rem; }
+    .cv-title { font-size: 11pt; color: #00A86B; font-weight: 700; margin-bottom: 0.4rem; }
+    .cv-contact { font-size: 9pt; color: #555; margin-bottom: 1.25rem; padding-bottom: 1rem; border-bottom: 3px solid #00D48E; }
+    .cv-section-title { font-size: 9.5pt; font-weight: 900; text-transform: uppercase; letter-spacing: 0.12em; color: #060A14; border-bottom: 1.5px solid #eee; padding-bottom: 0.3rem; margin: 1.1rem 0 0.6rem; }
+    .cv-text { font-size: 10pt; color: #333; line-height: 1.6; }
+    .cv-tag { display: inline-block; background: #f0fdf9; border: 1px solid #00D48E; color: #007a5e; font-size: 8.5pt; font-weight: 700; padding: 0.15rem 0.55rem; border-radius: 4px; margin: 0.1rem; }
+    .match-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(0,212,142,0.12); border: 1px solid rgba(0,212,142,0.3); color: var(--accent); font-size: 0.78rem; font-weight: 700; padding: 0.3rem 0.75rem; border-radius: 20px; margin-bottom: 1rem; }
+    .tips-list { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 1rem; }
+    .tip-item { display: flex; gap: 0.75rem; align-items: flex-start; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 0.85rem 1rem; font-size: 0.85rem; }
+    .print-bar { position: sticky; bottom: 1rem; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.5rem; display: flex; gap: 0.75rem; align-items: center; justify-content: flex-end; margin-top: 1.5rem; }
+    @media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } h1 { font-size: 1.4rem; } .cv-preview { padding: 1.25rem; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="index.html">VELA</a>
+  <div style="display:flex;gap:0.5rem;align-items:center">
+    <button id="theme-btn" onclick="toggleTheme()" style="background:transparent;border:1.5px solid rgba(255,255,255,0.12);color:var(--text);padding:0.4rem 0.75rem;border-radius:8px;cursor:pointer;font-size:0.9rem">🌙</button>
+    <a href="dashboard.html" style="color:var(--muted);text-decoration:none;font-size:0.82rem;font-weight:600;border:1px solid var(--border);padding:0.4rem 0.9rem;border-radius:8px">Dashboard</a>
+    <a href="login.html" onclick="velaSignOut(event)" style="color:#FF5E5E;text-decoration:none;font-size:0.78rem;font-weight:600;border:1px solid rgba(255,94,94,0.25);padding:0.4rem 0.9rem;border-radius:8px">Sign Out</a>
+  </div>
+</nav>
+
+<div class="page">
+  <h1>ATS CV <span>Customiser</span></h1>
+  <p class="sub">Paste a job description and your profile — our AI rewrites your CV to match exactly what the employer is looking for. Beat the ATS filter and land more interviews.</p>
+
+  <div class="two-col">
+    <!-- LEFT: Job Description -->
+    <div class="card">
+      <label>📋 Job Description</label>
+      <p style="font-size:0.8rem;color:var(--muted);margin-bottom:0.75rem">Paste the full job posting here — requirements, responsibilities, everything</p>
+      <textarea id="job-desc" rows="14" placeholder="Paste the job description here...&#10;&#10;Example:&#10;We are looking for a Data Analyst with 2+ years of SQL experience, proficiency in Power BI or Tableau, and strong communication skills. Experience with Python is a plus..."></textarea>
+    </div>
+
+    <!-- RIGHT: Your CV / Profile -->
+    <div class="card">
+      <label>👤 Your Profile / Current CV</label>
+      <p style="font-size:0.8rem;color:var(--muted);margin-bottom:0.75rem">Paste your current CV text, or we will use your saved VELA profile</p>
+      <textarea id="user-cv" rows="10" placeholder="Paste your CV text here, or leave blank to use your VELA profile..."></textarea>
+      <button onclick="loadFromProfile()" style="margin-top:0.6rem;background:rgba(0,212,142,0.1);border:1.5px solid rgba(0,212,142,0.25);color:var(--accent);padding:0.5rem 1rem;border-radius:8px;font-size:0.82rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;width:100%">
+        ↙ Load from my VELA Profile
+      </button>
+    </div>
+  </div>
+
+  <div id="status-msg" class="status"></div>
+
+  <button class="btn-main" id="btn-customise" onclick="customiseCV()">
+    🤖 Customise My CV for This Job →
+  </button>
+
+  <!-- RESULT -->
+  <div id="result-section" class="result-section">
+
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:0.75rem">
+      <div>
+        <h2 style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;margin-bottom:0.3rem">✅ Your Tailored CV</h2>
+        <p style="font-size:0.82rem;color:var(--muted)">Optimised for ATS filters and this specific job</p>
+      </div>
+      <div id="match-score-badge" class="match-badge">🎯 Calculating match...</div>
+    </div>
+
+    <!-- ATS Tips -->
+    <div id="ats-tips" class="card" style="margin-bottom:1.5rem;display:none">
+      <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;margin-bottom:0.75rem;color:var(--accent)">💡 What we optimised for this job</div>
+      <div id="tips-content" class="tips-list"></div>
+    </div>
+
+    <!-- CV Preview -->
+    <div class="card" style="padding:0;overflow:hidden">
+      <div id="cv-preview-content" class="cv-preview">
+        <!-- Generated CV renders here -->
+      </div>
+    </div>
+
+    <!-- Print/Download Bar -->
+    <div class="print-bar">
+      <span style="font-size:0.82rem;color:var(--muted);flex:1">Your tailored CV is ready</span>
+      <button onclick="printCV()" class="btn-main" style="width:auto;padding:0.7rem 1.5rem;margin:0">🖨️ Print / Save as PDF</button>
+      <button onclick="resetForm()" class="btn-secondary" style="width:auto;padding:0.7rem 1.25rem">Start Over</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ── AUTH GUARD ─────────────────────────────────────────────────────────────
+(async function() {
+  try {
+    const cfg = window.VELA_CONFIG || {};
+    if (!cfg.SUPABASE_URL || typeof supabase === 'undefined') return;
+    const _sb = supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_KEY);
+    const { data } = await _sb.auth.getSession();
+    if (!data.session) window.location.href = 'login.html';
+  } catch(e) {}
+})();
+
+// ── THEME ──────────────────────────────────────────────────────────────────
+function toggleTheme() {
+  document.body.classList.toggle('light-mode');
+  const isLight = document.body.classList.contains('light-mode');
+  document.getElementById('theme-btn').textContent = isLight ? '☀️' : '🌙';
+  localStorage.setItem('vela_theme', isLight ? 'light' : 'dark');
+}
+function applyTheme() {
+  if (localStorage.getItem('vela_theme') === 'light') {
+    document.body.classList.add('light-mode');
+    document.getElementById('theme-btn').textContent = '☀️';
+  }
+}
+async function velaSignOut(e) {
+  if (e) e.preventDefault();
+  try {
+    const cfg = window.VELA_CONFIG || {};
+    if (typeof supabase !== 'undefined' && cfg.SUPABASE_URL) {
+      const _sb = supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_KEY);
+      await _sb.auth.signOut();
+    }
+  } catch(err) {}
+  window.location.href = 'login.html';
+}
+document.addEventListener('DOMContentLoaded', applyTheme);
+
+// ── LOAD FROM PROFILE ──────────────────────────────────────────────────────
+function loadFromProfile() {
+  let p = {};
+  try {
+    const keys = Object.keys(localStorage).filter(k =>
+      k.startsWith('vela_') && !k.includes('_step') && !k.includes('_quiz') &&
+      !k.includes('_theme') && !k.includes('_role') && !k.includes('_saved') &&
+      !k.includes('_skill') && !k.includes('_tool') && !k.includes('_filter')
+    );
+    if (keys.length > 0) {
+      const sorted = keys.sort((a,b) => {
+        try { return JSON.parse(localStorage.getItem(b)).name ? 1 : -1; } catch(e) { return 0; }
+      });
+      p = JSON.parse(localStorage.getItem(sorted[0]) || '{}');
+    }
+  } catch(e) {}
+
+  if (!p.name) {
+    setStatus('No saved profile found. Please complete your profile first.', 'error');
+    return;
+  }
+
+  const skills = (p.skills || []).join(', ') || p.skill || '';
+  const tools = (p.tools || []).filter(t => t !== 'none').join(', ') || '';
+  const expLabel = {none:'No experience',less1:'Under 1 year experience','1to3':'1-3 years experience','3plus':'3+ years experience'}[p.experience] || '';
+  const eduLabel = {secondary:'Secondary School',diploma:'Diploma/HND',bachelor:"Bachelor's Degree",master:"Master's Degree",phd:'PhD',other:'Professional Certification'}[p.education] || '';
+  const engLabel = {1:'Basic English',2:'Conversational English',3:'Intermediate English',4:'Proficient English',5:'Fluent English'}[p.english] || '';
+
+  const cvText = `NAME: ${p.name}
+COUNTRY: ${p.country || ''}
+EMAIL: ${p.email || ''}
+
+SKILLS: ${skills}
+TOOLS: ${tools}
+EDUCATION: ${eduLabel}${p.field ? ' — ' + p.field : ''}
+EXPERIENCE: ${expLabel}${p.expYears ? ' — ' + p.expYears : ''}
+ENGLISH: ${engLabel}
+AVAILABILITY: ${p.availability || ''}
+
+PROFESSIONAL SUMMARY: ${p.motivation || ''}
+CAREER GOAL: ${p.goal || ''}`;
+
+  document.getElementById('user-cv').value = cvText;
+  setStatus('', '');
+}
+
+// ── MAIN CUSTOMISE FUNCTION ────────────────────────────────────────────────
+async function customiseCV() {
+  const jobDesc = document.getElementById('job-desc').value.trim();
+  const userCV = document.getElementById('user-cv').value.trim();
+
+  if (!jobDesc) { setStatus('Please paste a job description first.', 'error'); return; }
+  if (!userCV) { setStatus('Please add your CV text or load from your profile.', 'error'); return; }
+
+  const btn = document.getElementById('btn-customise');
+  btn.disabled = true;
+  btn.textContent = '⏳ Customising your CV...';
+  setStatus('🤖 Analysing the job requirements and tailoring your CV — this takes about 15 seconds...', 'loading');
+
+  document.getElementById('result-section').classList.remove('visible');
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{
+          role: 'user',
+          content: `You are an expert ATS CV writer. Analyse this job description and tailor the person's CV to maximise ATS score and interview chances.
+
+JOB DESCRIPTION:
+${jobDesc.substring(0, 2000)}
+
+CANDIDATE'S CURRENT CV/PROFILE:
+${userCV.substring(0, 2000)}
+
+Return ONLY valid JSON in this exact format (no markdown, no backticks):
+{
+  "matchScore": 85,
+  "jobTitle": "Data Analyst",
+  "companyName": "extracted or Unknown",
+  "tailoredSummary": "2-3 sentence professional summary using keywords from the job description",
+  "tailoredSkills": ["skill1", "skill2", "skill3", "skill4", "skill5", "skill6"],
+  "tailoredTools": ["tool1", "tool2", "tool3"],
+  "keywordsAdded": ["keyword1", "keyword2", "keyword3"],
+  "optimisations": [
+    {"icon": "✅", "text": "Added keyword X from job requirements"},
+    {"icon": "🎯", "text": "Emphasised Y which matches their requirements"},
+    {"icon": "📝", "text": "Reframed experience as Z to match role"}
+  ],
+  "tailoredExperience": "1-2 sentences of experience reframed to match the role",
+  "atsWarnings": ["Any gaps or missing requirements to address"]
+}`
+        }]
+      })
+    });
+
+    const data = await response.json();
+    const raw = (data.content?.[0]?.text || '{}').replace(/```json|```/g, '').trim();
+    const result = JSON.parse(raw);
+    renderResult(result, userCV);
+
+  } catch(e) {
+    setStatus('Something went wrong. Please try again.', 'error');
+    btn.disabled = false;
+    btn.textContent = '🤖 Customise My CV for This Job →';
+  }
+}
+
+function renderResult(r, originalCV) {
+  // Match score badge
+  const score = r.matchScore || 0;
+  const scoreColor = score >= 75 ? '#00D48E' : score >= 50 ? '#FFB347' : '#FF5E5E';
+  document.getElementById('match-score-badge').innerHTML =
+    `🎯 <span style="color:${scoreColor}">${score}% ATS Match</span>`;
+  document.getElementById('match-score-badge').style.borderColor = scoreColor + '40';
+  document.getElementById('match-score-badge').style.background = scoreColor + '15';
+
+  // Tips
+  if (r.optimisations && r.optimisations.length > 0) {
+    const tipsEl = document.getElementById('tips-content');
+    tipsEl.innerHTML = r.optimisations.map(o =>
+      `<div class="tip-item"><span>${o.icon}</span><span>${o.text}</span></div>`
+    ).join('');
+    if (r.atsWarnings && r.atsWarnings.length > 0) {
+      tipsEl.innerHTML += r.atsWarnings.map(w =>
+        `<div class="tip-item"><span>⚠️</span><span style="color:var(--warn)">${w}</span></div>`
+      ).join('');
+    }
+    document.getElementById('ats-tips').style.display = 'block';
+  }
+
+  // Parse original CV for name/contact
+  let name = '', email = '', country = '', education = '', expText = '', goal = '';
+  const lines = originalCV.split('\n');
+  lines.forEach(line => {
+    if (line.startsWith('NAME:')) name = line.replace('NAME:', '').trim();
+    if (line.startsWith('EMAIL:')) email = line.replace('EMAIL:', '').trim();
+    if (line.startsWith('COUNTRY:')) country = line.replace('COUNTRY:', '').trim();
+    if (line.startsWith('EDUCATION:')) education = line.replace('EDUCATION:', '').trim();
+    if (line.startsWith('EXPERIENCE:')) expText = line.replace('EXPERIENCE:', '').trim();
+    if (line.startsWith('CAREER GOAL:')) goal = line.replace('CAREER GOAL:', '').trim();
+  });
+
+  const skillsHTML = (r.tailoredSkills || []).map(s => `<span class="cv-tag">${s}</span>`).join('');
+  const toolsHTML = (r.tailoredTools || []).join(', ');
+  const keywordsHTML = (r.keywordsAdded || []).map(k => `<span class="cv-tag" style="background:#f0f8ff;border-color:#3B9EFF;color:#1A6FCC">${k}</span>`).join('');
+
+  document.getElementById('cv-preview-content').innerHTML = `
+    <div class="cv-name">${(name || 'Your Name').toUpperCase()}</div>
+    <div class="cv-title">${r.jobTitle || 'Remote Professional'}</div>
+    <div class="cv-contact">
+      ${email ? '✉ ' + email + '&nbsp;&nbsp;' : ''}
+      ${country ? '📍 ' + country : ''}
+    </div>
+
+    <div class="cv-section-title">Professional Summary</div>
+    <div class="cv-text">${r.tailoredSummary || ''}</div>
+
+    ${skillsHTML ? `<div class="cv-section-title">Core Skills</div><div>${skillsHTML}</div>` : ''}
+    ${keywordsHTML ? `<div class="cv-section-title">Key Competencies (Job-Matched)</div><div>${keywordsHTML}</div>` : ''}
+    ${toolsHTML ? `<div class="cv-section-title">Tools & Platforms</div><div class="cv-text">${toolsHTML}</div>` : ''}
+
+    ${education ? `<div class="cv-section-title">Education</div><div class="cv-text">${education}</div>` : ''}
+    ${expText ? `<div class="cv-section-title">Experience</div><div class="cv-text">${r.tailoredExperience || expText}</div>` : ''}
+    ${goal ? `<div class="cv-section-title">Career Objective</div><div class="cv-text">${goal}</div>` : ''}
+
+    <div style="margin-top:2rem;text-align:center;font-size:8pt;color:#aaa;border-top:1px solid #eee;padding-top:0.75rem">
+      Tailored by VELA ATS Customiser · ${new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})}
+    </div>`;
+
+  setStatus('', '');
+  document.getElementById('result-section').classList.add('visible');
+  document.getElementById('btn-customise').disabled = false;
+  document.getElementById('btn-customise').textContent = '🤖 Customise My CV for This Job →';
+  document.getElementById('result-section').scrollIntoView({ behavior: 'smooth' });
+}
+
+function printCV() {
+  const cvContent = document.getElementById('cv-preview-content').innerHTML;
+  const win = window.open('', '_blank');
+  win.document.write(`<!DOCTYPE html><html><head><title>Tailored CV</title>
+  <style>body{font-family:Arial,sans-serif;font-size:10.5pt;color:#111;padding:2cm;max-width:21cm;margin:0 auto}
+  .cv-name{font-size:20pt;font-weight:900;color:#060A14;letter-spacing:-0.5px}
+  .cv-title{font-size:11pt;color:#00A86B;font-weight:700;margin-top:0.2rem}
+  .cv-contact{font-size:9pt;color:#555;margin:0.4rem 0 1rem;padding-bottom:0.8rem;border-bottom:3px solid #00D48E}
+  .cv-section-title{font-size:9.5pt;font-weight:900;text-transform:uppercase;letter-spacing:0.1em;border-bottom:1.5px solid #eee;padding-bottom:0.25rem;margin:1rem 0 0.5rem}
+  .cv-text{font-size:10pt;color:#333;line-height:1.6}
+  .cv-tag{display:inline-block;background:#f0fdf9;border:1px solid #00D48E;color:#007a5e;font-size:8.5pt;font-weight:700;padding:0.15rem 0.55rem;border-radius:4px;margin:0.1rem}
+  @media print{body{padding:1cm}}
+  </style></head><body>${cvContent}</body></html>`);
+  win.document.close();
+  setTimeout(() => { win.focus(); win.print(); }, 400);
+}
+
+function setStatus(msg, type) {
+  const el = document.getElementById('status-msg');
+  if (!msg) { el.style.display = 'none'; return; }
+  el.className = 'status ' + type;
+  el.textContent = msg;
+}
+
+function resetForm() {
+  document.getElementById('job-desc').value = '';
+  document.getElementById('user-cv').value = '';
+  document.getElementById('result-section').classList.remove('visible');
+  setStatus('', '');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
