@@ -1047,6 +1047,36 @@ function selectSkill(name, el) {
   if (badge) badge.textContent = profile.skills.length + " selected";
 }
 
+// ── LIVE SKILL FILTER — updates grid without re-rendering step ───────────────
+function filterSkillsLive(q) {
+  window._skillSearch = q;
+  const activeFilter = window._skillFilter || "all";
+  const grid = document.getElementById("skill-grid-live");
+  const badge = document.getElementById("skill-count-badge");
+  if (!grid) return;
+
+  const filtered = ALL_SKILLS.filter(s => {
+    const matchCat = activeFilter === "all" || s.cat === activeFilter;
+    const matchSearch = !q || s.name.toLowerCase().includes(q.toLowerCase());
+    return matchCat && matchSearch;
+  });
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `<div style="color:var(--muted);font-size:0.88rem;padding:1rem;grid-column:1/-1">No skills match. Add it manually below.</div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(s => `
+    <div class="skill-card ${profile.skills.includes(s.name) ? "selected" : ""}"
+      onclick="selectSkill('${s.name.replace(/'/g,"\'")}', this)" style="position:relative">
+      <span class="skill-card-icon">${s.icon}</span>
+      <span class="skill-card-name">${s.name}</span>
+      ${s.trend ? `<span style="position:absolute;top:4px;right:4px;background:rgba(255,100,0,0.15);color:#FF6B35;font-size:0.6rem;font-weight:800;padding:1px 5px;border-radius:4px">🔥HOT</span>` : ""}
+    </div>`).join("");
+
+  if (badge) badge.textContent = profile.skills.length + " selected";
+}
+
 // Rate each skill individually
 function setSkillLevel(skillName, val, el) {
   if (!profile.skillLevels) profile.skillLevels = {};
@@ -1073,6 +1103,30 @@ function advanceSkillRating(idx, total) {
     profile.selfLevel = Math.round(levels.reduce((a,b)=>a+b,0)/levels.length);
     next();
   }
+}
+
+// ── LIVE TOOL FILTER — updates groups without re-render ─────────────────────
+function filterToolsLive(q) {
+  window._toolSearch = q;
+  const groups = document.getElementById("tools-groups-live");
+  if (!groups) return;
+  const skillsWithTools = profile.skills.filter(s => TOOLS_BY_SKILL[s]);
+  const useDefault = skillsWithTools.length === 0;
+  const grps = useDefault
+    ? [{ skill: "General Remote Work", tools: DEFAULT_TOOLS }]
+    : skillsWithTools.map(s => ({ skill: s, tools: TOOLS_BY_SKILL[s] || [] }));
+
+  groups.innerHTML = grps.map(g => {
+    const filtered = g.tools.filter(t => !q || t.toLowerCase().includes(q.toLowerCase()));
+    if (filtered.length === 0) return "";
+    return `
+      <div style="margin-bottom:1.25rem">
+        <div style="font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);margin-bottom:0.6rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border)">${g.skill}</div>
+        <div class="tools-grid">
+          ${filtered.map(t=>`<div class="tool-chip ${profile.tools.includes(t)?"selected":""}" onclick="toggleTool('${t.replace(/'/g,"\'")}',this)">${t}</div>`).join("")}
+        </div>
+      </div>`;
+  }).join("");
 }
 
 // Custom tool management
@@ -1224,6 +1278,7 @@ const steps = [
       const matchSearch = !searchQ || s.name.toLowerCase().includes(searchQ.toLowerCase());
       return matchCat && matchSearch;
     });
+    const customSkills = profile.skills.filter(s => !ALL_SKILLS.find(a => a.name === s));
     return `
     <div class="step-num">Step 4 of 10 · Your Skills</div>
     <h1 class="step-title">Choose your <span>skill paths</span></h1>
@@ -1231,24 +1286,24 @@ const steps = [
 
     <div style="display:flex;gap:0.5rem;margin-bottom:0.75rem;align-items:center;flex-wrap:wrap">
       <input id="skill-search" class="input" placeholder="🔍 Search skills..." value="${searchQ}"
-        oninput="window._skillSearch=this.value;renderStep()" style="flex:1;min-width:180px;padding:0.6rem 1rem;font-size:0.88rem"/>
-      <span id="skill-count-badge" style="background:rgba(0,229,160,0.1);border:1px solid rgba(0,229,160,0.25);color:var(--accent);font-size:0.78rem;font-weight:700;padding:0.4rem 0.85rem;border-radius:20px;white-space:nowrap">${profile.skills.length} selected</span>
+        oninput="filterSkillsLive(this.value)" style="flex:1;min-width:180px;padding:0.6rem 1rem;font-size:0.88rem"/>
+      <span id="skill-count-badge" style="background:rgba(0,212,142,0.1);border:1px solid rgba(0,212,142,0.25);color:var(--accent);font-size:0.78rem;font-weight:700;padding:0.4rem 0.85rem;border-radius:20px;white-space:nowrap">${profile.skills.length} selected</span>
     </div>
 
     <div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:1rem">
       ${cats.map(c=>`
-        <button onclick="window._skillFilter='${c.key}';renderStep()"
+        <button onclick="window._skillFilter='${c.key}';window._skillSearch='';filterSkillsLive('')"
           style="padding:0.3rem 0.75rem;border-radius:20px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;
           border:1.5px solid ${activeFilter===c.key?'var(--accent)':'var(--border)'};
-          background:${activeFilter===c.key?'rgba(0,229,160,0.12)':'transparent'};
+          background:${activeFilter===c.key?'rgba(0,212,142,0.12)':'transparent'};
           color:${activeFilter===c.key?'var(--accent)':'var(--muted)'}">
           ${c.label}
         </button>`).join("")}
     </div>
 
-    <div class="skill-grid" style="max-height:320px;overflow-y:auto;padding-right:4px">
+    <div id="skill-grid-live" class="skill-grid" style="max-height:320px;overflow-y:auto;padding-right:4px">
       ${filtered.length === 0
-        ? `<div style="color:var(--muted);font-size:0.88rem;padding:1rem;grid-column:1/-1">No skills match your search. Add it manually below.</div>`
+        ? `<div style="color:var(--muted);font-size:0.88rem;padding:1rem;grid-column:1/-1">No skills match. Add it manually below.</div>`
         : filtered.map(s=>`
         <div class="skill-card ${profile.skills.includes(s.name)?"selected":""}" onclick="selectSkill('${s.name.replace(/'/g,"\'")}',this)"
           style="position:relative">
@@ -1259,15 +1314,16 @@ const steps = [
     </div>
 
     <div style="margin-top:1rem;display:flex;gap:0.5rem;align-items:center">
-      <input id="custom-skill-input" class="input" placeholder="Add a skill not listed..." style="flex:1;padding:0.55rem 0.9rem;font-size:0.85rem"/>
-      <button onclick="addCustomSkill()" style="background:rgba(0,229,160,0.12);border:1.5px solid rgba(0,229,160,0.3);color:var(--accent);padding:0.55rem 1rem;border-radius:8px;font-weight:700;font-size:0.85rem;cursor:pointer;font-family:'Syne',sans-serif;white-space:nowrap">+ Add</button>
+      <input id="custom-skill-input" class="input" placeholder="Add a skill not listed..." style="flex:1;padding:0.55rem 0.9rem;font-size:0.85rem"
+        onkeydown="if(event.key==='Enter'){addCustomSkill();event.preventDefault();}"/>
+      <button onclick="addCustomSkill()" style="background:rgba(0,212,142,0.12);border:1.5px solid rgba(0,212,142,0.3);color:var(--accent);padding:0.55rem 1rem;border-radius:8px;font-weight:700;font-size:0.85rem;cursor:pointer;font-family:'Syne',sans-serif;white-space:nowrap">+ Add</button>
     </div>
-    <div id="custom-skills-display" style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.5rem">
-      ${profile.skills.filter(s=>!ALL_SKILLS.find(a=>a.name===s)).map(s=>`
-        <span style="background:rgba(0,229,160,0.1);border:1px solid rgba(0,229,160,0.3);color:var(--accent);padding:0.3rem 0.75rem;border-radius:20px;font-size:0.8rem;font-weight:600">
+    ${customSkills.length > 0 ? `<div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.5rem">
+      ${customSkills.map(s=>`
+        <span style="background:rgba(0,212,142,0.1);border:1px solid rgba(0,212,142,0.3);color:var(--accent);padding:0.3rem 0.75rem;border-radius:20px;font-size:0.8rem;font-weight:600">
           ${s} <span onclick="removeCustomSkill('${s.replace(/'/g,"\'")}');event.stopPropagation()" style="cursor:pointer;margin-left:0.35rem;opacity:0.7">✕</span>
         </span>`).join("")}
-    </div>
+    </div>` : ""}
 
     <div class="btn-row" style="margin-top:1.25rem">
       <button class="btn-back" onclick="back()">← Back</button>
@@ -1311,44 +1367,70 @@ const steps = [
     </div>`;
   },
 
-  // STEP 6 — Tools (across all selected skills + manual input)
+  // STEP 6 — Tools (grouped by skill, with search + manual input)
   () => {
-    // Gather tools from all selected skills
-    const allRelevantTools = [...new Set(
-      profile.skills.flatMap(s => TOOLS_BY_SKILL[s] || DEFAULT_TOOLS)
-    )].sort();
     const toolSearch = window._toolSearch || "";
-    const filteredTools = allRelevantTools.filter(t =>
-      !toolSearch || t.toLowerCase().includes(toolSearch.toLowerCase())
-    );
+    // Build per-skill groups — only for skills that have a tools list
+    const skillsWithTools = profile.skills.filter(s => TOOLS_BY_SKILL[s]);
+    const useDefault = skillsWithTools.length === 0;
+    const groups = useDefault
+      ? [{ skill: "General Remote Work", tools: DEFAULT_TOOLS }]
+      : skillsWithTools.map(s => ({ skill: s, tools: TOOLS_BY_SKILL[s] || [] }));
+    // All tools flat (for custom display check)
+    const allRelevantTools = [...new Set(groups.flatMap(g => g.tools))];
+    const customTools = profile.tools.filter(t => !allRelevantTools.includes(t) && t !== "none");
+    const selectedCount = profile.tools.filter(t => t !== "none").length;
+
     return `
     <div class="step-num">Step 6 of 10 · Tools</div>
     <h1 class="step-title">Which tools do you <span>already know</span>?</h1>
-    <p class="step-sub">Tools from all your selected skills are shown. Select every tool you can use — even basic familiarity counts.</p>
+    <p class="step-sub">Tools are grouped by your selected skills. Select every tool you can use — even basic familiarity counts.</p>
 
-    <input id="tool-search" class="input" placeholder="🔍 Search tools..." value="${toolSearch}"
-      oninput="window._toolSearch=this.value;renderStep()" style="margin-bottom:0.85rem;padding:0.6rem 1rem;font-size:0.88rem;width:100%"/>
+    <input id="tool-search" class="input" placeholder="🔍 Search tools across all skills..."
+      value="${toolSearch}"
+      oninput="filterToolsLive(this.value)"
+      style="margin-bottom:1rem;padding:0.6rem 1rem;font-size:0.88rem;width:100%"/>
 
-    <div class="tools-grid">
-      ${filteredTools.map(t=>`
-        <div class="tool-chip ${profile.tools.includes(t)?"selected":""}" onclick="toggleTool('${t.replace(/'/g,"\'")}',this)">${t}</div>`).join("")}
+    <div id="tools-groups-live">
+      ${groups.map(g => {
+        const filtered = g.tools.filter(t =>
+          !toolSearch || t.toLowerCase().includes(toolSearch.toLowerCase())
+        );
+        if (filtered.length === 0) return "";
+        return `
+        <div style="margin-bottom:1.25rem">
+          <div style="font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);margin-bottom:0.6rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border)">
+            ${g.skill}
+          </div>
+          <div class="tools-grid">
+            ${filtered.map(t=>`
+              <div class="tool-chip ${profile.tools.includes(t)?"selected":""}"
+                onclick="toggleTool('${t.replace(/'/g,"\'")}',this)">${t}</div>`).join("")}
+          </div>
+        </div>`;
+      }).join("")}
+    </div>
+
+    <div style="margin-bottom:1rem">
       <div class="tool-chip ${profile.tools.includes("none")?"selected":""}" onclick="toggleNone(this)"
-        style="border-color:rgba(100,116,139,0.4);color:var(--muted)">🚫 None yet</div>
+        style="border-color:rgba(100,116,139,0.4);color:var(--muted);display:inline-block">🚫 I don't know any of these yet</div>
     </div>
 
-    <div style="margin-top:0.85rem;display:flex;gap:0.5rem;align-items:center">
-      <input id="custom-tool-input" class="input" placeholder="Add a tool not listed..." style="flex:1;padding:0.55rem 0.9rem;font-size:0.85rem"/>
-      <button onclick="addCustomTool()" style="background:rgba(0,229,160,0.12);border:1.5px solid rgba(0,229,160,0.3);color:var(--accent);padding:0.55rem 1rem;border-radius:8px;font-weight:700;font-size:0.85rem;cursor:pointer;font-family:'Syne',sans-serif;white-space:nowrap">+ Add</button>
+    <div style="display:flex;gap:0.5rem;align-items:center;margin-bottom:0.5rem">
+      <input id="custom-tool-input" class="input" placeholder="Add a tool not listed..."
+        style="flex:1;padding:0.55rem 0.9rem;font-size:0.85rem"
+        onkeydown="if(event.key==='Enter'){addCustomTool();event.preventDefault();}"/>
+      <button onclick="addCustomTool()" style="background:rgba(0,212,142,0.12);border:1.5px solid rgba(0,212,142,0.3);color:var(--accent);padding:0.55rem 1rem;border-radius:8px;font-weight:700;font-size:0.85rem;cursor:pointer;font-family:'Syne',sans-serif;white-space:nowrap">+ Add</button>
     </div>
-    <div id="custom-tools-display" style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.5rem">
-      ${profile.tools.filter(t=>!allRelevantTools.includes(t)&&t!=="none").map(t=>`
-        <span style="background:rgba(0,229,160,0.1);border:1px solid rgba(0,229,160,0.3);color:var(--accent);padding:0.3rem 0.75rem;border-radius:20px;font-size:0.8rem;font-weight:600">
+    ${customTools.length > 0 ? `<div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:0.5rem">
+      ${customTools.map(t=>`
+        <span style="background:rgba(0,212,142,0.1);border:1px solid rgba(0,212,142,0.3);color:var(--accent);padding:0.3rem 0.75rem;border-radius:20px;font-size:0.8rem;font-weight:600">
           ${t} <span onclick="removeCustomTool('${t.replace(/'/g,"\'")}');event.stopPropagation()" style="cursor:pointer;margin-left:0.35rem;opacity:0.7">✕</span>
         </span>`).join("")}
-    </div>
-    ${profile.tools.filter(t=>t!=="none").length > 0 ? `<div style="margin-top:0.5rem;font-size:0.78rem;color:var(--accent)">✓ ${profile.tools.filter(t=>t!=="none").length} tool${profile.tools.filter(t=>t!=="none").length!==1?"s":""} selected</div>` : ""}
+    </div>` : ""}
+    ${selectedCount > 0 ? `<div style="font-size:0.78rem;color:var(--accent);margin-bottom:0.5rem">✓ ${selectedCount} tool${selectedCount!==1?"s":""} selected</div>` : ""}
 
-    <div class="btn-row" style="margin-top:1.5rem">
+    <div class="btn-row" style="margin-top:1.25rem">
       <button class="btn-back" onclick="back()">← Back</button>
       <button class="btn-next" onclick="saveStep6()">Continue →</button>
     </div>`;
@@ -1880,22 +1962,172 @@ function showScore() {
           </div>`).join("")}
       </div>
 
-      <!-- PERSONALISED FEEDBACK -->
-      ${feedback.length > 0 ? `
+      <!-- PERSONALISED FEEDBACK — general + per-skill roadmaps -->
       <div style="text-align:left;margin-bottom:1.75rem">
-        <div style="font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:${tierData.color};margin-bottom:1rem">Your Personal Action Plan</div>
-        <div style="display:flex;flex-direction:column;gap:0.75rem">
+        <div style="font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:${tierData.color};margin-bottom:1rem">📋 Your Personal Action Plan</div>
+
+        ${feedback.length > 0 ? `
+        <div style="display:flex;flex-direction:column;gap:0.65rem;margin-bottom:1.5rem">
           ${feedback.map((f,i)=>`
-            <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1rem 1.1rem;display:flex;gap:0.85rem;align-items:flex-start">
-              <span style="font-size:1.3rem;flex-shrink:0">${f.icon}</span>
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:0.9rem 1rem;display:flex;gap:0.75rem;align-items:flex-start">
+              <span style="font-size:1.2rem;flex-shrink:0">${f.icon}</span>
               <div style="flex:1">
-                <div style="font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:0.3rem">${i+1}. ${f.title}</div>
-                <div style="font-size:0.82rem;color:var(--muted);line-height:1.55;margin-bottom:0.5rem">${f.detail}</div>
-                <a href="${f.href}" style="font-size:0.8rem;font-weight:700;color:${tierData.color};text-decoration:none">${f.action}</a>
+                <div style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--text);margin-bottom:0.25rem">${i+1}. ${f.title}</div>
+                <div style="font-size:0.8rem;color:var(--muted);line-height:1.5;margin-bottom:0.4rem">${f.detail}</div>
+                <a href="${f.href}" style="font-size:0.78rem;font-weight:700;color:${tierData.color};text-decoration:none">${f.action}</a>
               </div>
             </div>`).join("")}
-        </div>
-      </div>` : ""}
+        </div>` : ""}
+
+        <!-- PER-SKILL ROADMAPS WITH LEARNING MATERIALS -->
+        ${(() => {
+          const skillsToShow = profile.skills.length > 0 ? profile.skills : (profile.skill ? [profile.skill] : []);
+          if (skillsToShow.length === 0) return "";
+
+          // Inline roadmap data for key skills
+          const SKILL_ROADMAPS = {
+            "Data Analysis": {
+              steps: ["Learn Excel & Google Sheets basics","Master SQL (SELECT, JOIN, GROUP BY)","Build Python/Pandas skills","Learn one visualisation tool (Power BI or Tableau)","Complete a real dataset project","Publish your work on GitHub"],
+              resources: [
+                { name:"Google Data Analytics Certificate", url:"https://www.coursera.org/professional-certificates/google-data-analytics", tag:"Free · Cert" },
+                { name:"SQL for Data Science — Coursera", url:"https://www.coursera.org/learn/sql-for-data-science", tag:"Free" },
+                { name:"Kaggle Free Courses", url:"https://www.kaggle.com/learn", tag:"Free · Practice" },
+                { name:"Power BI YouTube — Pragmatic Works", url:"https://www.youtube.com/watch?v=AGrl-H87pRU", tag:"YouTube" },
+              ]
+            },
+            "Customer Service": {
+              steps: ["Master professional written English","Learn Zendesk or Intercom (free trials)","Practice handling complaints, refunds, escalations","Get HubSpot Customer Service Certification","Build a portfolio of 5 sample responses","Apply to remote CS roles at SaaS companies"],
+              resources: [
+                { name:"HubSpot Customer Service Cert", url:"https://academy.hubspot.com/courses/customer-service-training", tag:"Free · Cert" },
+                { name:"Zendesk Training", url:"https://training.zendesk.com", tag:"Free" },
+                { name:"English for Professionals — Coursera", url:"https://www.coursera.org/learn/english-communication-professional", tag:"Free" },
+              ]
+            },
+            "Virtual Assistant": {
+              steps: ["Master Google Workspace (Gmail, Calendar, Drive, Docs)","Learn Notion for project management","Practice inbox management and scheduling","Take Asana Academy certification","Learn basic AI tools (ChatGPT for productivity)","Build a portfolio of SOPs and work samples"],
+              resources: [
+                { name:"Google Workspace Learning Center", url:"https://workspace.google.com/intl/en/learning-center/", tag:"Free" },
+                { name:"Asana Academy Certification", url:"https://academy.asana.com", tag:"Free · Cert" },
+                { name:"Make.com Automation Academy", url:"https://www.make.com/en/academy", tag:"Free" },
+              ]
+            },
+            "Social Media Management": {
+              steps: ["Learn all major platforms (Instagram, LinkedIn, TikTok, Facebook)","Master Canva for content creation","Understand analytics (reach, impressions, engagement rate)","Take Meta Social Media Marketing Certificate","Build a 30-day content calendar as a portfolio piece","Get your first client (friend, family, nonprofit)"],
+              resources: [
+                { name:"Meta Social Media Certificate", url:"https://www.coursera.org/professional-certificates/facebook-social-media-marketing", tag:"Free · Cert" },
+                { name:"HubSpot Social Media Cert", url:"https://academy.hubspot.com/courses/social-media", tag:"Free · Cert" },
+                { name:"Canva Design School", url:"https://www.canva.com/learn/", tag:"Free" },
+              ]
+            },
+            "Content Writing": {
+              steps: ["Study SEO basics (keyword research, on-page optimisation)","Learn Grammarly and Hemingway Editor","Read 10 great blog posts in your niche daily","Write and publish 5 sample pieces","Get HubSpot Content Marketing Certification","Build a portfolio site with your best work"],
+              resources: [
+                { name:"HubSpot Content Marketing Cert", url:"https://academy.hubspot.com/courses/content-marketing", tag:"Free · Cert" },
+                { name:"Yoast SEO Copywriting", url:"https://yoast.com/academy/free-training-seo-copywriting/", tag:"Free" },
+                { name:"Google Digital Garage", url:"https://learndigital.withgoogle.com/digitalgarage/course/digital-marketing", tag:"Free · Cert" },
+              ]
+            },
+            "SEO Specialist": {
+              steps: ["Master Google Search Console and Google Analytics","Learn keyword research (Ahrefs free tools, Ubersuggest)","Understand technical SEO (site speed, crawlability, schema)","Complete Semrush SEO Fundamentals Exam","Run a full site audit on a real website","Build a case study showing SEO results"],
+              resources: [
+                { name:"Ahrefs SEO Course for Beginners", url:"https://ahrefs.com/academy/seo-training-course", tag:"Free" },
+                { name:"Semrush SEO Fundamentals Exam", url:"https://www.semrush.com/academy/", tag:"Free · Cert" },
+                { name:"Google SEO Starter Guide", url:"https://developers.google.com/search/docs/fundamentals/seo-starter-guide", tag:"Free" },
+              ]
+            },
+            "Project Management": {
+              steps: ["Learn Agile and Scrum methodologies","Master Jira, Asana, or Monday.com","Study risk management and scope management","Take Google Project Management Certificate","Practice running a mock sprint with a real team","Pursue PMP or PRINCE2 certification"],
+              resources: [
+                { name:"Google PM Certificate — Coursera", url:"https://www.coursera.org/professional-certificates/google-project-management", tag:"Free · Cert" },
+                { name:"Jira Fundamentals — Atlassian", url:"https://university.atlassian.com/student/catalog", tag:"Free · Cert" },
+                { name:"Scrum Guide (Official)", url:"https://scrumguides.org", tag:"Free" },
+              ]
+            },
+            "UI/UX Design": {
+              steps: ["Learn Figma fundamentals (frames, components, auto-layout)","Study UX principles (Nielsen's heuristics, user flows)","Conduct your first usability test","Build 3 Figma case studies (problem → wireframe → final design)","Take Google UX Design Certificate","Publish your portfolio on Behance or personal site"],
+              resources: [
+                { name:"Google UX Design Certificate", url:"https://www.coursera.org/professional-certificates/google-ux-design", tag:"Free · Cert" },
+                { name:"Figma Learning Resources", url:"https://www.figma.com/resources/learn-design/", tag:"Free" },
+                { name:"Nielsen Norman Group Articles", url:"https://www.nngroup.com/articles/", tag:"Free" },
+              ]
+            },
+            "Email Marketing": {
+              steps: ["Learn email marketing fundamentals (open rates, CTR, deliverability)","Master Mailchimp or Klaviyo (free accounts available)","Study copywriting for email (subject lines, CTAs)","Get HubSpot Email Marketing Certification","Write a 5-email welcome sequence as a portfolio piece","Learn A/B testing and analytics"],
+              resources: [
+                { name:"HubSpot Email Marketing Cert", url:"https://academy.hubspot.com/courses/email-marketing", tag:"Free · Cert" },
+                { name:"Klaviyo Resources", url:"https://www.klaviyo.com/marketing-resources", tag:"Free" },
+                { name:"ActiveCampaign Certification", url:"https://www.activecampaign.com/education", tag:"Free · Cert" },
+              ]
+            },
+            "Cybersecurity": {
+              steps: ["Learn networking fundamentals (TCP/IP, DNS, HTTP)","Start TryHackMe beginner path (free)","Understand common vulnerabilities (OWASP Top 10)","Study CompTIA Security+ exam guide","Complete Google Cybersecurity Certificate","Build a home lab and document your experiments"],
+              resources: [
+                { name:"Google Cybersecurity Certificate", url:"https://www.coursera.org/professional-certificates/google-cybersecurity", tag:"Free · Cert" },
+                { name:"TryHackMe — Free Path", url:"https://tryhackme.com", tag:"Free · Practice" },
+                { name:"CompTIA Security+", url:"https://www.comptia.org/certifications/security", tag:"Paid · Cert" },
+              ]
+            },
+            "Bookkeeping": {
+              steps: ["Learn the accounting equation (Assets = Liabilities + Equity)","Master double-entry bookkeeping","Learn QuickBooks Online (free trial available)","Get QuickBooks ProAdvisor Certification (free via Intuit)","Get Xero Advisor Certification (free)","Build a sample financial report as a portfolio piece"],
+              resources: [
+                { name:"QuickBooks ProAdvisor Cert", url:"https://quickbooks.intuit.com/accountants/quickbooks-online-certification/", tag:"Free · Cert" },
+                { name:"Xero Advisor Certification", url:"https://www.xero.com/uk/advisor-programme/xero-advisor-certification/", tag:"Free · Cert" },
+                { name:"AccountingCoach — Free", url:"https://www.accountingcoach.com/bookkeeping/explanation", tag:"Free" },
+              ]
+            },
+            "E-Commerce": {
+              steps: ["Learn Shopify basics (free trial available)","Understand conversion rate optimisation","Master Meta Ads Manager","Learn email marketing for e-commerce (Klaviyo)","Take Shopify Partner Certification (free)","Build a case study showing a real store's metrics"],
+              resources: [
+                { name:"Shopify Compass — Free Courses", url:"https://www.shopify.com/compass", tag:"Free" },
+                { name:"Shopify Partner Certification", url:"https://www.shopify.com/partners/certification", tag:"Free · Cert" },
+                { name:"Meta Blueprint — Ads", url:"https://www.facebook.com/business/learn/courses", tag:"Free · Cert" },
+              ]
+            },
+            "HR & Recruitment": {
+              steps: ["Learn the full recruitment lifecycle (sourcing to onboarding)","Master LinkedIn Recruiter basics","Learn an ATS (Greenhouse or Lever — free demos)","Study employment law basics for remote work","Take Google People Management course","Build a sample interview guide and job description"],
+              resources: [
+                { name:"Google People Management", url:"https://www.coursera.org/learn/people-management", tag:"Free" },
+                { name:"HR Analytics — Wharton", url:"https://www.coursera.org/learn/people-analytics", tag:"Free" },
+                { name:"SHRM Learning", url:"https://www.shrm.org/learning/", tag:"Course" },
+              ]
+            },
+            "Prompt Engineering & AI": {
+              steps: ["Learn prompt engineering fundamentals (zero-shot, few-shot, chain-of-thought)","Master ChatGPT and Claude for professional tasks","Learn Make.com or Zapier for AI automation","Build 3 real automation workflows","Study LangChain or n8n for advanced pipelines","Build a portfolio of use cases with documented results"],
+              resources: [
+                { name:"ChatGPT Prompt Engineering — DeepLearning.AI", url:"https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/", tag:"Free" },
+                { name:"Make.com Academy", url:"https://www.make.com/en/academy", tag:"Free" },
+                { name:"Google AI Essentials", url:"https://grow.google/certificates/ai-essentials/", tag:"Free · Cert" },
+              ]
+            },
+          };
+
+          return skillsToShow.map(skillName => {
+            const roadmap = SKILL_ROADMAPS[skillName];
+            if (!roadmap) return "";
+            return `
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.1rem 1.25rem;margin-bottom:1rem">
+              <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem;color:var(--text);margin-bottom:0.85rem;display:flex;align-items:center;gap:0.5rem">
+                📍 ${skillName} — Learning Roadmap
+              </div>
+              <div style="margin-bottom:0.85rem">
+                ${roadmap.steps.map((step, i) => `
+                  <div style="display:flex;gap:0.6rem;align-items:flex-start;padding:0.35rem 0;${i < roadmap.steps.length-1 ? 'border-bottom:1px solid var(--border)' : ''}">
+                    <span style="background:rgba(0,212,142,0.15);color:var(--accent);font-size:0.7rem;font-weight:800;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:0.1rem">${i+1}</span>
+                    <span style="font-size:0.82rem;color:var(--muted);line-height:1.5">${step}</span>
+                  </div>`).join("")}
+              </div>
+              <div style="font-family:'Syne',sans-serif;font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);margin-bottom:0.5rem">Free Resources to Start</div>
+              <div style="display:flex;flex-direction:column;gap:0.4rem">
+                ${roadmap.resources.map(r => `
+                  <a href="${r.url}" target="_blank" style="display:flex;align-items:center;justify-content:space-between;padding:0.5rem 0.75rem;background:rgba(59,158,255,0.06);border:1px solid rgba(59,158,255,0.15);border-radius:8px;text-decoration:none;transition:all 0.2s" onmouseover="this.style.borderColor='rgba(59,158,255,0.4)'" onmouseout="this.style.borderColor='rgba(59,158,255,0.15)'">
+                    <span style="font-size:0.8rem;color:var(--text);font-weight:500">${r.name}</span>
+                    <span style="font-size:0.68rem;font-weight:700;padding:0.15rem 0.5rem;border-radius:10px;background:rgba(0,212,142,0.12);color:var(--accent);white-space:nowrap;margin-left:0.5rem">${r.tag}</span>
+                  </a>`).join("")}
+              </div>
+            </div>`;
+          }).join("");
+        })()}
+      </div>
 
       <!-- CAREER RECOMMENDATIONS -->
       ${(() => {
@@ -1926,19 +2158,35 @@ function showScore() {
         </div>`;
       })()}
 
-      <!-- SAMPLE PORTFOLIO PROJECTS -->
-      <div style="text-align:left;margin-bottom:1.75rem">
-        <div style="font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#0096FF;margin-bottom:0.5rem">Sample Portfolio Projects for ${portfolioSkill}</div>
-        <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem">Pick one and build it. A real project beats a CV every time.</p>
-        <div style="display:flex;flex-direction:column;gap:0.75rem">
-          ${portfolioProjects.map((p,i)=>`
-            <div style="background:var(--card);border:1px solid rgba(0,150,255,0.2);border-radius:12px;padding:1rem 1.1rem">
-              <div style="font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:0.3rem">Project ${i+1}: ${p.title}</div>
-              <div style="font-size:0.82rem;color:var(--muted);line-height:1.55;margin-bottom:0.5rem">${p.desc}</div>
-              <span style="background:rgba(0,150,255,0.1);border:1px solid rgba(0,150,255,0.25);color:#0096FF;font-size:0.75rem;font-weight:700;padding:0.25rem 0.7rem;border-radius:20px">🛠️ ${p.tool}</span>
-            </div>`).join("")}
-        </div>
-      </div>
+      <!-- SAMPLE PORTFOLIO PROJECTS — ALL SKILLS -->
+      ${(() => {
+        const skillsWithPortfolio = profile.skills.filter(s => PORTFOLIO_BY_SKILL[s]);
+        if (skillsWithPortfolio.length === 0 && !PORTFOLIO_BY_SKILL[profile.skill]) return "";
+        const skillsToShow = skillsWithPortfolio.length > 0 ? skillsWithPortfolio : [portfolioSkill];
+        return `
+        <div style="text-align:left;margin-bottom:1.75rem">
+          <div style="font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#3B9EFF;margin-bottom:0.5rem">🗂️ Sample Portfolio Projects</div>
+          <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem">One project per skill. Pick one and start today — a real project beats a CV every time.</p>
+          ${skillsToShow.map(skillName => {
+            const projects = PORTFOLIO_BY_SKILL[skillName];
+            if (!projects) return "";
+            return `
+            <div style="margin-bottom:1.5rem">
+              <div style="font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#3B9EFF;margin-bottom:0.75rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border)">
+                📌 ${skillName}
+              </div>
+              <div style="display:flex;flex-direction:column;gap:0.6rem">
+                ${projects.map((p,i)=>`
+                  <div style="background:var(--card);border:1px solid rgba(59,158,255,0.15);border-radius:12px;padding:0.9rem 1rem">
+                    <div style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--text);margin-bottom:0.25rem">Project ${i+1}: ${p.title}</div>
+                    <div style="font-size:0.8rem;color:var(--muted);line-height:1.5;margin-bottom:0.4rem">${p.desc}</div>
+                    <span style="background:rgba(59,158,255,0.1);border:1px solid rgba(59,158,255,0.2);color:#3B9EFF;font-size:0.72rem;font-weight:700;padding:0.2rem 0.6rem;border-radius:20px">🛠️ ${p.tool}</span>
+                  </div>`).join("")}
+              </div>
+            </div>`;
+          }).join("")}
+        </div>`;
+      })()}
 
       <!-- ACTION BUTTONS -->
       <div class="pass-actions">
