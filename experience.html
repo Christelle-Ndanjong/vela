@@ -140,11 +140,12 @@
     --muted: #6B6358;
   }
   </style>
+    <script src="config.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script>
   (function() {
-    var SURL = 'https://xlpghpsowygekrwylhjf.supabase.co';
-    var SKEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhscGdocHNvd3lnZWtyd3lsaGpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNTE5NjEsImV4cCI6MjA4ODcyNzk2MX0.10e6szZ_7oFdwRYrjuT-c6DXWTsapZ82f4BDWoTADlk';
+    var SURL = window.VELA_CONFIG.SUPABASE_URL;
+    var SKEY = window.VELA_CONFIG.SUPABASE_KEY;
     function waitForSupabase(cb, tries) {
       tries = tries || 0;
       if (typeof supabase !== 'undefined') { cb(); }
