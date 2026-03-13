@@ -603,7 +603,6 @@
   body.light-mode {
     --bg: #FAF7F2;
     --bg2: #F2EDE4;
-    --surface: #E8E2D9;
     --card: #FFFDF9;
     --border: rgba(0,0,0,0.08);
     --text: #1A1510;
@@ -625,6 +624,7 @@
   <button class="hamburger-btn" onclick="toggleMobileNav()" aria-label="Open menu">☰</button>
 
   <button class="hamburger-btn" onclick="toggleMobileNav()" aria-label="Open menu">☰</button>
+  <div style="display:flex;gap:0.5rem;align-items:center"><button id="theme-btn" onclick="toggleTheme()" title="Toggle theme" style="background:transparent;border:1.5px solid rgba(255,255,255,0.12);color:var(--text);padding:0.4rem 0.75rem;border-radius:8px;cursor:pointer;font-size:0.9rem;font-family:'DM Sans',sans-serif;">🌙</button><a href="login.html" onclick="velaSignOut(event)" style="background:transparent;border:1px solid rgba(255,100,100,0.25);color:#FF6B6B;padding:0.4rem 0.9rem;border-radius:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;">Sign Out</a></div>
 </nav>
 <div id="mobile-nav-overlay" class="mobile-nav-overlay">
   <button class="mobile-nav-close" onclick="toggleMobileNav()">✕</button>
@@ -1294,6 +1294,34 @@ document.addEventListener('keydown', function(e) {
   }
 });
 
+</script>
+<script>
+function toggleTheme() {
+  document.body.classList.toggle('light-mode');
+  const isLight = document.body.classList.contains('light-mode');
+  const btn = document.getElementById('theme-btn');
+  if (btn) btn.textContent = isLight ? '☀️' : '🌙';
+  localStorage.setItem('vela_theme', isLight ? 'light' : 'dark');
+}
+function applyTheme() {
+  if (localStorage.getItem('vela_theme') === 'light') {
+    document.body.classList.add('light-mode');
+    const btn = document.getElementById('theme-btn');
+    if (btn) btn.textContent = '☀️';
+  }
+}
+async function velaSignOut(e) {
+  if (e) e.preventDefault();
+  try {
+    const cfg = window.VELA_CONFIG || {};
+    if (typeof supabase !== 'undefined' && cfg.SUPABASE_URL) {
+      const _sb = supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_KEY);
+      await _sb.auth.signOut();
+    }
+  } catch(err) {}
+  window.location.href = 'login.html';
+}
+document.addEventListener('DOMContentLoaded', applyTheme);
 </script>
 </body>
 </html>
