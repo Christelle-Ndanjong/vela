@@ -453,9 +453,22 @@ function candidateCard(c) {
   const engLabels = {3:"Intermediate",4:"Proficient",5:"Fluent"};
   const availLabels = {fulltime:"Full-time",parttime:"Part-time",flexible:"Flexible"};
 
+  const LAYER_BADGE_MAP = {
+    video:     "Identity Verified",
+    comm:      "Skills Verified",
+    task:      "Portfolio Verified",
+    tools:     "Remote Ready",
+    interview: "Reliability Verified",
+  };
+  const LAYER_COLORS = {
+    video:"#3B9EFF", comm:"#00D48E", task:"#9333EA", tools:"#FFB347", interview:"#FF6B9D"
+  };
   const verifTags = Object.entries(c.verif).map(([key, val]) => {
-    const labels = {comm:"Comm",tools:"Tools",interview:"Interview",task:"Task",video:"Video"};
-    return `<span class="verif-pill ${val}">${labels[key]}</span>`;
+    const label = LAYER_BADGE_MAP[key] || key;
+    const color = val === 'pass' ? (LAYER_COLORS[key] || 'var(--accent)') : '';
+    const style = val === 'pass' ? `style="border-color:${color}50;color:${color};background:${color}18"` : '';
+    const icon = val === 'pass' ? '✔ ' : val === 'review' ? '⏳ ' : '○ ';
+    return `<span class="verif-pill ${val}" ${style}>${icon}${label}</span>`;
   }).join("");
 
   return `
