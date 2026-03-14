@@ -14,38 +14,24 @@
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     html,body{overflow-x:hidden;max-width:100%;}
     :root {
-      --bg:       #0B0F1F;
-      --bg2:      #0E1328;
-      --surface:  #151A2E;
-      --card:     #151A2E;
-      --card2:    #1E2542;
-      --border:   #2A3153;
-      --accent:   #22C55E;
-      --accent2:  #3B82F6;
-      --grad1:    #22C1C3;
-      --grad2:    #6C63FF;
-      --text:     #FFFFFF;
-      --text2:    #A1A8C3;
-      --muted:    #6B7280;
-      --gold:     #F5A623;
-      --danger:   #EF4444;
-      --warn:     #F59E0B;
-      --success:  #22C55E;
+      --bg:      #0B0F1F;
+      --bg2:     #0E1328;
+      --surface: #151A2E;
+      --card:    #1A2040;
+      --border:  #2A3153;
+      --accent:  #22C55E;
+      --accent2: #3B82F6;
+      --grad1:   #22C1C3;
+      --grad2:   #6C63FF;
+      --gold:    #F5A623;
+      --text:    #FFFFFF;
+      --text2:   #A1A8C3;
+      --muted:   #6B7280;
+      --danger:  #EF4444;
+      --warn:    #F59E0B;
     }
     body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;}
-    body.light-mode {
-    --bg:      #F0F4FF;
-    --bg2:     #E4EAFB;
-    --surface: #FFFFFF;
-    --card:    #FFFFFF;
-    --card2:   #F0F4FF;
-    --border:  #CBD5E1;
-    --accent:  #16A34A;
-    --accent2: #2563EB;
-    --text:    #0F172A;
-    --text2:   #475569;
-    --muted:   #94A3B8;
-  }
+    /* light mode removed — VELA is dark */
 
     /* NAV */
     nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 5%;border-bottom:1px solid var(--border);background:rgba(5,9,24,0.95);position:sticky;top:0;z-index:100;backdrop-filter:blur(20px);}
@@ -199,7 +185,7 @@
   </a>
   <div class="nav-right">
     <a class="btn-ghost" href="talent.html">← All Talent</a>
-    <button id="theme-btn" onclick="toggleTheme()" style="background:transparent;border:1.5px solid rgba(255,255,255,0.12);color:var(--text);padding:0.4rem 0.7rem;border-radius:8px;cursor:pointer;font-size:0.88rem;">🌑 Dark</button>
+    
     <button class="btn-hire" onclick="requestInterview()">Request Interview →</button>
   </div>
 </nav>
