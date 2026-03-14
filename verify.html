@@ -346,11 +346,14 @@
       </div>
     </div>
     <div class="passport-badges" id="passport-badges"></div>
-    <div class="vela-badge">
+    <div class="vela-badge" style="flex-direction:column;align-items:center;text-align:center;gap:0.35rem">
       <div class="vela-badge-icon" id="badge-icon">🔒</div>
       <div class="vela-badge-text">
         <div class="label">VELA Status</div>
         <div class="val" id="badge-status">Not Yet Verified</div>
+      </div>
+      <div style="font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:800;color:var(--muted);margin-top:0.25rem">
+        VELA Score: <span id="vela-score-display" style="color:var(--accent)">—</span>
       </div>
     </div>
   </div>
@@ -473,13 +476,32 @@ function getScenario() {
 }
 
 // ─── VERIF DEFINITIONS ────────────────────────────────────────────────────
+// ─── VELA 5-LAYER VERIFICATION FRAMEWORK ───────────────────────────────────
 const LAYERS = [
-  { id:"comm",     icon:"✍️", title:"Communication Test",      desc:"Written professional scenario — AI scored", auto: true  },
-  { id:"task",     icon:"📁", title:"Task Simulation",         desc:"Upload a real work sample document",         auto: false },
-  { id:"tools",    icon:"🛠️", title:"Tool Knowledge Assessment",desc:"10 questions on your skill's core tools",     auto: true  },
-  { id:"video",    icon:"🎥", title:"Video Introduction",      desc:"60-second professional introduction",        auto: false },
-  { id:"interview",icon:"💬", title:"Mock Interview",          desc:"3 role-specific questions — AI scored",      auto: true  },
+  { id:"video",    icon:"🪪", title:"Layer 1 — Identity Verification",    shortTitle:"Identity Verified",     badge:"✔ Identity Verified",     desc:"Record a 60-second professional video introduction. Proves you are a real person with real communication ability.", auto: false, color:"#3B9EFF" },
+  { id:"comm",     icon:"🧠", title:"Layer 2 — Skills Assessment",         shortTitle:"Skills Verified",       badge:"✔ Skills Verified",       desc:"Written scenario + mock interview scored by AI. Proves your actual skill level — not just what you claim.", auto: true,  color:"#00D48E" },
+  { id:"task",     icon:"🗂️", title:"Layer 3 — Portfolio Review",          shortTitle:"Portfolio Verified",    badge:"✔ Portfolio Verified",    desc:"Upload a real work sample — a report, design file, code, or case study. Human-reviewed within 48 hours.", auto: false, color:"#9333EA" },
+  { id:"tools",    icon:"🌐", title:"Layer 4 — Remote Work Readiness",     shortTitle:"Remote Ready",          badge:"✔ Remote Ready",          desc:"10-question quiz on professional tools, async communication, and time zone management. Proves you can work remotely.", auto: true,  color:"#FFB347" },
+  { id:"interview",icon:"⭐", title:"Layer 5 — Professional Reliability",  shortTitle:"Reliability Score",     badge:"✔ Reliability Verified",  desc:"3 in-depth situational questions. AI scores your judgment, professionalism, and reliability under pressure.", auto: true,  color:"#FF6B9D" },
 ];
+
+// Badge label mapping for employer-facing pages
+const LAYER_BADGE_LABELS = {
+  video:     "✔ Identity Verified",
+  comm:      "✔ Skills Verified",
+  task:      "✔ Portfolio Verified",
+  tools:     "✔ Remote Ready",
+  interview: "✔ Reliability Verified",
+};
+
+// Short labels for pills
+const LAYER_SHORT_LABELS = {
+  video:     "Identity",
+  comm:      "Skills",
+  task:      "Portfolio",
+  tools:     "Remote Ready",
+  interview: "Reliability",
+};
 
 // ─── PASSPORT ─────────────────────────────────────────────────────────────
 function updatePassport() {
@@ -492,16 +514,30 @@ function updatePassport() {
 
   const passed = LAYERS.filter(l => verifState[l.id]?.status === "passed" || verifState[l.id]?.status === "review");
   const allDone = passed.length === LAYERS.length;
+  // Calculate reliability score based on layers completed
+  const reliabilityScore = Math.round((passed.length / LAYERS.length) * 100);
 
-  document.getElementById("badge-icon").textContent = allDone ? "🏆" : passed.length >= 3 ? "⭐" : "🔒";
-  document.getElementById("badge-status").textContent = allDone ? "Fully Verified" : passed.length >= 3 ? `${passed.length}/5 Complete` : "Not Yet Verified";
+  document.getElementById("badge-icon").textContent = allDone ? "✅" : passed.length >= 3 ? "🔓" : "🔒";
+  document.getElementById("badge-status").textContent = allDone ? "VELA VERIFIED ™" : passed.length >= 3 ? `${passed.length} / 5 Layers` : "Not Yet Verified";
 
   const badges = document.getElementById("passport-badges");
+  // Show VELA Score from profile if available
+  try {
+    const profileKeys = Object.keys(localStorage).filter(k => k.startsWith('vela_') && !k.includes('_step') && !k.includes('_quiz') && !k.includes('_theme') && !k.includes('_verif') && !k.includes('_role') && !k.includes('_skill') && !k.includes('_tool'));
+    if (profileKeys.length > 0) {
+      const p = JSON.parse(localStorage.getItem(profileKeys[0]) || '{}');
+      if (p.name) { candidate.name = p.name; document.getElementById('pp-name').textContent = p.name; }
+      if (p.skill) { candidate.skill = p.skill; document.getElementById('pp-skill').textContent = p.skill + (p.country ? ' · ' + p.country : ''); }
+      const scoreEl = document.getElementById('vela-score-display');
+      if (scoreEl && p.total_score) scoreEl.textContent = p.total_score + '/100';
+    }
+  } catch(e) {}
+
   badges.innerHTML = LAYERS.map(l => {
     const s = verifState[l.id]?.status;
     const cls = s === "passed" ? "passed" : s === "review" ? "review" : s === "failed" ? "failed" : "locked";
     const icon = s === "passed" ? "✓" : s === "review" ? "⏳" : s === "failed" ? "✗" : "○";
-    return `<span class="badge-chip ${cls}">${icon} ${l.title.split(" ")[0]}</span>`;
+    return `<span class="badge-chip ${cls}">${icon} ${l.shortTitle}</span>`;
   }).join("");
 
   if (allDone) document.getElementById("complete-banner").style.display = "block";
@@ -522,10 +558,14 @@ function renderCards() {
     return `
     <div class="verif-card ${cardClass}" id="card-${layer.id}">
       <div class="verif-header" onclick="toggleCard('${layer.id}')">
-        <div class="verif-icon-wrap ${iconClass}">${layer.icon}</div>
+        <div class="verif-icon-wrap ${iconClass}" style="background:${iconClass==='icon-passed'?layer.color+'20':''};border-color:${iconClass==='icon-passed'?layer.color+'50':''}">${layer.icon}</div>
         <div class="verif-meta">
-          <div class="verif-title">${layer.title}</div>
-          <div class="verif-desc">${layer.desc} ${layer.auto ? "· <span style='color:var(--accent);font-size:0.72rem'>Auto-scored by AI</span>" : "· <span style='color:var(--warn);font-size:0.72rem'>Human reviewed</span>"}</div>
+          <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap">
+            <span style="font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:${layer.color};background:${layer.color}18;border:1px solid ${layer.color}30;padding:0.15rem 0.55rem;border-radius:20px">${layer.shortTitle}</span>
+            ${status === 'passed' ? `<span style="font-size:0.68rem;font-weight:800;color:var(--accent)">✅ ${layer.badge}</span>` : ''}
+          </div>
+          <div class="verif-title">${layer.title.includes(' — ') ? layer.title.split(' — ')[1] : layer.title}</div>
+          <div class="verif-desc">${layer.desc} ${layer.auto ? "· <span style='color:var(--accent);font-size:0.72rem'>⚡ AI-scored instantly</span>" : "· <span style='color:var(--warn);font-size:0.72rem'>👤 Human reviewed</span>"}</div>
         </div>
         <div class="verif-right">
           ${score !== undefined ? `<div class="verif-score" style="color:${score>=70?'var(--accent)':score>=50?'var(--warn)':'var(--danger)'}">${score}<span style="font-size:0.7rem;color:var(--muted);font-weight:400">/100</span></div>` : ""}
