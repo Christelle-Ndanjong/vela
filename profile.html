@@ -17,23 +17,21 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg:       #0B0F1F;
-      --bg2:      #0E1328;
-      --surface:  #151A2E;
-      --card:     #151A2E;
-      --card2:    #1E2542;
-      --border:   #2A3153;
-      --accent:   #22C55E;
-      --accent2:  #3B82F6;
-      --grad1:    #22C1C3;
-      --grad2:    #6C63FF;
-      --text:     #FFFFFF;
-      --text2:    #A1A8C3;
-      --muted:    #6B7280;
-      --gold:     #F5A623;
-      --danger:   #EF4444;
-      --warn:     #F59E0B;
-      --success:  #22C55E;
+      --bg:      #0B0F1F;
+      --bg2:     #0E1328;
+      --surface: #151A2E;
+      --card:    #1A2040;
+      --border:  #2A3153;
+      --accent:  #22C55E;
+      --accent2: #3B82F6;
+      --grad1:   #22C1C3;
+      --grad2:   #6C63FF;
+      --gold:    #F5A623;
+      --text:    #FFFFFF;
+      --text2:   #A1A8C3;
+      --muted:   #6B7280;
+      --danger:  #EF4444;
+      --warn:    #F59E0B;
     }
     html, body { scroll-behavior: smooth; overflow-x: hidden; max-width: 100%; }
     body {
@@ -324,19 +322,7 @@
       .score-big { font-size: 3rem; }
       .choice-grid.cols-2 { grid-template-columns: 1fr; }
     }
-  body.light-mode {
-    --bg:      #F0F4FF;
-    --bg2:     #E4EAFB;
-    --surface: #FFFFFF;
-    --card:    #FFFFFF;
-    --card2:   #F0F4FF;
-    --border:  #CBD5E1;
-    --accent:  #16A34A;
-    --accent2: #2563EB;
-    --text:    #0F172A;
-    --text2:   #475569;
-    --muted:   #94A3B8;
-  }
+  /* light mode removed — VELA is dark */
 
   /* ── VELA VERIFIED BADGE ─────────────────────────────────────────────── */
   .vela-verified-badge {
@@ -936,6 +922,11 @@ function calcScore() {
 }
 
 function updateWordCount(qi, text, elId) {
+  // Persist text answer immediately
+  try {
+    const email = currentUser ? currentUser.email : (profile.email || 'guest');
+    localStorage.setItem('vela_quiz_' + email, JSON.stringify(quizAnswers));
+  } catch(e) {}
   const words = text.trim().split(/\s+/).filter(Boolean).length;
   const el = document.getElementById(elId);
   if (el) {
@@ -1244,6 +1235,11 @@ function answerQuiz(qi, ans, el) {
   const wrap = el.closest(".quiz-question");
   wrap.querySelectorAll(".q-option").forEach(o => o.classList.remove("selected"));
   el.classList.add("selected");
+  // Persist immediately so answers survive navigation
+  try {
+    const email = currentUser ? currentUser.email : (profile.email || 'guest');
+    localStorage.setItem('vela_quiz_' + email, JSON.stringify(quizAnswers));
+  } catch(e) {}
 }
 
 // ─── STEPS ───────────────────────────────────────────────────────────────────
