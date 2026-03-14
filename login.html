@@ -20,18 +20,23 @@
     html, body { overflow-x: hidden; max-width: 100%; }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #060A14;
-      --bg2: #0B1120;
-      --surface: #0F1829;
-      --card: #111E30;
-      --border: rgba(255,255,255,0.08);
-      --accent: #00D48E;
-      --accent2: #3B9EFF;
-      --text: #E8EEFF;
-      --muted: #7A8AAD;
-      --danger: #FF5E5E;
-      --warn: #FFB347;
-      --success: #00D48E;
+      --bg:       #0B0F1F;
+      --bg2:      #0E1328;
+      --surface:  #151A2E;
+      --card:     #151A2E;
+      --card2:    #1E2542;
+      --border:   #2A3153;
+      --accent:   #22C55E;
+      --accent2:  #3B82F6;
+      --grad1:    #22C1C3;
+      --grad2:    #6C63FF;
+      --text:     #FFFFFF;
+      --text2:    #A1A8C3;
+      --muted:    #6B7280;
+      --gold:     #F5A623;
+      --danger:   #EF4444;
+      --warn:     #F59E0B;
+      --success:  #22C55E;
     }
     body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.5rem; }
     .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.8rem; background: linear-gradient(135deg, var(--accent), var(--blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.5rem; text-align: center; }
@@ -39,14 +44,14 @@
     .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; width: 100%; max-width: 420px; }
     .tabs { display: flex; gap: 0; margin-bottom: 1.75rem; background: var(--surface); border-radius: 10px; padding: 4px; }
     .tab { flex: 1; padding: 0.6rem; border: none; border-radius: 8px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; background: transparent; color: var(--muted); }
-    .tab.active { background: var(--accent); color: #07090F; }
+    .tab.active { background: linear-gradient(135deg, #22C1C3, #6C63FF); color: #FFFFFF; }
     .form-group { margin-bottom: 1.1rem; }
     .form-label { display: block; font-size: 0.75rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4rem; }
     .form-input { width: 100%; background: var(--surface); border: 1.5px solid var(--border); color: var(--text); -webkit-text-fill-color: var(--text); padding: 0.75rem 1rem; border-radius: 10px; font-size: 0.9rem; font-family: 'DM Sans', sans-serif; outline: none; transition: border-color 0.2s; }
-    .form-input:focus { border-color: rgba(0,229,160,0.4); }
+    .form-input:focus { border-color: rgba(0,196,140,0.4); }
     .form-input::placeholder { color: var(--muted); opacity: 1; }
     .form-input:-webkit-autofill { -webkit-box-shadow: 0 0 0 100px var(--surface) inset !important; -webkit-text-fill-color: var(--text) !important; }
-    .btn-submit { width: 100%; background: var(--accent); color: #07090F; border: none; padding: 0.85rem; border-radius: 10px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; cursor: pointer; margin-top: 0.5rem; transition: opacity 0.2s; }
+    .btn-submit { width: 100%; background: linear-gradient(135deg, #22C1C3, #6C63FF); color: #FFFFFF; border: none; padding: 0.85rem; border-radius: 10px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; cursor: pointer; margin-top: 0.5rem; transition: opacity 0.2s; }
     .btn-submit:hover { opacity: 0.88; }
     .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
     .btn-google { width: 100%; background: #fff; color: #1A1510; border: 1.5px solid rgba(255,255,255,0.15); padding: 0.85rem; border-radius: 10px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.92rem; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.65rem; margin-bottom: 0.85rem; }
@@ -63,21 +68,23 @@
     .back-link a { color: var(--accent); text-decoration: none; }
 
   body.light-mode {
-    --bg: #F5F0E8;
-    --bg2: #EDE6D8;
-    --card: #FDFAF5;
-    --surface: #EDE6D8;
-    --border: rgba(0,0,0,0.09);
-    --text: #15110A;
-    --muted: #6B5F4E;
-    --accent: #00A86B;
-    --accent2: #1A6FCC;
+    --bg:      #F0F4FF;
+    --bg2:     #E4EAFB;
+    --surface: #FFFFFF;
+    --card:    #FFFFFF;
+    --card2:   #F0F4FF;
+    --border:  #CBD5E1;
+    --accent:  #16A34A;
+    --accent2: #2563EB;
+    --text:    #0F172A;
+    --text2:   #475569;
+    --muted:   #94A3B8;
   }
   </style>
 </head>
 <body>
 
-<div style="position:fixed;top:1rem;right:1rem;z-index:100"><button id="theme-btn" onclick="toggleTheme()" title="Toggle theme" style="background:transparent;border:1.5px solid rgba(255,255,255,0.12);color:var(--text);padding:0.4rem 0.75rem;border-radius:8px;cursor:pointer;font-size:0.9rem;font-family:'DM Sans',sans-serif;">🌙</button></div>
+<div style="position:fixed;top:1rem;right:1rem;z-index:100"><button id="theme-btn" onclick="toggleTheme()" title="Toggle theme" style="background:transparent;border:1.5px solid rgba(255,255,255,0.12);color:var(--text);padding:0.4rem 0.75rem;border-radius:8px;cursor:pointer;font-size:0.9rem;font-family:'DM Sans',sans-serif;">🌑 Dark</button></div>
 <div class="logo" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;"><img src="logo.png" alt="VELA" style="width:32px;height:32px;object-fit:contain;"/>VELA</div>
 <div class="tagline">African Talent. Verified. Placed.</div>
 
@@ -194,14 +201,14 @@ function applyRoleBanner() {
   if (!banner) return;
   if (currentRole === 'recruiter') {
     banner.style.display = 'block';
-    banner.style.background = 'rgba(0,150,255,0.1)';
-    banner.style.border = '1.5px solid rgba(0,150,255,0.3)';
-    banner.style.color = '#0096FF';
+    banner.style.background = 'rgba(45,107,228,0.1)';
+    banner.style.border = '1.5px solid rgba(45,107,228,0.3)';
+    banner.style.color = '#2D6BE4';
     banner.innerHTML = '🏢 Recruiter account — you will be taken to the Employer Dashboard';
   } else {
     banner.style.display = 'block';
-    banner.style.background = 'rgba(0,229,160,0.08)';
-    banner.style.border = '1.5px solid rgba(0,229,160,0.25)';
+    banner.style.background = 'rgba(0,196,140,0.08)';
+    banner.style.border = '1.5px solid rgba(0,196,140,0.25)';
     banner.style.color = 'var(--accent)';
     banner.innerHTML = '🌍 Job Seeker account — you will be taken to your profile';
   }
@@ -400,14 +407,14 @@ function toggleTheme() {
   document.body.classList.toggle('light-mode');
   const isLight = document.body.classList.contains('light-mode');
   const btn = document.getElementById('theme-btn');
-  if (btn) btn.textContent = isLight ? '☀️' : '🌙';
+  if (btn) btn.textContent = isLight ? '🌌 Navy' : '🌑 Dark';
   localStorage.setItem('vela_theme', isLight ? 'light' : 'dark');
 }
 function applyTheme() {
   if (localStorage.getItem('vela_theme') === 'light') {
     document.body.classList.add('light-mode');
     const btn = document.getElementById('theme-btn');
-    if (btn) btn.textContent = '☀️';
+    if (btn) btn.textContent = '🌌 Navy';
   }
 }
 async function velaSignOut(e) {
