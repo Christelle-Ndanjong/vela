@@ -31,9 +31,23 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #07090F; --bg2: #0B0F1A; --surface: #101520;
-      --border: rgba(255,255,255,0.07); --accent: #0096FF;
-      --accent2: #00E5A0; --text: #F0F4FF; --muted: #6B7A99; --card: #0C1220;
+      --bg:       #0B0F1F;
+      --bg2:      #0E1328;
+      --surface:  #151A2E;
+      --card:     #151A2E;
+      --card2:    #1E2542;
+      --border:   #2A3153;
+      --accent:   #22C55E;
+      --accent2:  #3B82F6;
+      --grad1:    #22C1C3;
+      --grad2:    #6C63FF;
+      --text:     #FFFFFF;
+      --text2:    #A1A8C3;
+      --muted:    #6B7280;
+      --gold:     #F5A623;
+      --danger:   #EF4444;
+      --warn:     #F59E0B;
+      --success:  #22C55E;
     }
     html { scroll-behavior: smooth; }
     body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
@@ -47,10 +61,10 @@
     }
     .logo-wrap { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
     .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem;
-      letter-spacing: 0.08em; background: linear-gradient(135deg, var(--accent), var(--accent2));
+      letter-spacing: 0.08em; background: linear-gradient(135deg, #22C1C3, #6C63FF);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .logo-tag { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--accent); background: rgba(0,150,255,0.1); border: 1px solid rgba(0,150,255,0.2);
+      color: var(--accent); background: rgba(45,107,228,0.1); border: 1px solid rgba(45,107,228,0.2);
       padding: 0.2rem 0.55rem; border-radius: 4px; }
     .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: color 0.2s; }
@@ -74,7 +88,7 @@
     .hero-glow {
       position: absolute; top: 15%; left: 50%; transform: translateX(-50%);
       width: 800px; height: 600px; pointer-events: none;
-      background: radial-gradient(ellipse, rgba(0,150,255,0.07) 0%, rgba(0,229,160,0.03) 40%, transparent 70%);
+      background: radial-gradient(ellipse, rgba(45,107,228,0.07) 0%, rgba(0,196,140,0.03) 40%, transparent 70%);
     }
     .hero-grid {
       position: absolute; inset: 0; pointer-events: none; opacity: 0.03;
@@ -83,7 +97,7 @@
     }
     .hero-badge {
       display: inline-flex; align-items: center; gap: 0.5rem;
-      background: rgba(0,150,255,0.08); border: 1px solid rgba(0,150,255,0.2);
+      background: rgba(45,107,228,0.08); border: 1px solid rgba(45,107,228,0.2);
       color: var(--accent); font-size: 0.75rem; font-weight: 700;
       letter-spacing: 0.1em; text-transform: uppercase; padding: 0.4rem 1rem;
       border-radius: 100px; margin-bottom: 2rem; animation: fadeUp 0.6s ease both;
@@ -119,7 +133,7 @@
       color: rgba(255,255,255,0.2); letter-spacing: 0.05em; text-transform: uppercase; }
 
     /* ── STATS STRIP ── */
-    .stats-strip { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    .stats-strip { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
       padding: 2.5rem 5%; display: flex; justify-content: center; gap: 5rem; flex-wrap: wrap; }
     .strip-stat { text-align: center; }
     .strip-num { font-family: 'Syne', sans-serif; font-size: 2.2rem; font-weight: 800;
@@ -138,7 +152,7 @@
     /* ── THE PROBLEM ── */
     .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     .problem-card { background: var(--card); border: 1.5px solid var(--border); border-radius: 14px; padding: 1.75rem; }
-    .problem-card.highlight { border-color: rgba(0,150,255,0.25); background: rgba(0,150,255,0.04); }
+    .problem-card.highlight { border-color: rgba(45,107,228,0.25); background: rgba(45,107,228,0.04); }
     .problem-icon { font-size: 1.5rem; margin-bottom: 1rem; }
     .problem-title { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
     .problem-text { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
@@ -148,8 +162,8 @@
     .how-steps::before { content: ''; position: absolute; top: 28px; left: 10%; right: 10%;
       height: 1px; background: linear-gradient(90deg, transparent, var(--border), var(--border), transparent); }
     .how-step { text-align: center; }
-    .how-step-num { width: 56px; height: 56px; border-radius: 50%; border: 1.5px solid rgba(0,150,255,0.3);
-      background: rgba(0,150,255,0.08); display: flex; align-items: center; justify-content: center;
+    .how-step-num { width: 56px; height: 56px; border-radius: 50%; border: 1.5px solid rgba(45,107,228,0.3);
+      background: rgba(45,107,228,0.08); display: flex; align-items: center; justify-content: center;
       font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 800; color: var(--accent);
       margin: 0 auto 1.25rem; position: relative; z-index: 1; }
     .how-step-title { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
@@ -159,10 +173,10 @@
     .verif-explainer { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
     .verif-passport {
       background: linear-gradient(145deg, #0C1625, #080F1A);
-      border: 1.5px solid rgba(0,150,255,0.2); border-radius: 20px; padding: 2rem; position: relative; overflow: hidden;
+      border: 1.5px solid rgba(45,107,228,0.2); border-radius: 20px; padding: 2rem; position: relative; overflow: hidden;
     }
     .verif-passport::before { content: ''; position: absolute; top: -30px; right: -30px; width: 150px; height: 150px;
-      background: radial-gradient(circle, rgba(0,150,255,0.08), transparent 70%); border-radius: 50%; }
+      background: radial-gradient(circle, rgba(45,107,228,0.08), transparent 70%); border-radius: 50%; }
     .passport-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
     .passport-avatar-em { width: 48px; height: 48px; border-radius: 50%;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
@@ -171,7 +185,7 @@
     .passport-name-em { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--text); }
     .passport-detail { font-size: 0.78rem; color: var(--muted); margin-top: 0.15rem; }
     .passport-score-row { display: flex; align-items: center; justify-content: space-between;
-      background: rgba(0,150,255,0.06); border: 1px solid rgba(0,150,255,0.12); border-radius: 10px;
+      background: rgba(45,107,228,0.06); border: 1px solid rgba(45,107,228,0.12); border-radius: 10px;
       padding: 0.85rem 1rem; margin-bottom: 1rem; }
     .ps-label { font-size: 0.75rem; color: var(--muted); font-weight: 600; }
     .ps-val { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 800; color: var(--accent); }
@@ -179,20 +193,20 @@
     .vl-row { display: flex; align-items: center; gap: 0.75rem; }
     .vl-dot { width: 24px; height: 24px; border-radius: 7px; display: flex; align-items: center;
       justify-content: center; font-size: 0.7rem; flex-shrink: 0; }
-    .vl-dot.pass { background: rgba(0,229,160,0.12); color: var(--accent2); border: 1px solid rgba(0,229,160,0.25); }
+    .vl-dot.pass { background: rgba(34,197,94,0.12); color: var(--accent2); border: 1px solid rgba(0,196,140,0.25); }
     .vl-dot.review { background: rgba(255,165,0,0.1); color: #FFA500; border: 1px solid rgba(255,165,0,0.2); }
     .vl-name { font-size: 0.82rem; color: var(--text); flex: 1; }
     .vl-score { font-family: 'Syne', sans-serif; font-size: 0.82rem; font-weight: 700; color: var(--muted); }
     .vl-badge { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
       padding: 0.15rem 0.5rem; border-radius: 4px; }
-    .vl-badge.pass { background: rgba(0,229,160,0.1); color: var(--accent2); }
+    .vl-badge.pass { background: rgba(34,197,94,0.12); color: var(--accent2); }
     .vl-badge.review { background: rgba(255,165,0,0.1); color: #FFA500; }
 
     /* ── SKILLS ── */
     .skills-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.75rem; }
     .skill-pill { background: var(--card); border: 1.5px solid var(--border); border-radius: 10px;
       padding: 0.85rem 1rem; text-align: center; transition: all 0.2s; cursor: default; }
-    .skill-pill:hover { border-color: rgba(0,150,255,0.3); background: rgba(0,150,255,0.05); }
+    .skill-pill:hover { border-color: rgba(45,107,228,0.3); background: rgba(45,107,228,0.05); }
     .skill-pill-icon { font-size: 1.25rem; margin-bottom: 0.4rem; }
     .skill-pill-name { font-size: 0.75rem; font-weight: 600; color: var(--text); line-height: 1.3; }
     .skill-pill-count { font-size: 0.68rem; color: var(--muted); margin-top: 0.2rem; }
@@ -200,7 +214,7 @@
     /* ── TESTIMONIALS ── */
     .testimonials { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
     .testimonial { background: var(--card); border: 1.5px solid var(--border); border-radius: 16px; padding: 1.75rem; transition: border-color 0.3s; }
-    .testimonial:hover { border-color: rgba(0,150,255,0.2); }
+    .testimonial:hover { border-color: rgba(45,107,228,0.2); }
     .test-quote { font-size: 0.92rem; color: var(--text); line-height: 1.7; margin-bottom: 1.25rem; font-style: italic; }
     .test-author { display: flex; align-items: center; gap: 0.75rem; }
     .test-avatar { width: 36px; height: 36px; border-radius: 50%;
@@ -214,8 +228,8 @@
     /* ── PRICING ── */
     .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
     .pricing-card { background: var(--card); border: 1.5px solid var(--border); border-radius: 18px; padding: 2rem; transition: all 0.3s; }
-    .pricing-card:hover { border-color: rgba(0,150,255,0.25); transform: translateY(-3px); }
-    .pricing-card.featured { border-color: rgba(0,150,255,0.35); background: rgba(0,150,255,0.04); position: relative; }
+    .pricing-card:hover { border-color: rgba(45,107,228,0.25); transform: translateY(-3px); }
+    .pricing-card.featured { border-color: rgba(45,107,228,0.35); background: rgba(45,107,228,0.04); position: relative; }
     .featured-tag { position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
       background: var(--accent); color: #fff; font-family: 'Syne', sans-serif; font-size: 0.68rem;
       font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
@@ -236,7 +250,7 @@
     .btn-pricing-filled:hover { opacity: 0.88; }
 
     /* ── CTA SECTION ── */
-    .cta-section { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 6rem 5%; text-align: center; }
+    .cta-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 6rem 5%; text-align: center; }
     .cta-inner { max-width: 640px; margin: 0 auto; }
     .cta-section h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem);
       font-weight: 800; color: var(--text); margin-bottom: 1rem; line-height: 1.1; }
@@ -281,13 +295,17 @@
     }
   
   body.light-mode {
-    --bg: #FAF7F2;
-    --bg2: #F2EDE4;
-    --surface: #E8E2D9;
-    --card: #FFFDF9;
-    --border: rgba(0,0,0,0.08);
-    --text: #1A1510;
-    --muted: #6B6358;
+    --bg:      #F0F4FF;
+    --bg2:     #E4EAFB;
+    --surface: #FFFFFF;
+    --card:    #FFFFFF;
+    --card2:   #F0F4FF;
+    --border:  #CBD5E1;
+    --accent:  #16A34A;
+    --accent2: #2563EB;
+    --text:    #0F172A;
+    --text2:   #475569;
+    --muted:   #94A3B8;
   }
   </style>
 </head>
@@ -319,12 +337,13 @@
 
   <div class="hero-badge"><span></span> Trusted by Remote-First Companies Worldwide</div>
 
-  <h1>Stop Guessing.<br/>Start Hiring <em>Verified</em><br/>African Talent.</h1>
+  <h1>Hire <em>Verified</em> African Talent<br/>in <em>48 Hours.</em></h1>
 
-  <p class="hero-sub">Every VELA candidate is pre-verified through 5 layers of assessment before you ever see their profile. You see their scores, their evidence, their work — not just a CV.</p>
+  <p class="hero-sub">Every VELA professional is pre-verified through 5 independent assessments. Submit your role requirements and we match you with the right talent — fast.</p>
 
   <div class="hero-ctas">
     <a class="btn-primary" href="talent.html">Browse Verified Talent →</a>
+    <a class="btn-primary" href="#smart-match" style="background:rgba(245,166,35,0.15);border:1.5px solid rgba(245,166,35,0.4);color:#F5A623">Request Candidates →</a>
     <a class="btn-secondary" href="#how">See How It Works</a>
   </div>
 
@@ -417,11 +436,11 @@
       <h2 class="section-title">5 layers of verification before you see them</h2>
       <p class="section-sub">No other platform does this. Every score you see is independently assessed — not self-reported.</p>
       <div style="display:flex;flex-direction:column;gap:1rem;margin-top:2rem">
-        <div style="display:flex;align-items:flex-start;gap:1rem"><div style="width:36px;height:36px;border-radius:9px;background:rgba(0,150,255,0.1);border:1px solid rgba(0,150,255,0.2);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0">✍️</div><div><div style="font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:0.2rem">🧠 Skills Assessment</div><div style="font-size:0.8rem;color:var(--muted);line-height:1.5">AI-scored written professional scenario — tone, clarity, grammar, relevance</div></div></div>
-        <div style="display:flex;align-items:flex-start;gap:1rem"><div style="width:36px;height:36px;border-radius:9px;background:rgba(0,150,255,0.1);border:1px solid rgba(0,150,255,0.2);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0">🛠️</div><div><div style="font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:0.2rem">Tool Knowledge</div><div style="font-size:0.8rem;color:var(--muted);line-height:1.5">10 questions on the specific tools of their skill — auto-scored</div></div></div>
-        <div style="display:flex;align-items:flex-start;gap:1rem"><div style="width:36px;height:36px;border-radius:9px;background:rgba(0,150,255,0.1);border:1px solid rgba(0,150,255,0.2);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0">💬</div><div><div style="font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:0.2rem">⭐ Professional Reliability</div><div style="font-size:0.8rem;color:var(--muted);line-height:1.5">3 written interview questions scored by AI on depth, relevance, and quality</div></div></div>
-        <div style="display:flex;align-items:flex-start;gap:1rem"><div style="width:36px;height:36px;border-radius:9px;background:rgba(0,150,255,0.1);border:1px solid rgba(0,150,255,0.2);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0">📁</div><div><div style="font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:0.2rem">🗂️ Portfolio Review</div><div style="font-size:0.8rem;color:var(--muted);line-height:1.5">A real uploaded work sample reviewed by the VELA team</div></div></div>
-        <div style="display:flex;align-items:flex-start;gap:1rem"><div style="width:36px;height:36px;border-radius:9px;background:rgba(0,150,255,0.1);border:1px solid rgba(0,150,255,0.2);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0">🎥</div><div><div style="font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:0.2rem">🪪 Identity Verification</div><div style="font-size:0.8rem;color:var(--muted);line-height:1.5">60-second professional introduction reviewed for clarity and confidence</div></div></div>
+        <div style="display:flex;align-items:flex-start;gap:1rem"><div style="width:36px;height:36px;border-radius:9px;background:rgba(45,107,228,0.1);border:1px solid rgba(45,107,228,0.2);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0">✍️</div><div><div style="font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:0.2rem">🧠 Skills Assessment</div><div style="font-size:0.8rem;color:var(--muted);line-height:1.5">AI-scored written professional scenario — tone, clarity, grammar, relevance</div></div></div>
+        <div style="display:flex;align-items:flex-start;gap:1rem"><div style="width:36px;height:36px;border-radius:9px;background:rgba(45,107,228,0.1);border:1px solid rgba(45,107,228,0.2);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0">🛠️</div><div><div style="font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:0.2rem">Tool Knowledge</div><div style="font-size:0.8rem;color:var(--muted);line-height:1.5">10 questions on the specific tools of their skill — auto-scored</div></div></div>
+        <div style="display:flex;align-items:flex-start;gap:1rem"><div style="width:36px;height:36px;border-radius:9px;background:rgba(45,107,228,0.1);border:1px solid rgba(45,107,228,0.2);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0">💬</div><div><div style="font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:0.2rem">⭐ Professional Reliability</div><div style="font-size:0.8rem;color:var(--muted);line-height:1.5">3 written interview questions scored by AI on depth, relevance, and quality</div></div></div>
+        <div style="display:flex;align-items:flex-start;gap:1rem"><div style="width:36px;height:36px;border-radius:9px;background:rgba(45,107,228,0.1);border:1px solid rgba(45,107,228,0.2);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0">📁</div><div><div style="font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:0.2rem">🗂️ Portfolio Review</div><div style="font-size:0.8rem;color:var(--muted);line-height:1.5">A real uploaded work sample reviewed by the VELA team</div></div></div>
+        <div style="display:flex;align-items:flex-start;gap:1rem"><div style="width:36px;height:36px;border-radius:9px;background:rgba(45,107,228,0.1);border:1px solid rgba(45,107,228,0.2);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0">🎥</div><div><div style="font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:0.2rem">🪪 Identity Verification</div><div style="font-size:0.8rem;color:var(--muted);line-height:1.5">60-second professional introduction reviewed for clarity and confidence</div></div></div>
       </div>
     </div>
 
@@ -446,7 +465,7 @@
       </div>
       <div style="margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
         <div style="font-size:0.75rem;color:var(--muted)">MSc Mathematics · 2 years experience</div>
-        <div style="background:rgba(0,229,160,0.1);border:1px solid rgba(0,229,160,0.25);color:#00E5A0;font-size:0.68rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:0.2rem 0.6rem;border-radius:100px">3/5 Verified</div>
+        <div style="background:rgba(34,197,94,0.12);border:1px solid rgba(0,196,140,0.25);color:#00C48C;font-size:0.68rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:0.2rem 0.6rem;border-radius:100px">3/5 Verified</div>
       </div>
     </div>
   </div>
@@ -589,19 +608,19 @@
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:2rem" id="post-role-form">
       <div>
         <label style="font-size:0.78rem;font-weight:600;color:var(--muted);display:block;margin-bottom:0.4rem">Your Name *</label>
-        <input id="pr-name" type="text" placeholder="e.g. Sarah Johnson" style="width:100%;background:var(--surface);border:1.5px solid var(--border);color:var(--text);padding:0.8rem 1rem;border-radius:10px;font-size:0.9rem;font-family:'DM Sans',sans-serif;outline:none" onfocus="this.style.borderColor='rgba(0,150,255,0.4)'" onblur="this.style.borderColor='var(--border)'"/>
+        <input id="pr-name" type="text" placeholder="e.g. Sarah Johnson" style="width:100%;background:var(--surface);border:1.5px solid var(--border);color:var(--text);padding:0.8rem 1rem;border-radius:10px;font-size:0.9rem;font-family:'DM Sans',sans-serif;outline:none" onfocus="this.style.borderColor='rgba(45,107,228,0.4)'" onblur="this.style.borderColor='var(--border)'"/>
       </div>
       <div>
         <label style="font-size:0.78rem;font-weight:600;color:var(--muted);display:block;margin-bottom:0.4rem">Company Name *</label>
-        <input id="pr-company" type="text" placeholder="e.g. Acme Corp" style="width:100%;background:var(--surface);border:1.5px solid var(--border);color:var(--text);padding:0.8rem 1rem;border-radius:10px;font-size:0.9rem;font-family:'DM Sans',sans-serif;outline:none" onfocus="this.style.borderColor='rgba(0,150,255,0.4)'" onblur="this.style.borderColor='var(--border)'"/>
+        <input id="pr-company" type="text" placeholder="e.g. Acme Corp" style="width:100%;background:var(--surface);border:1.5px solid var(--border);color:var(--text);padding:0.8rem 1rem;border-radius:10px;font-size:0.9rem;font-family:'DM Sans',sans-serif;outline:none" onfocus="this.style.borderColor='rgba(45,107,228,0.4)'" onblur="this.style.borderColor='var(--border)'"/>
       </div>
       <div>
         <label style="font-size:0.78rem;font-weight:600;color:var(--muted);display:block;margin-bottom:0.4rem">Work Email *</label>
-        <input id="pr-email" type="email" placeholder="you@company.com" style="width:100%;background:var(--surface);border:1.5px solid var(--border);color:var(--text);padding:0.8rem 1rem;border-radius:10px;font-size:0.9rem;font-family:'DM Sans',sans-serif;outline:none" onfocus="this.style.borderColor='rgba(0,150,255,0.4)'" onblur="this.style.borderColor='var(--border)'"/>
+        <input id="pr-email" type="email" placeholder="you@company.com" style="width:100%;background:var(--surface);border:1.5px solid var(--border);color:var(--text);padding:0.8rem 1rem;border-radius:10px;font-size:0.9rem;font-family:'DM Sans',sans-serif;outline:none" onfocus="this.style.borderColor='rgba(45,107,228,0.4)'" onblur="this.style.borderColor='var(--border)'"/>
       </div>
       <div>
         <label style="font-size:0.78rem;font-weight:600;color:var(--muted);display:block;margin-bottom:0.4rem">Skill Needed *</label>
-        <select id="pr-skill" style="width:100%;background:var(--surface);border:1.5px solid var(--border);color:var(--text);padding:0.8rem 1rem;border-radius:10px;font-size:0.9rem;font-family:'DM Sans',sans-serif;outline:none;cursor:pointer" onfocus="this.style.borderColor='rgba(0,150,255,0.4)'" onblur="this.style.borderColor='var(--border)'">
+        <select id="pr-skill" style="width:100%;background:var(--surface);border:1.5px solid var(--border);color:var(--text);padding:0.8rem 1rem;border-radius:10px;font-size:0.9rem;font-family:'DM Sans',sans-serif;outline:none;cursor:pointer" onfocus="this.style.borderColor='rgba(45,107,228,0.4)'" onblur="this.style.borderColor='var(--border)'">
           <option value="">Select a skill...</option>
           <option>Customer Service</option>
           <option>Virtual Assistant</option>
@@ -623,7 +642,7 @@
       </div>
       <div style="grid-column:1/-1">
         <label style="font-size:0.78rem;font-weight:600;color:var(--muted);display:block;margin-bottom:0.4rem">Tell us about the role</label>
-        <textarea id="pr-message" placeholder="e.g. We need a part-time virtual assistant, 20hrs/week, to manage our CEO's calendar and inbox. Budget $800/month. Looking to hire within 2 weeks." rows="4" style="width:100%;background:var(--surface);border:1.5px solid var(--border);color:var(--text);padding:0.8rem 1rem;border-radius:10px;font-size:0.9rem;font-family:'DM Sans',sans-serif;outline:none;resize:vertical" onfocus="this.style.borderColor='rgba(0,150,255,0.4)'" onblur="this.style.borderColor='var(--border)'"></textarea>
+        <textarea id="pr-message" placeholder="e.g. We need a part-time virtual assistant, 20hrs/week, to manage our CEO's calendar and inbox. Budget $800/month. Looking to hire within 2 weeks." rows="4" style="width:100%;background:var(--surface);border:1.5px solid var(--border);color:var(--text);padding:0.8rem 1rem;border-radius:10px;font-size:0.9rem;font-family:'DM Sans',sans-serif;outline:none;resize:vertical" onfocus="this.style.borderColor='rgba(45,107,228,0.4)'" onblur="this.style.borderColor='var(--border)'"></textarea>
       </div>
       <div style="grid-column:1/-1;display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
         <button onclick="submitPostRole()" style="background:var(--accent2);color:#fff;border:none;padding:0.9rem 2rem;border-radius:10px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;transition:opacity 0.2s" onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'">Send Hiring Request →</button>
@@ -631,7 +650,7 @@
       </div>
     </div>
 
-    <div id="post-role-success" style="display:none;text-align:center;padding:3rem;background:rgba(0,229,160,0.06);border:1.5px solid rgba(0,229,160,0.2);border-radius:16px">
+    <div id="post-role-success" style="display:none;text-align:center;padding:3rem;background:rgba(0,196,140,0.06);border:1.5px solid rgba(0,196,140,0.2);border-radius:16px">
       <div style="font-size:2.5rem;margin-bottom:1rem">✅</div>
       <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;color:var(--text);margin-bottom:0.5rem">Request received!</div>
       <div style="color:var(--muted);font-size:0.9rem">We'll match you with verified candidates and be in touch within 24 hours.</div>
@@ -640,6 +659,110 @@
 </section>
 
 <!-- CTA -->
+
+<!-- SMART MATCH SECTION -->
+<section id="smart-match" style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:5rem 6%;">
+  <div style="max-width:900px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:3rem;">
+      <div style="display:inline-block;background:rgba(245,166,35,0.1);border:1px solid rgba(245,166,35,0.3);border-radius:20px;padding:0.3rem 1rem;font-size:0.72rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#F5A623;margin-bottom:1rem;">VELA SMART MATCH</div>
+      <h2 style="font-family:'Syne',sans-serif;font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:800;color:var(--text);margin-bottom:0.75rem;">Tell us what you need.<br/>We find the talent.</h2>
+      <p style="color:var(--muted);font-size:1rem;max-width:520px;margin:0 auto;line-height:1.7;">Don't have time to search hundreds of profiles. Submit your requirements and VELA will send you 3–5 pre-screened, verified candidates within 48 hours.</p>
+    </div>
+
+    <div style="background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:2.5rem;max-width:700px;margin:0 auto;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.25rem;">
+        <div>
+          <label style="display:block;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:0.5rem;">Role Needed *</label>
+          <input id="sm-role" class="sm-input" placeholder="e.g. Data Analyst" style="width:100%;background:var(--surface);border:1.5px solid var(--border);color:var(--text);padding:0.75rem 1rem;border-radius:10px;font-size:0.9rem;font-family:'DM Sans',sans-serif;outline:none;-webkit-text-fill-color:var(--text);" onfocus="this.style.borderColor='rgba(0,196,140,0.4)'" onblur="this.style.borderColor='var(--border)'"/>
+        </div>
+        <div>
+          <label style="display:block;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:0.5rem;">Experience Level</label>
+          <select id="sm-exp" style="width:100%;background:var(--surface);border:1.5px solid var(--border);color:var(--text);padding:0.75rem 1rem;border-radius:10px;font-size:0.9rem;font-family:'DM Sans',sans-serif;outline:none;" onfocus="this.style.borderColor='rgba(0,196,140,0.4)'" onblur="this.style.borderColor='var(--border)'">
+            <option value="">Any level</option>
+            <option value="entry">Entry (0–1 years)</option>
+            <option value="mid">Mid-level (1–3 years)</option>
+            <option value="senior">Senior (3+ years)</option>
+          </select>
+        </div>
+        <div>
+          <label style="display:block;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:0.5rem;">Key Skills Required</label>
+          <input id="sm-skills" class="sm-input" placeholder="e.g. SQL, Python, Power BI" style="width:100%;background:var(--surface);border:1.5px solid var(--border);color:var(--text);padding:0.75rem 1rem;border-radius:10px;font-size:0.9rem;font-family:'DM Sans',sans-serif;outline:none;-webkit-text-fill-color:var(--text);" onfocus="this.style.borderColor='rgba(0,196,140,0.4)'" onblur="this.style.borderColor='var(--border)'"/>
+        </div>
+        <div>
+          <label style="display:block;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:0.5rem;">Budget Range (USD/month)</label>
+          <select id="sm-budget" style="width:100%;background:var(--surface);border:1.5px solid var(--border);color:var(--text);padding:0.75rem 1rem;border-radius:10px;font-size:0.9rem;font-family:'DM Sans',sans-serif;outline:none;" onfocus="this.style.borderColor='rgba(0,196,140,0.4)'" onblur="this.style.borderColor='var(--border)'">
+            <option value="">Flexible</option>
+            <option value="500-1000">$500 – $1,000</option>
+            <option value="1000-2000">$1,000 – $2,000</option>
+            <option value="2000-3500">$2,000 – $3,500</option>
+            <option value="3500+">$3,500+</option>
+          </select>
+        </div>
+        <div>
+          <label style="display:block;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:0.5rem;">Time Zone Preference</label>
+          <select id="sm-tz" style="width:100%;background:var(--surface);border:1.5px solid var(--border);color:var(--text);padding:0.75rem 1rem;border-radius:10px;font-size:0.9rem;font-family:'DM Sans',sans-serif;outline:none;" onfocus="this.style.borderColor='rgba(0,196,140,0.4)'" onblur="this.style.borderColor='var(--border)'">
+            <option value="">Any timezone</option>
+            <option value="us">US overlap (EST/PST)</option>
+            <option value="europe">Europe overlap (GMT/CET)</option>
+            <option value="africa">Africa timezone (GMT+1–3)</option>
+            <option value="flexible">Fully flexible / async</option>
+          </select>
+        </div>
+        <div>
+          <label style="display:block;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:0.5rem;">Your Email *</label>
+          <input id="sm-email" type="email" placeholder="you@company.com" style="width:100%;background:var(--surface);border:1.5px solid var(--border);color:var(--text);padding:0.75rem 1rem;border-radius:10px;font-size:0.9rem;font-family:'DM Sans',sans-serif;outline:none;-webkit-text-fill-color:var(--text);" onfocus="this.style.borderColor='rgba(0,196,140,0.4)'" onblur="this.style.borderColor='var(--border)'"/>
+        </div>
+      </div>
+      <div style="margin-bottom:1.25rem;">
+        <label style="display:block;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:0.5rem;">Additional Details (optional)</label>
+        <textarea id="sm-notes" placeholder="Any specific requirements, team context, or questions..." style="width:100%;background:var(--surface);border:1.5px solid var(--border);color:var(--text);padding:0.75rem 1rem;border-radius:10px;font-size:0.9rem;font-family:'DM Sans',sans-serif;outline:none;resize:vertical;min-height:90px;-webkit-text-fill-color:var(--text);" onfocus="this.style.borderColor='rgba(0,196,140,0.4)'" onblur="this.style.borderColor='var(--border)'"></textarea>
+      </div>
+      <div id="sm-msg" style="display:none;padding:0.75rem 1rem;border-radius:10px;font-size:0.88rem;margin-bottom:1rem;"></div>
+      <button onclick="submitSmartMatch()" style="width:100%;background:linear-gradient(135deg,#F5A623,#E8890A);color:#fff;border:none;padding:1rem;border-radius:10px;font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;cursor:pointer;transition:opacity 0.2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+        Find My Candidates — We'll Respond in 48 Hours →
+      </button>
+      <p style="text-align:center;font-size:0.78rem;color:var(--muted);margin-top:0.75rem;">Free to request · Only pay $299 when you make a successful hire</p>
+    </div>
+  </div>
+</section>
+
+<script>
+function submitSmartMatch() {
+  var role    = document.getElementById("sm-role").value.trim();
+  var email   = document.getElementById("sm-email").value.trim();
+  var skills  = document.getElementById("sm-skills").value.trim();
+  var exp     = document.getElementById("sm-exp").value;
+  var budget  = document.getElementById("sm-budget").value;
+  var tz      = document.getElementById("sm-tz").value;
+  var notes   = document.getElementById("sm-notes").value.trim();
+  var msgEl   = document.getElementById("sm-msg");
+
+  if (!role) { showSMMsg("Please enter the role you need.", "error"); return; }
+  if (!email || !email.includes("@")) { showSMMsg("Please enter a valid email address.", "error"); return; }
+
+  var subject = "VELA Smart Match Request — " + role;
+  var body = "Role Needed: " + role + "\n" +
+    "Experience Level: " + (exp || "Any") + "\n" +
+    "Key Skills: " + (skills || "Not specified") + "\n" +
+    "Budget: " + (budget || "Flexible") + "\n" +
+    "Time Zone: " + (tz || "Any") + "\n" +
+    "Contact Email: " + email + "\n" +
+    (notes ? "Additional Details: " + notes : "");
+
+  window.location.href = "mailto:joinvela2026@gmail.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+  showSMMsg("Opening your email client... We will respond within 48 hours with your matched candidates.", "success");
+}
+
+function showSMMsg(msg, type) {
+  var el = document.getElementById("sm-msg");
+  el.style.display = "block";
+  el.style.background = type === "success" ? "rgba(34,197,94,0.12)" : "rgba(255,94,94,0.1)";
+  el.style.color = type === "success" ? "var(--accent)" : "var(--danger)";
+  el.style.border = "1px solid " + (type === "success" ? "rgba(0,196,140,0.3)" : "rgba(255,94,94,0.3)");
+  el.textContent = msg;
+}
+</script>
+
 <section class="cta-section">
   <div class="cta-inner">
     <h2>Ready to hire with<br/>confidence?</h2>
