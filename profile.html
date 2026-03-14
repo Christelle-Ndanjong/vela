@@ -330,6 +330,42 @@
     --accent: #00A86B;
     --accent2: #1A6FCC;
   }
+
+  /* ── VELA VERIFIED BADGE ─────────────────────────────────────────────── */
+  .vela-verified-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: linear-gradient(135deg, rgba(0,212,142,0.12), rgba(59,158,255,0.08));
+    border: 1.5px solid rgba(0,212,142,0.35);
+    border-radius: 10px; padding: 0.6rem 1rem;
+    font-family: 'Syne', sans-serif;
+  }
+  .vela-verified-badge .badge-seal {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: linear-gradient(135deg, #00D48E, #3B9EFF);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0,212,142,0.3);
+  }
+  .vela-verified-badge .badge-text { display: flex; flex-direction: column; }
+  .vela-verified-badge .badge-title {
+    font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em;
+    text-transform: uppercase; color: #00D48E; line-height: 1;
+  }
+  .vela-verified-badge .badge-score {
+    font-size: 0.88rem; font-weight: 800; color: var(--text); line-height: 1.3;
+  }
+  .vela-layer-pills {
+    display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.5rem;
+  }
+  .vela-layer-pill {
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.05em;
+    text-transform: uppercase; padding: 0.2rem 0.55rem; border-radius: 20px;
+    border: 1px solid; white-space: nowrap;
+  }
+  .vela-layer-pill.passed { background: rgba(0,212,142,0.1); color: #00D48E; border-color: rgba(0,212,142,0.3); }
+  .vela-layer-pill.pending { background: rgba(107,122,153,0.1); color: var(--muted); border-color: var(--border); }
+  .vela-layer-pill.review  { background: rgba(255,179,71,0.1); color: #FFB347; border-color: rgba(255,179,71,0.25); }
+
   </style>
 </head>
 <body>
@@ -1942,6 +1978,9 @@ function showScore() {
       <!-- VERDICT BADGE -->
       <div style="display:inline-block;background:${tierData.verdictColor};border:1.5px solid ${tierData.verdictBorder};color:${tierData.verdictText};font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:800;letter-spacing:0.1em;padding:0.4rem 1.1rem;border-radius:20px;margin-bottom:1rem">${tierData.emoji} ${tierData.verdict}</div>
 
+      <!-- VELA VERIFIED BADGE -->
+      <div id="vela-badge-container" style="margin:0.75rem auto 1rem;text-align:left;max-width:100%"></div>
+
       <h2 class="score-title">${tierData.headline}</h2>
       <p class="score-message" style="margin-bottom:1.5rem">${tierData.message}</p>
 
@@ -2200,6 +2239,12 @@ function showScore() {
       </div>
 
     </div>`;
+
+  // Render VELA badge
+  setTimeout(() => {
+    const badgeEl = document.getElementById('vela-badge-container');
+    if (badgeEl) renderVelaBadge(badgeEl, { showLayers: true, showScore: true, forceShow: true });
+  }, 200);
 
   // Save
   try {
@@ -2519,6 +2564,77 @@ ${profile.goal ? `
       <button onclick="window.close()" style="background:#eee;color:#333;border:none;padding:0.6rem 1rem;border-radius:8px;font-weight:700;cursor:pointer;font-size:0.9rem">✕ Close</button>`;
     win.document.body.appendChild(dlBtn);
   }, 500);
+}
+
+
+// ── VELA VERIFIED BADGE RENDERER ────────────────────────────────────────────
+function renderVelaBadge(containerEl, options = {}) {
+  const { showLayers = true, showScore = true, compact = false } = options;
+  
+  // Load verification state + profile
+  let verifState = {};
+  let profileScore = 0;
+  let profileName = '';
+  try {
+    verifState = JSON.parse(localStorage.getItem('vela_verif') || '{}');
+    const pKeys = Object.keys(localStorage).filter(k =>
+      k.startsWith('vela_') && !k.includes('_step') && !k.includes('_quiz') &&
+      !k.includes('_theme') && !k.includes('_verif') && !k.includes('_role') &&
+      !k.includes('_skill') && !k.includes('_tool') && !k.includes('_saved')
+    );
+    if (pKeys.length > 0) {
+      const p = JSON.parse(localStorage.getItem(pKeys[0]) || '{}');
+      profileScore = p.total_score || 0;
+      profileName = p.name || '';
+    }
+  } catch(e) {}
+
+  const LAYER_DEFS = [
+    { id:'video',     label:'Identity Verified',    color:'#3B9EFF' },
+    { id:'comm',      label:'Skills Verified',       color:'#00D48E' },
+    { id:'task',      label:'Portfolio Verified',    color:'#9333EA' },
+    { id:'tools',     label:'Remote Ready',          color:'#FFB347' },
+    { id:'interview', label:'Reliability Verified',  color:'#FF6B9D' },
+  ];
+
+  const passedCount = LAYER_DEFS.filter(l =>
+    verifState[l.id]?.status === 'passed' || verifState[l.id]?.status === 'review'
+  ).length;
+
+  const isFullyVerified = passedCount === 5;
+  const hasStarted = passedCount > 0 || profileScore > 0;
+
+  if (!hasStarted && !options.forceShow) {
+    containerEl.style.display = 'none';
+    return;
+  }
+
+  containerEl.style.display = 'block';
+
+  const scoreDisplay = profileScore > 0 ? profileScore + '/100' : '—';
+  const statusText = isFullyVerified ? 'VELA VERIFIED' :
+    passedCount > 0 ? passedCount + '/5 Layers' : 'Profile Scored';
+
+  containerEl.innerHTML = `
+    <div class="vela-verified-badge">
+      <div class="badge-seal">${isFullyVerified ? '✅' : passedCount >= 3 ? '🔓' : '⚡'}</div>
+      <div class="badge-text">
+        <div class="badge-title">${statusText}</div>
+        ${showScore ? `<div class="badge-score">VELA Score: ${scoreDisplay}</div>` : ''}
+      </div>
+    </div>
+    ${showLayers && !compact ? `
+    <div class="vela-layer-pills">
+      ${LAYER_DEFS.map(l => {
+        const st = verifState[l.id]?.status;
+        const cls = st === 'passed' ? 'passed' : st === 'review' ? 'review' : 'pending';
+        const icon = st === 'passed' ? '✔' : st === 'review' ? '⏳' : '○';
+        return `<span class="vela-layer-pill ${cls}" style="${st==='passed'?'border-color:'+l.color+'50;color:'+l.color+';background:'+l.color+'18':''}">${icon} ${l.label}</span>`;
+      }).join('')}
+    </div>` : ''}
+    <a href="verify.html" style="display:inline-block;margin-top:0.6rem;font-size:0.75rem;font-weight:700;color:var(--accent);text-decoration:none">
+      ${isFullyVerified ? 'View Verification Details →' : 'Complete Verification →'}
+    </a>`;
 }
 
 function retryQuiz() {
