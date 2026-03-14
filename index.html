@@ -32,23 +32,21 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg:       #0B0F1F;
-      --bg2:      #0E1328;
-      --surface:  #151A2E;
-      --card:     #151A2E;
-      --card2:    #1E2542;
-      --border:   #2A3153;
-      --accent:   #22C55E;
-      --accent2:  #3B82F6;
-      --grad1:    #22C1C3;
-      --grad2:    #6C63FF;
-      --text:     #FFFFFF;
-      --text2:    #A1A8C3;
-      --muted:    #6B7280;
-      --gold:     #F5A623;
-      --danger:   #EF4444;
-      --warn:     #F59E0B;
-      --success:  #22C55E;
+      --bg:      #0B0F1F;
+      --bg2:     #0E1328;
+      --surface: #151A2E;
+      --card:    #1A2040;
+      --border:  #2A3153;
+      --accent:  #22C55E;
+      --accent2: #3B82F6;
+      --grad1:   #22C1C3;
+      --grad2:   #6C63FF;
+      --gold:    #F5A623;
+      --text:    #FFFFFF;
+      --text2:   #A1A8C3;
+      --muted:   #6B7280;
+      --danger:  #EF4444;
+      --warn:    #F59E0B;
     }
     html, body { scroll-behavior: smooth; overflow-x: hidden; max-width: 100%; }
     body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; min-height: 100vh; }
@@ -277,19 +275,7 @@
       .tab-btn { font-size: 0.65rem; padding: 0.4rem 0.25rem; }
     }
 
-  body.light-mode {
-    --bg:      #F0F4FF;
-    --bg2:     #E4EAFB;
-    --surface: #FFFFFF;
-    --card:    #FFFFFF;
-    --card2:   #F0F4FF;
-    --border:  #CBD5E1;
-    --accent:  #16A34A;
-    --accent2: #2563EB;
-    --text:    #0F172A;
-    --text2:   #475569;
-    --muted:   #94A3B8;
-  }
+  /* light mode removed — VELA is dark */
   
     /* ── MOBILE HAMBURGER ── */
     .hamburger-btn { display: none; background: transparent; border: 1px solid var(--border); color: var(--text); padding: 0.4rem 0.6rem; border-radius: 8px; cursor: pointer; font-size: 1.1rem; line-height: 1; }
@@ -320,7 +306,7 @@
     <li><a href="profile.html" class="nav-cta">Get Started</a></li>
   </ul>
   <div style="display:flex;gap:0.5rem;align-items:center">
-    <button id="theme-btn" onclick="toggleTheme()" title="Toggle theme" style="background:transparent;border:1.5px solid rgba(255,255,255,0.12);color:var(--text);padding:0.4rem 0.75rem;border-radius:8px;cursor:pointer;font-size:0.9rem;font-family:'DM Sans',sans-serif;">🌑 Dark</button>
+    
     <a id="nav-auth-btn" href="login.html" style="background:transparent;border:1px solid rgba(0,196,140,0.25);color:var(--accent);padding:0.4rem 0.9rem;border-radius:8px;font-size:0.78rem;font-weight:600;text-decoration:none;">Sign In</a>
   </div>
 
@@ -340,7 +326,6 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-pill">Now Live · Join the Community</div>
-  <div style="display:inline-block;background:rgba(245,166,35,0.1);border:1px solid rgba(245,166,35,0.3);border-radius:20px;padding:0.35rem 1.1rem;font-size:0.78rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:#F5A623;margin-bottom:1.25rem;">⚡ Hire Verified African Talent in 48 Hours</div>
   <h1>African Talent.<br/><span class="green">Verified.</span> <span class="blue">Placed.</span></h1>
   <p class="hero-sub">VELA connects verified African professionals to remote jobs worldwide — with the skills, evidence, and credibility to get hired with confidence.</p>
   <!-- ROLE SELECTOR -->
