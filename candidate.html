@@ -225,11 +225,11 @@ const CANDIDATES = [
 ];
 
 const VERIF_LAYER_META = {
-  video:     { icon:"🪪", title:"Identity Verified",        color:"#2D6BE4", badge:"✔ Identity Verified"    },
-  comm:      { icon:"🧠", title:"Skills Verified",           color:"#00C48C", badge:"✔ Skills Verified"      },
-  task:      { icon:"🗂️", title:"Portfolio Verified",        color:"#9333EA", badge:"✔ Portfolio Verified"   },
-  tools:     { icon:"🌐", title:"Remote Ready",              color:"#FFB347", badge:"✔ Remote Ready"         },
-  interview: { icon:"⭐", title:"Reliability Verified",      color:"#FF6B9D", badge:"✔ Reliability Verified" },
+  video:     { icon:"ID",  svg:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M15 9h2M15 13h2"/></svg>', title:"Identity Verified",      color:"#3B82F6", badge:"✔ Identity Verified"    },
+  comm:      { icon:"SK",  svg:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="12" y2="17"/></svg>', title:"Skills Verified",         color:"#22C55E", badge:"✔ Skills Verified"      },
+  task:      { icon:"PF",  svg:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><path d="M8 12l2 2 4-4"/></svg>', title:"Portfolio Verified",       color:"#8B5CF6", badge:"✔ Portfolio Verified"   },
+  tools:     { icon:"RR",  svg:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>', title:"Remote Ready",             color:"#F59E0B", badge:"✔ Remote Ready"         },
+  interview: { icon:"RL",  svg:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>', title:"Reliability Verified",    color:"#EC4899", badge:"✔ Reliability Verified" },
 };
 
 const ENG_LABELS   = {3:"Intermediate",4:"Proficient",5:"Fluent"};
@@ -266,7 +266,7 @@ function renderProfile() {
     var style = isPassed
       ? "border-color:" + meta.color + "50;color:" + meta.color + ";background:" + meta.color + "18;"
       : "border-color:var(--border);color:var(--muted);background:transparent;opacity:0.5;";
-    return "<span class=\"vmb-layer\" style=\"" + style + "\">" + (isPassed ? "✔ " : "○ ") + meta.title + "</span>";
+    return "<span class=\"vmb-layer\" style=\"display:inline-flex;align-items:center;gap:0.3rem;" + style + "\">" + (isPassed ? '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20,6 9,17 4,12"/></svg>' : "○") + " " + meta.title + "</span>";
   }).join("");
 
   // Build test results rows
@@ -278,7 +278,7 @@ function renderProfile() {
     var pct = score || (isPassed ? 80 : 0);
     var color = pct >= 85 ? "var(--accent)" : pct >= 70 ? "var(--accent2)" : "var(--warn)";
     return "<div class=\"test-row\">" +
-      "<span class=\"test-layer-icon\">" + meta.icon + "</span>" +
+      "<span class=\"test-layer-icon\" style=\"color:" + (isPassed ? meta.color : "var(--muted)") + "\">" + meta.svg + "</span>" +
       "<span class=\"test-name\">" + meta.title + "</span>" +
       (isPassed ? "<div class=\"test-bar-wrap\"><div class=\"test-bar-track\"><div class=\"test-bar-fill\" style=\"width:" + pct + "%;background:" + color + ";\"></div></div></div>" +
       "<span class=\"test-score-label\" style=\"color:" + color + "\">" + pct + "%</span>"
