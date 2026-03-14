@@ -32,23 +32,21 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg:       #0B0F1F;
-      --bg2:      #0E1328;
-      --surface:  #151A2E;
-      --card:     #151A2E;
-      --card2:    #1E2542;
-      --border:   #2A3153;
-      --accent:   #22C55E;
-      --accent2:  #3B82F6;
-      --grad1:    #22C1C3;
-      --grad2:    #6C63FF;
-      --text:     #FFFFFF;
-      --text2:    #A1A8C3;
-      --muted:    #6B7280;
-      --gold:     #F5A623;
-      --danger:   #EF4444;
-      --warn:     #F59E0B;
-      --success:  #22C55E;
+      --bg:      #0B0F1F;
+      --bg2:     #0E1328;
+      --surface: #151A2E;
+      --card:    #1A2040;
+      --border:  #2A3153;
+      --accent:  #22C55E;
+      --accent2: #3B82F6;
+      --grad1:   #22C1C3;
+      --grad2:   #6C63FF;
+      --gold:    #F5A623;
+      --text:    #FFFFFF;
+      --text2:   #A1A8C3;
+      --muted:   #6B7280;
+      --danger:  #EF4444;
+      --warn:    #F59E0B;
     }
     html, body { scroll-behavior: smooth; overflow-x: hidden; max-width: 100%; }
     body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
@@ -297,19 +295,7 @@
       .welcome-name { font-size: 1.3rem; }
     }
 
-  body.light-mode {
-    --bg:      #F0F4FF;
-    --bg2:     #E4EAFB;
-    --surface: #FFFFFF;
-    --card:    #FFFFFF;
-    --card2:   #F0F4FF;
-    --border:  #CBD5E1;
-    --accent:  #16A34A;
-    --accent2: #2563EB;
-    --text:    #0F172A;
-    --text2:   #475569;
-    --muted:   #94A3B8;
-  }
+  /* light mode removed — VELA is dark */
   </style>
   <script>
   (function() {
@@ -351,7 +337,7 @@
     <li><a href="dashboard.html" class="active">Dashboard</a></li>
   </ul>
   <div class="nav-right" style="display:flex;align-items:center;gap:0.5rem">
-    <button id="theme-btn" onclick="toggleTheme()" title="Toggle theme" style="background:transparent;border:1.5px solid rgba(255,255,255,0.12);color:var(--text);padding:0.4rem 0.75rem;border-radius:8px;cursor:pointer;font-size:0.9rem;font-family:'DM Sans',sans-serif;">🌑 Dark</button>
+    
     <div class="nav-avatar" id="nav-avatar">?</div>
   </div>
   <a href="login.html" onclick="velaSignOut(event)" style="background:transparent;border:1px solid rgba(255,100,100,0.25);color:#FF6B6B;padding:0.4rem 0.9rem;border-radius:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;">Sign Out</a>
@@ -632,18 +618,51 @@
 <script>
 // ─── LOAD STATE ───────────────────────────────────────────────────────────
 const profile = {
-  name:         localStorage.getItem("vela_name")     || "",
-  skill:        localStorage.getItem("vela_skill")    || "",
-  country:      localStorage.getItem("vela_country")  || "",
-  score:        parseInt(localStorage.getItem("vela_score") || "0"),
-  education:    localStorage.getItem("vela_edu")      || "",
-  experience:   localStorage.getItem("vela_exp")      || "",
-  tools:        JSON.parse(localStorage.getItem("vela_tools") || "[]"),
-  english:      parseInt(localStorage.getItem("vela_english") || "0"),
-  motivation:   localStorage.getItem("vela_motivation") || "",
-  availability: localStorage.getItem("vela_avail")   || "",
+  name: "", skill: "", country: "", score: 0, education: "",
+  experience: "", tools: [], english: 0, motivation: "", availability: "",
+  _completed: false,
 };
 const verifState = JSON.parse(localStorage.getItem("vela_verif") || "{}");
+
+// ── Load profile from email-keyed storage (matches how profile.html saves) ──
+(function loadProfileFromStorage() {
+  try {
+    // Try email-keyed key first (how profile.html saves)
+    var keys = Object.keys(localStorage).filter(function(k) {
+      return k.startsWith("vela_") && k.includes("@") && !k.includes("_step") && !k.includes("_quiz");
+    });
+    if (keys.length > 0) {
+      var saved = JSON.parse(localStorage.getItem(keys[0]) || "{}");
+      if (saved.name) {
+        profile.name         = saved.name || "";
+        profile.skill        = saved.skill || saved.skills && saved.skills[0] || "";
+        profile.country      = saved.country || "";
+        profile.score        = saved.total_score || saved.score || 0;
+        profile.education    = saved.education || "";
+        profile.experience   = saved.expYears || saved.experience || "";
+        profile.tools        = saved.tools || [];
+        profile.english      = saved.english || 0;
+        profile.motivation   = saved.motivation || "";
+        profile.availability = saved.availability || "";
+        profile._completed   = saved._completed || false;
+        return;
+      }
+    }
+    // Fallback: try flat keys for older saves
+    var n = localStorage.getItem("vela_name") || "";
+    if (n) {
+      profile.name         = n;
+      profile.skill        = localStorage.getItem("vela_skill") || "";
+      profile.country      = localStorage.getItem("vela_country") || "";
+      profile.score        = parseInt(localStorage.getItem("vela_score") || "0");
+      profile.education    = localStorage.getItem("vela_edu") || "";
+      profile.experience   = localStorage.getItem("vela_exp") || "";
+      profile.english      = parseInt(localStorage.getItem("vela_english") || "0");
+      profile.motivation   = localStorage.getItem("vela_motivation") || "";
+      profile.availability = localStorage.getItem("vela_avail") || "";
+    }
+  } catch(e) { console.warn("Profile load error:", e); }
+})();
 const roadmapProgress = JSON.parse(localStorage.getItem("vela_roadmap") || "{}");
 
 // ─── DEMO DATA (when no real profile exists) ──────────────────────────────
@@ -737,6 +756,7 @@ function getVerifCount() {
 }
 
 function getProfilePct() {
+  if (profile._completed) return 100;
   let done = 0, total = 6;
   if (profile.name)         done++;
   if (profile.skill)        done++;
@@ -758,7 +778,11 @@ function getNextAction() {
   const pct = getProfilePct();
   const verif = getVerifCount();
   const roadmap = getRoadmapPct();
-  if (pct < 100) return { icon:"👤", text:"Complete your profile to unlock your full VELA experience", btn:"Build Profile →", url:"profile.html" };
+  if (pct < 100 && !profile._completed) return { icon:"👤", text:"Complete your profile to unlock your full VELA experience", btn:"Build Profile →", url:"profile.html" };
+  if (pct >= 100 || profile._completed) {
+    // Profile complete — never redirect back to profile
+    if (verif === 0) return { icon:"⚡", text:"Your profile is complete! Now start your first verification layer.", btn:"Start Verification →", url:"verify.html" };
+  }
   if (verif === 0) return { icon:"⚡", text:"Start your first verification — Communication Test is the best place to begin", btn:"Start Verification →", url:"verify.html" };
   if (verif < 3)   return { icon:"🏆", text:`${verif}/5 verifications done — keep going to unlock VELA Verified status`, btn:"Continue Verification →", url:"verify.html" };
   if (verif < 5)   return { icon:"🔐", text:`Almost there — ${5-verif} more verification${5-verif>1?"s":""} needed for the full badge`, btn:"Finish Verification →", url:"verify.html" };
