@@ -1,197 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-SHKH39MCXB"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-SHKH39MCXB');
-  </script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-SHKH39MCXB');</script>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>VELA — Candidate Profile</title>
-  <meta name="description" content="View verified VELA candidate profile — readiness score, verification layers, skills, tools, and work samples."/>
-  <meta property="og:title" content="Candidate Profile — VELA"/>
+  <meta name="description" content="Verified VELA candidate profile — VELA Score, 5-layer verification, skills, portfolio, and hire button."/>
   <meta name="robots" content="noindex"/>
-    <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="icon" type="image/png" href="favicon.png"/>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html,body{overflow-x:hidden;max-width:100%;}
     :root {
-      --bg: #07090F; --bg2: #0B0F1A; --surface: #101520;
-      --border: rgba(255,255,255,0.07); --accent: #0096FF;
-      --accent2: #00E5A0; --text: #F0F4FF; --muted: #6B7A99; --card: #0C1220;
+      --bg:       #0B0F1F;
+      --bg2:      #0E1328;
+      --surface:  #151A2E;
+      --card:     #151A2E;
+      --card2:    #1E2542;
+      --border:   #2A3153;
+      --accent:   #22C55E;
+      --accent2:  #3B82F6;
+      --grad1:    #22C1C3;
+      --grad2:    #6C63FF;
+      --text:     #FFFFFF;
+      --text2:    #A1A8C3;
+      --muted:    #6B7280;
+      --gold:     #F5A623;
+      --danger:   #EF4444;
+      --warn:     #F59E0B;
+      --success:  #22C55E;
     }
-    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+    body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;}
+    body.light-mode {
+    --bg:      #F0F4FF;
+    --bg2:     #E4EAFB;
+    --surface: #FFFFFF;
+    --card:    #FFFFFF;
+    --card2:   #F0F4FF;
+    --border:  #CBD5E1;
+    --accent:  #16A34A;
+    --accent2: #2563EB;
+    --text:    #0F172A;
+    --text2:   #475569;
+    --muted:   #94A3B8;
+  }
 
-    nav {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 1rem 5%; border-bottom: 1px solid var(--border);
-      background: rgba(7,9,15,0.95); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px);
-    }
-    .logo-wrap { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
-    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem;
-      letter-spacing: 0.08em; background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .logo-tag { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--accent); background: rgba(0,150,255,0.1); border: 1px solid rgba(0,150,255,0.2);
-      padding: 0.2rem 0.55rem; border-radius: 4px; }
-    .nav-right { display: flex; gap: 0.75rem; }
-    .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--muted);
-      padding: 0.45rem 1rem; border-radius: 7px; font-size: 0.83rem; font-weight: 500;
-      cursor: pointer; text-decoration: none; transition: all 0.2s; }
-    .btn-ghost:hover { border-color: var(--accent); color: var(--text); }
-    .btn-primary { background: var(--accent); color: #fff; border: none; padding: 0.45rem 1.2rem;
-      border-radius: 7px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem;
-      cursor: pointer; transition: opacity 0.2s; }
-    .btn-primary:hover { opacity: 0.88; }
+    /* NAV */
+    nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 5%;border-bottom:1px solid var(--border);background:rgba(5,9,24,0.95);position:sticky;top:0;z-index:100;backdrop-filter:blur(20px);}
+    body.light-mode nav{background:rgba(245,240,232,0.95);}
+    .logo-wrap{display:flex;align-items:center;gap:0.75rem;text-decoration:none;}
+    .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;letter-spacing:0.08em;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .logo-tag{font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent2);background:rgba(45,107,228,0.1);border:1px solid rgba(45,107,228,0.2);padding:0.2rem 0.5rem;border-radius:4px;}
+    .nav-right{display:flex;gap:0.6rem;align-items:center;}
+    .btn-ghost{background:transparent;border:1px solid var(--border);color:var(--muted);padding:0.4rem 0.9rem;border-radius:7px;font-size:0.8rem;font-weight:500;cursor:pointer;text-decoration:none;transition:all 0.2s;}
+    .btn-ghost:hover{border-color:var(--accent);color:var(--text);}
+    .btn-hire{background:linear-gradient(135deg,#22C1C3,#6C63FF);color:#fff;border:none;padding:0.5rem 1.25rem;border-radius:8px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.85rem;cursor:pointer;transition:opacity 0.2s;}
+    .btn-hire:hover{opacity:0.88;}
 
     /* LAYOUT */
-    .page { max-width: 1100px; margin: 0 auto; padding: 2.5rem 5% 5rem;
-      display: grid; grid-template-columns: 1fr 340px; gap: 1.5rem; align-items: start; }
-
-    /* ── LEFT COLUMN ── */
-    .left { display: flex; flex-direction: column; gap: 1.25rem; }
+    .page{max-width:1120px;margin:0 auto;padding:2rem 5% 5rem;display:grid;grid-template-columns:1fr 320px;gap:1.5rem;align-items:start;}
+    .left{display:flex;flex-direction:column;gap:1.25rem;}
+    .right{display:flex;flex-direction:column;gap:1.1rem;position:sticky;top:80px;}
 
     /* HERO CARD */
-    .hero-card {
-      background: linear-gradient(145deg, #0C1625, #07090F);
-      border: 1.5px solid rgba(0,150,255,0.2); border-radius: 20px; padding: 2rem; position: relative; overflow: hidden;
-    }
-    .hero-card::before { content:''; position:absolute; top:-50px; right:-50px; width:200px; height:200px;
-      background: radial-gradient(circle, rgba(0,150,255,0.07), transparent 70%); border-radius:50%; }
-    .hero-top { display: flex; align-items: flex-start; gap: 1.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
-    .hero-avatar { width: 80px; height: 80px; border-radius: 20px; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.8rem; color: #000; }
-    .hero-info { flex: 1; min-width: 0; }
-    .hero-name { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800; color: var(--text); margin-bottom: 0.3rem; }
-    .hero-meta { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.5rem; }
-    .hero-meta-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.82rem; color: var(--muted); }
-    .vela-verified-badge { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.75rem;
-      background: rgba(0,229,160,0.08); border: 1px solid rgba(0,229,160,0.2);
-      display: inline-flex; padding: 0.3rem 0.75rem; border-radius: 100px;
-      font-size: 0.75rem; font-weight: 700; color: var(--accent2); }
-    .hero-score-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-    .hero-score-item { background: rgba(0,150,255,0.05); border: 1px solid rgba(0,150,255,0.1);
-      border-radius: 12px; padding: 1rem; text-align: center; }
-    .hsi-val { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; margin-bottom: 0.2rem; }
-    .hsi-label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .hero-card{background:linear-gradient(145deg,var(--card),var(--bg2));border:1.5px solid var(--border);border-radius:20px;padding:2rem;position:relative;overflow:hidden;}
+    .hero-card::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;background:radial-gradient(circle,rgba(0,196,140,0.06),transparent 70%);border-radius:50%;pointer-events:none;}
+    .hero-top{display:flex;align-items:flex-start;gap:1.5rem;margin-bottom:1.5rem;flex-wrap:wrap;}
+    .hero-avatar{width:88px;height:88px;border-radius:18px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:2rem;color:#000;position:relative;}
+    .verified-ring{position:absolute;bottom:-6px;right:-6px;width:24px;height:24px;border-radius:50%;background:var(--accent);border:2px solid var(--bg);display:flex;align-items:center;justify-content:center;font-size:0.7rem;}
+    .hero-info{flex:1;min-width:200px;}
+    .hero-name{font-family:'Syne',sans-serif;font-size:1.75rem;font-weight:800;color:var(--text);line-height:1.1;margin-bottom:0.3rem;}
+    .hero-role{font-size:1rem;color:var(--accent);font-weight:600;margin-bottom:0.6rem;}
+    .hero-meta{display:flex;gap:0.75rem;flex-wrap:wrap;}
+    .hero-meta-item{display:flex;align-items:center;gap:0.35rem;font-size:0.8rem;color:var(--muted);}
+
+    /* VELA VERIFIED MASTER BADGE */
+    .vela-master-badge{display:flex;align-items:center;gap:1rem;background:linear-gradient(135deg,rgba(245,166,35,0.08),rgba(0,196,140,0.06));border:1.5px solid rgba(245,166,35,0.25);border-radius:14px;padding:1rem 1.25rem;margin-top:1.25rem;}
+    .vmb-seal{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#22C1C3,#6C63FF);display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;box-shadow:0 4px 16px rgba(245,166,35,0.25);}
+    .vmb-info{flex:1;}
+    .vmb-title{font-family:'Syne',sans-serif;font-weight:800;font-size:0.88rem;color:var(--gold);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.2rem;}
+    .vmb-score{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:var(--text);line-height:1;}
+    .vmb-tier{font-size:0.75rem;font-weight:600;color:var(--muted);}
+    .vmb-layers{display:flex;flex-wrap:wrap;gap:0.3rem;}
+    .vmb-layer{font-size:0.62rem;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;padding:0.2rem 0.55rem;border-radius:20px;border:1px solid;}
 
     /* SECTION CARD */
-    .section-card { background: var(--card); border: 1.5px solid var(--border); border-radius: 16px; overflow: hidden; }
-    .section-header { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border); }
-    .section-title { font-family: 'Syne', sans-serif; font-size: 0.88rem; font-weight: 700;
-      color: var(--text); display: flex; align-items: center; gap: 0.5rem; }
-    .section-body { padding: 1.5rem; }
+    .section-card{background:var(--card);border:1.5px solid var(--border);border-radius:16px;overflow:hidden;}
+    .section-header{padding:1rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:0.5rem;}
+    .section-icon{font-size:1rem;}
+    .section-title{font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--text);}
+    .section-body{padding:1.25rem;}
 
-    /* BIO */
-    .bio-text { font-size: 0.92rem; color: var(--muted); line-height: 1.7; }
+    /* SUMMARY */
+    .bio-text{font-size:0.9rem;color:var(--muted);line-height:1.75;}
 
-    /* VERIFICATION DETAILS */
-    .verif-detail-list { display: flex; flex-direction: column; gap: 1rem; }
-    .vd-item { border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; }
-    .vd-item.pass-item { border-color: rgba(0,229,160,0.2); }
-    .vd-item.pending-item { border-color: var(--border); opacity: 0.6; }
-    .vd-item.review-item { border-color: rgba(255,165,0,0.2); }
-    .vd-header { display: flex; align-items: center; gap: 0.85rem; padding: 0.9rem 1rem;
-      background: rgba(255,255,255,0.02); }
-    .vd-icon { width: 32px; height: 32px; border-radius: 9px; display: flex; align-items: center;
-      justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
-    .vd-icon.pass { background: rgba(0,229,160,0.1); border: 1px solid rgba(0,229,160,0.2); }
-    .vd-icon.review { background: rgba(255,165,0,0.1); border: 1px solid rgba(255,165,0,0.2); }
-    .vd-icon.pending { background: var(--surface); border: 1px solid var(--border); }
-    .vd-title { font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 700; color: var(--text); flex: 1; }
-    .vd-status-pill { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase;
-      padding: 0.2rem 0.6rem; border-radius: 100px; }
-    .vd-status-pill.pass { background: rgba(0,229,160,0.1); color: var(--accent2); border: 1px solid rgba(0,229,160,0.2); }
-    .vd-status-pill.review { background: rgba(255,165,0,0.1); color: #FFA500; border: 1px solid rgba(255,165,0,0.2); }
-    .vd-status-pill.pending { background: var(--surface); color: var(--muted); border: 1px solid var(--border); }
-    .vd-score { font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 800; margin-left: 0.5rem; }
-    .vd-body { padding: 0.85rem 1rem; border-top: 1px solid var(--border); }
-    .vd-feedback { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
-    .vd-bar-wrap { margin-top: 0.6rem; }
-    .vd-bar-track { height: 4px; background: var(--surface); border-radius: 100px; overflow: hidden; }
-    .vd-bar-fill { height: 100%; border-radius: 100px; }
+    /* SKILLS */
+    .skill-chips{display:flex;flex-wrap:wrap;gap:0.5rem;}
+    .skill-chip{background:var(--border);border:1px solid var(--border);color:#FFFFFF;font-size:0.8rem;font-weight:600;padding:0.3rem 0.8rem;border-radius:20px;}
 
-    /* TOOLS */
-    .tools-wrap { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .tool-badge { background: var(--surface); border: 1px solid var(--border); color: var(--text);
-      font-size: 0.8rem; font-weight: 500; padding: 0.35rem 0.85rem; border-radius: 8px; }
+    /* EXPERIENCE */
+    .exp-item{padding-bottom:1rem;margin-bottom:1rem;border-bottom:1px solid var(--border);}
+    .exp-item:last-child{border-bottom:none;padding-bottom:0;margin-bottom:0;}
+    .exp-role{font-family:'Syne',sans-serif;font-weight:700;font-size:0.92rem;color:var(--text);margin-bottom:0.15rem;}
+    .exp-company{font-size:0.82rem;color:var(--accent);font-weight:600;margin-bottom:0.15rem;}
+    .exp-period{font-size:0.75rem;color:var(--muted);}
+    .exp-bullets{margin-top:0.6rem;padding-left:1rem;}
+    .exp-bullets li{font-size:0.82rem;color:var(--muted);line-height:1.6;margin-bottom:0.25rem;}
 
-    /* EXPERIENCE / EDUCATION */
-    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .info-item { }
-    .info-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.35rem; }
-    .info-val { font-size: 0.88rem; color: var(--text); font-weight: 500; }
+    /* PORTFOLIO */
+    .portfolio-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.85rem;}
+    .port-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem;transition:border-color 0.2s;cursor:pointer;}
+    .port-card:hover{border-color:rgba(0,196,140,0.3);}
+    .port-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.85rem;color:var(--text);margin-bottom:0.3rem;}
+    .port-tools{font-size:0.75rem;color:var(--muted);}
+    .port-link{display:inline-flex;align-items:center;gap:0.3rem;font-size:0.75rem;font-weight:700;color:var(--accent);margin-top:0.5rem;text-decoration:none;}
 
-    /* ── RIGHT COLUMN ── */
-    .right { display: flex; flex-direction: column; gap: 1.25rem; position: sticky; top: 80px; }
+    /* TEST RESULTS */
+    .test-row{display:flex;align-items:center;gap:0.75rem;padding:0.6rem 0;border-bottom:1px solid var(--border);}
+    .test-row:last-child{border-bottom:none;}
+    .test-layer-icon{font-size:1.1rem;flex-shrink:0;}
+    .test-name{flex:1;font-size:0.85rem;font-weight:600;color:var(--text);}
+    .test-bar-wrap{width:100px;flex-shrink:0;}
+    .test-bar-track{height:4px;background:var(--surface);border-radius:100px;overflow:hidden;}
+    .test-bar-fill{height:100%;border-radius:100px;}
+    .test-score-label{font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:800;width:36px;text-align:right;flex-shrink:0;}
 
-    /* SCORE CARD */
-    .score-card {
-      background: linear-gradient(145deg, #0C1625, #07090F);
-      border: 1.5px solid rgba(0,150,255,0.25); border-radius: 18px;
-      padding: 1.75rem; text-align: center;
-    }
-    .score-ring-wrap { position: relative; width: 130px; height: 130px; margin: 0 auto 1.25rem; }
-    .score-ring-wrap svg { position: absolute; inset: 0; transform: rotate(-90deg); }
-    .score-ring-track { fill: none; stroke: var(--surface); stroke-width: 7; }
-    .score-ring-fill { fill: none; stroke-width: 7; stroke-linecap: round; transition: stroke-dashoffset 1.2s cubic-bezier(0.4,0,0.2,1); }
-    .score-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-    .score-num { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; line-height: 1; }
-    .score-denom { font-size: 0.68rem; color: var(--muted); }
-    .score-label-val { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; margin-bottom: 0.25rem; }
-    .score-hint { font-size: 0.78rem; color: var(--muted); line-height: 1.5; margin-bottom: 1.25rem; }
-    .score-breakdown { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem; }
-    .sb-row { display: flex; align-items: center; gap: 0.5rem; }
-    .sb-label { font-size: 0.7rem; color: var(--muted); width: 72px; text-align: right; flex-shrink: 0; }
-    .sb-track { flex: 1; height: 3px; background: var(--surface); border-radius: 100px; overflow: hidden; }
-    .sb-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
-    .sb-val { font-size: 0.65rem; color: var(--muted); width: 28px; font-family: 'Syne', sans-serif; font-weight: 700; }
+    /* VIDEO */
+    .video-slot{background:var(--surface);border:1.5px dashed var(--border);border-radius:12px;padding:2rem;text-align:center;}
+    .video-slot-icon{font-size:2.5rem;margin-bottom:0.5rem;}
+    .video-slot-text{font-size:0.85rem;color:var(--muted);line-height:1.6;}
 
-    .btn-contact-full { width: 100%; background: var(--accent); color: #fff; border: none;
-      padding: 0.9rem; border-radius: 10px; font-family: 'Syne', sans-serif; font-weight: 700;
-      font-size: 0.9rem; cursor: pointer; transition: opacity 0.2s; margin-bottom: 0.6rem; }
-    .btn-contact-full:hover { opacity: 0.88; }
-    .btn-shortlist-full { width: 100%; background: transparent; border: 1.5px solid var(--border);
-      color: var(--muted); padding: 0.85rem; border-radius: 10px; font-family: 'Syne', sans-serif;
-      font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; }
-    .btn-shortlist-full:hover { border-color: var(--accent2); color: var(--accent2); }
-    .btn-shortlist-full.shortlisted { border-color: rgba(0,229,160,0.4); color: var(--accent2); background: rgba(0,229,160,0.06); }
+    /* REMOTE READINESS */
+    .remote-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;}
+    .remote-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:0.85rem;}
+    .remote-label{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:0.3rem;}
+    .remote-val{font-size:0.88rem;font-weight:600;color:var(--text);}
 
-    /* QUICK FACTS */
-    .quick-facts { display: flex; flex-direction: column; gap: 0.75rem; }
-    .qf-item { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
-    .qf-label { font-size: 0.78rem; color: var(--muted); }
-    .qf-val { font-size: 0.82rem; font-weight: 600; color: var(--text); text-align: right; }
+    /* RIGHT COLUMN CARDS */
+    .action-card{background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:1.25rem;}
+    .score-display{text-align:center;margin-bottom:1rem;}
+    .score-big{font-family:'Syne',sans-serif;font-size:3.5rem;font-weight:800;line-height:1;}
+    .score-100{font-size:1rem;color:var(--muted);}
+    .score-tier-pill{display:inline-block;font-size:0.72rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;padding:0.3rem 0.85rem;border-radius:20px;margin-top:0.4rem;}
+    .btn-request{width:100%;background:linear-gradient(135deg,#22C1C3,#6C63FF);color:#fff;border:none;padding:0.9rem;border-radius:10px;font-family:'Syne',sans-serif;font-weight:800;font-size:0.92rem;cursor:pointer;transition:opacity 0.2s;margin-bottom:0.6rem;}
+    .btn-request:hover{opacity:0.88;}
+    .btn-shortlist{width:100%;background:transparent;border:1.5px solid var(--border);color:var(--muted);padding:0.8rem;border-radius:10px;font-family:'Syne',sans-serif;font-weight:600;font-size:0.85rem;cursor:pointer;transition:all 0.2s;}
+    .btn-shortlist:hover{border-color:var(--accent);color:var(--accent);}
+    .btn-shortlist.active{border-color:rgba(0,196,140,0.4);color:var(--accent);background:rgba(0,196,140,0.06);}
+    .quick-fact{display:flex;justify-content:space-between;align-items:center;padding:0.55rem 0;border-bottom:1px solid var(--border);font-size:0.82rem;}
+    .quick-fact:last-child{border-bottom:none;}
+    .qf-label{color:var(--muted);}
+    .qf-val{font-weight:600;color:var(--text);text-align:right;}
 
     /* SIMILAR */
-    .similar-list { display: flex; flex-direction: column; gap: 0.6rem; }
-    .similar-card { display: flex; align-items: center; gap: 0.75rem;
-      background: var(--bg2); border: 1px solid var(--border); border-radius: 10px;
-      padding: 0.75rem; cursor: pointer; transition: border-color 0.2s; text-decoration: none; color: inherit; }
-    .similar-card:hover { border-color: rgba(0,150,255,0.3); }
-    .similar-avatar { width: 34px; height: 34px; border-radius: 9px; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.8rem; color: #000; }
-    .similar-name { font-family: 'Syne', sans-serif; font-size: 0.82rem; font-weight: 700; color: var(--text); }
-    .similar-meta { font-size: 0.72rem; color: var(--muted); }
-    .similar-score { font-family: 'Syne', sans-serif; font-size: 0.82rem; font-weight: 800; margin-left: auto; flex-shrink: 0; }
+    .similar-item{display:flex;align-items:center;gap:0.75rem;padding:0.6rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;text-decoration:none;color:inherit;transition:border-color 0.2s;margin-bottom:0.5rem;}
+    .similar-item:hover{border-color:rgba(0,196,140,0.3);}
+    .similar-avatar{width:32px;height:32px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.75rem;color:#000;}
+    .sim-name{font-family:'Syne',sans-serif;font-size:0.8rem;font-weight:700;color:var(--text);}
+    .sim-meta{font-size:0.7rem;color:var(--muted);}
+    .sim-score{font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:800;margin-left:auto;flex-shrink:0;}
 
-    @keyframes fadeUp { from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)} }
-    .fade-up { animation: fadeUp 0.35s ease both; }
+    @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+    .fade-up{animation:fadeUp 0.35s ease both;}
 
-    @media (max-width: 900px) {
-      .page { grid-template-columns: 1fr; }
-      .right { position: static; }
-      .info-grid { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 640px) {
-      .hero-score-row { grid-template-columns: 1fr; }
-    }
+    @media(max-width:900px){.page{grid-template-columns:1fr;}.right{position:static;}}
+    @media(max-width:640px){.portfolio-grid{grid-template-columns:1fr;}.remote-grid{grid-template-columns:1fr;}.hero-name{font-size:1.4rem;}}
   </style>
   <script src="config.js"></script>
 </head>
@@ -199,30 +174,23 @@
 
 <nav>
   <a class="logo-wrap" href="employers.html">
-    <span class="logo"><img src="logo.png" alt="VELA" style="width:28px;height:28px;object-fit:contain;vertical-align:middle;margin-right:6px;"/>VELA</span>
+    <span class="logo"><img src="logo.png" alt="VELA" style="width:26px;height:26px;object-fit:contain;vertical-align:middle;margin-right:5px;"/>VELA</span>
     <span class="logo-tag">For Employers</span>
   </a>
   <div class="nav-right">
-    <a class="btn-ghost" href="talent.html">← Browse Talent</a>
-    <button id="theme-btn" onclick="toggleTheme()" style="background:transparent;border:1.5px solid rgba(255,255,255,0.12);color:var(--text);padding:0.4rem 0.75rem;border-radius:8px;cursor:pointer;font-size:0.9rem;">🌙</button>
-    <button class="btn-primary" onclick="contactCandidate()">Contact Candidate →</button>
-    <button class="hamburger-btn" onclick="toggleMobileNav()">☰</button>
+    <a class="btn-ghost" href="talent.html">← All Talent</a>
+    <button id="theme-btn" onclick="toggleTheme()" style="background:transparent;border:1.5px solid rgba(255,255,255,0.12);color:var(--text);padding:0.4rem 0.7rem;border-radius:8px;cursor:pointer;font-size:0.88rem;">🌑 Dark</button>
+    <button class="btn-hire" onclick="requestInterview()">Request Interview →</button>
   </div>
 </nav>
-<div id="mobile-nav-overlay" class="mobile-nav-overlay">
-  <button class="mobile-nav-close" onclick="toggleMobileNav()">✕</button>
-  <a href="employers.html" onclick="toggleMobileNav()">For Employers</a>
-  <a href="talent.html" onclick="toggleMobileNav()">Browse Talent</a>
-  <a href="employers.html#pricing" class="mobile-nav-cta" onclick="toggleMobileNav()">Post a Role →</a>
-</div>
 
 <div class="page" id="page">
-  <div style="text-align:center;padding:4rem;color:var(--muted);grid-column:1/-1">Loading candidate profile...</div>
+  <div style="text-align:center;padding:4rem;color:var(--muted);grid-column:1/-1">Loading profile...</div>
 </div>
 
 <script>
 const AVATAR_COLORS = [
-  ["#00E5A0","#006640"],["#0096FF","#003A66"],["#A855F7","#4A1580"],
+  ["#00C48C","#006640"],["#2D6BE4","#003A66"],["#A855F7","#4A1580"],
   ["#F59E0B","#6B4400"],["#EF4444","#6B1A1A"],["#10B981","#065F46"],
   ["#F97316","#7A3B10"],["#06B6D4","#0E4D5C"],
 ];
@@ -237,296 +205,257 @@ const CANDIDATES = [
 ];
 
 const VERIF_LAYER_META = {
-  comm:      { icon:"✍️", title:"Communication Test",       auto:true  },
-  tools:     { icon:"🛠️", title:"Tool Knowledge Assessment", auto:true  },
-  interview: { icon:"💬", title:"Mock Interview",             auto:true  },
-  task:      { icon:"📁", title:"Task Simulation",            auto:false },
-  video:     { icon:"🎥", title:"Video Introduction",         auto:false },
+  video:     { icon:"🪪", title:"Identity Verified",        color:"#2D6BE4", badge:"✔ Identity Verified"    },
+  comm:      { icon:"🧠", title:"Skills Verified",           color:"#00C48C", badge:"✔ Skills Verified"      },
+  task:      { icon:"🗂️", title:"Portfolio Verified",        color:"#9333EA", badge:"✔ Portfolio Verified"   },
+  tools:     { icon:"🌐", title:"Remote Ready",              color:"#FFB347", badge:"✔ Remote Ready"         },
+  interview: { icon:"⭐", title:"Reliability Verified",      color:"#FF6B9D", badge:"✔ Reliability Verified" },
 };
 
 const ENG_LABELS   = {3:"Intermediate",4:"Proficient",5:"Fluent"};
 const AVAIL_LABELS = {fulltime:"Full-time (30–40h/week)",parttime:"Part-time (10–20h/week)",flexible:"Flexible hours"};
-const EXP_LABELS   = {none:"No prior experience",less1:"Under 1 year",["1to3"]:"1–3 years",["3plus"]:"3+ years"};
+const EXP_LABELS   = {none:"No prior experience",less1:"Under 1 year","1to3":"1–3 years","3plus":"3+ years"};
 const EDU_LABELS   = {secondary:"Secondary School",diploma:"Diploma / HND",bachelor:"Bachelor's Degree",master:"Master's Degree",phd:"PhD / Doctorate"};
+const SCORE_TIER   = (s) => s >= 90 ? {label:"Elite Talent", color:"#F5A623"} : s >= 80 ? {label:"Highly Qualified", color:"#00C48C"} : s >= 70 ? {label:"Qualified", color:"#2D6BE4"} : {label:"Developing", color:"#7A8AAD"};
 
 let candidate = null;
-let isShortlisted = false;
 
 function init() {
   const params = new URLSearchParams(window.location.search);
   const id = parseInt(params.get("id")) || 1;
-  candidate = CANDIDATES.find(c => c.id === id) || CANDIDATES[0];
+  candidate = CANDIDATES.find(function(c){ return c.id === id; }) || CANDIDATES[0];
   renderProfile();
 }
 
 function renderProfile() {
-  const c = candidate;
-  const colorIdx = c.id % AVATAR_COLORS.length;
-  const [bg] = AVATAR_COLORS[colorIdx];
-  const initials = c.name.split(" ").map(w=>w[0]).join("").slice(0,2).toUpperCase();
-  const verifPassed = Object.values(c.verif).filter(v => v.s === "pass").length;
-  const scoreColor = c.score >= 80 ? "#00E5A0" : c.score >= 65 ? "#0096FF" : "#FFA500";
-  const circumference = 2 * Math.PI * 56;
-  const offset = circumference - (c.score/100) * circumference;
+  var c = candidate;
+  var colorIdx = c.id % AVATAR_COLORS.length;
+  var bg = AVATAR_COLORS[colorIdx][0];
+  var initials = c.name.split(" ").map(function(w){return w[0];}).join("").slice(0,2).toUpperCase();
+  var verifPassed = Object.values(c.verif).filter(function(v){return v.s==="pass";}).length;
+  var tier = SCORE_TIER(c.score); // uses #3B82F6 for score display
+  var allVerified = verifPassed === 5;
 
-  const similar = CANDIDATES.filter(x => x.id !== c.id && x.skill === c.skill).slice(0,3);
+  var LAYER_ORDER = ["video","comm","task","tools","interview"];
 
-  document.getElementById("page").innerHTML = `
-    <!-- LEFT -->
-    <div class="left fade-up">
+  // Build verification layer pills
+  var layerPills = LAYER_ORDER.map(function(key) {
+    var meta = VERIF_LAYER_META[key];
+    var st = c.verif[key] && c.verif[key].s;
+    var isPassed = st === "pass";
+    var style = isPassed
+      ? "border-color:" + meta.color + "50;color:" + meta.color + ";background:" + meta.color + "18;"
+      : "border-color:var(--border);color:var(--muted);background:transparent;opacity:0.5;";
+    return "<span class=\"vmb-layer\" style=\"" + style + "\">" + (isPassed ? "✔ " : "○ ") + meta.title + "</span>";
+  }).join("");
 
-      <!-- HERO CARD -->
-      <div class="hero-card">
-        <div class="hero-top">
-          <div class="hero-avatar" style="background:linear-gradient(135deg,${bg}22,${bg}44);border:2px solid ${bg}44;color:${bg}">${initials}</div>
-          <div class="hero-info">
-            <div class="hero-name">${c.name}</div>
-            <div class="hero-meta">
-              <div class="hero-meta-item">📍 ${c.country}</div>
-              <div class="hero-meta-item">🎯 ${c.skill}</div>
-              <div class="hero-meta-item">⏰ ${AVAIL_LABELS[c.availability]}</div>
-            </div>
-            <div style="margin-top:0.75rem">
-              <span class="vela-verified-badge">⚡ ${verifPassed}/5 VELA Verified</span>
-            </div>
-          </div>
-        </div>
-        <div class="hero-score-row">
-          <div class="hero-score-item">
-            <div class="hsi-val" style="color:${scoreColor}">${c.score}</div>
-            <div class="hsi-label">Readiness Score</div>
-          </div>
-          <div class="hero-score-item">
-            <div class="hsi-val" style="color:var(--accent2)">${verifPassed}/5</div>
-            <div class="hsi-label">Verifications</div>
-          </div>
-          <div class="hero-score-item">
-            <div class="hsi-val" style="color:var(--accent)">${ENG_LABELS[c.english]||"—"}</div>
-            <div class="hsi-label">English Level</div>
-          </div>
-        </div>
-      </div>
+  // Build test results rows
+  var testRows = LAYER_ORDER.map(function(key) {
+    var meta = VERIF_LAYER_META[key];
+    var st = c.verif[key] && c.verif[key].s;
+    var score = c.verif[key] && c.verif[key].score;
+    var isPassed = st === "pass";
+    var pct = score || (isPassed ? 80 : 0);
+    var color = pct >= 85 ? "var(--accent)" : pct >= 70 ? "var(--accent2)" : "var(--warn)";
+    return "<div class=\"test-row\">" +
+      "<span class=\"test-layer-icon\">" + meta.icon + "</span>" +
+      "<span class=\"test-name\">" + meta.title + "</span>" +
+      (isPassed ? "<div class=\"test-bar-wrap\"><div class=\"test-bar-track\"><div class=\"test-bar-fill\" style=\"width:" + pct + "%;background:" + color + ";\"></div></div></div>" +
+      "<span class=\"test-score-label\" style=\"color:" + color + "\">" + pct + "%</span>"
+      : "<span style=\"font-size:0.72rem;color:var(--muted);margin-left:auto\">Pending</span>") +
+    "</div>";
+  }).join("");
 
-      <!-- BIO -->
-      <div class="section-card">
-        <div class="section-header"><div class="section-title">👤 About ${c.name.split(" ")[0]}</div></div>
-        <div class="section-body">
-          <p class="bio-text">${c.bio}</p>
-          ${c.goal ? `<p class="bio-text" style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)"><strong style="color:var(--text)">Goal:</strong> ${c.goal}</p>` : ""}
-        </div>
-      </div>
+  // Similar candidates
+  var similar = CANDIDATES.filter(function(x){ return x.id !== c.id && x.skill === c.skill; }).slice(0,3);
+  var similarHTML = similar.map(function(s) {
+    var sTier = SCORE_TIER(s.score);
+    var si = s.id % AVATAR_COLORS.length;
+    var sbg = AVATAR_COLORS[si][0];
+    var sins = s.name.split(" ").map(function(w){return w[0];}).join("").slice(0,2).toUpperCase();
+    return "<a class=\"similar-item\" href=\"candidate.html?id=" + s.id + "\">" +
+      "<div class=\"similar-avatar\" style=\"background:" + sbg + "22;border:1.5px solid " + sbg + "44;color:" + sbg + "\">" + sins + "</div>" +
+      "<div><div class=\"sim-name\">" + s.name + "</div><div class=\"sim-meta\">📍 " + s.country + "</div></div>" +
+      "<span class=\"sim-score\" style=\"color:" + sTier.color + "\">" + s.score + "</span>" +
+    "</a>";
+  }).join("");
 
-      <!-- VERIFICATION EVIDENCE -->
-      <div class="section-card">
-        <div class="section-header">
-          <div class="section-title">⚡ Verification Evidence
-            <span style="font-family:'DM Sans',sans-serif;font-size:0.72rem;font-weight:400;color:var(--muted);margin-left:0.5rem">All scores independently assessed — not self-reported</span>
-          </div>
-        </div>
-        <div class="section-body">
-          <div class="verif-detail-list">
-            ${Object.entries(c.verif).map(([key, data]) => {
-              const meta = VERIF_LAYER_META[key];
-              const s = data.s;
-              const scoreColor = data.score >= 80 ? "#00E5A0" : data.score >= 65 ? "#0096FF" : "#FFA500";
-              return `
-                <div class="vd-item ${s}-item">
-                  <div class="vd-header">
-                    <div class="vd-icon ${s}">${meta.icon}</div>
-                    <div class="vd-title">${meta.title}</div>
-                    ${meta.auto ? `<span style="font-size:0.65rem;color:var(--accent);background:rgba(0,150,255,0.08);padding:0.15rem 0.5rem;border-radius:4px;border:1px solid rgba(0,150,255,0.15)">AI scored</span>` : `<span style="font-size:0.65rem;color:var(--muted);background:var(--surface);padding:0.15rem 0.5rem;border-radius:4px;border:1px solid var(--border)">Human reviewed</span>`}
-                    ${data.score !== null && data.score !== undefined ? `<div class="vd-score" style="color:${scoreColor}">${data.score}/100</div>` : ""}
-                    <div class="vd-status-pill ${s}">${s==="pass"?"Passed":s==="review"?"In Review":"Pending"}</div>
-                  </div>
-                  ${data.feedback ? `
-                    <div class="vd-body">
-                      <div class="vd-feedback">${data.feedback}</div>
-                      ${data.score ? `
-                        <div class="vd-bar-wrap">
-                          <div class="vd-bar-track">
-                            <div class="vd-bar-fill" style="width:${data.score}%;background:linear-gradient(90deg,${scoreColor}88,${scoreColor})"></div>
-                          </div>
-                        </div>` : ""}
-                    </div>` : ""}
-                </div>`;
-            }).join("")}
-          </div>
-        </div>
-      </div>
+  var html = "<!-- LEFT --><div class=\"left fade-up\">" +
 
-      <!-- TOOLS -->
-      <div class="section-card">
-        <div class="section-header"><div class="section-title">🛠️ Tools & Platforms</div></div>
-        <div class="section-body">
-          <div class="tools-wrap">
-            ${c.tools.map(t => `<span class="tool-badge">${t}</span>`).join("")}
-          </div>
-        </div>
-      </div>
+  // ── HERO CARD ──────────────────────────────────────────────────────────────
+  "<div class=\"hero-card\">" +
+    "<div class=\"hero-top\">" +
+      "<div class=\"hero-avatar\" style=\"background:linear-gradient(135deg," + bg + "22," + bg + "44);border:2.5px solid " + bg + "55;\">" +
+        "<span style=\"color:" + bg + "\">" + initials + "</span>" +
+        "<div class=\"verified-ring\">" + (allVerified ? "✅" : verifPassed + "/" + LAYER_ORDER.length) + "</div>" +
+      "</div>" +
+      "<div class=\"hero-info\">" +
+        "<div class=\"hero-name\">" + c.name + "</div>" +
+        "<div class=\"hero-role\">" + c.skill + "</div>" +
+        "<div class=\"hero-meta\">" +
+          "<span class=\"hero-meta-item\">📍 " + c.country + "</span>" +
+          "<span class=\"hero-meta-item\">⏱ " + AVAIL_LABELS[c.availability] + "</span>" +
+          "<span class=\"hero-meta-item\">🗣️ English: " + (ENG_LABELS[c.english] || "Proficient") + "</span>" +
+        "</div>" +
+      "</div>" +
+    "</div>" +
+    "<div class=\"vela-master-badge\">" +
+      "<div class=\"vmb-seal\">" + (allVerified ? "✅" : "⚡") + "</div>" +
+      "<div class=\"vmb-info\">" +
+        "<div class=\"vmb-title\">VELA " + (allVerified ? "VERIFIED" : "IN PROGRESS") + "</div>" +
+        "<div class=\"vmb-score\" style=\"color:" + tier.color + "\">" + c.score + "<span style=\"font-size:0.9rem;color:var(--muted);font-weight:400\">/100</span></div>" +
+        "<div class=\"vmb-tier\" style=\"color:" + tier.color + "\">" + tier.label + "</div>" +
+      "</div>" +
+      "<div class=\"vmb-layers\">" + layerPills + "</div>" +
+    "</div>" +
+  "</div>" +
 
-      <!-- BACKGROUND -->
-      <div class="section-card">
-        <div class="section-header"><div class="section-title">📋 Background</div></div>
-        <div class="section-body">
-          <div class="info-grid">
-            <div class="info-item"><div class="info-label">Education</div><div class="info-val">${EDU_LABELS[c.education]||"—"}</div></div>
-            <div class="info-item"><div class="info-label">Field of Study</div><div class="info-val">${c.field||"—"}</div></div>
-            <div class="info-item"><div class="info-label">Experience</div><div class="info-val">${EXP_LABELS[c.experience]||"—"}</div></div>
-            <div class="info-item"><div class="info-label">Location</div><div class="info-val">${c.country}, Africa</div></div>
-            <div class="info-item"><div class="info-label">Availability</div><div class="info-val">${AVAIL_LABELS[c.availability]||"—"}</div></div>
-            <div class="info-item"><div class="info-label">Profile Since</div><div class="info-val">${new Date(c.joined).toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"})}</div></div>
-          </div>
-        </div>
-      </div>
-    </div>
+  // ── PROFESSIONAL SUMMARY ───────────────────────────────────────────────────
+  "<div class=\"section-card\">" +
+    "<div class=\"section-header\"><span class=\"section-icon\">👤</span><span class=\"section-title\">Professional Summary</span></div>" +
+    "<div class=\"section-body\"><p class=\"bio-text\">" + (c.bio || "No summary provided.") + "</p></div>" +
+  "</div>" +
 
-    <!-- RIGHT -->
-    <div class="right fade-up" style="animation-delay:0.08s">
+  // ── KEY SKILLS ─────────────────────────────────────────────────────────────
+  "<div class=\"section-card\">" +
+    "<div class=\"section-header\"><span class=\"section-icon\">🛠️</span><span class=\"section-title\">Key Skills & Tools</span></div>" +
+    "<div class=\"section-body\">" +
+      "<div class=\"skill-chips\">" + c.tools.map(function(t){ return "<span class=\"skill-chip\">" + t + "</span>"; }).join("") + "</div>" +
+    "</div>" +
+  "</div>" +
 
-      <!-- SCORE CARD -->
-      <div class="score-card">
-        <div class="score-ring-wrap">
-          <svg viewBox="0 0 130 130" width="130" height="130">
-            <circle class="score-ring-track" cx="65" cy="65" r="56"/>
-            <circle class="score-ring-fill" cx="65" cy="65" r="56"
-              stroke="${scoreColor}" stroke-dasharray="${circumference.toFixed(1)}"
-              stroke-dashoffset="${circumference.toFixed(1)}" id="score-ring"/>
-          </svg>
-          <div class="score-center">
-            <div class="score-num" style="color:${scoreColor}" id="score-display">0</div>
-            <div class="score-denom">/ 100</div>
-          </div>
-        </div>
-        <div class="score-label-val" style="color:${scoreColor}">${c.score>=90?"Exceptional":c.score>=80?"Strong Candidate":c.score>=70?"Good Candidate":"Developing"}</div>
-        <div class="score-hint">VELA Readiness Score — based on education, experience, verified assessments, and tools.</div>
+  // ── EXPERIENCE ─────────────────────────────────────────────────────────────
+  "<div class=\"section-card\">" +
+    "<div class=\"section-header\"><span class=\"section-icon\">💼</span><span class=\"section-title\">Experience & Education</span></div>" +
+    "<div class=\"section-body\">" +
+      "<div class=\"exp-item\">" +
+        "<div class=\"exp-role\">" + c.skill + " Professional</div>" +
+        "<div class=\"exp-company\">Remote Work Experience</div>" +
+        "<div class=\"exp-period\">" + (EXP_LABELS[c.experience] || "Experience") + "</div>" +
+      "</div>" +
+      "<div class=\"exp-item\">" +
+        "<div class=\"exp-role\">" + (EDU_LABELS[c.education] || "Education") + "</div>" +
+        "<div class=\"exp-company\">" + (c.field || "") + "</div>" +
+      "</div>" +
+    "</div>" +
+  "</div>" +
 
-        <div class="score-breakdown">
-          ${[
-            {l:"Education",    v:({secondary:4,diploma:8,bachelor:14,master:18,phd:20}[c.education]||6),   max:20},
-            {l:"Experience",   v:({none:0,less1:5,"1to3":10,"3plus":15}[c.experience]||0),                max:15},
-            {l:"Verifications",v:Math.min(Object.values(c.verif).filter(x=>x.s==="pass").length*4,20),    max:20},
-            {l:"English",      v:(c.english||0)*3,                                                        max:15},
-            {l:"Tools",        v:Math.min(c.tools.length*2,15),                                           max:15},
-          ].map(b=>`
-            <div class="sb-row">
-              <div class="sb-label">${b.l}</div>
-              <div class="sb-track"><div class="sb-fill" style="width:${Math.round((b.v/b.max)*100)}%"></div></div>
-              <div class="sb-val">${b.v}/${b.max}</div>
-            </div>`).join("")}
-        </div>
+  // ── PORTFOLIO ──────────────────────────────────────────────────────────────
+  "<div class=\"section-card\">" +
+    "<div class=\"section-header\"><span class=\"section-icon\">🗂️</span><span class=\"section-title\">Portfolio & Projects</span></div>" +
+    "<div class=\"section-body\">" +
+      "<div class=\"portfolio-grid\">" +
+        "<div class=\"port-card\"><div class=\"port-title\">Work Sample #1</div><div class=\"port-tools\">Skill: " + c.skill + "</div><a class=\"port-link\" href=\"#\">View Project →</a></div>" +
+        "<div class=\"port-card\"><div class=\"port-title\">Work Sample #2</div><div class=\"port-tools\">Tools: " + (c.tools.slice(0,2).join(", ") || "") + "</div><a class=\"port-link\" href=\"#\">View Project →</a></div>" +
+      "</div>" +
+    "</div>" +
+  "</div>" +
 
-        <button class="btn-contact-full" onclick="contactCandidate()">Contact ${c.name.split(" ")[0]} →</button>
-        <button class="btn-shortlist-full ${isShortlisted?"shortlisted":""}" id="sl-btn" onclick="toggleShortlist()">
-          ${isShortlisted?"♥ Shortlisted":"♡ Add to Shortlist"}
-        </button>
-      </div>
+  // ── VELA TEST RESULTS ──────────────────────────────────────────────────────
+  "<div class=\"section-card\">" +
+    "<div class=\"section-header\"><span class=\"section-icon\">📊</span><span class=\"section-title\">VELA Verification Results</span></div>" +
+    "<div class=\"section-body\">" + testRows + "</div>" +
+  "</div>" +
 
-      <!-- QUICK FACTS -->
-      <div class="section-card">
-        <div class="section-header"><div class="section-title">⚡ Quick Facts</div></div>
-        <div class="section-body">
-          <div class="quick-facts">
-            <div class="qf-item"><span class="qf-label">Skill Path</span><span class="qf-val">${c.skill}</span></div>
-            <div class="qf-item"><span class="qf-label">Location</span><span class="qf-val">${c.country}</span></div>
-            <div class="qf-item"><span class="qf-label">Availability</span><span class="qf-val">${c.availability==="fulltime"?"Full-time":c.availability==="parttime"?"Part-time":"Flexible"}</span></div>
-            <div class="qf-item"><span class="qf-label">English</span><span class="qf-val">${ENG_LABELS[c.english]||"—"}</span></div>
-            <div class="qf-item"><span class="qf-label">Experience</span><span class="qf-val">${EXP_LABELS[c.experience]||"—"}</span></div>
-            <div class="qf-item"><span class="qf-label">Education</span><span class="qf-val">${EDU_LABELS[c.education]||"—"}</span></div>
-            <div class="qf-item"><span class="qf-label">Verifications</span><span class="qf-val" style="color:${scoreColor}">${verifPassed}/5 Complete</span></div>
-          </div>
-        </div>
-      </div>
+  // ── VIDEO INTRO ────────────────────────────────────────────────────────────
+  "<div class=\"section-card\">" +
+    "<div class=\"section-header\"><span class=\"section-icon\">🎥</span><span class=\"section-title\">Video Introduction</span></div>" +
+    "<div class=\"section-body\">" +
+      (c.verif.video && c.verif.video.s === "pass"
+        ? "<div class=\"video-slot\"><div class=\"video-slot-icon\">▶️</div><div class=\"video-slot-text\">60-second professional introduction verified by VELA.<br/><strong style=\"color:var(--text)\">Video available after contact request.</strong></div></div>"
+        : "<div class=\"video-slot\"><div class=\"video-slot-icon\">🎥</div><div class=\"video-slot-text\">Video introduction pending.</div></div>") +
+    "</div>" +
+  "</div>" +
 
-      ${similar.length ? `
-      <!-- SIMILAR CANDIDATES -->
-      <div class="section-card">
-        <div class="section-header">
-          <div class="section-title">👥 Similar Candidates</div>
-        </div>
-        <div class="section-body">
-          <div class="similar-list">
-            ${similar.map(s => {
-              const [sbg] = AVATAR_COLORS[s.id % AVATAR_COLORS.length];
-              const si = s.name.split(" ").map(w=>w[0]).join("").slice(0,2).toUpperCase();
-              const sc = s.score >= 80 ? "#00E5A0" : s.score >= 65 ? "#0096FF" : "#FFA500";
-              return `
-                <a class="similar-card" href="candidate.html?id=${s.id}">
-                  <div class="similar-avatar" style="background:linear-gradient(135deg,${sbg}22,${sbg}44);color:${sbg};border:1.5px solid ${sbg}33">${si}</div>
-                  <div>
-                    <div class="similar-name">${s.name}</div>
-                    <div class="similar-meta">${s.country} · ${s.skill}</div>
-                  </div>
-                  <div class="similar-score" style="color:${sc}">${s.score}</div>
-                </a>`;
-            }).join("")}
-          </div>
-        </div>
-      </div>` : ""}
+  // ── REMOTE READINESS ───────────────────────────────────────────────────────
+  "<div class=\"section-card\">" +
+    "<div class=\"section-header\"><span class=\"section-icon\">🌐</span><span class=\"section-title\">Remote Work Readiness</span></div>" +
+    "<div class=\"section-body\">" +
+      "<div class=\"remote-grid\">" +
+        "<div class=\"remote-item\"><div class=\"remote-label\">English</div><div class=\"remote-val\">" + (ENG_LABELS[c.english] || "Proficient") + "</div></div>" +
+        "<div class=\"remote-item\"><div class=\"remote-label\">Availability</div><div class=\"remote-val\">" + (AVAIL_LABELS[c.availability] || "") + "</div></div>" +
+        "<div class=\"remote-item\"><div class=\"remote-label\">Time Zone</div><div class=\"remote-val\">Africa / GMT+1–3</div></div>" +
+        "<div class=\"remote-item\"><div class=\"remote-label\">Remote Verified</div><div class=\"remote-val\" style=\"color:var(--accent)\">✔ Remote Ready</div></div>" +
+      "</div>" +
+    "</div>" +
+  "</div>" +
 
-    </div>`;
+  "</div>" + // end .left
+
+  // ── RIGHT COLUMN ───────────────────────────────────────────────────────────
+  "<div class=\"right fade-up\">" +
+
+  // SCORE CARD
+  "<div class=\"action-card\">" +
+    "<div class=\"score-display\">" +
+      "<div class=\"score-big\" style=\"color:" + tier.color + "\">" + c.score + "<span class=\"score-100\">/100</span></div>" +
+      "<div class=\"score-tier-pill\" style=\"background:" + tier.color + "18;color:" + tier.color + ";border:1px solid " + tier.color + "40\">" + tier.label + "</div>" +
+    "</div>" +
+    "<button class=\"btn-request\" onclick=\"requestInterview()\">Request Interview →</button>" +
+    "<button class=\"btn-shortlist\" id=\"shortlist-btn\" onclick=\"toggleShortlist()\">♡ Save to Shortlist</button>" +
+  "</div>" +
+
+  // QUICK FACTS
+  "<div class=\"action-card\">" +
+    "<div style=\"font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:0.75rem;\">Quick Facts</div>" +
+    "<div class=\"quick-fact\"><span class=\"qf-label\">Location</span><span class=\"qf-val\">📍 " + c.country + "</span></div>" +
+    "<div class=\"quick-fact\"><span class=\"qf-label\">Availability</span><span class=\"qf-val\">" + (AVAIL_LABELS[c.availability] || "") + "</span></div>" +
+    "<div class=\"quick-fact\"><span class=\"qf-label\">Experience</span><span class=\"qf-val\">" + (EXP_LABELS[c.experience] || "") + "</span></div>" +
+    "<div class=\"quick-fact\"><span class=\"qf-label\">English</span><span class=\"qf-val\">" + (ENG_LABELS[c.english] || "") + "</span></div>" +
+    "<div class=\"quick-fact\"><span class=\"qf-label\">Education</span><span class=\"qf-val\">" + (EDU_LABELS[c.education] || "") + "</span></div>" +
+    "<div class=\"quick-fact\"><span class=\"qf-label\">VELA Layers</span><span class=\"qf-val\" style=\"color:var(--accent)\">" + verifPassed + "/5 Verified</span></div>" +
+  "</div>" +
+
+  // SIMILAR CANDIDATES
+  (similar.length > 0 ? "<div class=\"action-card\">" +
+    "<div style=\"font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:0.75rem;\">Similar Candidates</div>" +
+    similarHTML +
+  "</div>" : "") +
+
+  "</div>"; // end .right
+
+  document.getElementById("page").innerHTML = html;
 
   // Animate score ring
-  setTimeout(() => {
-    const ring = document.getElementById("score-ring");
-    if (ring) ring.style.strokeDashoffset = offset.toFixed(1);
-    let count = 0;
-    const disp = document.getElementById("score-display");
-    const interval = setInterval(() => {
-      count = Math.min(count + 2, c.score);
-      if (disp) disp.textContent = count;
-      if (count >= c.score) clearInterval(interval);
-    }, 20);
-  }, 300);
+  setTimeout(function(){
+    var fills = document.querySelectorAll(".test-bar-fill");
+    fills.forEach(function(f){
+      var w = f.style.width;
+      f.style.width = "0";
+      requestAnimationFrame(function(){
+        setTimeout(function(){ f.style.transition = "width 1s ease"; f.style.width = w; }, 50);
+      });
+    });
+  }, 100);
+}
 
-  document.title = `VELA — ${c.name} · ${c.skill}`;
+function requestInterview() {
+  if (!candidate) return;
+  var msg = "Hello VELA,\n\nI am interested in requesting an interview with " + candidate.name + " (" + candidate.skill + ").\n\nPlease let me know next steps.\n\nThank you.";
+  window.location.href = "mailto:joinvela2026@gmail.com?subject=Interview Request — " + encodeURIComponent(candidate.name) + "&body=" + encodeURIComponent(msg);
 }
 
 function toggleShortlist() {
-  isShortlisted = !isShortlisted;
-  const btn = document.getElementById("sl-btn");
-  if (btn) {
-    btn.className = `btn-shortlist-full ${isShortlisted?"shortlisted":""}`;
-    btn.textContent = isShortlisted ? `♥ Shortlisted` : `♡ Add to Shortlist`;
-  }
+  var btn = document.getElementById("shortlist-btn");
+  if (!btn) return;
+  btn.classList.toggle("active");
+  btn.textContent = btn.classList.contains("active") ? "♥ Saved to Shortlist" : "♡ Save to Shortlist";
 }
 
-function contactCandidate() {
-  if (!candidate) return;
-  const msg = `📧 Contact request for ${candidate.name}\n\nIn production, this would:\n1. Send your company details to VELA\n2. VELA facilitates the introduction\n3. You connect directly with ${candidate.name.split(" ")[0]}\n\nOne placement fee of $299 applies on successful hire.`;
-  alert(msg);
-}
-
-init();
-</script>
-
-<script>
-function toggleMobileNav() {
-  var overlay = document.getElementById('mobile-nav-overlay');
-  overlay.classList.toggle('open');
-  document.body.style.overflow = overlay.classList.contains('open') ? 'hidden' : '';
-}
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') { var o = document.getElementById('mobile-nav-overlay'); if(o){o.classList.remove('open'); document.body.style.overflow='';} }
-});
-</script>
-
-<script>
 function toggleTheme() {
-  document.body.classList.toggle('light-mode');
-  const isLight = document.body.classList.contains('light-mode');
-  const btn = document.getElementById('theme-btn');
-  if (btn) btn.textContent = isLight ? '☀️' : '🌙';
-  localStorage.setItem('vela_theme', isLight ? 'light' : 'dark');
+  document.body.classList.toggle("light-mode");
+  var isLight = document.body.classList.contains("light-mode");
+  document.getElementById("theme-btn").textContent = isLight ? "☀️" : "🌑 Dark";
+  localStorage.setItem("vela_theme", isLight ? "light" : "dark");
 }
 function applyTheme() {
-  if (localStorage.getItem('vela_theme') === 'light') {
-    document.body.classList.add('light-mode');
-    const btn = document.getElementById('theme-btn');
-    if (btn) btn.textContent = '☀️';
+  if (localStorage.getItem("vela_theme") === "light") {
+    document.body.classList.add("light-mode");
+    var btn = document.getElementById("theme-btn");
+    if (btn) btn.textContent = "🌌 Navy";
   }
 }
-document.addEventListener('DOMContentLoaded', applyTheme);
+document.addEventListener("DOMContentLoaded", function(){ applyTheme(); init(); });
 </script>
-
 </body>
 </html>
