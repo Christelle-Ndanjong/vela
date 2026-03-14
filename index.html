@@ -224,19 +224,24 @@
       nav > div button, nav > div a { padding: 0.3rem 0.45rem; font-size: 0.68rem; white-space: nowrap; }
 
       /* Hero */
-      h1 { font-size: 2.2rem; }
+      h1 { font-size: 2.2rem; line-height: 1.15; }
       .hero { padding: 4.5rem 5% 3rem; min-height: auto; }
-      .hero-sub { font-size: 0.92rem; }
-      .hero-stats { gap: 1.25rem; flex-wrap: wrap; justify-content: center; }
-      .hero-stat-num { font-size: 1.4rem; }
+      .hero-sub { font-size: 0.9rem; }
+      .hero-stats { gap: 1rem; flex-wrap: wrap; justify-content: center; }
+      .hero-stat-num { font-size: 1.3rem; }
       .hero-btns { flex-direction: column; align-items: center; }
+      #card-seeker, #card-recruiter { min-width: unset !important; width: 100%; }
 
-      /* Role cards — stack vertically */
-      #card-seeker, #card-recruiter { min-width: unset !important; }
+      /* Problem/solution 3-col → 1-col */
+      section > div > div[style*="grid-template-columns:repeat(3"] { grid-template-columns: 1fr !important; }
+      section > div > div[style*="grid-template-columns:repeat(3,1fr)"] { grid-template-columns: 1fr !important; }
 
-      /* Tab section */
+      /* Talent preview cards → 1-col */
+      section div[style*="grid-template-columns:repeat(3,1fr);gap:1.25rem"] { grid-template-columns: 1fr !important; }
+
+      /* Tabs */
       .tabs-nav { gap: 0.25rem; display: grid; grid-template-columns: 1fr 1fr; overflow-x: visible; -webkit-mask: none; mask: none; }
-      .tab-btn { font-size: 0.73rem; padding: 0.5rem 0.4rem; text-align: center; }
+      .tab-btn { font-size: 0.72rem; padding: 0.5rem 0.4rem; text-align: center; }
 
       /* Steps */
       .steps-grid { grid-template-columns: 1fr !important; }
@@ -251,20 +256,25 @@
       .audience-grid { grid-template-columns: 1fr; }
       .employer-cards { grid-template-columns: 1fr; }
 
-      /* Community section */
-      #community { padding: 3.5rem 5%; }
-      #community h2 { font-size: 1.5rem; }
-      #community p { font-size: 0.88rem; }
+      /* Community */
+      #community { padding: 3rem 5%; }
+      #community h2 { font-size: 1.4rem; }
       #community a { width: 100%; justify-content: center; box-sizing: border-box; }
 
       /* Footer */
       footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 5%; }
       .footer-links { flex-wrap: wrap; justify-content: center; gap: 0.75rem; }
     }
+
+      @media (max-width: 768px) {
+        .problem-grid { grid-template-columns: 1fr !important; }
+        .solution-grid { grid-template-columns: 1fr !important; }
+        .preview-cards-grid { grid-template-columns: 1fr !important; }
+      }
     @media (max-width: 400px) {
-      h1 { font-size: 1.85rem; }
-      .hero-stat-num { font-size: 1.2rem; }
-      .tab-btn { font-size: 0.68rem; padding: 0.45rem 0.3rem; }
+      h1 { font-size: 1.8rem; }
+      .hero-stat-num { font-size: 1.15rem; }
+      .tab-btn { font-size: 0.65rem; padding: 0.4rem 0.25rem; }
     }
 
   body.light-mode {
@@ -470,6 +480,205 @@
   </div>
 </div>
 
+
+<!-- PROBLEM / SOLUTION SECTION -->
+<section style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:5rem 6%;">
+  <div style="max-width:1100px;margin:0 auto;">
+
+    <!-- SECTION HEADER -->
+    <div style="text-align:center;margin-bottom:4rem;">
+      <div style="display:inline-block;background:rgba(108,99,255,0.1);border:1px solid rgba(108,99,255,0.25);border-radius:20px;padding:0.3rem 1rem;font-size:0.72rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#6C63FF;margin-bottom:1rem;">Why VELA</div>
+      <h2 style="font-family:'Syne',sans-serif;font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:800;color:var(--text);margin-bottom:0.75rem;">Two sides. One platform.<br/>Both stories matter.</h2>
+      <p style="color:#A1A8C3;font-size:0.95rem;max-width:500px;margin:0 auto;line-height:1.75;">VELA is built for the people trying to get hired <em>and</em> the companies trying to hire right.</p>
+    </div>
+
+    <!-- TWO COLUMNS -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start;" class="two-story-grid">
+
+      <!-- ── CANDIDATE STORY ── -->
+      <div style="background:var(--card);border:1.5px solid var(--border);border-radius:20px;overflow:hidden;">
+        <!-- Header -->
+        <div style="background:linear-gradient(135deg,rgba(34,193,195,0.12),rgba(108,99,255,0.08));padding:1.5rem 1.75rem;border-bottom:1px solid var(--border);">
+          <div style="font-size:0.7rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#22C1C3;margin-bottom:0.5rem;">For Candidates</div>
+          <div style="font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:800;color:var(--text);line-height:1.3;">You have the skills.<br/>The world just cannot see them yet.</div>
+        </div>
+        <!-- Problems -->
+        <div style="padding:1.25rem 1.75rem;border-bottom:1px solid var(--border);">
+          <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#EF4444;margin-bottom:0.75rem;">The problem</div>
+          <div style="display:flex;flex-direction:column;gap:0.6rem;">
+            <div style="display:flex;align-items:flex-start;gap:0.6rem;"><span style="color:#EF4444;flex-shrink:0;margin-top:0.1rem;">✗</span><span style="font-size:0.85rem;color:#A1A8C3;line-height:1.55;">You apply to remote jobs and never hear back</span></div>
+            <div style="display:flex;align-items:flex-start;gap:0.6rem;"><span style="color:#EF4444;flex-shrink:0;margin-top:0.1rem;">✗</span><span style="font-size:0.85rem;color:#A1A8C3;line-height:1.55;">Overseas employers don't trust African credentials</span></div>
+            <div style="display:flex;align-items:flex-start;gap:0.6rem;"><span style="color:#EF4444;flex-shrink:0;margin-top:0.1rem;">✗</span><span style="font-size:0.85rem;color:#A1A8C3;line-height:1.55;">Your CV looks the same as everyone else's</span></div>
+            <div style="display:flex;align-items:flex-start;gap:0.6rem;"><span style="color:#EF4444;flex-shrink:0;margin-top:0.1rem;">✗</span><span style="font-size:0.85rem;color:#A1A8C3;line-height:1.55;">You don't know what's missing or how to fix it</span></div>
+          </div>
+        </div>
+        <!-- Solutions -->
+        <div style="padding:1.25rem 1.75rem;border-bottom:1px solid var(--border);">
+          <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#22C55E;margin-bottom:0.75rem;">What VELA gives you</div>
+          <div style="display:flex;flex-direction:column;gap:0.6rem;">
+            <div style="display:flex;align-items:flex-start;gap:0.6rem;"><span style="color:#22C55E;flex-shrink:0;margin-top:0.1rem;">✓</span><span style="font-size:0.85rem;color:#A1A8C3;line-height:1.55;">A <strong style="color:var(--text)">VELA Score</strong> — independent proof of your readiness, not self-reported</span></div>
+            <div style="display:flex;align-items:flex-start;gap:0.6rem;"><span style="color:#22C55E;flex-shrink:0;margin-top:0.1rem;">✓</span><span style="font-size:0.85rem;color:#A1A8C3;line-height:1.55;"><strong style="color:var(--text)">5 verification badges</strong> employers in the US, UK, and Europe trust</span></div>
+            <div style="display:flex;align-items:flex-start;gap:0.6rem;"><span style="color:#22C55E;flex-shrink:0;margin-top:0.1rem;">✓</span><span style="font-size:0.85rem;color:#A1A8C3;line-height:1.55;">A <strong style="color:var(--text)">skill roadmap</strong> — exactly what to learn, for free, in the right order</span></div>
+            <div style="display:flex;align-items:flex-start;gap:0.6rem;"><span style="color:#22C55E;flex-shrink:0;margin-top:0.1rem;">✓</span><span style="font-size:0.85rem;color:#A1A8C3;line-height:1.55;">An <strong style="color:var(--text)">ATS-optimised CV</strong> customised per job — AI-powered, beats applicant filters</span></div>
+            <div style="display:flex;align-items:flex-start;gap:0.6rem;"><span style="color:#22C55E;flex-shrink:0;margin-top:0.1rem;">✓</span><span style="font-size:0.85rem;color:#A1A8C3;line-height:1.55;"><strong style="color:var(--text)">Daily matched jobs</strong> — real remote listings updated every morning</span></div>
+          </div>
+        </div>
+        <!-- CTA -->
+        <div style="padding:1.25rem 1.75rem;">
+          <a href="profile.html" style="display:block;text-align:center;background:linear-gradient(135deg,#22C1C3,#6C63FF);color:#fff;padding:0.85rem;border-radius:10px;font-family:'Syne',sans-serif;font-weight:800;font-size:0.88rem;text-decoration:none;transition:opacity 0.2s;" onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'">Build My Profile — It's Free →</a>
+        </div>
+      </div>
+
+      <!-- ── EMPLOYER STORY ── -->
+      <div style="background:var(--card);border:1.5px solid var(--border);border-radius:20px;overflow:hidden;">
+        <!-- Header -->
+        <div style="background:linear-gradient(135deg,rgba(245,166,35,0.1),rgba(34,197,94,0.06));padding:1.5rem 1.75rem;border-bottom:1px solid var(--border);">
+          <div style="font-size:0.7rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#F5A623;margin-bottom:0.5rem;">For Employers</div>
+          <div style="font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:800;color:var(--text);line-height:1.3;">Stop guessing.<br/>Every candidate pre-screened before you meet them.</div>
+        </div>
+        <!-- Problems -->
+        <div style="padding:1.25rem 1.75rem;border-bottom:1px solid var(--border);">
+          <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#EF4444;margin-bottom:0.75rem;">The problem</div>
+          <div style="display:flex;flex-direction:column;gap:0.6rem;">
+            <div style="display:flex;align-items:flex-start;gap:0.6rem;"><span style="color:#EF4444;flex-shrink:0;margin-top:0.1rem;">✗</span><span style="font-size:0.85rem;color:#A1A8C3;line-height:1.55;">CVs are self-reported — no way to verify actual skill</span></div>
+            <div style="display:flex;align-items:flex-start;gap:0.6rem;"><span style="color:#EF4444;flex-shrink:0;margin-top:0.1rem;">✗</span><span style="font-size:0.85rem;color:#A1A8C3;line-height:1.55;">Hours wasted filtering hundreds of unqualified applicants</span></div>
+            <div style="display:flex;align-items:flex-start;gap:0.6rem;"><span style="color:#EF4444;flex-shrink:0;margin-top:0.1rem;">✗</span><span style="font-size:0.85rem;color:#A1A8C3;line-height:1.55;">Remote readiness — communication, reliability — unknown</span></div>
+            <div style="display:flex;align-items:flex-start;gap:0.6rem;"><span style="color:#EF4444;flex-shrink:0;margin-top:0.1rem;">✗</span><span style="font-size:0.85rem;color:#A1A8C3;line-height:1.55;">Finding the right hire takes weeks, not days</span></div>
+          </div>
+        </div>
+        <!-- Solutions -->
+        <div style="padding:1.25rem 1.75rem;border-bottom:1px solid var(--border);">
+          <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#22C55E;margin-bottom:0.75rem;">What VELA gives you</div>
+          <div style="display:flex;flex-direction:column;gap:0.6rem;">
+            <div style="display:flex;align-items:flex-start;gap:0.6rem;"><span style="color:#22C55E;flex-shrink:0;margin-top:0.1rem;">✓</span><span style="font-size:0.85rem;color:#A1A8C3;line-height:1.55;">Every candidate has a <strong style="color:var(--text)">VELA Score</strong> — independently verified, not self-reported</span></div>
+            <div style="display:flex;align-items:flex-start;gap:0.6rem;"><span style="color:#22C55E;flex-shrink:0;margin-top:0.1rem;">✓</span><span style="font-size:0.85rem;color:#A1A8C3;line-height:1.55;"><strong style="color:var(--text)">5-layer verification</strong> — identity, skills, portfolio, remote readiness, reliability</span></div>
+            <div style="display:flex;align-items:flex-start;gap:0.6rem;"><span style="color:#22C55E;flex-shrink:0;margin-top:0.1rem;">✓</span><span style="font-size:0.85rem;color:#A1A8C3;line-height:1.55;"><strong style="color:var(--text)">Smart Match</strong> — submit a role and get 3–5 pre-screened candidates in 48 hours</span></div>
+            <div style="display:flex;align-items:flex-start;gap:0.6rem;"><span style="color:#22C55E;flex-shrink:0;margin-top:0.1rem;">✓</span><span style="font-size:0.85rem;color:#A1A8C3;line-height:1.55;"><strong style="color:var(--text)">Free to browse</strong> — only pay $299 when you make a successful hire</span></div>
+            <div style="display:flex;align-items:flex-start;gap:0.6rem;"><span style="color:#22C55E;flex-shrink:0;margin-top:0.1rem;">✓</span><span style="font-size:0.85rem;color:#A1A8C3;line-height:1.55;"><strong style="color:var(--text)">54 countries</strong> of verified African professionals — timezone flexible, English fluent</span></div>
+          </div>
+        </div>
+        <!-- CTA -->
+        <div style="padding:1.25rem 1.75rem;">
+          <a href="employers.html" style="display:block;text-align:center;background:linear-gradient(135deg,#F5A623,#E8890A);color:#fff;padding:0.85rem;border-radius:10px;font-family:'Syne',sans-serif;font-weight:800;font-size:0.88rem;text-decoration:none;transition:opacity 0.2s;" onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'">Find Verified Talent →</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- MOBILE: stack + add separating label -->
+    <style>
+      @media (max-width: 768px) {
+        .two-story-grid { grid-template-columns: 1fr !important; gap: 1.5rem !important; }
+      }
+    </style>
+
+  </div>
+</section>
+
+<!-- TALENT PREVIEW SECTION -->
+<section style="padding:5rem 6%;background:var(--bg);">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:2.5rem;">
+      <div style="display:inline-block;background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.25);border-radius:20px;padding:0.3rem 1rem;font-size:0.72rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#3B82F6;margin-bottom:1rem;">Featured Talent</div>
+      <h2 style="font-family:'Syne',sans-serif;font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;color:var(--text);margin-bottom:0.6rem;">Meet Some of Our Verified Professionals</h2>
+      <p style="color:var(--muted);font-size:0.95rem;max-width:480px;margin:0 auto;">Every candidate below has passed our 5-layer verification. This is what pre-screened looks like.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-bottom:2.5rem;">
+
+      <!-- Card 1 -->
+      <div style="background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:1.5rem;position:relative;overflow:hidden;transition:transform 0.2s,box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 16px 48px rgba(0,0,0,0.4)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#22C1C3,#6C63FF)"></div>
+        <div style="display:flex;align-items:center;gap:0.85rem;margin-bottom:1.1rem;">
+          <div style="width:48px;height:48px;border-radius:14px;background:rgba(34,193,195,0.15);border:1.5px solid rgba(34,193,195,0.3);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;color:#22C1C3;flex-shrink:0;">FA</div>
+          <div>
+            <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:#FFFFFF;">Fatima A.</div>
+            <div style="font-size:0.75rem;color:#A1A8C3;">📍 Nigeria</div>
+          </div>
+          <div style="margin-left:auto;text-align:right;">
+            <div style="font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;color:#3B82F6;line-height:1;">91</div>
+            <div style="font-size:0.62rem;color:#A1A8C3;">VELA Score</div>
+          </div>
+        </div>
+        <div style="display:inline-block;background:var(--border);border:1px solid #2A3153;color:#A1A8C3;font-size:0.7rem;font-weight:700;padding:0.2rem 0.65rem;border-radius:100px;margin-bottom:0.85rem;">Customer Service</div>
+        <div style="display:flex;flex-wrap:wrap;gap:0.35rem;margin-bottom:1rem;">
+          <span style="background:#2A3153;color:#FFFFFF;font-size:0.72rem;font-weight:600;padding:0.2rem 0.65rem;border-radius:6px;">Zendesk</span>
+          <span style="background:#2A3153;color:#FFFFFF;font-size:0.72rem;font-weight:600;padding:0.2rem 0.65rem;border-radius:6px;">HubSpot</span>
+          <span style="background:#2A3153;color:#FFFFFF;font-size:0.72rem;font-weight:600;padding:0.2rem 0.65rem;border-radius:6px;">Intercom</span>
+        </div>
+        <div style="display:flex;gap:0.35rem;flex-wrap:wrap;margin-bottom:1rem;">
+          <span style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);color:#22C55E;font-size:0.62rem;font-weight:800;padding:0.18rem 0.5rem;border-radius:4px;">✔ Identity</span>
+          <span style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);color:#22C55E;font-size:0.62rem;font-weight:800;padding:0.18rem 0.5rem;border-radius:4px;">✔ Skills</span>
+          <span style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);color:#22C55E;font-size:0.62rem;font-weight:800;padding:0.18rem 0.5rem;border-radius:4px;">✔ Remote Ready</span>
+          <span style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);color:#22C55E;font-size:0.62rem;font-weight:800;padding:0.18rem 0.5rem;border-radius:4px;">✔ Portfolio</span>
+        </div>
+        <a href="talent.html" style="display:block;text-align:center;background:linear-gradient(135deg,#22C1C3,#6C63FF);color:#fff;padding:0.6rem;border-radius:8px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;text-decoration:none;">View Profile →</a>
+      </div>
+
+      <!-- Card 2 -->
+      <div style="background:var(--card);border:1.5px solid rgba(108,99,255,0.3);border-radius:16px;padding:1.5rem;position:relative;overflow:hidden;transition:transform 0.2s,box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 16px 48px rgba(0,0,0,0.4)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#22C1C3,#6C63FF)"></div>
+        <div style="display:flex;align-items:center;gap:0.85rem;margin-bottom:1.1rem;">
+          <div style="width:48px;height:48px;border-radius:14px;background:rgba(108,99,255,0.15);border:1.5px solid rgba(108,99,255,0.3);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;color:#6C63FF;flex-shrink:0;">TA</div>
+          <div>
+            <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:#FFFFFF;">Tunde A.</div>
+            <div style="font-size:0.75rem;color:#A1A8C3;">📍 Nigeria</div>
+          </div>
+          <div style="margin-left:auto;text-align:right;">
+            <div style="font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;color:#3B82F6;line-height:1;">94</div>
+            <div style="font-size:0.62rem;color:#A1A8C3;">VELA Score</div>
+          </div>
+        </div>
+        <div style="display:inline-block;background:var(--border);border:1px solid #2A3153;color:#A1A8C3;font-size:0.7rem;font-weight:700;padding:0.2rem 0.65rem;border-radius:100px;margin-bottom:0.85rem;">Prompt Engineering & AI</div>
+        <div style="display:flex;flex-wrap:wrap;gap:0.35rem;margin-bottom:1rem;">
+          <span style="background:#2A3153;color:#FFFFFF;font-size:0.72rem;font-weight:600;padding:0.2rem 0.65rem;border-radius:6px;">Claude</span>
+          <span style="background:#2A3153;color:#FFFFFF;font-size:0.72rem;font-weight:600;padding:0.2rem 0.65rem;border-radius:6px;">Make.com</span>
+          <span style="background:#2A3153;color:#FFFFFF;font-size:0.72rem;font-weight:600;padding:0.2rem 0.65rem;border-radius:6px;">LangChain</span>
+        </div>
+        <div style="display:flex;gap:0.35rem;flex-wrap:wrap;margin-bottom:1rem;">
+          <span style="background:rgba(245,166,35,0.12);border:1px solid rgba(245,166,35,0.3);color:#F5A623;font-size:0.62rem;font-weight:800;padding:0.18rem 0.5rem;border-radius:4px;">★ Elite Talent</span>
+          <span style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);color:#22C55E;font-size:0.62rem;font-weight:800;padding:0.18rem 0.5rem;border-radius:4px;">✔ VELA VERIFIED</span>
+        </div>
+        <a href="talent.html" style="display:block;text-align:center;background:linear-gradient(135deg,#22C1C3,#6C63FF);color:#fff;padding:0.6rem;border-radius:8px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;text-decoration:none;">View Profile →</a>
+      </div>
+
+      <!-- Card 3 -->
+      <div style="background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:1.5rem;position:relative;overflow:hidden;transition:transform 0.2s,box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 16px 48px rgba(0,0,0,0.4)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#22C1C3,#6C63FF)"></div>
+        <div style="display:flex;align-items:center;gap:0.85rem;margin-bottom:1.1rem;">
+          <div style="width:48px;height:48px;border-radius:14px;background:rgba(34,193,195,0.15);border:1.5px solid rgba(34,193,195,0.3);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;color:#22C1C3;flex-shrink:0;">AO</div>
+          <div>
+            <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:#FFFFFF;">Amara O.</div>
+            <div style="font-size:0.75rem;color:#A1A8C3;">📍 Ghana</div>
+          </div>
+          <div style="margin-left:auto;text-align:right;">
+            <div style="font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;color:#3B82F6;line-height:1;">82</div>
+            <div style="font-size:0.62rem;color:#A1A8C3;">VELA Score</div>
+          </div>
+        </div>
+        <div style="display:inline-block;background:var(--border);border:1px solid #2A3153;color:#A1A8C3;font-size:0.7rem;font-weight:700;padding:0.2rem 0.65rem;border-radius:100px;margin-bottom:0.85rem;">Data Analysis</div>
+        <div style="display:flex;flex-wrap:wrap;gap:0.35rem;margin-bottom:1rem;">
+          <span style="background:#2A3153;color:#FFFFFF;font-size:0.72rem;font-weight:600;padding:0.2rem 0.65rem;border-radius:6px;">SQL</span>
+          <span style="background:#2A3153;color:#FFFFFF;font-size:0.72rem;font-weight:600;padding:0.2rem 0.65rem;border-radius:6px;">Python</span>
+          <span style="background:#2A3153;color:#FFFFFF;font-size:0.72rem;font-weight:600;padding:0.2rem 0.65rem;border-radius:6px;">Power BI</span>
+        </div>
+        <div style="display:flex;gap:0.35rem;flex-wrap:wrap;margin-bottom:1rem;">
+          <span style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);color:#22C55E;font-size:0.62rem;font-weight:800;padding:0.18rem 0.5rem;border-radius:4px;">✔ Skills</span>
+          <span style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);color:#22C55E;font-size:0.62rem;font-weight:800;padding:0.18rem 0.5rem;border-radius:4px;">✔ Remote Ready</span>
+          <span style="background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);color:#3B82F6;font-size:0.62rem;font-weight:800;padding:0.18rem 0.5rem;border-radius:4px;">Highly Qualified</span>
+        </div>
+        <a href="talent.html" style="display:block;text-align:center;background:linear-gradient(135deg,#22C1C3,#6C63FF);color:#fff;padding:0.6rem;border-radius:8px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;text-decoration:none;">View Profile →</a>
+      </div>
+
+    </div>
+
+    <div style="text-align:center;">
+      <a href="talent.html" style="display:inline-block;background:transparent;border:1.5px solid rgba(108,99,255,0.4);color:#A1A8C3;padding:0.8rem 2rem;border-radius:10px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.borderColor='#6C63FF';this.style.color='#FFFFFF'" onmouseout="this.style.borderColor='rgba(108,99,255,0.4)';this.style.color='#A1A8C3'">Browse All Verified Talent →</a>
+    </div>
+  </div>
+</section>
+
+
 <!-- TABS -->
 <div class="tabs-section">
   <div class="tabs-nav">
@@ -557,58 +766,95 @@
 
   <!-- TAB 3: FOR CANDIDATES -->
   <div class="tab-panel" id="tab-candidates">
-    <div class="audience-grid">
-      <div class="audience-card">
-        <div class="audience-icon">🎓</div>
-        <div class="audience-title">Degree holders not getting callbacks</div>
-        <div class="audience-desc">You have the qualification. VELA gives you the verified proof that employers in the US, UK, and Europe can actually trust.</div>
-      </div>
-      <div class="audience-card">
-        <div class="audience-icon">📖</div>
-        <div class="audience-title">People learning a new skill</div>
-        <div class="audience-desc">VELA's skill roadmaps show you exactly what to learn, in what order, using free resources — then verify you when you're ready.</div>
-      </div>
-      <div class="audience-card">
-        <div class="audience-icon">💼</div>
-        <div class="audience-title">Professionals switching to remote</div>
-        <div class="audience-desc">Already working? VELA translates your existing experience into an internationally credible profile with independent scores.</div>
-      </div>
-      <div class="audience-card">
-        <div class="audience-icon">🌱</div>
-        <div class="audience-title">Fresh graduates with no experience</div>
-        <div class="audience-desc">Use VELA's volunteering and internship directory to build real portfolio evidence — then verify it and apply with confidence.</div>
-      </div>
-    </div>
-    <div>
-      <p style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:1rem">Your 5-layer verification</p>
-      <div class="verify-steps">
-        <div class="verify-step"><div class="vs-num">01</div><div><div class="vs-text">Communication Test</div><div class="vs-desc">Professional English, clarity, tone — scored by AI</div></div></div>
-        <div class="verify-step"><div class="vs-num">02</div><div><div class="vs-text">Tool Knowledge Quiz</div><div class="vs-desc">Skill-specific tools — 20 questions, instant score</div></div></div>
-        <div class="verify-step"><div class="vs-num">03</div><div><div class="vs-text">Mock Interview</div><div class="vs-desc">Real interview questions — AI-assessed response</div></div></div>
-        <div class="verify-step"><div class="vs-num">04</div><div><div class="vs-text">Task Simulation</div><div class="vs-desc">Do the actual work — show don't tell</div></div></div>
-        <div class="verify-step"><div class="vs-num">05</div><div><div class="vs-text">Video Introduction</div><div class="vs-desc">60-second video — employers see and hear you</div></div></div>
-      </div>
-      <div style="margin-top:1.5rem">
-        <a href="profile.html" class="btn-main">Start My Profile →</a>
+
+    <!-- THE PROBLEM -->
+    <div style="background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:1.75rem;margin-bottom:1.25rem;border-left:3px solid #EF4444;">
+      <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:#EF4444;margin-bottom:0.85rem;">Sound familiar?</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;" class="cand-problem-grid">
+        <div style="display:flex;align-items:flex-start;gap:0.6rem;">
+          <span style="color:#EF4444;font-size:1rem;flex-shrink:0;margin-top:0.1rem;">✗</span>
+          <span style="font-size:0.88rem;color:var(--text2);line-height:1.55;">You apply to remote jobs and never hear back</span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:0.6rem;">
+          <span style="color:#EF4444;font-size:1rem;flex-shrink:0;margin-top:0.1rem;">✗</span>
+          <span style="font-size:0.88rem;color:var(--text2);line-height:1.55;">You have skills but no way to prove them internationally</span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:0.6rem;">
+          <span style="color:#EF4444;font-size:1rem;flex-shrink:0;margin-top:0.1rem;">✗</span>
+          <span style="font-size:0.88rem;color:var(--text2);line-height:1.55;">Employers overseas don't trust African credentials</span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:0.6rem;">
+          <span style="color:#EF4444;font-size:1rem;flex-shrink:0;margin-top:0.1rem;">✗</span>
+          <span style="font-size:0.88rem;color:var(--text2);line-height:1.55;">You don't know what's missing or how to fix it</span>
+        </div>
       </div>
     </div>
+
+    <!-- THE SOLUTION -->
+    <div style="background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:1.75rem;margin-bottom:1.25rem;border-left:3px solid #22C55E;">
+      <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:#22C55E;margin-bottom:0.85rem;">VELA changes that</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;" class="cand-solution-grid">
+        <div style="display:flex;align-items:flex-start;gap:0.6rem;">
+          <span style="color:#22C55E;font-size:1rem;flex-shrink:0;margin-top:0.1rem;">✓</span>
+          <span style="font-size:0.88rem;color:var(--text2);line-height:1.55;">A verified profile employers in 54 countries trust</span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:0.6rem;">
+          <span style="color:#22C55E;font-size:1rem;flex-shrink:0;margin-top:0.1rem;">✓</span>
+          <span style="font-size:0.88rem;color:var(--text2);line-height:1.55;">A VELA Score that proves your readiness — not just a CV</span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:0.6rem;">
+          <span style="color:#22C55E;font-size:1rem;flex-shrink:0;margin-top:0.1rem;">✓</span>
+          <span style="font-size:0.88rem;color:var(--text2);line-height:1.55;">A roadmap: exactly what to learn and in what order</span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:0.6rem;">
+          <span style="color:#22C55E;font-size:1rem;flex-shrink:0;margin-top:0.1rem;">✓</span>
+          <span style="font-size:0.88rem;color:var(--text2);line-height:1.55;">Real remote jobs matched to your skills — updated daily</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- YOUR 4 STEPS -->
+    <div style="margin-bottom:1.5rem;">
+      <p style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:1rem;">Your journey on VELA</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;" class="cand-steps-grid">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem;display:flex;gap:0.75rem;align-items:flex-start;">
+          <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#22C1C3,#6C63FF);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.72rem;color:#fff;flex-shrink:0;">1</div>
+          <div><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;color:var(--text);margin-bottom:0.2rem;">Build your profile</div><div style="font-size:0.8rem;color:var(--muted);">Answer 10 questions. Get your VELA Readiness Score instantly.</div></div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem;display:flex;gap:0.75rem;align-items:flex-start;">
+          <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#22C1C3,#6C63FF);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.72rem;color:#fff;flex-shrink:0;">2</div>
+          <div><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;color:var(--text);margin-bottom:0.2rem;">Get verified in 5 layers</div><div style="font-size:0.8rem;color:var(--muted);">Pass the tests. Earn the badges employers actually trust.</div></div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem;display:flex;gap:0.75rem;align-items:flex-start;">
+          <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#22C1C3,#6C63FF);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.72rem;color:#fff;flex-shrink:0;">3</div>
+          <div><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;color:var(--text);margin-bottom:0.2rem;">Build your portfolio</div><div style="font-size:0.8rem;color:var(--muted);">Real work samples. Not a list of responsibilities — proof.</div></div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem;display:flex;gap:0.75rem;align-items:flex-start;">
+          <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#22C55E,#22C1C3);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.72rem;color:#fff;flex-shrink:0;">4</div>
+          <div><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;color:var(--text);margin-bottom:0.2rem;">Apply and get hired</div><div style="font-size:0.8rem;color:var(--muted);">Daily remote jobs matched to your skills. Apply with confidence.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <a href="profile.html" style="display:inline-block;background:linear-gradient(135deg,#22C1C3,#6C63FF);color:#fff;padding:0.85rem 2rem;border-radius:10px;font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem;text-decoration:none;transition:opacity 0.2s;" onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'">Build My Profile — It's Free →</a>
+
   </div>
 
   <!-- TAB 4: FOR EMPLOYERS -->
   <div class="tab-panel" id="tab-employers">
     <div class="employer-hero">
-      <h3>Hire Verified African Talent in 48 Hours</h3>
-      <p>Stop reviewing CVs that tell you nothing. VELA candidates come with independent scores, skill evidence, and portfolio proof — before you meet them.</p>
+      <h3>What you get with every VELA candidate</h3>
+      <p>Before you see a single profile, each candidate has already been scored, tested, and verified across 5 independent layers.</p>
       <div class="employer-stats">
-        <div class="emp-stat"><div class="emp-stat-num">Growing</div><div class="emp-stat-lbl">Verified Candidates</div></div>
-        <div class="emp-stat"><div class="emp-stat-num">54</div><div class="emp-stat-lbl">Countries</div></div>
         <div class="emp-stat"><div class="emp-stat-num">5</div><div class="emp-stat-lbl">Verification Layers</div></div>
+        <div class="emp-stat"><div class="emp-stat-num">54</div><div class="emp-stat-lbl">Countries</div></div>
+        <div class="emp-stat"><div class="emp-stat-num">48h</div><div class="emp-stat-lbl">To Shortlist</div></div>
         <div class="emp-stat"><div class="emp-stat-num">$0</div><div class="emp-stat-lbl">To Browse</div></div>
       </div>
       <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap">
-          <a href="employers.html" class="btn-employer">Browse Talent →</a>
-          <a href="employers.html#smart-match" style="background:rgba(245,166,35,0.12);border:1.5px solid rgba(245,166,35,0.3);color:#F5A623;padding:0.75rem 1.5rem;border-radius:9px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;text-decoration:none;transition:all 0.2s">Request Candidates →</a>
-        </div>
+        <a href="employers.html" class="btn-employer">Browse Verified Talent →</a>
+        <a href="employers.html#smart-match" style="background:rgba(245,166,35,0.12);border:1.5px solid rgba(245,166,35,0.3);color:#F5A623;padding:0.75rem 1.5rem;border-radius:9px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;text-decoration:none;transition:all 0.2s">Request Candidates →</a>
+      </div>
     </div>
     <div class="employer-cards">
       <div class="emp-card">
