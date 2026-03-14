@@ -1,383 +1,816 @@
-{
-  "updated": "2026-03-14T00:11:54.648040+00:00",
-  "total": 20,
-  "note": "Seed data \u2014 GitHub Actions scraper will replace this daily with fresh real jobs",
-  "skill_counts": {
-    "Customer Service": 1,
-    "Data Analysis": 3,
-    "Social Media Management": 3,
-    "SEO Specialist": 1,
-    "Virtual Assistant": 1,
-    "Project Management": 1,
-    "UI/UX Design": 2,
-    "Email Marketing": 1,
-    "Content Writing": 2,
-    "HR & Recruitment": 1,
-    "Bookkeeping": 1,
-    "E-Commerce": 1,
-    "Prompt Engineering & AI": 1,
-    "Cybersecurity": 1
-  },
-  "jobs": [
-    {
-      "id": "rok1",
-      "title": "Customer Support Specialist",
-      "company": "Automattic",
-      "skill": "Customer Service",
-      "tags": [
-        "support",
-        "remote",
-        "chat"
-      ],
-      "url": "https://automattic.com/work-with-us/",
-      "location": "Worldwide",
-      "salary": "$40k\u2013$65k",
-      "posted": "2026-03-13",
-      "source": "RemoteOK",
-      "remote": true,
-      "type": "job"
-    },
-    {
-      "id": "rok2",
-      "title": "Data Analyst",
-      "company": "GitLab",
-      "skill": "Data Analysis",
-      "tags": [
-        "sql",
-        "analytics",
-        "remote"
-      ],
-      "url": "https://about.gitlab.com/jobs/",
-      "location": "Worldwide",
-      "salary": "$70k\u2013$110k",
-      "posted": "2026-03-13",
-      "source": "RemoteOK",
-      "remote": true,
-      "type": "job"
-    },
-    {
-      "id": "rok3",
-      "title": "Social Media Manager",
-      "company": "Buffer",
-      "skill": "Social Media Management",
-      "tags": [
-        "social",
-        "content",
-        "marketing"
-      ],
-      "url": "https://buffer.com/journey",
-      "location": "Worldwide",
-      "salary": "$45k\u2013$65k",
-      "posted": "2026-03-13",
-      "source": "RemoteOK",
-      "remote": true,
-      "type": "job"
-    },
-    {
-      "id": "rok4",
-      "title": "SEO Specialist",
-      "company": "Zapier",
-      "skill": "SEO Specialist",
-      "tags": [
-        "seo",
-        "content",
-        "remote"
-      ],
-      "url": "https://zapier.com/jobs",
-      "location": "Worldwide",
-      "salary": "$55k\u2013$80k",
-      "posted": "2026-03-13",
-      "source": "RemoteOK",
-      "remote": true,
-      "type": "job"
-    },
-    {
-      "id": "rem1",
-      "title": "Virtual Assistant",
-      "company": "Belay Solutions",
-      "skill": "Virtual Assistant",
-      "tags": [
-        "va",
-        "admin",
-        "remote"
-      ],
-      "url": "https://belaysolutions.com/join-our-team/",
-      "location": "Worldwide",
-      "salary": "$18\u2013$25/hr",
-      "posted": "2026-03-13",
-      "source": "Remotive",
-      "remote": true,
-      "type": "job"
-    },
-    {
-      "id": "rem2",
-      "title": "Project Manager",
-      "company": "Toggl",
-      "skill": "Project Management",
-      "tags": [
-        "pm",
-        "agile",
-        "remote"
-      ],
-      "url": "https://toggl.com/jobs/",
-      "location": "Worldwide",
-      "salary": "$65k\u2013$95k",
-      "posted": "2026-03-13",
-      "source": "Remotive",
-      "remote": true,
-      "type": "job"
-    },
-    {
-      "id": "rem3",
-      "title": "UI/UX Designer",
-      "company": "InVision",
-      "skill": "UI/UX Design",
-      "tags": [
-        "figma",
-        "ux",
-        "product"
-      ],
-      "url": "https://www.invisionapp.com/careers",
-      "location": "Worldwide",
-      "salary": "$70k\u2013$100k",
-      "posted": "2026-03-13",
-      "source": "Remotive",
-      "remote": true,
-      "type": "job"
-    },
-    {
-      "id": "rem4",
-      "title": "Email Marketing Specialist",
-      "company": "Mailchimp",
-      "skill": "Email Marketing",
-      "tags": [
-        "email",
-        "klaviyo",
-        "campaigns"
-      ],
-      "url": "https://mailchimp.com/about/careers/",
-      "location": "Worldwide",
-      "salary": "$50k\u2013$70k",
-      "posted": "2026-03-13",
-      "source": "Remotive",
-      "remote": true,
-      "type": "job"
-    },
-    {
-      "id": "job1",
-      "title": "Content Writer",
-      "company": "HubSpot",
-      "skill": "Content Writing",
-      "tags": [
-        "writing",
-        "seo",
-        "content"
-      ],
-      "url": "https://www.hubspot.com/jobs",
-      "location": "Worldwide",
-      "salary": "$45k\u2013$70k",
-      "posted": "2026-03-13",
-      "source": "Jobicy",
-      "remote": true,
-      "type": "job"
-    },
-    {
-      "id": "job2",
-      "title": "HR Recruiter",
-      "company": "Deel",
-      "skill": "HR & Recruitment",
-      "tags": [
-        "hr",
-        "recruiter",
-        "remote"
-      ],
-      "url": "https://www.deel.com/careers",
-      "location": "Worldwide",
-      "salary": "$55k\u2013$80k",
-      "posted": "2026-03-13",
-      "source": "Jobicy",
-      "remote": true,
-      "type": "job"
-    },
-    {
-      "id": "job3",
-      "title": "Bookkeeper",
-      "company": "Bench",
-      "skill": "Bookkeeping",
-      "tags": [
-        "quickbooks",
-        "xero",
-        "finance"
-      ],
-      "url": "https://bench.co/careers",
-      "location": "Worldwide",
-      "salary": "$40k\u2013$60k",
-      "posted": "2026-03-13",
-      "source": "Jobicy",
-      "remote": true,
-      "type": "job"
-    },
-    {
-      "id": "job4",
-      "title": "Shopify E-Commerce Manager",
-      "company": "Thrasio",
-      "skill": "E-Commerce",
-      "tags": [
-        "shopify",
-        "ecommerce",
-        "growth"
-      ],
-      "url": "https://www.thrasio.com/careers",
-      "location": "Worldwide",
-      "salary": "$50k\u2013$75k",
-      "posted": "2026-03-13",
-      "source": "Jobicy",
-      "remote": true,
-      "type": "job"
-    },
-    {
-      "id": "him1",
-      "title": "AI Prompt Engineer",
-      "company": "Scale AI",
-      "skill": "Prompt Engineering & AI",
-      "tags": [
-        "ai",
-        "llm",
-        "prompt"
-      ],
-      "url": "https://scale.com/careers",
-      "location": "Worldwide",
-      "salary": "$80k\u2013$120k",
-      "posted": "2026-03-13",
-      "source": "Himalayas",
-      "remote": true,
-      "type": "job"
-    },
-    {
-      "id": "him2",
-      "title": "Cybersecurity Analyst",
-      "company": "CrowdStrike",
-      "skill": "Cybersecurity",
-      "tags": [
-        "soc",
-        "security",
-        "infosec"
-      ],
-      "url": "https://www.crowdstrike.com/careers/",
-      "location": "Worldwide",
-      "salary": "$70k\u2013$100k",
-      "posted": "2026-03-13",
-      "source": "Himalayas",
-      "remote": true,
-      "type": "job"
-    },
-    {
-      "id": "vol1",
-      "title": "Volunteer Social Media Manager",
-      "company": "Catchafire",
-      "skill": "Social Media Management",
-      "tags": [
-        "volunteer",
-        "nonprofit",
-        "social"
-      ],
-      "url": "https://www.catchafire.org/volunteer/",
-      "location": "Worldwide",
-      "salary": "Volunteer \u00b7 Portfolio Builder",
-      "posted": "2026-03-13",
-      "source": "Catchafire",
-      "remote": true,
-      "type": "volunteer"
-    },
-    {
-      "id": "vol2",
-      "title": "Volunteer Data Analyst",
-      "company": "UN Online Volunteers",
-      "skill": "Data Analysis",
-      "tags": [
-        "volunteer",
-        "data",
-        "un"
-      ],
-      "url": "https://www.onlinevolunteering.org/en/opportunities",
-      "location": "Worldwide",
-      "salary": "Volunteer \u00b7 UN Certificate",
-      "posted": "2026-03-13",
-      "source": "UN Volunteers",
-      "remote": true,
-      "type": "volunteer"
-    },
-    {
-      "id": "vol3",
-      "title": "Volunteer Content Writer",
-      "company": "Catchafire",
-      "skill": "Content Writing",
-      "tags": [
-        "volunteer",
-        "writing",
-        "nonprofit"
-      ],
-      "url": "https://www.catchafire.org/volunteer/",
-      "location": "Worldwide",
-      "salary": "Volunteer \u00b7 Portfolio Builder",
-      "posted": "2026-03-13",
-      "source": "Catchafire",
-      "remote": true,
-      "type": "volunteer"
-    },
-    {
-      "id": "vol4",
-      "title": "Volunteer UX Researcher",
-      "company": "Parker Dewey",
-      "skill": "UI/UX Design",
-      "tags": [
-        "volunteer",
-        "ux",
-        "research"
-      ],
-      "url": "https://app.parkerdewey.com/talent/opportunities",
-      "location": "Worldwide",
-      "salary": "Volunteer \u00b7 Portfolio Builder",
-      "posted": "2026-03-13",
-      "source": "Parker Dewey",
-      "remote": true,
-      "type": "volunteer"
-    },
-    {
-      "id": "int1",
-      "title": "Data Analysis Intern",
-      "company": "DataCamp",
-      "skill": "Data Analysis",
-      "tags": [
-        "intern",
-        "sql",
-        "analytics"
-      ],
-      "url": "https://www.datacamp.com/careers",
-      "location": "Worldwide",
-      "salary": "Paid \u00b7 Stipend",
-      "posted": "2026-03-13",
-      "source": "Remotive",
-      "remote": true,
-      "type": "internship"
-    },
-    {
-      "id": "int2",
-      "title": "Marketing Intern",
-      "company": "Hootsuite",
-      "skill": "Social Media Management",
-      "tags": [
-        "intern",
-        "social",
-        "marketing"
-      ],
-      "url": "https://www.hootsuite.com/company/careers",
-      "location": "Worldwide",
-      "salary": "Paid \u00b7 $12/hr",
-      "posted": "2026-03-13",
-      "source": "Jobicy",
-      "remote": true,
-      "type": "internship"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SHKH39MCXB"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-SHKH39MCXB');
+  </script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script src="config.js"></script>
+  <title>VELA — Remote Jobs for Africa</title>
+  <meta name="description" content="Browse curated remote jobs, internships and volunteering for African professionals. 15 skill paths, updated daily from global job boards. Free."/>
+  <meta name="keywords" content="remote jobs Africa, remote work Nigeria, remote jobs Kenya, remote jobs Ghana, African freelance jobs, online jobs Africa"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Remote Jobs For Africa — VELA"/>
+  <meta property="og:description" content="Browse curated remote jobs, internships and volunteering for African professionals. 15 skill paths, updated daily from global job boards. Free."/>
+  <meta property="og:url" content="https://christelle-ndanjong.github.io/vela/jobs.html"/>
+  <meta property="og:image" content="https://christelle-ndanjong.github.io/vela/og-image.png"/>
+  <meta property="og:site_name" content="VELA"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Remote Jobs For Africa — VELA"/>
+  <meta name="twitter:description" content="Browse curated remote jobs, internships and volunteering for African professionals. 15 skill paths, updated daily from global job boards. Free."/>
+  <meta name="twitter:image" content="https://christelle-ndanjong.github.io/vela/og-image.png"/>
+  <link rel="canonical" href="https://christelle-ndanjong.github.io/vela/jobs.html"/>
+    <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    html, body { overflow-x: hidden; max-width: 100%; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:       #0B0F1F;
+      --bg2:      #0E1328;
+      --surface:  #151A2E;
+      --card:     #151A2E;
+      --card2:    #1E2542;
+      --border:   #2A3153;
+      --accent:   #22C55E;
+      --accent2:  #3B82F6;
+      --grad1:    #22C1C3;
+      --grad2:    #6C63FF;
+      --text:     #FFFFFF;
+      --text2:    #A1A8C3;
+      --muted:    #6B7280;
+      --gold:     #F5A623;
+      --danger:   #EF4444;
+      --warn:     #F59E0B;
+      --success:  #22C55E;
     }
-  ]
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 5%; backdrop-filter: blur(20px);
+      background: rgba(8,12,18,0.92); border-bottom: 1px solid var(--border);
+    }
+    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem;
+      letter-spacing: 0.08em; background: linear-gradient(135deg, #22C1C3, #6C63FF);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      text-decoration: none; }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+    .nav-cta { background: var(--accent); color: #000 !important; padding: 0.45rem 1.1rem;
+      border-radius: 6px; font-weight: 700 !important; }
+
+    /* HEADER */
+    .page-header {
+      padding: 3.5rem 5% 2rem; max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;
+    }
+    .header-left h1 { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 800; color: var(--text); margin-bottom: 0.5rem; }
+    .header-left h1 span { background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .header-left p { color: var(--muted); font-size: 0.95rem; }
+    .update-badge { display: flex; align-items: center; gap: 0.5rem; background: rgba(0,196,140,0.08);
+      border: 1px solid rgba(0,196,140,0.15); color: var(--accent); font-size: 0.75rem;
+      font-weight: 600; padding: 0.4rem 0.9rem; border-radius: 100px; white-space: nowrap; }
+    .update-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
+
+    /* SEARCH & FILTERS */
+    .controls { padding: 0 5% 1.5rem; max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; }
+    .search-row { display: flex; gap: 0.75rem; }
+    .search-input {
+      flex: 1; background: var(--surface); border: 1px solid var(--border); color: var(--text);
+      padding: 0.75rem 1.1rem; border-radius: 10px; font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem; outline: none; transition: border-color 0.2s;
+    }
+    .search-input:focus { border-color: var(--accent); }
+    .search-input::placeholder { color: var(--muted); }
+
+    .filter-scroll { display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.25rem; scrollbar-width: none; }
+    .filter-scroll::-webkit-scrollbar { display: none; }
+    .filter-btn {
+      background: var(--surface); border: 1px solid var(--border); color: var(--muted);
+      padding: 0.4rem 0.9rem; border-radius: 100px; font-size: 0.8rem; font-weight: 500;
+      cursor: pointer; white-space: nowrap; transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+    }
+    .filter-btn:hover, .filter-btn.active { background: rgba(34,197,94,0.12); border-color: var(--accent); color: var(--accent); }
+
+    /* STATS BAR */
+    .stats-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5% 1.25rem; max-width: 1200px; margin: 0 auto;
+      color: var(--muted); font-size: 0.83rem; flex-wrap: wrap; gap: 0.5rem;
+    }
+    .jobs-count { color: var(--text); font-weight: 600; }
+
+    /* SORT */
+    .sort-select {
+      background: var(--surface); border: 1px solid var(--border); color: var(--muted);
+      padding: 0.35rem 0.75rem; border-radius: 6px; font-size: 0.8rem; cursor: pointer;
+      font-family: 'DM Sans', sans-serif; outline: none;
+    }
+
+    /* JOBS GRID */
+    .jobs-container { padding: 0 5% 5rem; max-width: 1200px; margin: 0 auto; }
+
+    /* SOURCE SECTION */
+    .source-section { margin-bottom: 2.5rem; }
+    .source-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+    .source-label { font-family: 'Syne', sans-serif; font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+    .source-line { flex: 1; height: 1px; background: var(--border); }
+    .source-count { font-size: 0.75rem; color: var(--muted); }
+
+    .jobs-list { display: flex; flex-direction: column; gap: 0.75rem; }
+
+    /* JOB CARD */
+    .job-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+      padding: 1.25rem 1.5rem; display: flex; align-items: center; gap: 1.25rem;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s; cursor: pointer;
+      text-decoration: none; color: inherit;
+    }
+    .job-card:hover { border-color: rgba(0,196,140,0.3); transform: translateY(-2px); box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
+
+    .job-logo {
+      width: 48px; height: 48px; border-radius: 10px; background: var(--surface);
+      border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0; overflow: hidden;
+    }
+    .job-logo img { width: 100%; height: 100%; object-fit: cover; border-radius: 9px; }
+
+    .job-main { flex: 1; min-width: 0; }
+    .job-title-row { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 0.3rem; }
+    .job-title { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--text); }
+    .job-new { background: rgba(34,197,94,0.12); color: var(--accent); font-size: 0.65rem;
+      font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.15rem 0.5rem;
+      border-radius: 4px; border: 1px solid rgba(0,196,140,0.2); }
+    .job-company { color: var(--muted); font-size: 0.85rem; margin-bottom: 0.5rem; }
+    .job-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .job-tag { background: var(--surface); border: 1px solid var(--border); color: var(--muted);
+      font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 4px; }
+    .skill-tag { background: rgba(45,107,228,0.08); border-color: rgba(45,107,228,0.2); color: var(--accent2); }
+
+    .job-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem; flex-shrink: 0; }
+    .job-salary { font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 700; color: var(--accent); }
+    .job-meta { color: var(--muted); font-size: 0.75rem; text-align: right; }
+    .job-source { display: flex; align-items: center; gap: 0.3rem; }
+    .source-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+    .apply-btn {
+      background: transparent; border: 1px solid rgba(0,196,140,0.3); color: var(--accent);
+      padding: 0.35rem 0.9rem; border-radius: 6px; font-size: 0.78rem; font-weight: 600;
+      cursor: pointer; font-family: 'Syne', sans-serif; transition: all 0.2s; white-space: nowrap;
+    }
+    .apply-btn:hover { background: rgba(34,197,94,0.12); }
+
+    /* EMPTY STATE */
+    .empty-state { text-align: center; padding: 5rem 1rem; }
+    .empty-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .empty-state h3 { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text); }
+    .empty-state p { color: var(--muted); font-size: 0.9rem; }
+
+    /* LOADING */
+    .loading { text-align: center; padding: 4rem; }
+    .spinner { width: 36px; height: 36px; border: 2px solid var(--border);
+      border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 1rem; }
+
+    /* DEMO NOTICE */
+    .demo-notice {
+      background: rgba(255,165,0,0.08); border: 1px solid rgba(255,165,0,0.2);
+      border-radius: 10px; padding: 1rem 1.25rem; margin: 0 5% 1.5rem;
+      max-width: 1200px; margin-left: auto; margin-right: auto;
+      display: flex; align-items: center; gap: 0.75rem; font-size: 0.85rem; color: #FFA500;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      nav { padding: 0.75rem 4%; }
+      .page-header { padding: 1.5rem 4% 1rem; }
+      .page-header h1 { font-size: 1.4rem; }
+      .controls { padding: 0 4% 1rem; flex-direction: column; gap: 0.5rem; }
+      .controls select { width: 100%; }
+      .stats-bar { padding: 0 4% 1rem; flex-wrap: wrap; gap: 0.5rem; }
+      .jobs-container { padding: 0 4% 4rem; }
+      .job-card { flex-wrap: wrap; padding: 1rem; gap: 0.85rem; }
+      .job-right { flex-direction: row; align-items: center; width: 100%; justify-content: space-between; }
+      .job-logo { width: 40px; height: 40px; font-size: 0.9rem; flex-shrink: 0; }
+      .job-title { font-size: 0.9rem; }
+      .filter-bar { flex-wrap: wrap; gap: 0.4rem; padding: 0 4%; }
+      .filter-btn { font-size: 0.75rem; padding: 0.3rem 0.7rem; }
+      .apply-btn { font-size: 0.8rem; padding: 0.5rem 0.9rem; white-space: nowrap; }
+      .source-section { padding: 0; }
+      .job-tags { flex-wrap: wrap; }
+    }
+    @media (max-width: 400px) {
+      .job-card { padding: 0.85rem; }
+      .job-title { font-size: 0.85rem; }
+      .salary { font-size: 0.75rem; }
+    }
+
+    .type-badge { font-size:0.6rem; font-weight:700; padding:0.15rem 0.45rem; border-radius:4px; vertical-align:middle; margin-left:0.35rem; }
+    .type-badge.intern { background:rgba(45,107,228,0.15); color:#2D6BE4; }
+    .type-badge.vol { background:rgba(0,196,140,0.15); color:#00C48C; }
+
+  body.light-mode {
+    --bg:      #F0F4FF;
+    --bg2:     #E4EAFB;
+    --surface: #FFFFFF;
+    --card:    #FFFFFF;
+    --card2:   #F0F4FF;
+    --border:  #CBD5E1;
+    --accent:  #16A34A;
+    --accent2: #2563EB;
+    --text:    #0F172A;
+    --text2:   #475569;
+    --muted:   #94A3B8;
+  }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="index.html"><img src="logo.png" alt="VELA" style="width:28px;height:28px;object-fit:contain;vertical-align:middle;margin-right:6px;"/>VELA</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="skills.html">Skills</a></li>
+    <li><a href="experience.html">Get Experience</a></li>
+    <li><a href="jobs.html" class="active">Jobs</a></li>
+    <li><a href="profile.html" style="color:var(--accent);font-size:0.82rem;font-weight:600;text-decoration:none;border:1px solid rgba(0,196,140,0.25);padding:0.4rem 0.9rem;border-radius:8px;">← My Results</a></li>
+    <li><a href="profile.html" class="nav-cta">My Profile</a></li>
+  </ul>
+  <div style="display:flex;gap:0.5rem;align-items:center">
+    <button id="theme-btn" onclick="toggleTheme()" title="Toggle theme" style="background:transparent;border:1.5px solid rgba(255,255,255,0.12);color:var(--text);padding:0.4rem 0.75rem;border-radius:8px;cursor:pointer;font-size:0.9rem;font-family:'DM Sans',sans-serif;">🌑 Dark</button>
+    <a id="nav-auth-btn" href="login.html" style="background:transparent;border:1px solid rgba(0,196,140,0.25);color:var(--accent);padding:0.4rem 0.9rem;border-radius:8px;font-size:0.78rem;font-weight:600;text-decoration:none;">Sign In</a>
+  </div>
+
+  <button class="hamburger-btn" onclick="toggleMobileNav()" aria-label="Open menu">☰</button>
+
+  <button class="hamburger-btn" onclick="toggleMobileNav()" aria-label="Open menu">☰</button>
+</nav>
+<div id="mobile-nav-overlay" class="mobile-nav-overlay">
+  <button class="mobile-nav-close" onclick="toggleMobileNav()">✕</button>
+  <a href="index.html" onclick="toggleMobileNav()">Home</a>
+  <a href="skills.html" onclick="toggleMobileNav()">Skills</a>
+  <a href="experience.html" onclick="toggleMobileNav()">Get Experience</a>
+  <a href="jobs.html" class="active" onclick="toggleMobileNav()">Jobs</a>
+  <a href="verify.html" onclick="toggleMobileNav()">Verify</a>
+  <a href="profile.html" class="mobile-nav-cta" onclick="toggleMobileNav()">My Profile →</a>
+</div>
+
+<div id="mobile-nav-overlay" class="mobile-nav-overlay">
+  <button class="mobile-nav-close" onclick="toggleMobileNav()">✕</button>
+  <a href="index.html" onclick="toggleMobileNav()">Home</a>
+  <a href="skills.html" onclick="toggleMobileNav()">Skills</a>
+  <a href="experience.html" onclick="toggleMobileNav()">Get Experience</a>
+  <a href="jobs.html" class="active" onclick="toggleMobileNav()">Jobs</a>
+  <a href="verify.html" onclick="toggleMobileNav()">Verify</a>
+  <a href="profile.html" class="mobile-nav-cta" onclick="toggleMobileNav()">My Profile →</a>
+</div>
+
+
+<!-- JOB DETAIL MODAL -->
+<div id="job-modal-overlay" class="job-modal-overlay" onclick="if(event.target===this)closeJobModal()">
+  <div class="job-modal" id="job-modal-content">
+    <!-- filled by JS -->
+  </div>
+</div>
+
+
+<div class="page-header">
+  <div class="header-left">
+    <h1>Remote Jobs <span>For Africa</span></h1>
+    <p>Curated daily from global job boards. Click any job to read the full description — then click <strong style="color:var(--accent)">Apply for this Job</strong> to submit your application directly to the employer.</p>
+  </div>
+  <div class="update-badge">
+    <span class="update-dot"></span>
+    <span id="update-time">Updated daily</span>
+  </div>
+</div>
+
+<div id="demo-notice" style="display:none"></div>
+
+<div class="controls">
+  <div class="search-row">
+    <input class="search-input" id="search" placeholder="Search jobs, companies, skills..." oninput="render()"/>
+  </div>
+  <div class="filter-scroll" id="skill-filters"></div>
+  <div class="filter-scroll" style="margin-top:0.5rem" id="type-filters">
+    <button class="filter-btn type-btn active" onclick="setType('all',this)">All Types</button>
+    <button class="filter-btn type-btn" onclick="setType('saved',this)">🔖 Saved</button>
+    <button class="filter-btn type-btn" onclick="setType('job',this)">💼 Full-time Jobs</button>
+    <button class="filter-btn type-btn" onclick="setType('internship',this)">🎓 Internships</button>
+    <button class="filter-btn type-btn" onclick="setType('volunteer',this)">🤝 Volunteering</button>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div><span class="jobs-count" id="jobs-count">0</span> remote jobs matched to VELA skills</div>
+  <select class="sort-select" id="sort" onchange="render()">
+    <option value="newest">Newest First</option>
+    <option value="company">By Company</option>
+    <option value="skill">By Skill</option>
+  </select>
+</div>
+
+<div class="jobs-container" id="jobs-container">
+  <div class="loading">
+    <div class="spinner"></div>
+    <p style="color:var(--muted);font-size:0.9rem">Loading jobs...</p>
+  </div>
+</div>
+
+<script>
+// ─── DEMO DATA (used when jobs.json is not available) ──────────────────────
+const DEMO_JOBS = [
+  // ── CUSTOMER SERVICE ──────────────────────────────────────────────────────
+  { id:"d1",  title:"Customer Support Specialist", company:"Shopify", skill:"Customer Service", tags:["support","chat","email"], url:"https://shopify.com/careers", location:"Worldwide", salary:"$40k–$55k", posted:"2026-03-08", source:"RemoteOK", remote:true },
+  { id:"d16", title:"Customer Success Manager", company:"Intercom", skill:"Customer Service", tags:["support","saas","cx"], url:"https://intercom.com/careers", location:"Worldwide", salary:"$55k–$75k", posted:"2026-03-07", source:"We Work Remotely", remote:true },
+  { id:"d30", title:"Support Representative", company:"Automattic", skill:"Customer Service", tags:["wordpress","support","remote"], url:"https://automattic.com/work-with-us", location:"Worldwide", salary:"$45k–$60k", posted:"2026-03-06", source:"Remotive", remote:true },
+  { id:"d31", title:"Customer Experience Specialist", company:"Zapier", skill:"Customer Service", tags:["cx","email","chat"], url:"https://zapier.com/jobs", location:"Worldwide", salary:"$50k–$65k", posted:"2026-03-05", source:"Jobicy", remote:true },
+  { id:"d32", title:"Technical Support Agent", company:"Atlassian", skill:"Customer Service", tags:["technical","jira","support"], url:"https://atlassian.com/company/careers", location:"Worldwide", salary:"$45k–$65k", posted:"2026-03-04", source:"Remote.co", remote:true },
+  // ── VIRTUAL ASSISTANT ─────────────────────────────────────────────────────
+  { id:"d2",  title:"Executive Virtual Assistant", company:"Boldly", skill:"Virtual Assistant", tags:["va","executive","admin"], url:"https://boldly.com", location:"Worldwide", salary:"$35k–$50k", posted:"2026-03-08", source:"Jobicy", remote:true },
+  { id:"d17", title:"Virtual Executive Assistant", company:"Fancy Hands", skill:"Virtual Assistant", tags:["admin","scheduling","research"], url:"https://fancyhands.com", location:"Worldwide", salary:"$30k–$45k", posted:"2026-03-07", source:"Flexjobs", remote:true },
+  { id:"d33", title:"Remote Personal Assistant", company:"Time Etc", skill:"Virtual Assistant", tags:["pa","admin","calendar"], url:"https://web.timeetc.com/become-a-va", location:"Worldwide", salary:"$25k–$40k", posted:"2026-03-06", source:"We Work Remotely", remote:true },
+  { id:"d34", title:"Operations VA", company:"Belay", skill:"Virtual Assistant", tags:["operations","admin","remote"], url:"https://belaysolutions.com", location:"Worldwide", salary:"$30k–$48k", posted:"2026-03-05", source:"Remote.co", remote:true },
+  { id:"d35", title:"Admin & Research Assistant", company:"Prialto", skill:"Virtual Assistant", tags:["research","admin","executive"], url:"https://prialto.com", location:"Worldwide", salary:"$28k–$42k", posted:"2026-03-04", source:"Remotive", remote:true },
+  // ── DATA ANALYSIS ─────────────────────────────────────────────────────────
+  { id:"d3",  title:"Data Analyst – Marketing", company:"HubSpot", skill:"Data Analysis", tags:["sql","tableau","analytics"], url:"https://hubspot.com/careers", location:"Worldwide", salary:"$60k–$85k", posted:"2026-03-08", source:"Remotive", remote:true },
+  { id:"d18", title:"Business Intelligence Analyst", company:"Stripe", skill:"Data Analysis", tags:["sql","power bi","analytics"], url:"https://stripe.com/jobs", location:"Worldwide", salary:"$80k–$110k", posted:"2026-03-07", source:"RemoteOK", remote:true },
+  { id:"d36", title:"Data Analyst – Product", company:"Notion", skill:"Data Analysis", tags:["python","sql","product"], url:"https://notion.com/careers", location:"Worldwide", salary:"$75k–$100k", posted:"2026-03-06", source:"We Work Remotely", remote:true },
+  { id:"d37", title:"Analytics Engineer", company:"dbt Labs", skill:"Data Analysis", tags:["dbt","sql","data warehouse"], url:"https://jobs.lever.co/dbtlabs", location:"Worldwide", salary:"$85k–$115k", posted:"2026-03-05", source:"Jobicy", remote:true },
+  { id:"d38", title:"Junior Data Analyst", company:"Deel", skill:"Data Analysis", tags:["excel","sql","reporting"], url:"https://deel.com/careers", location:"Worldwide", salary:"$50k–$70k", posted:"2026-03-04", source:"Remote.co", remote:true },
+  // ── PROMPT ENGINEERING & AI ───────────────────────────────────────────────
+  { id:"d4",  title:"AI Prompt Engineer", company:"Scale AI", skill:"Prompt Engineering & AI", tags:["llm","chatgpt","ai"], url:"https://scale.com", location:"Worldwide", salary:"$70k–$110k", posted:"2026-03-08", source:"RemoteOK", remote:true },
+  { id:"d39", title:"AI Content Specialist", company:"Jasper", skill:"Prompt Engineering & AI", tags:["ai","content","llm"], url:"https://jasper.ai/careers", location:"Worldwide", salary:"$55k–$80k", posted:"2026-03-07", source:"Remotive", remote:true },
+  { id:"d40", title:"Prompt Engineer – LLMs", company:"Cohere", skill:"Prompt Engineering & AI", tags:["llm","nlp","prompt"], url:"https://cohere.com/careers", location:"Worldwide", salary:"$80k–$120k", posted:"2026-03-06", source:"We Work Remotely", remote:true },
+  { id:"d41", title:"AI Automation Specialist", company:"Make.com", skill:"Prompt Engineering & AI", tags:["automation","ai","no-code"], url:"https://make.com/en/careers", location:"Worldwide", salary:"$60k–$90k", posted:"2026-03-05", source:"Jobicy", remote:true },
+  // ── SOCIAL MEDIA MANAGEMENT ───────────────────────────────────────────────
+  { id:"d5",  title:"Social Media Manager", company:"Buffer", skill:"Social Media Management", tags:["instagram","content","scheduling"], url:"https://buffer.com/journey", location:"Worldwide", salary:"$45k–$65k", posted:"2026-03-08", source:"Jobicy", remote:true },
+  { id:"d42", title:"Social Media Strategist", company:"Hootsuite", skill:"Social Media Management", tags:["strategy","analytics","social"], url:"https://hootsuite.com/about/careers", location:"Worldwide", salary:"$50k–$70k", posted:"2026-03-07", source:"Remotive", remote:true },
+  { id:"d43", title:"Community Manager", company:"Circle.so", skill:"Social Media Management", tags:["community","engagement","social"], url:"https://circle.so/careers", location:"Worldwide", salary:"$45k–$65k", posted:"2026-03-06", source:"We Work Remotely", remote:true },
+  { id:"d44", title:"Content & Social Coordinator", company:"Later", skill:"Social Media Management", tags:["content","instagram","tiktok"], url:"https://later.com/careers", location:"Worldwide", salary:"$40k–$58k", posted:"2026-03-05", source:"RemoteOK", remote:true },
+  // ── CONTENT WRITING ───────────────────────────────────────────────────────
+  { id:"d6",  title:"SEO Content Specialist", company:"Ahrefs", skill:"Content Writing", tags:["seo","writing","content"], url:"https://ahrefs.com/jobs", location:"Worldwide", salary:"$40k–$60k", posted:"2026-03-08", source:"Remotive", remote:true },
+  { id:"d45", title:"Technical Content Writer", company:"DigitalOcean", skill:"Content Writing", tags:["technical","writing","developer"], url:"https://digitalocean.com/careers", location:"Worldwide", salary:"$55k–$80k", posted:"2026-03-07", source:"We Work Remotely", remote:true },
+  { id:"d46", title:"Copywriter – SaaS", company:"Webflow", skill:"Content Writing", tags:["copywriting","saas","ux writing"], url:"https://webflow.com/careers", location:"Worldwide", salary:"$60k–$85k", posted:"2026-03-06", source:"Jobicy", remote:true },
+  { id:"d47", title:"Blog Content Writer", company:"Semrush", skill:"Content Writing", tags:["blog","seo","writing"], url:"https://semrush.com/company/careers", location:"Worldwide", salary:"$35k–$55k", posted:"2026-03-05", source:"RemoteOK", remote:true },
+  // ── SEO SPECIALIST ────────────────────────────────────────────────────────
+  { id:"d7",  title:"SEO Manager", company:"Semrush", skill:"SEO Specialist", tags:["seo","keyword","serp"], url:"https://semrush.com/company/careers", location:"Worldwide", salary:"$55k–$80k", posted:"2026-03-08", source:"RemoteOK", remote:true },
+  { id:"d48", title:"SEO Analyst", company:"Conductor", skill:"SEO Specialist", tags:["seo","analytics","content"], url:"https://conductor.com/careers", location:"Worldwide", salary:"$50k–$70k", posted:"2026-03-07", source:"Remotive", remote:true },
+  { id:"d49", title:"Technical SEO Specialist", company:"Moz", skill:"SEO Specialist", tags:["technical seo","crawling","audit"], url:"https://moz.com/about/jobs", location:"Worldwide", salary:"$55k–$80k", posted:"2026-03-06", source:"We Work Remotely", remote:true },
+  // ── PROJECT MANAGEMENT ────────────────────────────────────────────────────
+  { id:"d8",  title:"Project Manager – SaaS", company:"Basecamp", skill:"Project Management", tags:["agile","scrum","jira"], url:"https://basecamp.com/about/jobs", location:"Worldwide", salary:"$65k–$90k", posted:"2026-03-08", source:"Jobicy", remote:true },
+  { id:"d50", title:"Technical Project Manager", company:"GitLab", skill:"Project Management", tags:["pm","agile","remote-first"], url:"https://about.gitlab.com/jobs", location:"Worldwide", salary:"$80k–$110k", posted:"2026-03-07", source:"Remotive", remote:true },
+  { id:"d51", title:"Operations Project Manager", company:"Toptal", skill:"Project Management", tags:["ops","pm","async"], url:"https://toptal.com/careers", location:"Worldwide", salary:"$75k–$100k", posted:"2026-03-06", source:"We Work Remotely", remote:true },
+  // ── UI/UX DESIGN ──────────────────────────────────────────────────────────
+  { id:"d9",  title:"UI/UX Designer", company:"Figma", skill:"UI/UX Design", tags:["figma","ux","product design"], url:"https://figma.com/careers", location:"Worldwide", salary:"$70k–$100k", posted:"2026-03-08", source:"Remotive", remote:true },
+  { id:"d52", title:"Product Designer", company:"Linear", skill:"UI/UX Design", tags:["product","figma","design systems"], url:"https://linear.app/careers", location:"Worldwide", salary:"$80k–$120k", posted:"2026-03-07", source:"RemoteOK", remote:true },
+  { id:"d53", title:"UX Researcher", company:"Hotjar", skill:"UI/UX Design", tags:["ux research","usability","qualitative"], url:"https://hotjar.com/careers", location:"Worldwide", salary:"$65k–$90k", posted:"2026-03-06", source:"Jobicy", remote:true },
+  // ── EMAIL MARKETING ───────────────────────────────────────────────────────
+  { id:"d10", title:"Email Marketing Specialist", company:"Klaviyo", skill:"Email Marketing", tags:["email","klaviyo","campaigns"], url:"https://klaviyo.com/careers", location:"Worldwide", salary:"$50k–$70k", posted:"2026-03-08", source:"RemoteOK", remote:true },
+  { id:"d54", title:"CRM & Email Manager", company:"ActiveCampaign", skill:"Email Marketing", tags:["crm","automation","email"], url:"https://activecampaign.com/careers", location:"Worldwide", salary:"$55k–$75k", posted:"2026-03-07", source:"Remotive", remote:true },
+  { id:"d55", title:"Email Marketing Analyst", company:"Mailchimp", skill:"Email Marketing", tags:["analytics","a/b testing","campaigns"], url:"https://mailchimp.com/about/careers", location:"Worldwide", salary:"$50k–$70k", posted:"2026-03-06", source:"We Work Remotely", remote:true },
+  // ── CYBERSECURITY ─────────────────────────────────────────────────────────
+  { id:"d11", title:"SOC Security Analyst", company:"CrowdStrike", skill:"Cybersecurity", tags:["security","soc","infosec"], url:"https://crowdstrike.com/careers", location:"Worldwide", salary:"$65k–$95k", posted:"2026-03-08", source:"Jobicy", remote:true },
+  { id:"d56", title:"Information Security Analyst", company:"Okta", skill:"Cybersecurity", tags:["infosec","iam","cloud security"], url:"https://okta.com/company/careers", location:"Worldwide", salary:"$70k–$100k", posted:"2026-03-07", source:"Remotive", remote:true },
+  { id:"d57", title:"Penetration Tester", company:"HackerOne", skill:"Cybersecurity", tags:["pentest","bug bounty","security"], url:"https://hackerone.com/careers", location:"Worldwide", salary:"$80k–$120k", posted:"2026-03-06", source:"RemoteOK", remote:true },
+  // ── ONLINE TUTORING ───────────────────────────────────────────────────────
+  { id:"d12", title:"Online Math Tutor", company:"Preply", skill:"Online Tutoring", tags:["tutor","math","education"], url:"https://preply.com/en/become-a-tutor", location:"Worldwide", salary:"$15–$40/hr", posted:"2026-03-08", source:"Remotive", remote:true },
+  { id:"d58", title:"English Language Tutor", company:"iTalki", skill:"Online Tutoring", tags:["english","esl","tutoring"], url:"https://italki.com/teach", location:"Worldwide", salary:"$10–$35/hr", posted:"2026-03-07", source:"Flexjobs", remote:true },
+  { id:"d59", title:"K-12 Online Tutor", company:"Varsity Tutors", skill:"Online Tutoring", tags:["k12","tutor","subjects"], url:"https://varsitytutors.com/tutors", location:"Worldwide", salary:"$15–$35/hr", posted:"2026-03-06", source:"Remote.co", remote:true },
+  // ── BOOKKEEPING ───────────────────────────────────────────────────────────
+  { id:"d13", title:"Remote Bookkeeper", company:"Belay", skill:"Bookkeeping", tags:["quickbooks","accounting","finance"], url:"https://belaysolutions.com", location:"Worldwide", salary:"$45k–$65k", posted:"2026-03-08", source:"RemoteOK", remote:true },
+  { id:"d60", title:"Virtual Bookkeeper", company:"Bench", skill:"Bookkeeping", tags:["bookkeeping","xero","reconciliation"], url:"https://bench.co/careers", location:"Worldwide", salary:"$40k–$60k", posted:"2026-03-07", source:"Remotive", remote:true },
+  { id:"d61", title:"Accounting Assistant", company:"Pilot", skill:"Bookkeeping", tags:["accounting","quickbooks","finance"], url:"https://pilot.com/careers", location:"Worldwide", salary:"$38k–$55k", posted:"2026-03-06", source:"Jobicy", remote:true },
+  // ── E-COMMERCE ────────────────────────────────────────────────────────────
+  { id:"d14", title:"Shopify E-Commerce Manager", company:"Thrasio", skill:"E-Commerce", tags:["shopify","ecommerce","amazon"], url:"https://thrasio.com/careers", location:"Worldwide", salary:"$50k–$75k", posted:"2026-03-08", source:"Jobicy", remote:true },
+  { id:"d62", title:"E-Commerce Specialist", company:"Jungle Scout", skill:"E-Commerce", tags:["amazon","fba","ecommerce"], url:"https://junglescout.com/careers", location:"Worldwide", salary:"$45k–$65k", posted:"2026-03-07", source:"We Work Remotely", remote:true },
+  { id:"d63", title:"DTC Growth Manager", company:"Triple Whale", skill:"E-Commerce", tags:["dtc","shopify","growth"], url:"https://triplewhale.com/careers", location:"Worldwide", salary:"$55k–$80k", posted:"2026-03-06", source:"RemoteOK", remote:true },
+  // ── HR & RECRUITMENT ──────────────────────────────────────────────────────
+  { id:"d15", title:"Remote Talent Recruiter", company:"Deel", skill:"HR & Recruitment", tags:["recruiter","hr","talent"], url:"https://deel.com/careers", location:"Worldwide", salary:"$55k–$80k", posted:"2026-03-08", source:"Remotive", remote:true },
+  { id:"d64", title:"Technical Recruiter", company:"Remote.com", skill:"HR & Recruitment", tags:["recruiting","tech","remote"], url:"https://remote.com/careers", location:"Worldwide", salary:"$60k–$85k", posted:"2026-03-07", source:"Jobicy", remote:true },
+  { id:"d65", title:"HR Business Partner", company:"Oyster HR", skill:"HR & Recruitment", tags:["hrbp","remote","global"], url:"https://oysterhr.com/about/careers", location:"Worldwide", salary:"$65k–$90k", posted:"2026-03-06", source:"We Work Remotely", remote:true },
+  // ── INTERNSHIPS ───────────────────────────────────────────────────────────
+  { id:"i1", title:"Customer Support Intern", company:"Intercom", skill:"Customer Service", tags:["intern","support","entry"], url:"https://intercom.com/careers", location:"Worldwide", salary:"Paid · $15/hr", posted:"2026-03-08", source:"Remotive", remote:true, type:"internship" },
+  { id:"i2", title:"Data Analysis Internship", company:"DataCamp", skill:"Data Analysis", tags:["intern","sql","analytics"], url:"https://datacamp.com", location:"Worldwide", salary:"Paid · Stipend", posted:"2026-03-08", source:"Jobicy", remote:true, type:"internship" },
+  { id:"i3", title:"Social Media Marketing Intern", company:"Hootsuite", skill:"Social Media Management", tags:["intern","social","content"], url:"https://hootsuite.com/about/careers", location:"Worldwide", salary:"Paid · $12/hr", posted:"2026-03-08", source:"RemoteOK", remote:true, type:"internship" },
+  { id:"i4", title:"UX Design Intern", company:"Canva", skill:"UI/UX Design", tags:["intern","figma","ux"], url:"https://canva.com/careers", location:"Worldwide", salary:"Paid · Stipend", posted:"2026-03-08", source:"Remotive", remote:true, type:"internship" },
+  { id:"i5", title:"Content Writing Intern", company:"HubSpot", skill:"Content Writing", tags:["intern","writing","seo"], url:"https://hubspot.com/careers", location:"Worldwide", salary:"Paid · $14/hr", posted:"2026-03-08", source:"Jobicy", remote:true, type:"internship" },
+  { id:"i6", title:"Marketing Analytics Intern", company:"Mailchimp", skill:"Email Marketing", tags:["intern","analytics","email"], url:"https://mailchimp.com/about/careers", location:"Worldwide", salary:"Paid · $13/hr", posted:"2026-03-07", source:"We Work Remotely", remote:true, type:"internship" },
+  { id:"i7", title:"Cybersecurity Intern", company:"Palo Alto Networks", skill:"Cybersecurity", tags:["intern","security","soc"], url:"https://paloaltonetworks.com/company/careers", location:"Worldwide", salary:"Paid · Stipend", posted:"2026-03-07", source:"RemoteOK", remote:true, type:"internship" },
+  { id:"i8", title:"SEO Intern", company:"Moz", skill:"SEO Specialist", tags:["intern","seo","content"], url:"https://moz.com/about/jobs", location:"Worldwide", salary:"Paid · $12/hr", posted:"2026-03-07", source:"Remotive", remote:true, type:"internship" },
+  { id:"i9", title:"Bookkeeping Intern", company:"Bench", skill:"Bookkeeping", tags:["intern","accounting","finance"], url:"https://bench.co/careers", location:"Worldwide", salary:"Paid · Stipend", posted:"2026-03-07", source:"Jobicy", remote:true, type:"internship" },
+  { id:"i10", title:"Project Management Intern", company:"Asana", skill:"Project Management", tags:["intern","pm","agile"], url:"https://asana.com/jobs", location:"Worldwide", salary:"Paid · $16/hr", posted:"2026-03-06", source:"We Work Remotely", remote:true, type:"internship" },
+  // ── VOLUNTEER ─────────────────────────────────────────────────────────────
+  { id:"v1", title:"Volunteer Social Media Manager", company:"Catchafire", skill:"Social Media Management", tags:["volunteer","nonprofit","social"], url:"https://www.catchafire.org", location:"Worldwide", salary:"Volunteer · Portfolio Builder", posted:"2026-03-08", source:"Catchafire", remote:true, type:"volunteer" },
+  { id:"v2", title:"Volunteer Data Analyst", company:"UN Volunteers", skill:"Data Analysis", tags:["volunteer","data","impact"], url:"https://www.onlinevolunteering.org", location:"Worldwide", salary:"Volunteer · Certificate", posted:"2026-03-08", source:"UN Volunteers", remote:true, type:"volunteer" },
+  { id:"v3", title:"Volunteer Math Tutor", company:"Khan Academy", skill:"Online Tutoring", tags:["volunteer","math","education"], url:"https://www.khanacademy.org/contribute", location:"Worldwide", salary:"Volunteer · Impact Work", posted:"2026-03-08", source:"Khan Academy", remote:true, type:"volunteer" },
+  { id:"v4", title:"Volunteer HR Coordinator", company:"Idealist", skill:"HR & Recruitment", tags:["volunteer","hr","nonprofit"], url:"https://www.idealist.org", location:"Worldwide", salary:"Volunteer · Portfolio Builder", posted:"2026-03-08", source:"Idealist", remote:true, type:"volunteer" },
+  { id:"v5", title:"Volunteer Content Writer", company:"Catchafire", skill:"Content Writing", tags:["volunteer","writing","nonprofit"], url:"https://www.catchafire.org", location:"Worldwide", salary:"Volunteer · Portfolio Builder", posted:"2026-03-07", source:"Catchafire", remote:true, type:"volunteer" },
+  { id:"v6", title:"Volunteer Bookkeeper", company:"UN Volunteers", skill:"Bookkeeping", tags:["volunteer","finance","nonprofit"], url:"https://www.onlinevolunteering.org", location:"Worldwide", salary:"Volunteer · Certificate", posted:"2026-03-07", source:"UN Volunteers", remote:true, type:"volunteer" },
+  { id:"v7", title:"Volunteer UX Researcher", company:"Parker Dewey", skill:"UI/UX Design", tags:["volunteer","ux","research"], url:"https://app.parkerdewey.com", location:"Worldwide", salary:"Volunteer · Portfolio Builder", posted:"2026-03-07", source:"Parker Dewey", remote:true, type:"volunteer" },
+  { id:"v8", title:"Volunteer SEO Analyst", company:"Catchafire", skill:"SEO Specialist", tags:["volunteer","seo","nonprofit"], url:"https://www.catchafire.org", location:"Worldwide", salary:"Volunteer · Portfolio Builder", posted:"2026-03-06", source:"Catchafire", remote:true, type:"volunteer" },
+];
+
+const SKILLS = [...new Set(DEMO_JOBS.map(j => j.skill))].sort();
+
+let allJobs = [];
+let activeSkill = "All";
+let activeType = "all";
+
+// ─── LOAD DATA ──────────────────────────────────────────────────────────────
+async function loadJobs() {
+  try {
+    const res = await fetch("jobs.json");
+    if (!res.ok) throw new Error("No jobs.json");
+    const data = await res.json();
+    allJobs = data.jobs || [];
+    document.getElementById("demo-notice").style.display = "none";
+    const d = new Date(data.updated);
+    document.getElementById("update-time").textContent = "Updated " + d.toLocaleDateString("en-GB", { day:"numeric", month:"short", year:"numeric" });
+  } catch {
+    // Fall back to demo data
+    allJobs = DEMO_JOBS;
+    const notice = document.getElementById('demo-notice');
+    if (notice) {
+      notice.className = 'demo-notice';
+      notice.style.display = 'flex';
+      notice.innerHTML = '<span style="font-size:1.1rem">⚠️</span><div><strong style="color:#FFA500">Showing sample jobs</strong> — live job feed not loaded. <a href="https://github.com/christelle-ndanjong/vela" target="_blank" style="color:#FFA500;font-weight:600;">Run the scraper</a> and upload jobs.json to see real listings.</div>';
+    }
+  }
+  buildFilters();
+  render();
 }
+
+// ─── FILTER BUTTONS ─────────────────────────────────────────────────────────
+function buildFilters() {
+  const skills = ["All", ...new Set(allJobs.map(j => j.skill)).values()].sort((a,b) => a === "All" ? -1 : a.localeCompare(b));
+  const container = document.getElementById("skill-filters");
+  container.innerHTML = skills.map(s =>
+    `<button class="filter-btn ${s === activeSkill ? 'active' : ''}" onclick="setSkill('${s}', this)">${s}</button>`
+  ).join("");
+}
+
+function setSkill(skill, btn) {
+  activeSkill = skill;
+  document.querySelectorAll("#skill-filters .filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  render();
+}
+
+function setType(type, btn) {
+  activeType = type;
+  document.querySelectorAll("#type-filters .filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  render();
+}
+
+// ─── HELPERS ────────────────────────────────────────────────────────────────
+function isNew(dateStr) {
+  if (!dateStr) return false;
+  const d = new Date(dateStr);
+  const diff = (Date.now() - d.getTime()) / (1000 * 60 * 60 * 24);
+  return diff < 3;
+}
+
+function timeAgo(dateStr) {
+  if (!dateStr) return "";
+  const d = new Date(dateStr);
+  const diff = Math.floor((Date.now() - d.getTime()) / (1000 * 60 * 60 * 24));
+  if (diff === 0) return "Today";
+  if (diff === 1) return "Yesterday";
+  return `${diff}d ago`;
+}
+
+function logoFallback(company) {
+  return company ? company.charAt(0).toUpperCase() : "?";
+}
+
+// ─── RENDER ─────────────────────────────────────────────────────────────────
+
+
+
+function openJobModal(job) {
+  const userSkill = localStorage.getItem('vela_skill') || '';
+  const ms = getMatchScore(job);
+  const matchBadge = (userSkill && ms > 0)
+    ? `<span style="font-size:0.75rem;font-weight:700;color:${ms>=70?'var(--accent)':ms>=40?'#FFA500':'var(--muted)'};background:rgba(0,0,0,0.2);padding:0.2rem 0.6rem;border-radius:100px;border:1px solid currentColor;margin-left:0.5rem">${ms}% match</span>`
+    : '';
+
+  const tips = {
+    'Virtual Assistant':      'Highlight your organisational skills, communication, and any tools you know (Notion, Trello, Slack). Mention your availability and timezone.',
+    'Data Analysis':          'Mention specific tools — SQL, Excel, Tableau, Power BI. Link any dashboards or analyses you have built. Show you can tell a story with data.',
+    'Customer Service':       'Lead with your communication style. Share examples of how you have handled difficult situations or improved a customer experience.',
+    'Social Media Management':'Include links to accounts you have managed or content you have created. Metrics (followers gained, engagement rate) matter a lot here.',
+    'Content Writing':        "Always send writing samples. Match the tone of the company existing content. Show range — blogs, emails, social, technical.",
+    'UI/UX Design':           'Lead with your portfolio link. Show your design process, not just final screens. Explain the problem you were solving.',
+    'Web Development':        'Link to GitHub or live projects. Mention the stack. Show you can ship — employers care about delivery, not just code.',
+    'SEO Specialist':         'Share specific SEO wins — traffic growth, ranking improvements. Mention tools: Ahrefs, SEMrush, Search Console.',
+    'Project Management':     'Mention methodologies (Agile, Scrum) and tools (Jira, Asana, Monday). Show you have shipped projects on time.',
+    'Email Marketing':        'Share open rates, click rates, or revenue figures from campaigns. Mention platforms: Klaviyo, Mailchimp, ActiveCampaign.',
+  };
+  const tip = tips[job.skill] || `Highlight your ${job.skill} skills and mention any verified experience from your VELA profile. Show specific results, not just responsibilities.`;
+
+  const logoHtml = job.logo
+    ? `<img src="${job.logo}" alt="${job.company}" onerror="this.parentElement.textContent='${logoFallback(job.company)}'">`
+    : logoFallback(job.company);
+
+  document.getElementById('job-modal-content').innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.25rem;">
+      <div class="job-modal-header" style="margin-bottom:0;flex:1;">
+        <div class="job-modal-logo">${logoHtml}</div>
+        <div>
+          <div class="job-modal-title">${job.title}${matchBadge}</div>
+          <div class="job-modal-company">${job.company} · ${job.location || 'Worldwide'}</div>
+        </div>
+      </div>
+      <button onclick="closeJobModal()" style="background:transparent;border:none;color:var(--muted);font-size:1.2rem;cursor:pointer;padding:0.25rem;flex-shrink:0;margin-left:0.5rem;">✕</button>
+    </div>
+
+    <div class="job-modal-meta">
+      <span>📍 ${job.location || 'Worldwide'}</span>
+      ${job.salary ? `<span>💰 ${job.salary}</span>` : ''}
+      <span>🕐 ${timeAgo(job.posted)}</span>
+      <span>📌 ${job.source}</span>
+    </div>
+
+    <div class="job-modal-tags">
+      <span class="job-modal-tag" style="color:var(--accent);border-color:rgba(0,196,140,0.25);">${job.skill}</span>
+      ${(job.tags||[]).map(t => `<span class="job-modal-tag">${t}</span>`).join('')}
+    </div>
+
+    <div class="job-modal-tip">
+      <div class="job-modal-tip-label">💡 VELA tip for this role</div>
+      <div style="font-size:0.85rem;color:var(--text);line-height:1.65;">${tip}</div>
+    </div>
+
+    <div class="job-modal-actions">
+      <a href="${job.url}" target="_blank" rel="noopener" class="job-modal-apply" onclick="closeJobModal()">Apply Now →</a>
+      <button class="job-modal-close" onclick="closeJobModal()">Close</button>
+    </div>
+  `;
+
+  document.getElementById('job-modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeJobModal() {
+  document.getElementById('job-modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeJobModal();
+});
+
+function toggleSaveJob(jobId, btn) {
+  const saved = JSON.parse(localStorage.getItem('vela_saved_jobs') || '[]');
+  const id = String(jobId);
+  if (saved.includes(id)) {
+    const updated = saved.filter(x => x !== id);
+    localStorage.setItem('vela_saved_jobs', JSON.stringify(updated));
+    if (btn) btn.textContent = '🔖';
+  } else {
+    saved.push(id);
+    localStorage.setItem('vela_saved_jobs', JSON.stringify(saved));
+    if (btn) { btn.textContent = '✅'; btn.style.transform = 'scale(1.3)'; setTimeout(() => btn.style.transform = 'scale(1)', 200); }
+  }
+}
+
+function getMatchScore(job) {
+  const userSkill  = localStorage.getItem('vela_skill') || '';
+  const userTools  = JSON.parse(localStorage.getItem('vela_tools') || '[]');
+  const userEnglish = parseInt(localStorage.getItem('vela_english') || '0');
+  let score = 0;
+  if (job.skill && userSkill && job.skill === userSkill) score += 55;
+  const jobTags = (job.tags || []).map(t => t.toLowerCase());
+  const matched = userTools.filter(tool =>
+    jobTags.some(tag => tag.includes(tool.toLowerCase()) || tool.toLowerCase().includes(tag))
+  );
+  score += Math.min(matched.length * 10, 30);
+  if (userEnglish >= 3) score += 10;
+  if (userEnglish >= 4) score += 5;
+  return Math.min(score, 100);
+}
+
+function highlight(text, query) {
+  if (!query || query.length < 2) return text;
+  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return text.replace(new RegExp('(' + escaped + ')', 'gi'),
+    '<mark style="background:rgba(0,196,140,0.18);color:var(--accent);border-radius:2px;padding:0 1px;">$1</mark>');
+}
+
+function render() {
+  const query = document.getElementById("search").value.toLowerCase();
+  const sort  = document.getElementById("sort").value;
+
+  let jobs = allJobs.filter(j => {
+    const matchSkill = activeSkill === "All" || j.skill === activeSkill;
+    const matchQuery = !query ||
+      j.title.toLowerCase().includes(query) ||
+      j.company.toLowerCase().includes(query) ||
+      (j.tags || []).some(t => t.toLowerCase().includes(query)) ||
+      j.skill.toLowerCase().includes(query);
+    const jobType = j.type || "job";
+    const savedJobs = JSON.parse(localStorage.getItem('vela_saved_jobs') || '[]');
+    const matchType = activeType === "all" || jobType === activeType ||
+      (activeType === "saved" && savedJobs.includes(String(j.id)));
+    return matchSkill && matchQuery && matchType;
+  });
+
+  if (sort === "newest") jobs.sort((a,b) => (b.posted||"").localeCompare(a.posted||""));
+  if (sort === "company") jobs.sort((a,b) => a.company.localeCompare(b.company));
+  if (sort === "skill")   jobs.sort((a,b) => a.skill.localeCompare(b.skill));
+
+  document.getElementById("jobs-count").textContent = jobs.length;
+
+  if (!jobs.length) {
+    document.getElementById("jobs-container").innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">🔍</div>
+        <h3>No jobs found</h3>
+        <p>Try a different search or skill filter</p>
+      </div>`;
+    return;
+  }
+
+  // Group by source
+  const sources = {};
+  jobs.forEach(j => {
+    if (!sources[j.source]) sources[j.source] = [];
+    sources[j.source].push(j);
+  });
+
+  const html = Object.entries(sources).map(([source, sourceJobs]) => `
+    <div class="source-section">
+      <div class="source-header">
+        <span class="source-dot" style="width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0"></span>
+        <span class="source-label">${source}</span>
+        <div class="source-line"></div>
+        <span class="source-count">${sourceJobs.length} jobs</span>
+      </div>
+      <div class="jobs-list">
+        ${sourceJobs.map(job => `
+          <a class="job-card" href="${job.url}" target="_blank" rel="noopener" onclick="event.preventDefault();openJobModal(job)">
+            <div class="job-logo">
+              ${job.logo
+                ? `<img src="${job.logo}" alt="${job.company}" onerror="this.parentElement.textContent='${logoFallback(job.company)}'">`
+                : logoFallback(job.company)
+              }
+            </div>
+            <div class="job-main">
+              <div class="job-title-row">
+                <span class="job-title">${highlight(job.title, query)}</span>
+                ${isNew(job.posted) ? '<span class="job-new">New</span>' : ''}
+                ${(function(){
+                  const userSkill = localStorage.getItem('vela_skill');
+                  if (!userSkill) return '';
+                  const ms = getMatchScore(job);
+                  if (ms === 0) return '';
+                  const col = ms >= 70 ? 'var(--accent)' : ms >= 40 ? '#FFA500' : 'var(--muted)';
+                  return '<span style="font-size:0.68rem;font-weight:700;color:' + col + ';background:rgba(0,0,0,0.15);padding:0.15rem 0.5rem;border-radius:100px;border:1px solid currentColor;">' + ms + '% match</span>';
+                })()}
+              </div>
+              <div class="job-company">${job.company} · ${job.location || "Worldwide"}</div>
+              <div class="job-tags">
+                <span class="job-tag skill-tag">${job.skill}</span>
+                ${(job.tags||[]).slice(0,3).map(t => `<span class="job-tag">${t}</span>`).join("")}
+              </div>
+            </div>
+            <div class="job-right">
+              ${job.salary ? `<div class="job-salary">${job.salary}</div>` : ''}
+              <div class="job-meta">
+                <div>${timeAgo(job.posted)}</div>
+                <div class="job-source"><span class="source-dot"></span>${job.source}</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:0.5rem;margin-top:0.5rem;">
+                <button style="background:transparent;border:none;cursor:pointer;font-size:1rem;padding:0.25rem;transition:transform 0.15s;flex-shrink:0;" title="Save job"
+                  id="save-${job.id}"
+                  onclick="event.preventDefault();event.stopPropagation();toggleSaveJob('${job.id}', this)">
+                  ${(JSON.parse(localStorage.getItem('vela_saved_jobs')||'[]')).includes(String(job.id)) ? '✅' : '🔖'}
+                </button>
+                <button class="apply-btn" style="flex:1;" onclick="event.preventDefault();event.stopPropagation();window.open('${job.url}','_blank')">Apply →</button>
+              </div>
+            </div>
+          </a>
+        `).join("")}
+      </div>
+    </div>
+  `).join("");
+
+  document.getElementById("jobs-container").innerHTML = html;
+}
+
+loadJobs();
+</script>
+
+<script>
+function toggleTheme() {
+  document.body.classList.toggle('light-mode');
+  const isLight = document.body.classList.contains('light-mode');
+  const btn = document.getElementById('theme-btn');
+  if (btn) btn.textContent = isLight ? '🌌 Navy' : '🌑 Dark';
+  localStorage.setItem('vela_theme', isLight ? 'light' : 'dark');
+}
+function applyTheme() {
+  if (localStorage.getItem('vela_theme') === 'light') {
+    document.body.classList.add('light-mode');
+    const btn = document.getElementById('theme-btn');
+    if (btn) btn.textContent = '🌌 Navy';
+  }
+}
+async function velaSignOut(e) {
+  e.preventDefault();
+  try {
+    const SUPABASE_URL = window.VELA_CONFIG.SUPABASE_URL;
+    const SUPABASE_KEY = window.VELA_CONFIG.SUPABASE_KEY;
+    if (typeof supabase !== 'undefined') {
+      const _sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      await _sb.auth.signOut();
+    }
+  } catch(e) {}
+  window.location.href = 'login.html';
+}
+document.addEventListener('DOMContentLoaded', applyTheme);
+</script>
+<script>
+
+function toggleMobileNav() {
+  var overlay = document.getElementById('mobile-nav-overlay');
+  var isOpen = overlay.classList.contains('open');
+  overlay.classList.toggle('open');
+  document.body.style.overflow = isOpen ? '' : 'hidden';
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    var overlay = document.getElementById('mobile-nav-overlay');
+    if (overlay) { overlay.classList.remove('open'); document.body.style.overflow = ''; }
+  }
+});
+
+</script>
+<script>
+
+function toggleMobileNav() {
+  var overlay = document.getElementById('mobile-nav-overlay');
+  var isOpen = overlay.classList.contains('open');
+  overlay.classList.toggle('open');
+  document.body.style.overflow = isOpen ? '' : 'hidden';
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    var overlay = document.getElementById('mobile-nav-overlay');
+    if (overlay) { overlay.classList.remove('open'); document.body.style.overflow = ''; }
+  }
+});
+
+</script>
+
+<script>
+(function() {
+  var SURL = window.VELA_CONFIG.SUPABASE_URL;
+  var SKEY = window.VELA_CONFIG.SUPABASE_KEY;
+  function waitForSupabase(cb, tries) {
+    tries = tries || 0;
+    if (typeof supabase !== 'undefined') cb();
+    else if (tries < 40) setTimeout(function(){ waitForSupabase(cb, tries+1); }, 100);
+  }
+  waitForSupabase(function() {
+    var _sb = supabase.createClient(SURL, SKEY);
+    _sb.auth.getSession().then(function(res) {
+      var btn = document.getElementById('nav-auth-btn');
+      if (!btn) return;
+      if (res.data && res.data.session) {
+        btn.textContent = 'Sign Out';
+        btn.style.borderColor = 'rgba(255,100,100,0.25)';
+        btn.style.color = '#FF6B6B';
+        btn.onclick = function(e) {
+          e.preventDefault();
+          _sb.auth.signOut().then(function(){ window.location.href = 'login.html'; });
+        };
+      } else {
+        btn.textContent = 'Sign In';
+        btn.href = 'login.html';
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
