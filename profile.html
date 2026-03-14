@@ -17,18 +17,23 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #060A14;
-      --bg2: #0B1120;
-      --surface: #0F1829;
-      --card: #111E30;
-      --border: rgba(255,255,255,0.08);
-      --accent: #00D48E;
-      --accent2: #3B9EFF;
-      --text: #E8EEFF;
-      --muted: #7A8AAD;
-      --danger: #FF5E5E;
-      --warn: #FFB347;
-      --success: #00D48E;
+      --bg:       #0B0F1F;
+      --bg2:      #0E1328;
+      --surface:  #151A2E;
+      --card:     #151A2E;
+      --card2:    #1E2542;
+      --border:   #2A3153;
+      --accent:   #22C55E;
+      --accent2:  #3B82F6;
+      --grad1:    #22C1C3;
+      --grad2:    #6C63FF;
+      --text:     #FFFFFF;
+      --text2:    #A1A8C3;
+      --muted:    #6B7280;
+      --gold:     #F5A623;
+      --danger:   #EF4444;
+      --warn:     #F59E0B;
+      --success:  #22C55E;
     }
     html, body { scroll-behavior: smooth; overflow-x: hidden; max-width: 100%; }
     body {
@@ -45,7 +50,7 @@
     }
     .logo {
       font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem;
-      letter-spacing: 0.08em; background: linear-gradient(135deg, var(--accent), var(--accent2));
+      letter-spacing: 0.08em; background: linear-gradient(135deg, #22C1C3, #6C63FF);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       background-clip: text; text-decoration: none;
     }
@@ -53,7 +58,7 @@
 
     /* PROGRESS BAR */
     .progress-wrap {
-      background: var(--bg2); padding: 1rem 5%; border-bottom: 1px solid var(--border);
+      background: var(--surface); padding: 1rem 5%; border-bottom: 1px solid var(--border);
       position: sticky; top: 0; z-index: 50;
     }
     .progress-meta {
@@ -115,7 +120,7 @@
       transition: border-color 0.2s, box-shadow 0.2s;
     }
     .input:focus, .select:focus, .textarea:focus {
-      border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,229,160,0.08);
+      border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,196,140,0.08);
     }
     .input::placeholder, .textarea::placeholder { color: var(--muted); }
     .select { cursor: pointer; appearance: none;
@@ -139,10 +144,10 @@
       padding: 1rem 1.1rem; cursor: pointer; transition: all 0.2s; user-select: none;
       display: flex; align-items: center; gap: 0.75rem;
     }
-    .choice-card:hover { border-color: rgba(0,229,160,0.3); background: rgba(0,229,160,0.04); }
+    .choice-card:hover { border-color: rgba(0,196,140,0.3); background: rgba(0,196,140,0.04); }
     .choice-card.selected {
-      border-color: var(--accent); background: rgba(0,229,160,0.08);
-      box-shadow: 0 0 0 3px rgba(0,229,160,0.1);
+      border-color: var(--accent); background: rgba(0,196,140,0.08);
+      box-shadow: 0 0 0 3px rgba(34,197,94,0.12);
     }
     .choice-icon { font-size: 1.3rem; flex-shrink: 0; }
     .choice-text { flex: 1; }
@@ -167,8 +172,8 @@
       padding: 0.85rem 1rem; cursor: pointer; transition: all 0.2s; user-select: none;
       display: flex; align-items: center; gap: 0.6rem;
     }
-    .skill-card:hover { border-color: rgba(0,150,255,0.35); }
-    .skill-card.selected { border-color: var(--accent2); background: rgba(0,150,255,0.08); }
+    .skill-card:hover { border-color: rgba(45,107,228,0.35); }
+    .skill-card.selected { border-color: var(--accent2); background: rgba(45,107,228,0.08); }
     .skill-card-icon { font-size: 1.1rem; flex-shrink: 0; }
     .skill-card-name { font-size: 0.82rem; font-weight: 600; color: var(--text); line-height: 1.3; }
 
@@ -181,8 +186,8 @@
       padding: 0.4rem 0.9rem; border-radius: 100px; font-size: 0.82rem; font-weight: 500;
       cursor: pointer; transition: all 0.2s; user-select: none;
     }
-    .tool-chip:hover { border-color: rgba(0,229,160,0.3); color: var(--text); }
-    .tool-chip.selected { background: rgba(0,229,160,0.1); border-color: var(--accent); color: var(--accent); }
+    .tool-chip:hover { border-color: rgba(0,196,140,0.3); color: var(--text); }
+    .tool-chip.selected { background: rgba(34,197,94,0.12); border-color: var(--accent); color: var(--accent); }
 
     /* SCALE SLIDER */
     .scale-options { display: flex; gap: 0.5rem; }
@@ -191,8 +196,8 @@
       color: var(--muted); padding: 0.75rem 0.5rem; border-radius: 10px;
       text-align: center; cursor: pointer; transition: all 0.2s; user-select: none;
     }
-    .scale-btn:hover { border-color: rgba(0,229,160,0.3); }
-    .scale-btn.selected { border-color: var(--accent); background: rgba(0,229,160,0.1); color: var(--accent); }
+    .scale-btn:hover { border-color: rgba(0,196,140,0.3); }
+    .scale-btn.selected { border-color: var(--accent); background: rgba(34,197,94,0.12); color: var(--accent); }
     .scale-num { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 800; }
     .scale-label { font-size: 0.65rem; color: var(--muted); margin-top: 0.2rem; }
     .scale-btn.selected .scale-label { color: var(--accent); }
@@ -210,9 +215,9 @@
       padding: 0.85rem 1.1rem; cursor: pointer; transition: all 0.2s;
       font-size: 0.9rem; color: var(--muted); user-select: none;
     }
-    .q-option:hover { border-color: rgba(0,229,160,0.3); color: var(--text); }
-    .q-option.selected { border-color: var(--accent); background: rgba(0,229,160,0.08); color: var(--text); }
-    .q-option.correct { border-color: var(--accent); background: rgba(0,229,160,0.12); color: var(--accent); }
+    .q-option:hover { border-color: rgba(0,196,140,0.3); color: var(--text); }
+    .q-option.selected { border-color: var(--accent); background: rgba(0,196,140,0.08); color: var(--text); }
+    .q-option.correct { border-color: var(--accent); background: rgba(34,197,94,0.12); color: var(--accent); }
     .q-option.wrong { border-color: var(--danger); background: rgba(255,107,107,0.08); color: var(--danger); }
 
     /* BUTTONS */
@@ -320,15 +325,17 @@
       .choice-grid.cols-2 { grid-template-columns: 1fr; }
     }
   body.light-mode {
-    --bg: #F5F0E8;
-    --bg2: #EDE6D8;
-    --card: #FDFAF5;
-    --surface: #EDE6D8;
-    --border: rgba(0,0,0,0.09);
-    --text: #15110A;
-    --muted: #6B5F4E;
-    --accent: #00A86B;
-    --accent2: #1A6FCC;
+    --bg:      #F0F4FF;
+    --bg2:     #E4EAFB;
+    --surface: #FFFFFF;
+    --card:    #FFFFFF;
+    --card2:   #F0F4FF;
+    --border:  #CBD5E1;
+    --accent:  #16A34A;
+    --accent2: #2563EB;
+    --text:    #0F172A;
+    --text2:   #475569;
+    --muted:   #94A3B8;
   }
 
   /* ── VELA VERIFIED BADGE ─────────────────────────────────────────────── */
@@ -374,8 +381,8 @@
   <a class="logo" href="index.html"><img src="logo.png" alt="VELA" style="width:28px;height:28px;object-fit:contain;vertical-align:middle;margin-right:6px;"/>VELA</a>
   <span class="nav-step-info" id="nav-step-info">Building your profile</span>
   <div style="display:flex;gap:0.5rem;align-items:center;">
-    <button onclick="saveProgress()" id="save-btn" style="background:transparent;border:1px solid rgba(0,229,160,0.25);color:var(--accent);padding:0.4rem 0.9rem;border-radius:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">💾 Save</button>
-    <button onclick="loadProgress()" id="load-btn" style="display:none;background:rgba(0,229,160,0.08);border:1px solid rgba(0,229,160,0.3);color:var(--accent);padding:0.4rem 0.9rem;border-radius:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">↩ Resume</button>
+    <button onclick="saveProgress()" id="save-btn" style="background:transparent;border:1px solid rgba(0,196,140,0.25);color:var(--accent);padding:0.4rem 0.9rem;border-radius:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">💾 Save</button>
+    <button onclick="loadProgress()" id="load-btn" style="display:none;background:rgba(0,196,140,0.08);border:1px solid rgba(0,196,140,0.3);color:var(--accent);padding:0.4rem 0.9rem;border-radius:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">↩ Resume</button>
     <button onclick="signOut()" style="background:transparent;border:1px solid rgba(255,100,100,0.25);color:#FF6B6B;padding:0.4rem 0.9rem;border-radius:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">Sign Out</button>
   </div>
 </nav>
@@ -809,8 +816,8 @@ function saveProgress() {
     saveToSupabase();
     const btn = document.getElementById('save-btn');
     btn.textContent = '✅ Saved!';
-    btn.style.borderColor = 'rgba(0,229,160,0.6)';
-    setTimeout(() => { btn.textContent = '💾 Save'; btn.style.borderColor = 'rgba(0,229,160,0.25)'; }, 2000);
+    btn.style.borderColor = 'rgba(0,196,140,0.6)';
+    setTimeout(() => { btn.textContent = '💾 Save'; btn.style.borderColor = 'rgba(0,196,140,0.25)'; }, 2000);
   } catch(e) { alert('Could not save. Please try again.'); }
 }
 
@@ -1029,7 +1036,7 @@ function toggleTheme() {
   const btn = document.getElementById('theme-btn');
   body.classList.toggle('light-mode');
   const isLight = body.classList.contains('light-mode');
-  btn.textContent = isLight ? '☀️' : '🌙';
+  btn.textContent = isLight ? '🌌 Navy' : '🌑 Dark';
   localStorage.setItem('vela_theme', isLight ? 'light' : 'dark');
 }
 
@@ -1038,7 +1045,7 @@ function applyTheme() {
   if (saved === 'light') {
     document.body.classList.add('light-mode');
     const btn = document.getElementById('theme-btn');
-    if (btn) btn.textContent = '☀️';
+    if (btn) btn.textContent = '🌌 Navy';
   }
 }
 
@@ -1056,7 +1063,7 @@ function addCustomSkill() {
   const display = document.getElementById('custom-skills-display');
   if (display) {
     const span = document.createElement('span');
-    span.style.cssText = 'background:rgba(0,229,160,0.1);border:1px solid rgba(0,229,160,0.3);color:var(--accent);padding:0.35rem 0.85rem;border-radius:20px;font-size:0.82rem;font-weight:600';
+    span.style.cssText = 'background:rgba(34,197,94,0.12);border:1px solid rgba(0,196,140,0.3);color:var(--accent);padding:0.35rem 0.85rem;border-radius:20px;font-size:0.82rem;font-weight:600';
     span.innerHTML = `${val} <span onclick="removeCustomSkill('${val}')" style="cursor:pointer;margin-left:0.4rem;opacity:0.7">✕</span>`;
     display.appendChild(span);
   }
@@ -1206,10 +1213,10 @@ const steps = [
     <p class="step-sub">Have an existing CV? Upload it and we will fill in your profile automatically. No CV? Just fill in manually below.</p>
 
     <!-- CV UPLOAD BOX -->
-    <div id="cv-upload-box" style="border:2px dashed rgba(0,229,160,0.3);border-radius:14px;padding:1.5rem;text-align:center;margin-bottom:1.5rem;cursor:pointer;transition:all 0.2s;background:rgba(0,229,160,0.03)"
+    <div id="cv-upload-box" style="border:2px dashed rgba(0,196,140,0.3);border-radius:14px;padding:1.5rem;text-align:center;margin-bottom:1.5rem;cursor:pointer;transition:all 0.2s;background:rgba(0,196,140,0.03)"
       onclick="document.getElementById('cv-file-input').click()"
       ondragover="event.preventDefault();this.style.borderColor='var(--accent)'"
-      ondragleave="this.style.borderColor='rgba(0,229,160,0.3)'"
+      ondragleave="this.style.borderColor='rgba(0,196,140,0.3)'"
       ondrop="event.preventDefault();handleCVDrop(event.dataTransfer.files[0])">
       <div style="font-size:2rem;margin-bottom:0.5rem">📄</div>
       <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:var(--text);margin-bottom:0.3rem">Upload your CV to auto-fill</div>
@@ -1380,7 +1387,7 @@ const steps = [
     ${totalToRate > 1 ? `<div style="display:flex;gap:0.4rem;flex-wrap:wrap;margin-bottom:1rem">
       ${skillsToRate.map((s,i)=>`<span style="padding:0.3rem 0.75rem;border-radius:20px;font-size:0.78rem;font-weight:700;
         border:1.5px solid ${i===currentSkillIdx?'var(--accent)':'var(--border)'};
-        background:${i===currentSkillIdx?'rgba(0,229,160,0.1)':'transparent'};
+        background:${i===currentSkillIdx?'rgba(34,197,94,0.12)':'transparent'};
         color:${i===currentSkillIdx?'var(--accent)':profile.skillLevels[s]?'var(--text)':'var(--muted)'}">
         ${profile.skillLevels[s]?'✓ ':''} ${s}
       </span>`).join("")}
@@ -1561,7 +1568,7 @@ const steps = [
     <div class="step-num">Step 10 of 10 · Knowledge Check</div>
     <h1 class="step-title">Prove your <span>skills</span></h1>
     ${skillTabs.length > 1 ? `
-    <div style="background:rgba(0,229,160,0.06);border:1px solid rgba(0,229,160,0.2);border-radius:10px;padding:0.75rem 1rem;margin-bottom:1.25rem;font-size:0.83rem;color:var(--muted)">
+    <div style="background:rgba(0,196,140,0.06);border:1px solid rgba(0,196,140,0.2);border-radius:10px;padding:0.75rem 1rem;margin-bottom:1.25rem;font-size:0.83rem;color:var(--muted)">
       📋 Your assessment covers <strong style="color:var(--text)">${skillTabs.join(", ")}</strong> — ${quiz.length} questions total
     </div>` : ""}
     <p class="step-sub">Answer every question fully and honestly. This directly determines your VELA Readiness Score.</p>
@@ -1855,11 +1862,11 @@ function getTierMessage(score, name) {
   if (tier === "ready") return {
     emoji: "🚀",
     headline: `You're ready to apply, ${first}!`,
-    color: "#00E5A0",
+    color: "#00C48C",
     verdict: "READY TO APPLY",
-    verdictColor: "rgba(0,229,160,0.15)",
-    verdictBorder: "rgba(0,229,160,0.4)",
-    verdictText: "#00E5A0",
+    verdictColor: "rgba(0,196,140,0.15)",
+    verdictBorder: "rgba(0,196,140,0.4)",
+    verdictText: "#00C48C",
     message: `Your score of <strong>${score}/100</strong> shows you have solid foundations in <strong>${skill}</strong>. Employers would consider your profile. Your next move is to build a strong portfolio so you stand out above other applicants — don't apply without one.`,
     actions: [
       { label:"💼 View Matched Jobs", href:"jobs.html", style:"primary" },
@@ -1951,8 +1958,8 @@ function showScore() {
 
   const btnStyles = {
     primary: `background:var(--accent);color:#07090F;border:none`,
-    blue: `background:rgba(0,150,255,0.12);border:1.5px solid rgba(0,150,255,0.3);color:#0096FF`,
-    ghost: `background:transparent;border:1.5px solid rgba(0,229,160,0.3);color:var(--accent)`,
+    blue: `background:rgba(45,107,228,0.12);border:1.5px solid rgba(45,107,228,0.3);color:#2D6BE4`,
+    ghost: `background:transparent;border:1.5px solid rgba(0,196,140,0.3);color:var(--accent)`,
     teal: `background:rgba(41,182,246,0.12);border:1.5px solid rgba(41,182,246,0.3);color:#29B6F6`,
   };
 
@@ -2185,7 +2192,7 @@ function showScore() {
                   ${rec.easilyHired.map(r=>`<div style="font-size:0.8rem;color:var(--muted);padding:0.2rem 0;border-bottom:1px solid var(--border)">${r}</div>`).join("")}
                 </div>
                 <div>
-                  <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#0096FF;margin-bottom:0.4rem">🚀 Stand out as</div>
+                  <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#2D6BE4;margin-bottom:0.4rem">🚀 Stand out as</div>
                   ${rec.standOut.map(r=>`<div style="font-size:0.8rem;color:var(--muted);padding:0.2rem 0;border-bottom:1px solid var(--border)">${r}</div>`).join("")}
                 </div>
               </div>
@@ -2427,20 +2434,20 @@ function showCVStatus(msg, type) {
   if (!el) return;
   el.style.display = 'block';
   const colors = {
-    loading: 'rgba(0,150,255,0.1)',
-    success: 'rgba(0,229,160,0.1)',
+    loading: 'rgba(45,107,228,0.1)',
+    success: 'rgba(34,197,94,0.12)',
     error: 'rgba(255,107,107,0.1)',
     warn: 'rgba(255,165,0,0.1)'
   };
   const textColors = {
-    loading: '#0096FF',
+    loading: '#2D6BE4',
     success: 'var(--accent)',
     error: '#FF6B6B',
     warn: '#FFA500'
   };
   el.style.background = colors[type] || colors.loading;
   el.style.color = textColors[type] || textColors.loading;
-  el.style.border = '1px solid ' + (textColors[type] || textColors.loading).replace('var(--accent)', 'rgba(0,229,160,0.3)');
+  el.style.border = '1px solid ' + (textColors[type] || textColors.loading).replace('var(--accent)', 'rgba(0,196,140,0.3)');
   el.textContent = msg;
 }
 
