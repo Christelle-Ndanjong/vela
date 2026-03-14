@@ -32,18 +32,23 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #060A14;
-      --bg2: #0B1120;
-      --surface: #0F1829;
-      --card: #111E30;
-      --border: rgba(255,255,255,0.08);
-      --accent: #00D48E;
-      --accent2: #3B9EFF;
-      --text: #E8EEFF;
-      --muted: #7A8AAD;
-      --danger: #FF5E5E;
-      --warn: #FFB347;
-      --success: #00D48E;
+      --bg:       #0B0F1F;
+      --bg2:      #0E1328;
+      --surface:  #151A2E;
+      --card:     #151A2E;
+      --card2:    #1E2542;
+      --border:   #2A3153;
+      --accent:   #22C55E;
+      --accent2:  #3B82F6;
+      --grad1:    #22C1C3;
+      --grad2:    #6C63FF;
+      --text:     #FFFFFF;
+      --text2:    #A1A8C3;
+      --muted:    #6B7280;
+      --gold:     #F5A623;
+      --danger:   #EF4444;
+      --warn:     #F59E0B;
+      --success:  #22C55E;
     }
     html, body { scroll-behavior: smooth; overflow-x: hidden; max-width: 100%; }
     body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; min-height: 100vh; }
@@ -57,7 +62,7 @@
       background: rgba(7,9,15,0.88);
       border-bottom: 1px solid var(--border);
     }
-    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; letter-spacing: 0.1em; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
+    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; letter-spacing: 0.1em; background: linear-gradient(135deg, #22C1C3, #6C63FF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
     .nav-links { display: flex; gap: 1.75rem; list-style: none; align-items: center; }
     .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color 0.2s; }
     .nav-links a:hover { color: var(--text); }
@@ -73,16 +78,23 @@
       position: relative;
       overflow: hidden;
     }
-    .hero::before {
+        .hero::before {
       content: '';
-      position: absolute; top: -30%; left: 50%; transform: translateX(-50%);
-      width: min(700px, 100vw); height: min(700px, 100vw);
-      background: radial-gradient(circle, rgba(0,229,160,0.06) 0%, transparent 70%);
+      position: absolute; top: -20%; left: 50%; transform: translateX(-50%);
+      width: min(900px, 130vw); height: min(700px, 100vw);
+      background: radial-gradient(ellipse at 50% 30%, rgba(34,193,195,0.10) 0%, rgba(108,99,255,0.12) 40%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 200px;
+      background: linear-gradient(to bottom, transparent, var(--bg));
       pointer-events: none;
     }
     .hero-pill {
       display: inline-flex; align-items: center; gap: 0.5rem;
-      background: rgba(0,229,160,0.08); border: 1px solid rgba(0,229,160,0.2);
+      background: rgba(0,196,140,0.08); border: 1px solid rgba(0,196,140,0.2);
       color: var(--accent); font-size: 0.75rem; font-weight: 700;
       letter-spacing: 0.08em; text-transform: uppercase;
       padding: 0.35rem 0.9rem; border-radius: 20px; margin-bottom: 2rem;
@@ -99,11 +111,11 @@
       margin-bottom: 1.5rem;
       max-width: 800px;
     }
-    h1 .green { background: linear-gradient(135deg, var(--accent), #00C48C); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    h1 .blue { background: linear-gradient(135deg, var(--accent2), #60A5FA); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    h1 .green { background: linear-gradient(135deg, #22C1C3, #6C63FF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    h1 .blue { background: linear-gradient(135deg, #6C63FF, #22C1C3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .hero-sub { color: var(--muted); font-size: 1.05rem; max-width: 500px; margin: 0 auto 2.5rem; line-height: 1.75; }
     .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem; }
-    .btn-main { background: var(--accent); color: #07090F; padding: 0.9rem 2rem; border-radius: 10px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; text-decoration: none; transition: all 0.2s; }
+    .btn-main { background: linear-gradient(135deg, #22C1C3, #6C63FF); color: #FFFFFF; padding: 0.9rem 2rem; border-radius: 10px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; text-decoration: none; transition: all 0.2s; }
     .btn-main:hover { opacity: 0.9; transform: translateY(-1px); }
     .btn-ghost { background: transparent; border: 1.5px solid rgba(255,255,255,0.12); color: var(--text); padding: 0.9rem 2rem; border-radius: 10px; font-family: 'Syne', sans-serif; font-weight: 600; font-size: 0.95rem; text-decoration: none; transition: all 0.2s; }
     .btn-ghost:hover { border-color: rgba(255,255,255,0.25); }
@@ -132,7 +144,7 @@
       transition: all 0.2s; white-space: nowrap;
     }
     .tab-btn:hover { color: var(--text); }
-    .tab-btn.active { background: rgba(0,229,160,0.1); color: var(--accent); border: 1px solid rgba(0,229,160,0.2); }
+    .tab-btn.active { background: rgba(0,196,140,0.1); color: var(--accent); border: 1px solid rgba(0,196,140,0.2); }
     .tab-panel { display: none; animation: fadeIn 0.25s ease; }
     .tab-panel.active { display: block; }
     @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
@@ -140,7 +152,7 @@
     /* ── HOW IT WORKS TAB ── */
     .steps-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
     .step-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.75rem; display: flex; gap: 1.25rem; align-items: flex-start; transition: border-color 0.2s; }
-    .step-card:hover { border-color: rgba(0,229,160,0.2); }
+    .step-card:hover { border-color: rgba(0,196,140,0.2); }
     .step-num { font-family: 'Syne', sans-serif; font-size: 0.72rem; font-weight: 800; background: rgba(0,212,142,0.12); color: var(--accent); border: 1.5px solid rgba(0,212,142,0.25); width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; letter-spacing: 0; line-height: 1; }
     .step-body h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 0.4rem; }
     .step-body p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
@@ -151,7 +163,7 @@
     .skills-intro p { color: var(--muted); font-size: 0.9rem; max-width: 500px; margin: 0.5rem auto 0; }
     .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 0.65rem; margin-bottom: 1.5rem; }
     .skill-pill { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 0.9rem 0.75rem; text-align: center; text-decoration: none; display: block; transition: all 0.2s; }
-    .skill-pill:hover { border-color: rgba(0,229,160,0.3); background: rgba(0,229,160,0.04); transform: translateY(-2px); }
+    .skill-pill:hover { border-color: rgba(0,196,140,0.3); background: rgba(0,196,140,0.04); transform: translateY(-2px); }
     .sp-icon { font-size: 1.3rem; margin-bottom: 0.35rem; }
     .sp-name { font-family: 'Syne', sans-serif; font-size: 0.78rem; font-weight: 700; color: var(--text); margin-bottom: 0.25rem; line-height: 1.3; }
     .sp-badge { font-size: 0.65rem; font-weight: 700; }
@@ -167,13 +179,13 @@
     .audience-title { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 0.4rem; }
     .audience-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.6; }
     .verify-steps { display: flex; flex-direction: column; gap: 0.65rem; margin-top: 1.5rem; }
-    .verify-step { display: flex; align-items: center; gap: 1rem; background: rgba(0,229,160,0.04); border: 1px solid rgba(0,229,160,0.1); border-radius: 10px; padding: 0.85rem 1rem; }
+    .verify-step { display: flex; align-items: center; gap: 1rem; background: rgba(0,196,140,0.04); border: 1px solid rgba(0,196,140,0.1); border-radius: 10px; padding: 0.85rem 1rem; }
     .vs-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.85rem; color: var(--accent); width: 1.5rem; flex-shrink: 0; }
     .vs-text { font-size: 0.85rem; color: var(--text); font-weight: 500; }
     .vs-desc { font-size: 0.78rem; color: var(--muted); }
 
     /* ── FOR EMPLOYERS TAB ── */
-    .employer-hero { background: linear-gradient(135deg, rgba(0,150,255,0.08), rgba(0,229,160,0.05)); border: 1px solid rgba(0,150,255,0.15); border-radius: 16px; padding: 2rem; margin-bottom: 1.5rem; text-align: center; }
+    .employer-hero { background: linear-gradient(135deg, rgba(45,107,228,0.08), rgba(0,196,140,0.05)); border: 1px solid rgba(45,107,228,0.15); border-radius: 16px; padding: 2rem; margin-bottom: 1.5rem; text-align: center; }
     .employer-hero h3 { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 800; color: var(--text); margin-bottom: 0.5rem; }
     .employer-hero p { color: var(--muted); font-size: 0.88rem; max-width: 500px; margin: 0 auto 1.25rem; }
     .employer-stats { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.5rem; }
@@ -198,8 +210,8 @@
     .footer-copy { font-size: 0.75rem; color: var(--muted); }
 
     /* ── SHARED BTN ── */
-    .btn-outline { background: transparent; border: 1.5px solid rgba(0,229,160,0.25); color: var(--accent); padding: 0.75rem 1.75rem; border-radius: 9px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.88rem; text-decoration: none; transition: all 0.2s; display: inline-block; }
-    .btn-outline:hover { background: rgba(0,229,160,0.06); }
+    .btn-outline { background: transparent; border: 1.5px solid rgba(0,196,140,0.25); color: var(--accent); padding: 0.75rem 1.75rem; border-radius: 9px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.88rem; text-decoration: none; transition: all 0.2s; display: inline-block; }
+    .btn-outline:hover { background: rgba(0,196,140,0.06); }
 
     /* ── MOBILE ── */
     @media (max-width: 768px) {
@@ -256,15 +268,17 @@
     }
 
   body.light-mode {
-    --bg: #F5F0E8;
-    --bg2: #EDE6D8;
-    --card: #FDFAF5;
-    --surface: #EDE6D8;
-    --border: rgba(0,0,0,0.09);
-    --text: #15110A;
-    --muted: #6B5F4E;
-    --accent: #00A86B;
-    --accent2: #1A6FCC;
+    --bg:      #F0F4FF;
+    --bg2:     #E4EAFB;
+    --surface: #FFFFFF;
+    --card:    #FFFFFF;
+    --card2:   #F0F4FF;
+    --border:  #CBD5E1;
+    --accent:  #16A34A;
+    --accent2: #2563EB;
+    --text:    #0F172A;
+    --text2:   #475569;
+    --muted:   #94A3B8;
   }
   
     /* ── MOBILE HAMBURGER ── */
@@ -296,8 +310,8 @@
     <li><a href="profile.html" class="nav-cta">Get Started</a></li>
   </ul>
   <div style="display:flex;gap:0.5rem;align-items:center">
-    <button id="theme-btn" onclick="toggleTheme()" title="Toggle theme" style="background:transparent;border:1.5px solid rgba(255,255,255,0.12);color:var(--text);padding:0.4rem 0.75rem;border-radius:8px;cursor:pointer;font-size:0.9rem;font-family:'DM Sans',sans-serif;">🌙</button>
-    <a id="nav-auth-btn" href="login.html" style="background:transparent;border:1px solid rgba(0,229,160,0.25);color:var(--accent);padding:0.4rem 0.9rem;border-radius:8px;font-size:0.78rem;font-weight:600;text-decoration:none;">Sign In</a>
+    <button id="theme-btn" onclick="toggleTheme()" title="Toggle theme" style="background:transparent;border:1.5px solid rgba(255,255,255,0.12);color:var(--text);padding:0.4rem 0.75rem;border-radius:8px;cursor:pointer;font-size:0.9rem;font-family:'DM Sans',sans-serif;">🌑 Dark</button>
+    <a id="nav-auth-btn" href="login.html" style="background:transparent;border:1px solid rgba(0,196,140,0.25);color:var(--accent);padding:0.4rem 0.9rem;border-radius:8px;font-size:0.78rem;font-weight:600;text-decoration:none;">Sign In</a>
   </div>
 
   <button class="hamburger-btn" onclick="toggleMobileNav()" aria-label="Open menu">☰</button>
@@ -316,6 +330,7 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-pill">Now Live · Join the Community</div>
+  <div style="display:inline-block;background:rgba(245,166,35,0.1);border:1px solid rgba(245,166,35,0.3);border-radius:20px;padding:0.35rem 1.1rem;font-size:0.78rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:#F5A623;margin-bottom:1.25rem;">⚡ Hire Verified African Talent in 48 Hours</div>
   <h1>African Talent.<br/><span class="green">Verified.</span> <span class="blue">Placed.</span></h1>
   <p class="hero-sub">VELA connects verified African professionals to remote jobs worldwide — with the skills, evidence, and credibility to get hired with confidence.</p>
   <!-- ROLE SELECTOR -->
@@ -323,7 +338,7 @@
 
     <!-- JOB SEEKER CARD -->
     <div id="card-seeker" onclick="selectRole('seeker')"
-      style="flex:1;min-width:220px;background:rgba(0,229,160,0.06);border:2px solid rgba(0,229,160,0.25);border-radius:16px;padding:1.5rem 1.25rem;cursor:pointer;transition:all 0.25s;text-align:left;position:relative">
+      style="flex:1;min-width:220px;background:rgba(0,196,140,0.06);border:2px solid rgba(0,196,140,0.25);border-radius:16px;padding:1.5rem 1.25rem;cursor:pointer;transition:all 0.25s;text-align:left;position:relative">
       <div style="font-size:2rem;margin-bottom:0.6rem">🌍</div>
       <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:var(--text);margin-bottom:0.35rem">I am looking for work</div>
       <div style="font-size:0.82rem;color:var(--muted);line-height:1.5">Build your verified profile, get scored, and get matched to remote jobs worldwide</div>
@@ -332,11 +347,11 @@
 
     <!-- RECRUITER CARD -->
     <div id="card-recruiter" onclick="selectRole('recruiter')"
-      style="flex:1;min-width:220px;background:rgba(0,150,255,0.06);border:2px solid rgba(0,150,255,0.2);border-radius:16px;padding:1.5rem 1.25rem;cursor:pointer;transition:all 0.25s;text-align:left;position:relative">
+      style="flex:1;min-width:220px;background:rgba(45,107,228,0.06);border:2px solid rgba(45,107,228,0.2);border-radius:16px;padding:1.5rem 1.25rem;cursor:pointer;transition:all 0.25s;text-align:left;position:relative">
       <div style="font-size:2rem;margin-bottom:0.6rem">🏢</div>
       <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:var(--text);margin-bottom:0.35rem">I am hiring talent</div>
       <div style="font-size:0.82rem;color:var(--muted);line-height:1.5">Browse verified African professionals, filter by skill, score and availability — hire with confidence</div>
-      <div style="margin-top:1rem;background:#0096FF;color:#fff;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;padding:0.55rem 1.1rem;border-radius:8px;display:inline-block">Browse Talent →</div>
+      <div style="margin-top:1rem;background:#2D6BE4;color:#fff;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;padding:0.55rem 1.1rem;border-radius:8px;display:inline-block">Browse Talent →</div>
     </div>
 
   </div>
@@ -349,8 +364,8 @@
   function selectRole(role) {
     localStorage.setItem('vela_role', role);
     // Highlight selected card
-    document.getElementById('card-seeker').style.borderColor = role === 'seeker' ? 'var(--accent)' : 'rgba(0,229,160,0.25)';
-    document.getElementById('card-recruiter').style.borderColor = role === 'recruiter' ? '#0096FF' : 'rgba(0,150,255,0.2)';
+    document.getElementById('card-seeker').style.borderColor = role === 'seeker' ? 'var(--accent)' : 'rgba(0,196,140,0.25)';
+    document.getElementById('card-recruiter').style.borderColor = role === 'recruiter' ? '#2D6BE4' : 'rgba(45,107,228,0.2)';
     // Small delay so user sees the selection, then navigate
     setTimeout(() => {
       window.location.href = role === 'seeker' ? 'login.html?role=seeker' : 'login.html?role=recruiter';
@@ -360,7 +375,7 @@
   document.addEventListener('DOMContentLoaded', () => {
     const saved = localStorage.getItem('vela_role');
     if (saved === 'seeker') document.getElementById('card-seeker').style.borderColor = 'var(--accent)';
-    if (saved === 'recruiter') document.getElementById('card-recruiter').style.borderColor = '#0096FF';
+    if (saved === 'recruiter') document.getElementById('card-recruiter').style.borderColor = '#2D6BE4';
   });
   </script>
   <div class="hero-stats">
@@ -401,11 +416,11 @@
       </div>
     </div>
 
-    <div style="background:var(--card);border:1px solid rgba(0,229,160,0.15);border-radius:16px;padding:1.5rem;position:relative;">
+    <div style="background:var(--card);border:1px solid rgba(0,196,140,0.15);border-radius:16px;padding:1.5rem;position:relative;">
       <div style="color:#FFD700;font-size:0.85rem;margin-bottom:0.85rem;letter-spacing:0.1em;">★★★★★</div>
       <p style="font-size:0.85rem;color:var(--text);line-height:1.7;margin-bottom:1.25rem;">"I spent months applying for remote jobs and getting nothing back. VELA showed me exactly what I was missing and helped me fix it. The skill roadmap is genuinely useful."</p>
       <div style="display:flex;align-items:center;gap:0.75rem;">
-        <div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#0096FF,#00E5A0);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.8rem;color:#000;flex-shrink:0;">C</div>
+        <div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#2D6BE4,#00C48C);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.8rem;color:#000;flex-shrink:0;">C</div>
         <div>
           <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;color:var(--text);">Chidi O.</div>
           <div style="font-size:0.72rem;color:var(--muted);">Data Analyst · Nigeria</div>
@@ -417,7 +432,7 @@
       <div style="color:#FFD700;font-size:0.85rem;margin-bottom:0.85rem;letter-spacing:0.1em;">★★★★★</div>
       <p style="font-size:0.85rem;color:var(--text);line-height:1.7;margin-bottom:1.25rem;">"Free, honest, and actually built for us. No other platform tells you your real readiness score or shows you exactly where to improve. VELA is different."</p>
       <div style="display:flex;align-items:center;gap:0.75rem;">
-        <div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#FF6B9D,#0096FF);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.8rem;color:#fff;flex-shrink:0;">F</div>
+        <div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#FF6B9D,#2D6BE4);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.8rem;color:#fff;flex-shrink:0;">F</div>
         <div>
           <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;color:var(--text);">Fatima M.</div>
           <div style="font-size:0.72rem;color:var(--muted);">Content Writer · Kenya</div>
@@ -483,8 +498,8 @@
           <a href="profile.html" class="step-cta">Build Profile →</a>
         </div>
       </div>
-      <div class="step-card" style="border-color:rgba(0,229,160,0.2);background:rgba(0,229,160,0.03)">
-        <div class="step-num" style="color:rgba(0,229,160,0.4)">03</div>
+      <div class="step-card" style="border-color:rgba(0,196,140,0.2);background:rgba(0,196,140,0.03)">
+        <div class="step-num" style="color:rgba(0,196,140,0.4)">03</div>
         <div class="step-body">
           <h3>Get Experience 🌍</h3>
           <p>No experience yet? Use VELA's curated directory of remote volunteering and internship platforms to build real portfolio evidence — before you apply anywhere.</p>
@@ -499,7 +514,7 @@
           <a href="verify.html" class="step-cta">Start Verification →</a>
         </div>
       </div>
-      <div class="step-card" style="background: linear-gradient(135deg, rgba(0,229,160,0.06), rgba(0,150,255,0.04)); border-color: rgba(0,229,160,0.15);">
+      <div class="step-card" style="background: linear-gradient(135deg, rgba(0,196,140,0.06), rgba(45,107,228,0.04)); border-color: rgba(0,196,140,0.15);">
         <div class="step-num">05</div>
         <div class="step-body">
           <h3>Apply to Real Remote Jobs & Build Your Portfolio</h3>
@@ -582,7 +597,7 @@
   <!-- TAB 4: FOR EMPLOYERS -->
   <div class="tab-panel" id="tab-employers">
     <div class="employer-hero">
-      <h3>Hire verified African talent — remotely, reliably.</h3>
+      <h3>Hire Verified African Talent in 48 Hours</h3>
       <p>Stop reviewing CVs that tell you nothing. VELA candidates come with independent scores, skill evidence, and portfolio proof — before you meet them.</p>
       <div class="employer-stats">
         <div class="emp-stat"><div class="emp-stat-num">Growing</div><div class="emp-stat-lbl">Verified Candidates</div></div>
@@ -590,7 +605,10 @@
         <div class="emp-stat"><div class="emp-stat-num">5</div><div class="emp-stat-lbl">Verification Layers</div></div>
         <div class="emp-stat"><div class="emp-stat-num">$0</div><div class="emp-stat-lbl">To Browse</div></div>
       </div>
-      <a href="employers.html" class="btn-employer">Browse Talent →</a>
+      <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap">
+          <a href="employers.html" class="btn-employer">Browse Talent →</a>
+          <a href="employers.html#smart-match" style="background:rgba(245,166,35,0.12);border:1.5px solid rgba(245,166,35,0.3);color:#F5A623;padding:0.75rem 1.5rem;border-radius:9px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;text-decoration:none;transition:all 0.2s">Request Candidates →</a>
+        </div>
     </div>
     <div class="employer-cards">
       <div class="emp-card">
@@ -719,14 +737,14 @@ function toggleTheme() {
   document.body.classList.toggle('light-mode');
   const isLight = document.body.classList.contains('light-mode');
   const btn = document.getElementById('theme-btn');
-  if (btn) btn.textContent = isLight ? '☀️' : '🌙';
+  if (btn) btn.textContent = isLight ? '🌌 Navy' : '🌑 Dark';
   localStorage.setItem('vela_theme', isLight ? 'light' : 'dark');
 }
 function applyTheme() {
   if (localStorage.getItem('vela_theme') === 'light') {
     document.body.classList.add('light-mode');
     const btn = document.getElementById('theme-btn');
-    if (btn) btn.textContent = '☀️';
+    if (btn) btn.textContent = '🌌 Navy';
   }
 }
 async function velaSignOut(e) {
