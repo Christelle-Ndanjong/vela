@@ -20,23 +20,21 @@
     html, body { overflow-x: hidden; max-width: 100%; }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg:       #0B0F1F;
-      --bg2:      #0E1328;
-      --surface:  #151A2E;
-      --card:     #151A2E;
-      --card2:    #1E2542;
-      --border:   #2A3153;
-      --accent:   #22C55E;
-      --accent2:  #3B82F6;
-      --grad1:    #22C1C3;
-      --grad2:    #6C63FF;
-      --text:     #FFFFFF;
-      --text2:    #A1A8C3;
-      --muted:    #6B7280;
-      --gold:     #F5A623;
-      --danger:   #EF4444;
-      --warn:     #F59E0B;
-      --success:  #22C55E;
+      --bg:      #0B0F1F;
+      --bg2:     #0E1328;
+      --surface: #151A2E;
+      --card:    #1A2040;
+      --border:  #2A3153;
+      --accent:  #22C55E;
+      --accent2: #3B82F6;
+      --grad1:   #22C1C3;
+      --grad2:   #6C63FF;
+      --gold:    #F5A623;
+      --text:    #FFFFFF;
+      --text2:   #A1A8C3;
+      --muted:   #6B7280;
+      --danger:  #EF4444;
+      --warn:    #F59E0B;
     }
     body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.5rem; }
     .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.8rem; background: linear-gradient(135deg, var(--accent), var(--blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.5rem; text-align: center; }
@@ -67,24 +65,12 @@
     .back-link { text-align: center; margin-top: 1.5rem; font-size: 0.82rem; color: var(--muted); }
     .back-link a { color: var(--accent); text-decoration: none; }
 
-  body.light-mode {
-    --bg:      #F0F4FF;
-    --bg2:     #E4EAFB;
-    --surface: #FFFFFF;
-    --card:    #FFFFFF;
-    --card2:   #F0F4FF;
-    --border:  #CBD5E1;
-    --accent:  #16A34A;
-    --accent2: #2563EB;
-    --text:    #0F172A;
-    --text2:   #475569;
-    --muted:   #94A3B8;
-  }
+  /* light mode removed — VELA is dark */
   </style>
 </head>
 <body>
 
-<div style="position:fixed;top:1rem;right:1rem;z-index:100"><button id="theme-btn" onclick="toggleTheme()" title="Toggle theme" style="background:transparent;border:1.5px solid rgba(255,255,255,0.12);color:var(--text);padding:0.4rem 0.75rem;border-radius:8px;cursor:pointer;font-size:0.9rem;font-family:'DM Sans',sans-serif;">🌑 Dark</button></div>
+<div style="position:fixed;top:1rem;right:1rem;z-index:100"></div>
 <div class="logo" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;"><img src="logo.png" alt="VELA" style="width:32px;height:32px;object-fit:contain;"/>VELA</div>
 <div class="tagline">African Talent. Verified. Placed.</div>
 
