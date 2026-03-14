@@ -31,11 +31,23 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #080C12; --bg2: #0D1320; --surface: #111827;
-      --border: rgba(255,255,255,0.07); --accent: #00E5A0;
-      --accent2: #0096FF; --text: #F0F4FF; --muted: #6B7A99;
-      --card: #0F1A2E; --danger: #FF6B6B; --warn: #FFA500;
-      --gold: #FFD700; --silver: #C0C0C0; --bronze: #CD7F32;
+      --bg:       #0B0F1F;
+      --bg2:      #0E1328;
+      --surface:  #151A2E;
+      --card:     #151A2E;
+      --card2:    #1E2542;
+      --border:   #2A3153;
+      --accent:   #22C55E;
+      --accent2:  #3B82F6;
+      --grad1:    #22C1C3;
+      --grad2:    #6C63FF;
+      --text:     #FFFFFF;
+      --text2:    #A1A8C3;
+      --muted:    #6B7280;
+      --gold:     #F5A623;
+      --danger:   #EF4444;
+      --warn:     #F59E0B;
+      --success:  #22C55E;
     }
     body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
 
@@ -45,7 +57,7 @@
       background: rgba(8,12,18,0.95); position: sticky; top: 0; z-index: 100;
     }
     .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem;
-      letter-spacing: 0.08em; background: linear-gradient(135deg, var(--accent), var(--accent2));
+      letter-spacing: 0.08em; background: linear-gradient(135deg, #22C1C3, #6C63FF);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
     .nav-links { display: flex; gap: 1.5rem; list-style: none; }
     .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: color 0.2s; }
@@ -55,7 +67,7 @@
     /* PAGE HEADER */
     .page-header { padding: 3rem 5% 2rem; max-width: 1100px; margin: 0 auto; }
     .header-badge { display: inline-flex; align-items: center; gap: 0.5rem;
-      background: rgba(0,229,160,0.08); border: 1px solid rgba(0,229,160,0.2);
+      background: rgba(0,196,140,0.08); border: 1px solid rgba(0,196,140,0.2);
       color: var(--accent); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
       text-transform: uppercase; padding: 0.35rem 0.9rem; border-radius: 100px; margin-bottom: 1.25rem; }
     .page-header h1 { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 4vw, 2.8rem);
@@ -68,14 +80,14 @@
     .passport-wrap { padding: 0 5% 2rem; max-width: 1100px; margin: 0 auto; }
     .passport {
       background: linear-gradient(135deg, #0D1A2E, #0A1020);
-      border: 1px solid rgba(0,229,160,0.2); border-radius: 20px; padding: 1.75rem 2rem;
+      border: 1px solid rgba(0,196,140,0.2); border-radius: 20px; padding: 1.75rem 2rem;
       display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;
       position: relative; overflow: hidden;
     }
     .passport::before {
       content: ''; position: absolute; top: -40px; right: -40px;
       width: 200px; height: 200px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,229,160,0.06), transparent 70%);
+      background: radial-gradient(circle, rgba(0,196,140,0.06), transparent 70%);
     }
     .passport-left { display: flex; align-items: center; gap: 1.25rem; }
     .passport-avatar {
@@ -93,12 +105,12 @@
       letter-spacing: 0.06em; text-transform: uppercase; border: 1px solid;
     }
     .badge-chip.locked { background: rgba(255,255,255,0.03); border-color: var(--border); color: var(--muted); }
-    .badge-chip.passed { background: rgba(0,229,160,0.1); border-color: rgba(0,229,160,0.3); color: var(--accent); }
+    .badge-chip.passed { background: rgba(34,197,94,0.12); border-color: rgba(0,196,140,0.3); color: var(--accent); }
     .badge-chip.review { background: rgba(255,165,0,0.08); border-color: rgba(255,165,0,0.25); color: var(--warn); }
     .badge-chip.failed { background: rgba(255,107,107,0.08); border-color: rgba(255,107,107,0.25); color: var(--danger); }
     .vela-badge {
       display: flex; align-items: center; gap: 0.6rem;
-      background: rgba(0,229,160,0.06); border: 1.5px solid rgba(0,229,160,0.15);
+      background: rgba(0,196,140,0.06); border: 1.5px solid rgba(0,196,140,0.15);
       border-radius: 12px; padding: 0.75rem 1.1rem;
     }
     .vela-badge-icon { font-size: 1.5rem; }
@@ -112,8 +124,8 @@
       background: var(--card); border: 1.5px solid var(--border); border-radius: 16px; overflow: hidden;
       transition: border-color 0.3s;
     }
-    .verif-card.active { border-color: rgba(0,229,160,0.3); }
-    .verif-card.passed-card { border-color: rgba(0,229,160,0.2); }
+    .verif-card.active { border-color: rgba(0,196,140,0.3); }
+    .verif-card.passed-card { border-color: rgba(0,196,140,0.2); }
     .verif-card.failed-card { border-color: rgba(255,107,107,0.2); }
 
     .verif-header {
@@ -125,7 +137,7 @@
       justify-content: center; font-size: 1.2rem; flex-shrink: 0; border: 1px solid var(--border);
       background: var(--surface);
     }
-    .verif-icon-wrap.passed { background: rgba(0,229,160,0.1); border-color: rgba(0,229,160,0.3); }
+    .verif-icon-wrap.passed { background: rgba(34,197,94,0.12); border-color: rgba(0,196,140,0.3); }
     .verif-icon-wrap.failed { background: rgba(255,107,107,0.1); border-color: rgba(255,107,107,0.3); }
     .verif-icon-wrap.review { background: rgba(255,165,0,0.1); border-color: rgba(255,165,0,0.3); }
     .verif-meta { flex: 1; min-width: 0; }
@@ -137,7 +149,7 @@
       padding: 0.25rem 0.7rem; border-radius: 100px; border: 1px solid;
     }
     .status-pending { background: rgba(107,122,153,0.1); border-color: rgba(107,122,153,0.2); color: var(--muted); }
-    .status-passed  { background: rgba(0,229,160,0.1); border-color: rgba(0,229,160,0.25); color: var(--accent); }
+    .status-passed  { background: rgba(34,197,94,0.12); border-color: rgba(0,196,140,0.25); color: var(--accent); }
     .status-failed  { background: rgba(255,107,107,0.1); border-color: rgba(255,107,107,0.25); color: var(--danger); }
     .status-review  { background: rgba(255,165,0,0.1); border-color: rgba(255,165,0,0.25); color: var(--warn); }
     .verif-score { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 800; }
@@ -166,13 +178,13 @@
     .vq-num { color: var(--accent); margin-right: 0.4rem; }
     .vq-options { display: flex; flex-direction: column; gap: 0.4rem; }
     .vq-opt {
-      background: var(--bg2); border: 1.5px solid var(--border); border-radius: 8px;
+      background: var(--surface); border: 1.5px solid var(--border); border-radius: 8px;
       padding: 0.7rem 1rem; cursor: pointer; font-size: 0.86rem; color: var(--muted);
       transition: all 0.2s; user-select: none;
     }
-    .vq-opt:hover { border-color: rgba(0,229,160,0.3); color: var(--text); }
-    .vq-opt.selected { border-color: var(--accent); background: rgba(0,229,160,0.07); color: var(--text); }
-    .vq-opt.correct { border-color: var(--accent); background: rgba(0,229,160,0.12); color: var(--accent); }
+    .vq-opt:hover { border-color: rgba(0,196,140,0.3); color: var(--text); }
+    .vq-opt.selected { border-color: var(--accent); background: rgba(0,196,140,0.07); color: var(--text); }
+    .vq-opt.correct { border-color: var(--accent); background: rgba(34,197,94,0.12); color: var(--accent); }
     .vq-opt.wrong { border-color: var(--danger); background: rgba(255,107,107,0.08); color: var(--danger); }
 
     /* UPLOAD ZONE */
@@ -180,18 +192,18 @@
       border: 2px dashed var(--border); border-radius: 12px; padding: 2.5rem 1rem;
       text-align: center; cursor: pointer; transition: all 0.2s; position: relative;
     }
-    .upload-zone:hover, .upload-zone.drag { border-color: var(--accent); background: rgba(0,229,160,0.03); }
+    .upload-zone:hover, .upload-zone.drag { border-color: var(--accent); background: rgba(0,196,140,0.03); }
     .upload-zone input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
     .upload-icon { font-size: 2rem; margin-bottom: 0.75rem; }
     .upload-title { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 0.35rem; }
     .upload-hint { font-size: 0.78rem; color: var(--muted); }
-    .upload-done { display: flex; align-items: center; gap: 0.75rem; background: rgba(0,229,160,0.08);
-      border: 1px solid rgba(0,229,160,0.2); border-radius: 10px; padding: 0.85rem 1rem; margin-top: 0.75rem; }
+    .upload-done { display: flex; align-items: center; gap: 0.75rem; background: rgba(0,196,140,0.08);
+      border: 1px solid rgba(0,196,140,0.2); border-radius: 10px; padding: 0.85rem 1rem; margin-top: 0.75rem; }
     .upload-done-name { font-size: 0.85rem; color: var(--accent); font-weight: 500; }
 
     /* SCENARIO BOX */
     .scenario-box {
-      background: var(--bg2); border: 1px solid var(--border); border-radius: 12px;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
       padding: 1.25rem; margin-bottom: 1.25rem;
     }
     .scenario-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
@@ -200,13 +212,13 @@
 
     /* AI FEEDBACK */
     .ai-feedback {
-      background: rgba(0,150,255,0.05); border: 1px solid rgba(0,150,255,0.15);
+      background: rgba(45,107,228,0.05); border: 1px solid rgba(45,107,228,0.15);
       border-radius: 12px; padding: 1.25rem; margin-top: 1.25rem;
     }
     .ai-feedback-header { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.85rem; }
     .ai-feedback-label { font-family: 'Syne', sans-serif; font-size: 0.75rem; font-weight: 700;
       letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent2); }
-    .ai-score-pill { background: rgba(0,150,255,0.15); border: 1px solid rgba(0,150,255,0.25);
+    .ai-score-pill { background: rgba(45,107,228,0.15); border: 1px solid rgba(45,107,228,0.25);
       color: var(--accent2); font-family: 'Syne', sans-serif; font-size: 0.8rem; font-weight: 800;
       padding: 0.2rem 0.65rem; border-radius: 100px; margin-left: auto; }
     .ai-text { font-size: 0.86rem; color: var(--muted); line-height: 1.6; white-space: pre-wrap; }
@@ -235,8 +247,8 @@
 
     /* COMPLETE BANNER */
     .complete-banner {
-      background: linear-gradient(135deg, rgba(0,229,160,0.12), rgba(0,150,255,0.08));
-      border: 1.5px solid rgba(0,229,160,0.3); border-radius: 16px;
+      background: linear-gradient(135deg, rgba(34,197,94,0.12), rgba(45,107,228,0.08));
+      border: 1.5px solid rgba(0,196,140,0.3); border-radius: 16px;
       padding: 2rem; text-align: center; margin: 0 5% 3rem; max-width: 1100px;
       margin-left: auto; margin-right: auto; display: none;
     }
@@ -259,13 +271,17 @@
     }
   
   body.light-mode {
-    --bg: #FAF7F2;
-    --bg2: #F2EDE4;
-    --surface: #E8E2D9;
-    --card: #FFFDF9;
-    --border: rgba(0,0,0,0.08);
-    --text: #1A1510;
-    --muted: #6B6358;
+    --bg:      #F0F4FF;
+    --bg2:     #E4EAFB;
+    --surface: #FFFFFF;
+    --card:    #FFFFFF;
+    --card2:   #F0F4FF;
+    --border:  #CBD5E1;
+    --accent:  #16A34A;
+    --accent2: #2563EB;
+    --text:    #0F172A;
+    --text2:   #475569;
+    --muted:   #94A3B8;
   }
   </style>
     <script src="config.js"></script>
@@ -702,7 +718,7 @@ function renderInterview(questions, state) {
     return renderResult("interview", state);
   }
   return `
-    <div style="background:rgba(0,229,160,0.05);border:1px solid rgba(0,229,160,0.1);border-radius:10px;padding:1rem;margin-bottom:1.25rem;font-size:0.85rem;color:var(--muted);line-height:1.6">
+    <div style="background:rgba(0,196,140,0.05);border:1px solid rgba(34,197,94,0.12);border-radius:10px;padding:1rem;margin-bottom:1.25rem;font-size:0.85rem;color:var(--muted);line-height:1.6">
       Answer each question as you would in a real interview. Write at least 3–4 sentences per answer. Be specific — use real examples where possible. The AI will score your clarity, relevance, and depth.
     </div>
     ${questions.map((q,i) => `
