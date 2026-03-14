@@ -414,6 +414,7 @@
   <div style="display:flex;gap:0.5rem;align-items:center;">
     <button onclick="saveProgress()" id="save-btn" style="background:transparent;border:1px solid rgba(0,196,140,0.25);color:var(--accent);padding:0.4rem 0.9rem;border-radius:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">💾 Save</button>
     <button onclick="loadProgress()" id="load-btn" style="display:none;background:rgba(0,196,140,0.08);border:1px solid rgba(0,196,140,0.3);color:var(--accent);padding:0.4rem 0.9rem;border-radius:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">↩ Resume</button>
+    <a href="dashboard.html" id="nav-dashboard-btn" style="display:none;background:linear-gradient(135deg,#22C1C3,#6C63FF);color:#fff;padding:0.4rem 0.9rem;border-radius:8px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.78rem;text-decoration:none;white-space:nowrap;">My Dashboard →</a>
     <button onclick="signOut()" style="background:transparent;border:1px solid rgba(255,100,100,0.25);color:#FF6B6B;padding:0.4rem 0.9rem;border-radius:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">Sign Out</button>
   </div>
 </nav>
@@ -441,6 +442,17 @@ function supabaseLoadFailed() {
     document.getElementById('step-container').innerHTML = '';
     window._supabaseAvailable = false;
     applyTheme();
+    // Show dashboard button if profile exists
+    try {
+      const keys = Object.keys(localStorage).filter(k => k.startsWith('vela_') && !k.includes('_step') && !k.includes('_quiz') && !k.includes('_theme') && !k.includes('_verif') && !k.includes('_role'));
+      if (keys.length > 0) {
+        const p = JSON.parse(localStorage.getItem(keys[0]) || '{}');
+        if (p.name) {
+          const btn = document.getElementById('nav-dashboard-btn');
+          if (btn) btn.style.display = 'inline-block';
+        }
+      }
+    } catch(e) {}
     renderStep();
   });
 }
@@ -912,7 +924,7 @@ function calcScore() {
       if (ans === q.answer) quizPoints += 4;
     } else {
       const wordCount = ans ? ans.trim().split(/\s+/).filter(Boolean).length : 0;
-      if (wordCount >= 200) quizPoints += 4;
+      if (wordCount >= 100) quizPoints += 4;
       else if (wordCount >= (q.minWords || 20)) quizPoints += 3;
       else if (wordCount >= 10) quizPoints += 1;
     }
@@ -1617,11 +1629,11 @@ const steps = [
           id="quiz-text-${i}"
           class="textarea"
           style="min-height:130px;font-family:'DM Sans',sans-serif;font-size:0.9rem;"
-          placeholder="${q.placeholder||"Write your answer here — aim for 200-300 words"}"
+          placeholder="${q.placeholder||"Write your answer here — aim for 100-300 words"}"
           oninput="quizAnswers[${i}]=this.value;updateWordCount(${i},this.value,'wc-${i}')"
         >${quizAnswers[i]||""}</textarea>
         <div style="display:flex;justify-content:space-between;margin-top:0.4rem">
-          <span style="font-size:0.75rem;color:var(--muted)">${q.type==="code"?"💻 Write your code or query":"✍️ Aim for 200–300 words"}</span>
+          <span style="font-size:0.75rem;color:var(--muted)">${q.type==="code"?"💻 Write your code or query":"✍️ Aim for 100–300 words"}</span>
           <span id="wc-${i}" style="font-size:0.75rem;font-weight:700;color:${
             (quizAnswers[i]||"").trim().split(/\s+/).filter(Boolean).length >= 200 ? "var(--accent)" :
             (quizAnswers[i]||"").trim().split(/\s+/).filter(Boolean).length >= 100 ? "var(--warn)" : "var(--muted)"
@@ -2041,7 +2053,11 @@ function showScore() {
 
       <!-- PERSONALISED FEEDBACK — general + per-skill roadmaps -->
       <div style="text-align:left;margin-bottom:1.75rem">
-        <div style="font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:${tierData.color};margin-bottom:1rem">📋 Your Personal Action Plan</div>
+        <div onclick="toggleSection('plan')" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.25rem;margin-bottom:0.5rem;">
+          <div style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:800;color:${tierData.color}">📋 Your Personal Action Plan</div>
+          <span id="sec-icon-plan" style="color:var(--muted);font-size:0.75rem;">▼</span>
+        </div>
+        <div id="sec-plan" style="display:none;margin-bottom:1rem;">
 
         ${feedback.length > 0 ? `
         <div style="display:flex;flex-direction:column;gap:0.65rem;margin-bottom:1.5rem">
@@ -2211,6 +2227,13 @@ function showScore() {
         const careerRecs = getCareerRecommendations();
         if (careerRecs.length === 0) return "";
         return `
+        <div style="margin-bottom:0.5rem;cursor:pointer" onclick="toggleSection('career')">
+          <div style="display:flex;align-items:center;justify-content:space-between;background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.25rem;">
+            <div style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:800;color:#9333EA">🎯 Career Recommendations</div>
+            <span id="sec-icon-career" style="color:var(--muted);font-size:0.75rem;">▼</span>
+          </div>
+        </div>
+        <div id="sec-career" style="display:none;margin-bottom:1rem;">
         <div style="text-align:left;margin-bottom:1.75rem">
           <div style="font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#9333EA;margin-bottom:0.5rem">🎯 Career Recommendations For You</div>
           <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem">Based on your skills — here is what you can get hired for right now, and what will make you stand out.</p>
@@ -2232,7 +2255,8 @@ function showScore() {
                 💡 <strong style="color:var(--text)">Pro tip:</strong> ${rec.tip}
               </div>
             </div>`).join("")}
-        </div>`;
+        </div>
+        </div>`; /* close sec-career */
       })()}
 
       <!-- SAMPLE PORTFOLIO PROJECTS — ALL SKILLS -->
@@ -2241,6 +2265,13 @@ function showScore() {
         if (skillsWithPortfolio.length === 0 && !PORTFOLIO_BY_SKILL[profile.skill]) return "";
         const skillsToShow = skillsWithPortfolio.length > 0 ? skillsWithPortfolio : [portfolioSkill];
         return `
+        <div style="margin-bottom:0.5rem;cursor:pointer" onclick="toggleSection('portfolio')">
+          <div style="display:flex;align-items:center;justify-content:space-between;background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.25rem;">
+            <div style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:800;color:#3B9EFF">🗂️ Sample Portfolio Projects</div>
+            <span id="sec-icon-portfolio" style="color:var(--muted);font-size:0.75rem;">▼</span>
+          </div>
+        </div>
+        <div id="sec-portfolio" style="display:none;margin-bottom:1rem;">
         <div style="text-align:left;margin-bottom:1.75rem">
           <div style="font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#3B9EFF;margin-bottom:0.5rem">🗂️ Sample Portfolio Projects</div>
           <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem">One project per skill. Pick one and start today — a real project beats a CV every time.</p>
@@ -2263,10 +2294,12 @@ function showScore() {
             </div>`;
           }).join("")}
         </div>`;
-      })()}
+
+            })()}
 
       <!-- ACTION BUTTONS -->
       <div class="pass-actions">
+        <a class="btn-jobs" href="dashboard.html" style="background:linear-gradient(135deg,#22C1C3,#6C63FF);color:#fff;text-decoration:none;text-align:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.95rem;padding:1rem;border-radius:10px;display:block">🏠 Go to My Dashboard →</a>
         ${tierData.actions.map(a=>`
           <a class="btn-jobs" style="${btnStyles[a.style]};text-decoration:none;text-align:center;${a.urgent?'animation:pulse 2s infinite':''}" href="${a.href}" ${a.external?'target="_blank"':''}>${a.label}</a>
         `).join("")}
@@ -2673,6 +2706,15 @@ function renderVelaBadge(containerEl, options = {}) {
     <a href="verify.html" style="display:inline-block;margin-top:0.6rem;font-size:0.75rem;font-weight:700;color:var(--accent);text-decoration:none">
       ${isFullyVerified ? 'View Verification Details →' : 'Complete Verification →'}
     </a>`;
+}
+
+function toggleSection(id) {
+  const body = document.getElementById('sec-' + id);
+  const icon = document.getElementById('sec-icon-' + id);
+  if (!body) return;
+  const isOpen = body.style.display !== 'none';
+  body.style.display = isOpen ? 'none' : 'block';
+  if (icon) icon.textContent = isOpen ? '▼' : '▲';
 }
 
 function retryQuiz() {
