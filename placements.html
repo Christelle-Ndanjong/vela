@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VELA — Placement Tracker</title>
+  <meta name="robots" content="noindex,nofollow"/>
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{
+      --bg:#0B0F1F;--bg2:#0E1328;--surface:#151A2E;--card:#151A2E;
+      --border:#2A3153;--accent:#22C55E;--accent2:#3B82F6;
+      --grad1:#22C1C3;--grad2:#6C63FF;--gold:#F5A623;
+      --text:#FFFFFF;--text2:#A1A8C3;--muted:#6B7280;
+      --danger:#EF4444;--warn:#F59E0B;
+    }
+    body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;padding:2rem 5% 5rem;}
+
+    /* NAV */
+    .top-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:2.5rem;padding-bottom:1.25rem;border-bottom:1px solid var(--border);}
+    .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;letter-spacing:0.08em;background:linear-gradient(135deg,#22C1C3,#6C63FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;}
+    .private-badge{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:#EF4444;font-size:0.68rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;padding:0.25rem 0.75rem;border-radius:20px;}
+
+    /* MILESTONE HERO */
+    .milestone{background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:2.5rem;margin-bottom:2rem;text-align:center;position:relative;overflow:hidden;}
+    .milestone::before{content:'';position:absolute;top:-40px;left:50%;transform:translateX(-50%);width:300px;height:200px;background:radial-gradient(circle,rgba(34,197,94,0.08),transparent 70%);border-radius:50%;}
+    .milestone-label{font-size:0.72rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;}
+    .milestone-count{font-family:'Syne',sans-serif;font-size:5rem;font-weight:800;line-height:1;margin-bottom:0.25rem;}
+    .milestone-denom{font-size:1.2rem;color:var(--muted);font-weight:400;}
+    .milestone-goal{font-size:0.9rem;color:var(--text2);margin-bottom:2rem;}
+    .progress-track{height:12px;background:var(--surface);border-radius:100px;overflow:hidden;max-width:400px;margin:0 auto 0.75rem;}
+    .progress-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,#22C1C3,#22C55E);transition:width 1s cubic-bezier(0.4,0,0.2,1);}
+    .progress-pct{font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:700;color:var(--accent);}
+
+    /* STATS ROW */
+    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem;}
+    .stat-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:1.25rem;text-align:center;}
+    .stat-num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;line-height:1;margin-bottom:0.3rem;}
+    .stat-label{font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;}
+
+    /* ADD FORM */
+    .add-card{background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:1.75rem;margin-bottom:2rem;}
+    .form-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:var(--text);margin-bottom:1.25rem;display:flex;align-items:center;gap:0.5rem;}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.85rem;margin-bottom:1rem;}
+    .field label{display:block;font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:0.4rem;}
+    .field input,.field select,.field textarea{width:100%;background:var(--surface);border:1.5px solid var(--border);color:var(--text);padding:0.7rem 0.9rem;border-radius:9px;font-size:0.88rem;font-family:'DM Sans',sans-serif;outline:none;-webkit-text-fill-color:var(--text);transition:border-color 0.2s;}
+    .field input:focus,.field select:focus,.field textarea:focus{border-color:rgba(34,193,195,0.5);}
+    .field textarea{resize:vertical;min-height:72px;}
+    .field select option{background:var(--surface);}
+    .btn-add{background:linear-gradient(135deg,#22C1C3,#6C63FF);color:#fff;border:none;padding:0.85rem 2rem;border-radius:10px;font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem;cursor:pointer;transition:opacity 0.2s;}
+    .btn-add:hover{opacity:0.88;}
+
+    /* PLACEMENT LIST */
+    .list-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
+    .list-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:var(--text);}
+    .filter-tabs{display:flex;gap:0.4rem;}
+    .ftab{background:transparent;border:1px solid var(--border);color:var(--muted);padding:0.3rem 0.85rem;border-radius:20px;font-size:0.75rem;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+    .ftab.active{background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.3);color:#22C55E;}
+
+    /* PLACEMENT CARDS */
+    .placement-list{display:flex;flex-direction:column;gap:0.85rem;}
+    .placement-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:1.25rem 1.5rem;display:grid;grid-template-columns:auto 1fr auto auto;gap:1rem;align-items:center;transition:border-color 0.2s;}
+    .placement-card:hover{border-color:#2A3153;}
+    .placement-card.hired{border-left:3px solid #22C55E;}
+    .placement-card.interviewing{border-left:3px solid #3B82F6;}
+    .placement-card.contacted{border-left:3px solid #F5A623;}
+    .placement-card.rejected{border-left:3px solid #EF4444;opacity:0.65;}
+    .p-avatar{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#22C1C322,#22C1C344);border:1.5px solid #22C1C344;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem;color:#22C1C3;flex-shrink:0;}
+    .p-name{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:var(--text);margin-bottom:0.2rem;}
+    .p-meta{font-size:0.78rem;color:var(--muted);}
+    .p-status{font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.07em;padding:0.25rem 0.75rem;border-radius:20px;white-space:nowrap;flex-shrink:0;}
+    .p-status.hired{background:rgba(34,197,94,0.12);color:#22C55E;border:1px solid rgba(34,197,94,0.3);}
+    .p-status.interviewing{background:rgba(59,130,246,0.12);color:#3B82F6;border:1px solid rgba(59,130,246,0.3);}
+    .p-status.contacted{background:rgba(245,166,35,0.12);color:#F5A623;border:1px solid rgba(245,166,35,0.3);}
+    .p-status.rejected{background:rgba(239,68,68,0.1);color:#EF4444;border:1px solid rgba(239,68,68,0.2);}
+    .p-actions{display:flex;gap:0.4rem;flex-shrink:0;}
+    .p-btn{background:transparent;border:1px solid var(--border);color:var(--muted);width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.75rem;transition:all 0.2s;}
+    .p-btn:hover{border-color:#22C1C3;color:#22C1C3;}
+    .p-btn.delete:hover{border-color:#EF4444;color:#EF4444;}
+    .empty{text-align:center;padding:3rem;color:var(--muted);}
+    .empty-icon{font-size:2.5rem;margin-bottom:0.75rem;}
+
+    /* NOTES MODAL */
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;z-index:1000;backdrop-filter:blur(4px);display:none;}
+    .modal-overlay.open{display:flex;}
+    .modal{background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:2rem;width:90%;max-width:500px;}
+    .modal-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:1rem;}
+    .modal-close{float:right;background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:1.2rem;}
+
+    @media(max-width:768px){
+      .stats-row{grid-template-columns:1fr 1fr;}
+      .form-grid{grid-template-columns:1fr;}
+      .placement-card{grid-template-columns:auto 1fr;grid-template-rows:auto auto;}
+      .p-actions{grid-column:2;justify-self:end;}
+      .p-status{grid-column:2;}
+    }
+    @media(max-width:480px){
+      .stats-row{grid-template-columns:1fr 1fr;}
+      .milestone-count{font-size:3.5rem;}
+    }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <a href="index.html" class="logo">VELA</a>
+  <div style="display:flex;align-items:center;gap:0.75rem;">
+    <span class="private-badge">🔒 Private</span>
+    <span style="font-size:0.78rem;color:var(--muted);">Placement Tracker</span>
+  </div>
+</div>
+
+<!-- MILESTONE HERO -->
+<div class="milestone" id="milestone-card">
+  <div class="milestone-label">Mission: First 10 Successful Hires</div>
+  <div class="milestone-count" id="hired-count" style="color:#22C55E;">0<span class="milestone-denom">/10</span></div>
+  <div class="milestone-goal">Every hire makes VELA credible. This is the only number that matters right now.</div>
+  <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+  <div class="progress-pct" id="progress-pct">0% to goal</div>
+</div>
+
+<!-- STATS -->
+<div class="stats-row">
+  <div class="stat-card">
+    <div class="stat-num" id="stat-total" style="color:#A1A8C3;">0</div>
+    <div class="stat-label">Total Candidates</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num" id="stat-active" style="color:#3B82F6;">0</div>
+    <div class="stat-label">In Progress</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num" id="stat-hired" style="color:#22C55E;">0</div>
+    <div class="stat-label">Hired ✓</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num" id="stat-revenue" style="color:#F5A623;">$0</div>
+    <div class="stat-label">Revenue Earned</div>
+  </div>
+</div>
+
+<!-- ADD PLACEMENT -->
+<div class="add-card">
+  <div class="form-title">➕ Add a Placement</div>
+  <div class="form-grid">
+    <div class="field">
+      <label>Candidate Name</label>
+      <input id="f-name" placeholder="e.g. Amara Osei"/>
+    </div>
+    <div class="field">
+      <label>Skill / Role</label>
+      <input id="f-skill" placeholder="e.g. Data Analyst"/>
+    </div>
+    <div class="field">
+      <label>Employer / Company</label>
+      <input id="f-employer" placeholder="e.g. Acme Corp"/>
+    </div>
+    <div class="field">
+      <label>Country</label>
+      <input id="f-country" placeholder="e.g. Ghana"/>
+    </div>
+    <div class="field">
+      <label>Status</label>
+      <select id="f-status">
+        <option value="contacted">Contacted</option>
+        <option value="interviewing">Interviewing</option>
+        <option value="hired">Hired ✓</option>
+        <option value="rejected">Did Not Progress</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Salary / Fee (USD)</label>
+      <input id="f-salary" type="number" placeholder="e.g. 1500"/>
+    </div>
+  </div>
+  <div class="field" style="margin-bottom:1rem;">
+    <label>Notes</label>
+    <textarea id="f-notes" placeholder="Contact date, employer feedback, next steps..."></textarea>
+  </div>
+  <button class="btn-add" onclick="addPlacement()">Save Placement →</button>
+</div>
+
+<!-- PLACEMENT LIST -->
+<div class="list-header">
+  <div class="list-title">All Placements</div>
+  <div class="filter-tabs">
+    <button class="ftab active" onclick="setFilter('all',this)">All</button>
+    <button class="ftab" onclick="setFilter('contacted',this)">Contacted</button>
+    <button class="ftab" onclick="setFilter('interviewing',this)">Interviewing</button>
+    <button class="ftab" onclick="setFilter('hired',this)">Hired</button>
+  </div>
+</div>
+<div class="placement-list" id="placement-list">
+  <div class="empty"><div class="empty-icon">🎯</div><div>No placements yet. Add your first candidate above.</div><div style="font-size:0.8rem;color:var(--muted);margin-top:0.4rem;">Every successful hire builds VELA's credibility.</div></div>
+</div>
+
+<!-- NOTES MODAL -->
+<div class="modal-overlay" id="notes-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-title" id="modal-title">Notes</div>
+    <textarea id="modal-notes" style="width:100%;background:var(--surface);border:1.5px solid var(--border);color:var(--text);padding:0.75rem;border-radius:9px;font-family:'DM Sans',sans-serif;font-size:0.88rem;min-height:120px;resize:vertical;-webkit-text-fill-color:var(--text);"></textarea>
+    <div style="display:flex;gap:0.75rem;margin-top:1rem;">
+      <button onclick="saveNotes()" style="background:linear-gradient(135deg,#22C1C3,#6C63FF);color:#fff;border:none;padding:0.75rem 1.5rem;border-radius:9px;font-family:'Syne',sans-serif;font-weight:700;cursor:pointer;">Save Notes</button>
+      <select id="modal-status" style="background:var(--surface);border:1.5px solid var(--border);color:var(--text);padding:0.75rem;border-radius:9px;font-family:'DM Sans',sans-serif;">
+        <option value="contacted">Contacted</option>
+        <option value="interviewing">Interviewing</option>
+        <option value="hired">Hired ✓</option>
+        <option value="rejected">Did Not Progress</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<script>
+var STORAGE_KEY = "vela_placements_v1";
+var placements = [];
+var currentFilter = "all";
+var editingId = null;
+
+function load() {
+  try {
+    var stored = localStorage.getItem(STORAGE_KEY);
+    placements = stored ? JSON.parse(stored) : [];
+  } catch(e) { placements = []; }
+  render();
+}
+
+function save() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(placements));
+}
+
+function addPlacement() {
+  var name     = document.getElementById("f-name").value.trim();
+  var skill    = document.getElementById("f-skill").value.trim();
+  var employer = document.getElementById("f-employer").value.trim();
+  var country  = document.getElementById("f-country").value.trim();
+  var status   = document.getElementById("f-status").value;
+  var salary   = parseFloat(document.getElementById("f-salary").value) || 0;
+  var notes    = document.getElementById("f-notes").value.trim();
+
+  if (!name) { alert("Please enter the candidate name."); return; }
+
+  var p = {
+    id: Date.now(),
+    name: name,
+    skill: skill || "Remote Professional",
+    employer: employer || "—",
+    country: country || "Africa",
+    status: status,
+    salary: salary,
+    notes: notes,
+    date: new Date().toLocaleDateString("en-GB", {day:"numeric",month:"short",year:"numeric"}),
+  };
+
+  placements.unshift(p);
+  save();
+
+  // Clear form
+  ["f-name","f-skill","f-employer","f-country","f-salary","f-notes"].forEach(function(id){
+    document.getElementById(id).value = "";
+  });
+  document.getElementById("f-status").value = "contacted";
+
+  render();
+}
+
+function deletePlacement(id) {
+  if (!confirm("Remove this placement?")) return;
+  placements = placements.filter(function(p){ return p.id !== id; });
+  save();
+  render();
+}
+
+function openNotes(id) {
+  var p = placements.find(function(x){ return x.id === id; });
+  if (!p) return;
+  editingId = id;
+  document.getElementById("modal-title").textContent = p.name + " — Notes & Status";
+  document.getElementById("modal-notes").value = p.notes || "";
+  document.getElementById("modal-status").value = p.status;
+  document.getElementById("notes-modal").classList.add("open");
+}
+
+function saveNotes() {
+  if (!editingId) return;
+  var idx = placements.findIndex(function(p){ return p.id === editingId; });
+  if (idx < 0) return;
+  placements[idx].notes = document.getElementById("modal-notes").value.trim();
+  placements[idx].status = document.getElementById("modal-status").value;
+  save();
+  closeModal();
+  render();
+}
+
+function closeModal() {
+  document.getElementById("notes-modal").classList.remove("open");
+  editingId = null;
+}
+
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll(".ftab").forEach(function(b){ b.classList.remove("active"); });
+  btn.classList.add("active");
+  render();
+}
+
+function getInitials(name) {
+  return name.split(" ").map(function(w){ return w[0]; }).join("").slice(0,2).toUpperCase();
+}
+
+function render() {
+  var hired   = placements.filter(function(p){ return p.status === "hired"; });
+  var active  = placements.filter(function(p){ return p.status === "interviewing" || p.status === "contacted"; });
+  var revenue = hired.reduce(function(sum,p){ return sum + (p.salary ? 299 : 0); }, 0);
+  var pct     = Math.min(Math.round((hired.length / 10) * 100), 100);
+
+  document.getElementById("hired-count").innerHTML = hired.length + '<span class="milestone-denom">/10</span>';
+  document.getElementById("hired-count").style.color = hired.length >= 10 ? "#F5A623" : "#22C55E";
+  document.getElementById("progress-fill").style.width = pct + "%";
+  document.getElementById("progress-pct").textContent = pct + "% to goal";
+  document.getElementById("stat-total").textContent = placements.length;
+  document.getElementById("stat-active").textContent = active.length;
+  document.getElementById("stat-hired").textContent = hired.length;
+  document.getElementById("stat-revenue").textContent = "$" + (revenue).toLocaleString();
+
+  var filtered = currentFilter === "all" ? placements : placements.filter(function(p){ return p.status === currentFilter; });
+  var list = document.getElementById("placement-list");
+
+  if (filtered.length === 0) {
+    list.innerHTML = '<div class="empty"><div class="empty-icon">🎯</div><div>' + (currentFilter === "all" ? "No placements yet. Add your first candidate above." : "No placements with this status.") + '</div></div>';
+    return;
+  }
+
+  var STATUS_LABELS = { hired:"Hired ✓", interviewing:"Interviewing", contacted:"Contacted", rejected:"Did Not Progress" };
+
+  list.innerHTML = filtered.map(function(p) {
+    return '<div class="placement-card ' + p.status + '">' +
+      '<div class="p-avatar">' + getInitials(p.name) + '</div>' +
+      '<div>' +
+        '<div class="p-name">' + p.name + '</div>' +
+        '<div class="p-meta">🎯 ' + p.skill + ' &nbsp;·&nbsp; 🏢 ' + p.employer + ' &nbsp;·&nbsp; 📍 ' + p.country + (p.salary ? ' &nbsp;·&nbsp; 💰 $' + p.salary + '/mo' : '') + '</div>' +
+        (p.notes ? '<div style="font-size:0.75rem;color:var(--muted);margin-top:0.3rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:400px;">' + p.notes + '</div>' : '') +
+      '</div>' +
+      '<span class="p-status ' + p.status + '">' + (STATUS_LABELS[p.status] || p.status) + '</span>' +
+      '<div class="p-actions">' +
+        '<button class="p-btn" onclick="openNotes(' + p.id + ')" title="Edit notes & status">✏️</button>' +
+        '<button class="p-btn delete" onclick="deletePlacement(' + p.id + ')" title="Delete">✕</button>' +
+      '</div>' +
+    '</div>';
+  }).join("");
+}
+
+// Close modal on overlay click
+document.getElementById("notes-modal").addEventListener("click", function(e) {
+  if (e.target === this) closeModal();
+});
+
+document.addEventListener("DOMContentLoaded", load);
+</script>
+</body>
+</html>
