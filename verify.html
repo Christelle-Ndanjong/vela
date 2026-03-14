@@ -11,25 +11,26 @@
   </script>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>VELA — Get Verified</title>
-  <meta name="description" content="Earn your VELA Verified badge through 5 assessments: communication test, tool quiz, mock interview, task simulation, and video intro. Scored by AI instantly."/>
-  <meta name="keywords" content="African professional verification, remote work verification, VELA verified badge"/>
+  <title>VELA — Choose Your Path</title>
+  <meta name="description" content="Explore 15 in-demand remote skill paths. Each comes with a full learning roadmap, free resources, tool list, and live job matches for African professionals."/>
+  <meta name="keywords" content="remote skills Africa, learn remote work skills, online skills roadmap, digital skills Africa"/>
   <meta property="og:type" content="website"/>
-  <meta property="og:title" content="Get VELA Verified — 5-Layer Verification"/>
-  <meta property="og:description" content="Earn your VELA Verified badge through 5 assessments: communication test, tool quiz, mock interview, task simulation, and video intro. Scored by AI instantly."/>
-  <meta property="og:url" content="https://christelle-ndanjong.github.io/vela/verify.html"/>
+  <meta property="og:title" content="Remote Skill Paths — VELA"/>
+  <meta property="og:description" content="Explore 15 in-demand remote skill paths. Each comes with a full learning roadmap, free resources, tool list, and live job matches for African professionals."/>
+  <meta property="og:url" content="https://christelle-ndanjong.github.io/vela/skills.html"/>
   <meta property="og:image" content="https://christelle-ndanjong.github.io/vela/og-image.png"/>
   <meta property="og:site_name" content="VELA"/>
   <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:title" content="Get VELA Verified — 5-Layer Verification"/>
-  <meta name="twitter:description" content="Earn your VELA Verified badge through 5 assessments: communication test, tool quiz, mock interview, task simulation, and video intro. Scored by AI instantly."/>
+  <meta name="twitter:title" content="Remote Skill Paths — VELA"/>
+  <meta name="twitter:description" content="Explore 15 in-demand remote skill paths. Each comes with a full learning roadmap, free resources, tool list, and live job matches for African professionals."/>
   <meta name="twitter:image" content="https://christelle-ndanjong.github.io/vela/og-image.png"/>
-  <link rel="canonical" href="https://christelle-ndanjong.github.io/vela/verify.html"/>
+  <link rel="canonical" href="https://christelle-ndanjong.github.io/vela/skills.html"/>
     <link rel="icon" type="image/png" href="favicon.png"/>
 
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
       --bg:      #0B0F1F;
       --bg2:     #0E1328;
@@ -47,920 +48,1293 @@
       --danger:  #EF4444;
       --warn:    #F59E0B;
     }
-    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
 
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* NAV */
     nav {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 1.1rem 5%; border-bottom: 1px solid var(--border);
-      background: rgba(8,12,18,0.95); position: sticky; top: 0; z-index: 100;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 5%;
+      backdrop-filter: blur(20px);
+      background: rgba(8,12,18,0.92);
+      border-bottom: 1px solid var(--border);
     }
-    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem;
-      letter-spacing: 0.08em; background: linear-gradient(135deg, #22C1C3, #6C63FF);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
-    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
-    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--accent); }
-    .nav-links a.active { color: var(--accent); }
 
-    /* PAGE HEADER */
-    .page-header { padding: 3rem 5% 2rem; max-width: 1100px; margin: 0 auto; }
-    .header-badge { display: inline-flex; align-items: center; gap: 0.5rem;
-      background: rgba(0,196,140,0.08); border: 1px solid rgba(0,196,140,0.2);
-      color: var(--accent); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
-      text-transform: uppercase; padding: 0.35rem 0.9rem; border-radius: 100px; margin-bottom: 1.25rem; }
-    .page-header h1 { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 800; color: var(--text); margin-bottom: 0.6rem; line-height: 1.1; }
-    .page-header h1 span { background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .page-header p { color: var(--muted); font-size: 0.95rem; max-width: 560px; line-height: 1.6; }
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.5rem;
+      letter-spacing: 0.08em;
+      background: linear-gradient(135deg, #22C1C3, #6C63FF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+    }
 
-    /* PASSPORT PREVIEW */
-    .passport-wrap { padding: 0 5% 2rem; max-width: 1100px; margin: 0 auto; }
-    .passport {
-      background: linear-gradient(135deg, #0D1A2E, #0A1020);
-      border: 1px solid rgba(0,196,140,0.2); border-radius: 20px; padding: 1.75rem 2rem;
-      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;
-      position: relative; overflow: hidden;
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
     }
-    .passport::before {
-      content: ''; position: absolute; top: -40px; right: -40px;
-      width: 200px; height: 200px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,196,140,0.06), transparent 70%);
+
+    .nav-right span {
+      color: var(--muted);
+      font-size: 0.85rem;
     }
-    .passport-left { display: flex; align-items: center; gap: 1.25rem; }
-    .passport-avatar {
-      width: 56px; height: 56px; border-radius: 50%;
+
+    /* HEADER */
+    .header {
+      padding: 4rem 5% 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(0,196,140,0.08);
+      border: 1px solid rgba(0,196,140,0.2);
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.9rem;
+      border-radius: 100px;
+      margin-bottom: 1.5rem;
+    }
+
+    .header h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+
+    .header h1 span {
       background: linear-gradient(135deg, var(--accent), var(--accent2));
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.3rem; color: #000;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
-    .passport-name { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--text); }
-    .passport-skill { color: var(--muted); font-size: 0.82rem; margin-top: 0.2rem; }
-    .passport-badges { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-    .badge-chip {
-      display: flex; align-items: center; gap: 0.4rem;
-      padding: 0.35rem 0.8rem; border-radius: 100px; font-size: 0.72rem; font-weight: 700;
-      letter-spacing: 0.06em; text-transform: uppercase; border: 1px solid;
-    }
-    .badge-chip.locked { background: rgba(255,255,255,0.03); border-color: var(--border); color: var(--muted); }
-    .badge-chip.passed { background: rgba(34,197,94,0.12); border-color: rgba(0,196,140,0.3); color: var(--accent); }
-    .badge-chip.review { background: rgba(255,165,0,0.08); border-color: rgba(255,165,0,0.25); color: var(--warn); }
-    .badge-chip.failed { background: rgba(255,107,107,0.08); border-color: rgba(255,107,107,0.25); color: var(--danger); }
-    .vela-badge {
-      display: flex; align-items: center; gap: 0.6rem;
-      background: rgba(0,196,140,0.06); border: 1.5px solid rgba(0,196,140,0.15);
-      border-radius: 12px; padding: 0.75rem 1.1rem;
-    }
-    .vela-badge-icon { font-size: 1.5rem; }
-    .vela-badge-text .label { font-family: 'Syne', sans-serif; font-size: 0.82rem; font-weight: 700; color: var(--muted); }
-    .vela-badge-text .val { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 800; color: var(--accent); }
 
-    /* VERIFICATION GRID */
-    .verif-grid { padding: 0 5% 5rem; max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; }
-
-    .verif-card {
-      background: var(--card); border: 1.5px solid var(--border); border-radius: 16px; overflow: hidden;
-      transition: border-color 0.3s;
+    .header p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 580px;
+      margin-bottom: 2rem;
     }
-    .verif-card.active { border-color: rgba(0,196,140,0.3); }
-    .verif-card.passed-card { border-color: rgba(0,196,140,0.2); }
-    .verif-card.failed-card { border-color: rgba(255,107,107,0.2); }
 
-    .verif-header {
-      padding: 1.25rem 1.5rem; display: flex; align-items: center; gap: 1rem;
-      cursor: pointer; user-select: none;
+    /* FILTER TABS */
+    .filters {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      padding: 0 5%;
+      max-width: 1200px;
+      margin: 0 auto 2.5rem;
     }
-    .verif-icon-wrap {
-      width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center;
-      justify-content: center; font-size: 1.2rem; flex-shrink: 0; border: 1px solid var(--border);
+
+    .filter-btn {
       background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 0.45rem 1rem;
+      border-radius: 100px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
     }
-    .verif-icon-wrap.passed { background: rgba(34,197,94,0.12); border-color: rgba(0,196,140,0.3); }
-    .verif-icon-wrap.failed { background: rgba(255,107,107,0.1); border-color: rgba(255,107,107,0.3); }
-    .verif-icon-wrap.review { background: rgba(255,165,0,0.1); border-color: rgba(255,165,0,0.3); }
-    .verif-meta { flex: 1; min-width: 0; }
-    .verif-title { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--text); }
-    .verif-desc { font-size: 0.8rem; color: var(--muted); margin-top: 0.15rem; }
-    .verif-right { display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; }
-    .verif-status {
-      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-      padding: 0.25rem 0.7rem; border-radius: 100px; border: 1px solid;
+
+    .filter-btn:hover, .filter-btn.active {
+      background: rgba(0,196,140,0.1);
+      border-color: var(--accent);
+      color: var(--accent);
     }
-    .status-pending { background: rgba(107,122,153,0.1); border-color: rgba(107,122,153,0.2); color: var(--muted); }
-    .status-passed  { background: rgba(34,197,94,0.12); border-color: rgba(0,196,140,0.25); color: var(--accent); }
-    .status-failed  { background: rgba(255,107,107,0.1); border-color: rgba(255,107,107,0.25); color: var(--danger); }
-    .status-review  { background: rgba(255,165,0,0.1); border-color: rgba(255,165,0,0.25); color: var(--warn); }
-    .verif-score { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 800; }
-    .chevron { color: var(--muted); transition: transform 0.3s; font-size: 0.8rem; }
-    .chevron.open { transform: rotate(180deg); }
 
-    /* VERIF BODY */
-    .verif-body { display: none; border-top: 1px solid var(--border); }
-    .verif-body.open { display: block; }
-    .verif-body-inner { padding: 1.5rem; }
-
-    /* FORM ELEMENTS */
-    .vf-label { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem; display: block; }
-    .vf-textarea {
-      width: 100%; background: var(--surface); border: 1.5px solid var(--border); color: var(--text);
-      padding: 0.85rem 1.1rem; border-radius: 10px; font-family: 'DM Sans', sans-serif;
-      font-size: 0.9rem; outline: none; resize: vertical; min-height: 120px; line-height: 1.6;
-      transition: border-color 0.2s;
+    /* SKILLS GRID */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.25rem;
+      padding: 0 5% 6rem;
+      max-width: 1200px;
+      margin: 0 auto;
     }
-    .vf-textarea:focus { border-color: var(--accent); }
-    .vf-textarea::placeholder { color: var(--muted); }
 
-    /* QUIZ ITEMS */
-    .vq-item { margin-bottom: 1.5rem; }
-    .vq-text { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 0.75rem; line-height: 1.4; }
-    .vq-num { color: var(--accent); margin-right: 0.4rem; }
-    .vq-options { display: flex; flex-direction: column; gap: 0.4rem; }
-    .vq-opt {
-      background: var(--surface); border: 1.5px solid var(--border); border-radius: 8px;
-      padding: 0.7rem 1rem; cursor: pointer; font-size: 0.86rem; color: var(--muted);
-      transition: all 0.2s; user-select: none;
+    /* SKILL CARD */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      position: relative;
     }
-    .vq-opt:hover { border-color: rgba(0,196,140,0.3); color: var(--text); }
-    .vq-opt.selected { border-color: var(--accent); background: rgba(0,196,140,0.07); color: var(--text); }
-    .vq-opt.correct { border-color: var(--accent); background: rgba(34,197,94,0.12); color: var(--accent); }
-    .vq-opt.wrong { border-color: var(--danger); background: rgba(255,107,107,0.08); color: var(--danger); }
 
-    /* UPLOAD ZONE */
-    .upload-zone {
-      border: 2px dashed var(--border); border-radius: 12px; padding: 2.5rem 1rem;
-      text-align: center; cursor: pointer; transition: all 0.2s; position: relative;
+    .card:hover {
+      border-color: rgba(0,196,140,0.35);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
     }
-    .upload-zone:hover, .upload-zone.drag { border-color: var(--accent); background: rgba(0,196,140,0.03); }
-    .upload-zone input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
-    .upload-icon { font-size: 2rem; margin-bottom: 0.75rem; }
-    .upload-title { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 0.35rem; }
-    .upload-hint { font-size: 0.78rem; color: var(--muted); }
-    .upload-done { display: flex; align-items: center; gap: 0.75rem; background: rgba(0,196,140,0.08);
-      border: 1px solid rgba(0,196,140,0.2); border-radius: 10px; padding: 0.85rem 1rem; margin-top: 0.75rem; }
-    .upload-done-name { font-size: 0.85rem; color: var(--accent); font-weight: 500; }
 
-    /* SCENARIO BOX */
-    .scenario-box {
-      background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
-      padding: 1.25rem; margin-bottom: 1.25rem;
+    .card-top-bar {
+      height: 3px;
+      width: 100%;
     }
-    .scenario-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--accent); margin-bottom: 0.6rem; }
-    .scenario-text { font-size: 0.88rem; color: var(--text); line-height: 1.6; }
 
-    /* AI FEEDBACK */
-    .ai-feedback {
-      background: rgba(45,107,228,0.05); border: 1px solid rgba(45,107,228,0.15);
-      border-radius: 12px; padding: 1.25rem; margin-top: 1.25rem;
+    .card-body {
+      padding: 1.5rem;
     }
-    .ai-feedback-header { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.85rem; }
-    .ai-feedback-label { font-family: 'Syne', sans-serif; font-size: 0.75rem; font-weight: 700;
-      letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent2); }
-    .ai-score-pill { background: rgba(45,107,228,0.15); border: 1px solid rgba(45,107,228,0.25);
-      color: var(--accent2); font-family: 'Syne', sans-serif; font-size: 0.8rem; font-weight: 800;
-      padding: 0.2rem 0.65rem; border-radius: 100px; margin-left: auto; }
-    .ai-text { font-size: 0.86rem; color: var(--muted); line-height: 1.6; white-space: pre-wrap; }
 
-    /* LOADING */
-    .ai-loading { display: flex; align-items: center; gap: 0.75rem; color: var(--muted); font-size: 0.85rem; padding: 0.5rem 0; }
-    .spinner { width: 18px; height: 18px; border: 2px solid var(--border); border-top-color: var(--accent);
-      border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
-
-    /* BUTTONS */
-    .btn-submit {
-      background: linear-gradient(135deg, var(--accent), #00C080); color: #000;
-      border: none; padding: 0.85rem 1.75rem; border-radius: 10px;
-      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem;
-      letter-spacing: 0.03em; cursor: pointer; transition: opacity 0.2s; margin-top: 1.25rem;
-      display: flex; align-items: center; gap: 0.5rem;
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 1rem;
     }
-    .btn-submit:hover { opacity: 0.88; }
-    .btn-submit:disabled { opacity: 0.35; cursor: not-allowed; }
-    .btn-retry-sm {
-      background: transparent; border: 1.5px solid var(--border); color: var(--muted);
-      padding: 0.6rem 1.2rem; border-radius: 8px; font-family: 'Syne', sans-serif;
-      font-weight: 600; font-size: 0.8rem; cursor: pointer; transition: all 0.2s; margin-top: 0.75rem;
+
+    .card-icon-title {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
     }
-    .btn-retry-sm:hover { border-color: var(--accent); color: var(--accent); }
 
-    /* COMPLETE BANNER */
-    .complete-banner {
-      background: linear-gradient(135deg, rgba(34,197,94,0.12), rgba(45,107,228,0.08));
-      border: 1.5px solid rgba(0,196,140,0.3); border-radius: 16px;
-      padding: 2rem; text-align: center; margin: 0 5% 3rem; max-width: 1100px;
-      margin-left: auto; margin-right: auto; display: none;
+    .card-icon {
+      font-size: 1.75rem;
+      line-height: 1;
     }
-    .complete-banner h2 { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800;
-      color: var(--text); margin-bottom: 0.5rem; }
-    .complete-banner p { color: var(--muted); margin-bottom: 1.5rem; }
-    .btn-jobs { background: linear-gradient(135deg, var(--accent), #00C080); color: #000;
-      border: none; padding: 0.9rem 2rem; border-radius: 10px; font-family: 'Syne', sans-serif;
-      font-weight: 700; font-size: 0.95rem; cursor: pointer; text-decoration: none; display: inline-block; }
 
-    @keyframes spin { to { transform: rotate(360deg); } }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .card-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.2;
+    }
 
-    .fade-in { animation: fadeIn 0.3s ease both; }
+    .card-category {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .demand-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.65rem;
+      border-radius: 100px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .demand-high { background: rgba(0,196,140,0.12); color: var(--accent); border: 1px solid rgba(0,196,140,0.25); }
+    .demand-very-high { background: rgba(255,165,0,0.12); color: #FFA500; border: 1px solid rgba(255,165,0,0.25); }
+    .demand-explosive { background: rgba(255,80,80,0.12); color: #FF6B6B; border: 1px solid rgba(255,80,80,0.25); }
+
+    .card-desc {
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+
+    /* STATS ROW */
+    .card-stats {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .stat-val {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .stat-lbl {
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .stat-divider {
+      width: 1px;
+      background: var(--border);
+      align-self: stretch;
+    }
+
+    /* ROADMAP PREVIEW */
+    .roadmap-preview {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .roadmap-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .roadmap-steps {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .roadmap-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+      flex: 1;
+      position: relative;
+    }
+
+    .roadmap-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 10px;
+      left: 60%;
+      right: -40%;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .step-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: var(--muted);
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-dot.active {
+      border-color: var(--accent);
+      background: rgba(0,196,140,0.15);
+      color: var(--accent);
+    }
+
+    .step-name {
+      font-size: 0.65rem;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    /* TOOLS */
+    .tools-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .tool-tag {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.72rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+
+    /* CTA */
+    .card-cta {
+      width: 100%;
+      background: linear-gradient(135deg, var(--accent), #00C080);
+      color: #000;
+      border: none;
+      padding: 0.75rem;
+      border-radius: 8px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .card-cta:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    /* MODAL */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      z-index: 200;
+      backdrop-filter: blur(8px);
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: var(--bg2);
+      border: 1px solid rgba(0,196,140,0.2);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 640px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 2rem;
+      position: relative;
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s;
+    }
+
+    .modal-close:hover { color: var(--text); }
+
+    .modal-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+
+    .modal-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-desc {
+      color: var(--muted);
+      margin-bottom: 1.75rem;
+      font-size: 0.95rem;
+    }
+
+    .modal-section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .full-roadmap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .roadmap-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .roadmap-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(0,196,140,0.1);
+      border: 1px solid rgba(0,196,140,0.3);
+      color: var(--accent);
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .roadmap-content h4 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.2rem;
+    }
+
+    .roadmap-content p {
+      color: var(--muted);
+      font-size: 0.83rem;
+      line-height: 1.5;
+    }
+
+    .modal-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .modal-stat {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .modal-stat-val {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 0.2rem;
+    }
+
+    .modal-stat-lbl {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .modal-cta {
+      width: 100%;
+      background: linear-gradient(135deg, var(--accent), #00C080);
+      color: #000;
+      border: none;
+      padding: 1rem;
+      border-radius: 10px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      letter-spacing: 0.03em;
+      transition: opacity 0.2s;
+    }
+
+    .modal-cta:hover { opacity: 0.88; }
 
     @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .passport { flex-direction: column; }
-      .verif-header { flex-wrap: wrap; }
+      .grid { grid-template-columns: 1fr; padding: 0 4% 4rem; }
+      .modal { padding: 1.5rem; }
+      .modal-stats { grid-template-columns: repeat(3, 1fr); }
     }
+
+    .resources-list { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.75rem; }
+    .resource-item { display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 0.85rem 1rem; text-decoration: none; transition: all 0.2s; }
+    .resource-item:hover { background: rgba(0,196,140,0.07); border-color: rgba(0,196,140,0.25); }
+    .resource-left { display: flex; align-items: center; gap: 0.75rem; }
+    .resource-name { font-size: 0.88rem; font-weight: 600; color: #F0F4FF; margin-bottom: 0.1rem; }
+    .resource-source { font-size: 0.75rem; color: #6B7A99; }
+    .resource-arrow { color: #00C48C; font-size: 1rem; }
+    .resource-type { font-size: 0.65rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 5px; text-transform: uppercase; white-space: nowrap; }
+    .resource-type.Free { background: rgba(0,196,140,0.15); color: #00C48C; }
+    .resource-type.Course { background: rgba(45,107,228,0.15); color: #2D6BE4; }
+    .resource-type.YouTube { background: rgba(255,0,0,0.15); color: #ff6b6b; }
+    .resource-type.Cert { background: rgba(255,165,0,0.15); color: #FFA500; }
+    .resource-type.Practice { background: rgba(123,97,255,0.15); color: #7B61FF; }
+
+    .resources-list { display:flex; flex-direction:column; gap:0.5rem; margin-bottom:1.75rem; }
+    .resource-item { display:flex; align-items:center; justify-content:space-between; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:0.85rem 1rem; text-decoration:none; transition:all 0.2s; }
+    .resource-item:hover { background:rgba(0,196,140,0.07); border-color:rgba(0,196,140,0.25); transform:translateX(3px); }
+    .resource-name { font-size:0.88rem; font-weight:600; color:#F0F4FF; margin-bottom:0.15rem; }
+    .resource-source { font-size:0.75rem; color:#6B7A99; }
+    .resource-arrow { color:#00C48C; font-size:1.1rem; flex-shrink:0; margin-left:0.5rem; }
   
   /* light mode removed — VELA is dark */
   </style>
     <script src="config.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-  <script>
-  (function() {
-    function waitForConfig(cb, tries) {
-      tries = tries || 0;
-      if (window.VELA_CONFIG && typeof supabase !== 'undefined') { cb(); }
-      else if (tries < 60) { setTimeout(function(){ waitForConfig(cb, tries+1); }, 100); }
-      else { window.location.href = 'login.html'; }
-    }
-    waitForConfig(function() {
-      var _sb = supabase.createClient(window.VELA_CONFIG.SUPABASE_URL, window.VELA_CONFIG.SUPABASE_KEY);
-      _sb.auth.getSession().then(function(res) {
-        if (!res.data || !res.data.session) {
-          window.location.href = 'login.html';
-        }
-      }).catch(function() {
-        window.location.href = 'login.html';
-      });
-    });
-  })();
-  </script>
+
+<script>
+// Session guard — redirect to login if not signed in
+(async function() {
+  try {
+    if (typeof supabase === 'undefined') return;
+    const cfg = window.VELA_CONFIG || {};
+    if (!cfg.SUPABASE_URL) return;
+    const _sb = supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_KEY);
+    const { data } = await _sb.auth.getSession();
+    if (!data.session) window.location.href = 'login.html';
+  } catch(e) {}
+})();
+</script>
 </head>
 <body>
 
 <nav>
   <a class="logo" href="index.html"><img src="logo.png" alt="VELA" style="width:28px;height:28px;object-fit:contain;vertical-align:middle;margin-right:6px;"/>VELA</a>
-  <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="skills.html">Skills</a></li>
-    <li><a href="jobs.html">Jobs</a></li>
-    <li><a href="profile.html">Profile</a></li>
-    <li><a href="verify.html" class="active">Verify</a></li>
-  </ul>
+  <div class="nav-right">
+    <a href="experience.html" style="color:#6B7A99;text-decoration:none;font-size:0.88rem;font-weight:500;transition:color 0.2s" onmouseover="this.style.color='#F0F4FF'" onmouseout="this.style.color='#6B7A99'">Get Experience</a>
+    <a href="jobs.html" style="color:#6B7A99;text-decoration:none;font-size:0.88rem;font-weight:500;margin-left:1.5rem;transition:color 0.2s" onmouseover="this.style.color='#F0F4FF'" onmouseout="this.style.color='#6B7A99'">Jobs</a>
+    <span style="margin-left:1.5rem">Choose your path to get placed</span>
+  </div>
 
   <button class="hamburger-btn" onclick="toggleMobileNav()" aria-label="Open menu">☰</button>
 
   <button class="hamburger-btn" onclick="toggleMobileNav()" aria-label="Open menu">☰</button>
+  <div style="display:flex;gap:0.5rem;align-items:center"><a href="login.html" onclick="velaSignOut(event)" style="background:transparent;border:1px solid rgba(255,100,100,0.25);color:#FF6B6B;padding:0.4rem 0.9rem;border-radius:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;">Sign Out</a></div>
 </nav>
 <div id="mobile-nav-overlay" class="mobile-nav-overlay">
   <button class="mobile-nav-close" onclick="toggleMobileNav()">✕</button>
   <a href="index.html" onclick="toggleMobileNav()">Home</a>
-  <a href="skills.html" onclick="toggleMobileNav()">Skills</a>
+  <a href="skills.html" class="active" onclick="toggleMobileNav()">Skills</a>
   <a href="experience.html" onclick="toggleMobileNav()">Get Experience</a>
   <a href="jobs.html" onclick="toggleMobileNav()">Jobs</a>
-  <a href="verify.html" class="active" onclick="toggleMobileNav()">Verify</a>
+  <a href="verify.html" onclick="toggleMobileNav()">Verify</a>
   <a href="profile.html" class="mobile-nav-cta" onclick="toggleMobileNav()">My Profile →</a>
 </div>
 
 <div id="mobile-nav-overlay" class="mobile-nav-overlay">
   <button class="mobile-nav-close" onclick="toggleMobileNav()">✕</button>
   <a href="index.html" onclick="toggleMobileNav()">Home</a>
-  <a href="skills.html" onclick="toggleMobileNav()">Skills</a>
+  <a href="skills.html" class="active" onclick="toggleMobileNav()">Skills</a>
   <a href="experience.html" onclick="toggleMobileNav()">Get Experience</a>
   <a href="jobs.html" onclick="toggleMobileNav()">Jobs</a>
-  <a href="verify.html" class="active" onclick="toggleMobileNav()">Verify</a>
+  <a href="verify.html" onclick="toggleMobileNav()">Verify</a>
   <a href="profile.html" class="mobile-nav-cta" onclick="toggleMobileNav()">My Profile →</a>
 </div>
 
 
-<!-- PAGE HEADER -->
-<div class="page-header">
-  <div class="header-badge">⚡ 5 Layers · All Required · VELA Verified</div>
-  <h1>Get <span>VELA Verified</span></h1>
-  <p>Complete all 5 verification layers to earn your VELA Verified badge. Employers see your scores, your evidence, your proof — not just your CV.</p>
+<div class="header">
+  <div class="header-badge">15 In-Demand Skills · 2026–2027</div>
+  <h1>What Gets Africans<br/><span>Hired Remotely Right Now</span></h1>
+  <p>Not what sounds good. Not what's trending on Twitter. These are the 15 skills with the highest volume of remote job postings globally — all accessible from Africa, all learnable within months.</p>
 </div>
 
-<!-- CANDIDATE PASSPORT -->
-<div class="passport-wrap">
-  <div class="passport">
-    <div class="passport-left">
-      <div class="passport-avatar" id="pp-avatar">?</div>
-      <div>
-        <div class="passport-name" id="pp-name">Your Name</div>
-        <div class="passport-skill" id="pp-skill">Skill path not set · <a href="profile.html" style="color:var(--accent);text-decoration:none">Complete your profile first →</a></div>
-      </div>
-    </div>
-    <div class="passport-badges" id="passport-badges"></div>
-    <div class="vela-badge" style="flex-direction:column;align-items:center;text-align:center;gap:0.35rem">
-      <div class="vela-badge-icon" id="badge-icon">🔒</div>
-      <div class="vela-badge-text">
-        <div class="label">VELA Status</div>
-        <div class="val" id="badge-status">Not Yet Verified</div>
-      </div>
-      <div style="font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:800;color:var(--muted);margin-top:0.25rem">
-        VELA Score: <span id="vela-score-display" style="color:var(--accent)">—</span>
-      </div>
-    </div>
+<div class="filters">
+  <button class="filter-btn active" onclick="filterCards('all', this)">All Skills</button>
+  <button class="filter-btn" onclick="filterCards('entry', this)">Entry Level</button>
+  <button class="filter-btn" onclick="filterCards('tech', this)">Tech</button>
+  <button class="filter-btn" onclick="filterCards('business', this)">Business</button>
+  <button class="filter-btn" onclick="filterCards('creative', this)">Creative</button>
+  <button class="filter-btn" onclick="filterCards('ai', this)">AI-Powered</button>
+</div>
+
+<div class="grid" id="skills-grid"></div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+  <div class="modal" id="modal-content">
+    <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    <div id="modal-body"></div>
   </div>
 </div>
 
-<!-- COMPLETE BANNER -->
-<div class="complete-banner" id="complete-banner">
-  <div style="font-size:2.5rem;margin-bottom:0.75rem">🏆</div>
-  <h2>You Are VELA Verified!</h2>
-  <p>All 5 layers complete. Your verified profile is now visible to employers. You're ready to be placed.</p>
-  <a class="btn-jobs" href="jobs.html">View Matched Jobs →</a>
-</div>
-
-<!-- VERIFICATION CARDS -->
-<div class="verif-grid" id="verif-grid"></div>
-
 <script>
-// ─── CANDIDATE STATE (in real app loaded from backend) ────────────────────
-let candidate = {
-  name: localStorage.getItem("vela_name") || "Candidate",
-  skill: localStorage.getItem("vela_skill") || "Customer Service",
-  country: localStorage.getItem("vela_country") || "",
-};
-
-// Verif state
-let verifState = JSON.parse(localStorage.getItem("vela_verif") || "{}");
-
-// ─── SCENARIOS BY SKILL ───────────────────────────────────────────────────
-const SCENARIOS = {
-  "Customer Service": {
-    comm: { title: "Professional Email Response", prompt: "Write a professional email response to this customer complaint:", scenario: "Subject: Order #4891 — Still Not Arrived!\n\nI placed my order 3 weeks ago and it still hasn't arrived. Your tracking link doesn't work and I've emailed twice with no response. This is absolutely unacceptable. I want a full refund immediately or I'm disputing with my bank.", placeholder: "Write your professional response email here. Show empathy, take ownership, and resolve the issue clearly..." },
-    task: { title: "Customer Service Case File", instructions: "Create a 1-page customer service case study document. Include: (1) A real or fictional difficult customer scenario, (2) How you handled it step by step, (3) The outcome and what you learned. Upload as PDF or DOCX.", accepts: ".pdf,.doc,.docx" },
-    interview: [
-      { q: "Tell me about a time you turned an angry customer into a satisfied one. What did you do?", placeholder: "Describe the situation, your actions, and the result..." },
-      { q: "How do you stay calm and professional when a customer is being rude or unreasonable?", placeholder: "Explain your approach and any specific techniques you use..." },
-      { q: "What does excellent customer service mean to you and how do you deliver it consistently?", placeholder: "Share your philosophy and give a concrete example..." },
+const skills = [
+  {
+    id: 1,
+    icon: "🎧",
+    title: "Customer Service",
+    category: "entry",
+    categoryLabel: "Entry Level · Business",
+    demand: "explosive",
+    demandLabel: "🔥 Explosive Demand",
+    salary: "$400–$1,200/mo",
+    timeToReady: "4–6 weeks",
+    jobVolume: "58,000+ postings",
+    color: "linear-gradient(90deg, #00C48C, #2D6BE4)",
+    desc: "The #1 most hired remote role globally. Companies need people who can handle support via email, chat, and phone. If you communicate well in English, you can get hired.",
+    tools: ["Zendesk", "Intercom", "Freshdesk", "Slack", "Zoom", "HubSpot"],
+    roadmap: [
+      { title: "Communication Foundations", desc: "Professional English writing, email etiquette, tone and empathy training" },
+      { title: "Support Tools", desc: "Master Zendesk, Intercom or Freshdesk — the tools every employer uses" },
+      { title: "Live Chat & Ticketing", desc: "Handle real scenarios — complaints, refunds, escalations, follow-ups" },
+      { title: "Mock Assessment", desc: "VELA simulated customer interaction — scored and verified" },
+      { title: "Job Ready", desc: "Matched to CS roles at tech companies, e-commerce, and SaaS businesses" }
     ],
-    tools: [
-      { q: "In Zendesk, what is a 'macro'?", opts: ["A keyboard shortcut","A pre-written response template","A type of ticket","A reporting feature"], ans: 1 },
-      { q: "What does 'CSAT' stand for?", opts: ["Customer Service Analytics Tool","Customer Satisfaction Score","Centralised Support Action Team","Client Service Assessment Tracker"], ans: 1 },
-      { q: "Which metric measures how quickly support agents respond to tickets?", opts: ["Resolution rate","CSAT","First Response Time (FRT)","Ticket volume"], ans: 2 },
-      { q: "What is a 'ticket escalation'?", opts: ["Closing a ticket quickly","Moving a ticket to a higher-level agent or team","Deleting a difficult ticket","Reopening a resolved ticket"], ans: 1 },
-      { q: "In HubSpot, what is a 'contact property'?", opts: ["A customer's home address","A field that stores information about a contact","A type of email campaign","A sales pipeline stage"], ans: 1 },
-      { q: "What is 'omnichannel support'?", opts: ["Support via phone only","Supporting customers across multiple channels with a seamless experience","Having multiple support agents","Outsourcing customer service"], ans: 1 },
-      { q: "What does SLA stand for in customer service?", opts: ["Service Level Agreement","Standard Login Access","Support Level Analytics","Subscriber List Agreement"], ans: 0 },
-      { q: "Which is the best way to handle a customer asking for something outside your authority?", opts: ["Refuse politely","Make a promise you can't keep","Acknowledge, apologise, and escalate to someone who can help","Tell them to contact another company"], ans: 2 },
-      { q: "What is 'first contact resolution' (FCR)?", opts: ["Closing every ticket in under a minute","Resolving a customer issue in the first interaction without follow-up","Responding in under an hour","Routing tickets to the right agent first time"], ans: 1 },
-      { q: "What does 'AHT' stand for?", opts: ["Automated Help Tool","Average Handle Time","Account History Tracker","Agent Helpdesk Terminal"], ans: 1 },
-    ],
+    steps: ["Communication", "Tools", "Simulation", "Verified", "Placed"],
+    resources: [
+      { title: "Customer Service Fundamentals", url: "https://www.coursera.org/learn/customer-service-fundamentals", source: "Coursera", type: "Free" },
+      { title: "Zendesk Customer Service Training", url: "https://training.zendesk.com", source: "Zendesk", type: "Free" },
+      { title: "HubSpot Customer Service Certification", url: "https://academy.hubspot.com/courses/customer-service-training", source: "HubSpot Academy", type: "Cert" },
+      { title: "English for Professional Communication", url: "https://www.coursera.org/learn/english-communication-professional", source: "Coursera", type: "Free" },
+      { title: "Intercom Customer Support Mastery", url: "https://academy.intercom.com", source: "Intercom Academy", type: "Free" },
+      { title: "Customer Experience (CX) Fundamentals", url: "https://www.linkedin.com/learning/customer-experience-foundations", source: "LinkedIn Learning", type: "Free" },
+      { title: "Freshdesk Support Agent Training", url: "https://support.freshdesk.com/en/support/home", source: "Freshworks Academy", type: "Free" },
+      { title: "Google Project Management (soft skills module)", url: "https://www.coursera.org/professional-certificates/google-project-management", source: "Coursera", type: "Course" }
+    ]
   },
-  "Virtual Assistant": {
-    comm: { title: "Professional Email on Behalf of Executive", prompt: "Your executive asked you to write this email on their behalf:", scenario: "Send an email to David Chen at Acorn Partners rescheduling tomorrow's 2pm meeting to Thursday at the same time. Be professional. The executive's name is Sarah Williams.", placeholder: "Write the complete professional email as Sarah's VA..." },
-    task: { title: "VA Work Sample", instructions: "Create a document showing a sample week's work as a Virtual Assistant. Include: (1) A sample inbox management system you'd use, (2) A weekly schedule template for an executive, (3) A research brief on any topic of your choice (1 page). Upload as PDF or DOCX.", accepts: ".pdf,.doc,.docx" },
-    interview: [
-      { q: "How do you manage competing priorities when your executive has multiple urgent tasks at once?", placeholder: "Walk through your prioritisation approach..." },
-      { q: "Describe your system for managing someone else's inbox. How do you decide what needs attention first?", placeholder: "Explain your inbox management methodology..." },
-      { q: "What steps do you take to protect confidential information when working remotely as a VA?", placeholder: "Detail your approach to data security and confidentiality..." },
+  {
+    id: 2,
+    icon: "🤝",
+    title: "Virtual Assistant",
+    category: "entry",
+    categoryLabel: "Entry Level · Business",
+    demand: "explosive",
+    demandLabel: "🔥 Explosive Demand",
+    salary: "$500–$1,500/mo",
+    timeToReady: "4–8 weeks",
+    jobVolume: "45,000+ postings",
+    color: "linear-gradient(90deg, #FF6B6B, #FFA500)",
+    desc: "Executives and founders pay well for organised, reliable VAs who manage their calendar, inbox, research, and admin. Degree holders thrive here — it requires real intelligence.",
+    tools: ["Google Workspace", "Notion", "Trello", "Asana", "Calendly", "ChatGPT"],
+    roadmap: [
+      { title: "Admin & Organisation", desc: "Calendar management, email handling, scheduling, travel planning" },
+      { title: "Productivity Tools", desc: "Google Workspace, Notion, Trello — the VA tech stack" },
+      { title: "AI-Assisted VA Work", desc: "Use ChatGPT and AI tools to 10x your output as a VA" },
+      { title: "Executive Communication", desc: "Write on behalf of others, manage stakeholders, represent professionally" },
+      { title: "VELA Verified", desc: "Task simulation scored — clients see your actual work quality" }
     ],
-    tools: [
-      { q: "What is Google Workspace's 'shared drive' best used for?", opts: ["Personal file storage","Team file collaboration with consistent access","Sending large email attachments","Video conferencing"], ans: 1 },
-      { q: "In Notion, what is a 'database'?", opts: ["A code repository","A structured collection of pages with properties for organising information","A note-taking page","A calendar view"], ans: 1 },
-      { q: "What does Calendly primarily do?", opts: ["Sends automated emails","Allows others to book time in your calendar based on your availability","Manages social media posts","Tracks task completion"], ans: 1 },
-      { q: "What is Asana primarily used for?", opts: ["Video calls","Email marketing","Project and task management","Cloud file storage"], ans: 2 },
-      { q: "In Trello, what is a 'card'?", opts: ["A payment method","A contact record","A single task or item within a list","A type of board"], ans: 2 },
-      { q: "What is the main benefit of using ChatGPT as a VA?", opts: ["It replaces the VA entirely","It helps draft, research, and automate written tasks faster","It manages calendars automatically","It makes video calls"], ans: 1 },
-      { q: "Which Google tool is best for collaborative real-time document editing?", opts: ["Google Photos","Google Docs","Google Calendar","Google Drive"], ans: 1 },
-      { q: "What is Zoom primarily used for?", opts: ["File storage","Email communication","Video conferencing and online meetings","Project management"], ans: 2 },
-      { q: "What does 'EOD' mean in professional communication?", opts: ["End of Deal","End of Day","Email on Desktop","External Out of Date"], ans: 1 },
-      { q: "A VA receives a task marked 'ASAP' and another marked 'P1'. Which should they do first?", opts: ["ASAP — it sounds more urgent","P1 — it's a defined priority level","Both at the same time","Ask the executive to decide"], ans: 1 },
-    ],
+    steps: ["Admin", "Tools", "AI Skills", "Executive Comms", "Placed"],
+    resources: [
+      { title: "Google Workspace Learning Center", url: "https://workspace.google.com/intl/en/learning-center/", source: "Google", type: "Free" },
+      { title: "Notion Essential Training", url: "https://www.notion.so/help/guides", source: "Notion", type: "Free" },
+      { title: "Virtual Assistant Complete Course", url: "https://www.udemy.com/course/virtual-assistant-for-beginners/", source: "Udemy", type: "Free" },
+      { title: "ChatGPT Prompt Engineering for Beginners", url: "https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/", source: "DeepLearning.AI", type: "Free" },
+      { title: "Asana Academy Certification", url: "https://academy.asana.com", source: "Asana", type: "Cert" },
+      { title: "Trello Getting Started", url: "https://trello.com/guide", source: "Trello", type: "Free" },
+      { title: "Time Management Fundamentals", url: "https://www.linkedin.com/learning/time-management-fundamentals", source: "LinkedIn Learning", type: "Free" },
+      { title: "Make.com Automation Basics", url: "https://www.make.com/en/academy", source: "Make.com Academy", type: "Free" }
+    ]
   },
-  "Data Analysis": {
-    comm: { title: "Data Insights Summary Email", prompt: "Write a professional email presenting data findings to a non-technical manager:", scenario: "You've analysed last quarter's sales data and found that: Revenue is up 12% overall, but the North region is down 18%. Online sales grew 34% while in-store sales dropped 8%. The top-selling product category is Electronics (+28%). Write a clear, professional summary email to your manager.", placeholder: "Write your data insights email. Make it clear, professional, and actionable for a non-technical reader..." },
-    task: { title: "Data Analysis Portfolio Sample", instructions: "Create a data analysis report document. You can use any dataset (real or fictional). Include: (1) The question you were answering, (2) Your methodology, (3) Key findings with at least one chart or table, (4) Your recommendations. Upload as PDF or XLSX.", accepts: ".pdf,.xlsx,.xls,.csv,.docx" },
-    interview: [
-      { q: "Walk me through your process when you receive a new dataset to analyse. What are your first steps?", placeholder: "Describe your analytical workflow from raw data to insights..." },
-      { q: "How do you explain complex data findings to stakeholders who aren't technical?", placeholder: "Give an example of how you've translated data into business language..." },
-      { q: "Tell me about a time you found something unexpected in data. What did you do with that finding?", placeholder: "Describe the situation, your discovery, and the impact..." },
+  {
+    id: 3,
+    icon: "📊",
+    title: "Data Analysis",
+    category: "tech",
+    categoryLabel: "Tech · High Growth",
+    demand: "very-high",
+    demandLabel: "⚡ Very High Demand",
+    salary: "$800–$3,000/mo",
+    timeToReady: "3–5 months",
+    jobVolume: "40,000+ postings",
+    color: "linear-gradient(90deg, #2D6BE4, #7B61FF)",
+    desc: "Companies need people who can turn data into decisions. If you have a math or science background, this accelerates fast. One of the highest-paying accessible remote paths.",
+    tools: ["Excel", "SQL", "Python", "Tableau", "Power BI", "Google Sheets"],
+    roadmap: [
+      { title: "Excel & Google Sheets", desc: "Advanced formulas, pivot tables, data cleaning — the foundation" },
+      { title: "SQL Fundamentals", desc: "Query databases, extract insights, understand data structures" },
+      { title: "Python for Data", desc: "Pandas, NumPy, basic visualisation with Matplotlib" },
+      { title: "Visualisation & Reporting", desc: "Tableau or Power BI — tell stories with data" },
+      { title: "Portfolio Projects", desc: "3 real analysis projects for your GitHub — your proof of work" }
     ],
-    tools: [
-      { q: "In Excel, what does VLOOKUP do?", opts: ["Creates a chart","Searches for a value in a column and returns a corresponding value","Filters duplicate data","Calculates averages"], ans: 1 },
-      { q: "What SQL command retrieves data from a table?", opts: ["INSERT","UPDATE","SELECT","DELETE"], ans: 2 },
-      { q: "What is a pivot table used for?", opts: ["Creating formulas","Summarising and aggregating large datasets","Building dashboards","Writing SQL queries"], ans: 1 },
-      { q: "In statistics, what does 'mean' refer to?", opts: ["The most common value","The middle value","The average of all values","The range of values"], ans: 2 },
-      { q: "What Python library is most commonly used for data analysis?", opts: ["NumPy","Django","Pandas","Flask"], ans: 2 },
-      { q: "What does KPI stand for?", opts: ["Key Performance Indicator","Known Process Implementation","Key Product Index","Knowledge Performance Input"], ans: 0 },
-      { q: "What chart type is best for showing composition (parts of a whole)?", opts: ["Line chart","Scatter plot","Pie or donut chart","Histogram"], ans: 2 },
-      { q: "What is data cleaning?", opts: ["Deleting all old data","Identifying and fixing errors, inconsistencies, and missing values in a dataset","Formatting charts","Exporting data to CSV"], ans: 1 },
-      { q: "In SQL, what does GROUP BY do?", opts: ["Sorts results alphabetically","Groups rows with the same values for aggregate functions","Filters rows","Joins two tables"], ans: 1 },
-      { q: "What is an outlier in data?", opts: ["The most common value","A data point significantly different from the rest","A missing value","A duplicate entry"], ans: 1 },
-    ],
+    steps: ["Excel/SQL", "Python", "Visualisation", "Portfolio", "Placed"],
+    resources: [
+      { title: "Google Data Analytics Certificate", url: "https://www.coursera.org/professional-certificates/google-data-analytics", source: "Coursera / Google", type: "Cert" },
+      { title: "SQL for Data Science", url: "https://www.coursera.org/learn/sql-for-data-science", source: "Coursera", type: "Free" },
+      { title: "Excel Skills for Business", url: "https://www.coursera.org/specializations/excel", source: "Macquarie / Coursera", type: "Free" },
+      { title: "Power BI Full Course", url: "https://www.youtube.com/watch?v=AGrl-H87pRU", source: "YouTube · Pragmatic Works", type: "YouTube" },
+      { title: "Kaggle — Free Data Science Courses", url: "https://www.kaggle.com/learn", source: "Kaggle", type: "Free" },
+      { title: "IBM Data Analyst Certificate", url: "https://www.coursera.org/professional-certificates/ibm-data-analyst", source: "Coursera / IBM", type: "Cert" },
+      { title: "Tableau eLearning (Free)", url: "https://www.tableau.com/learn/training", source: "Tableau", type: "Free" },
+      { title: "Python for Everybody", url: "https://www.coursera.org/specializations/python", source: "Coursera / UMich", type: "Free" },
+      { title: "Statistics Fundamentals", url: "https://www.khanacademy.org/math/statistics-probability", source: "Khan Academy", type: "Free" }
+    ]
   },
-};
-
-// Default for skills without specific scenarios
-const DEFAULT_SCENARIO = {
-  comm: { title: "Professional Introduction Email", prompt: "Write a professional introduction email to a potential employer:", scenario: `You've found a remote ${candidate.skill} role at a company called TechGlobal. Write a compelling cold introduction email expressing your interest and briefly highlighting why you're a strong candidate.`, placeholder: "Write your professional introduction email here..." },
-  task: { title: "Skills Portfolio Document", instructions: `Create a 2-page document showcasing your ${candidate.skill} skills. Include: (1) Your relevant background and experience, (2) A sample piece of work or project demonstrating your skills, (3) What makes you stand out as a remote ${candidate.skill} professional. Upload as PDF or DOCX.`, accepts: ".pdf,.doc,.docx" },
-  interview: [
-    { q: `Why do you want to work remotely as a ${candidate.skill} professional, and what makes you suited for it?`, placeholder: "Share your motivation and remote work readiness..." },
-    { q: `What is your greatest strength in ${candidate.skill} and how does it translate to value for an employer?`, placeholder: "Be specific — give an example..." },
-    { q: "Where do you see yourself professionally in 2 years, and how does this remote role fit into that path?", placeholder: "Show ambition and a clear direction..." },
-  ],
-  tools: [
-    { q: "What does remote work primarily require?", opts: ["Office proximity","Reliable internet connection and self-discipline","The latest hardware","Daily commute"], ans: 1 },
-    { q: "Which tool is most commonly used for team communication in remote roles?", opts: ["Fax machine","In-person meetings","Slack or Microsoft Teams","Printed memos"], ans: 2 },
-    { q: "What is asynchronous communication?", opts: ["Communication happening in real time","Communication where responses aren't expected immediately","Video calling","Group messaging"], ans: 1 },
-    { q: "What does a strong remote work portfolio typically include?", opts: ["Just your CV","Evidence of completed work, testimonials, and demonstrated skills","A photo of your workspace","Your social media profiles"], ans: 1 },
-    { q: "What is the most important quality for a remote worker according to most employers?", opts: ["Working the fastest","Looking professional on video","Self-motivation and accountability","Having a home office"], ans: 2 },
-    { q: "How should you handle a missed deadline when working remotely?", opts: ["Say nothing and hope no one notices","Communicate proactively before the deadline if possible","Blame connection issues","Ask for a new deadline without explanation"], ans: 1 },
-    { q: "What is a 'standup' in a remote team context?", opts: ["A comedy show","A brief daily team check-in sharing progress and blockers","A formal performance review","A type of presentation"], ans: 1 },
-    { q: "Which tool would you use to share documents with a remote team?", opts: ["Email attachments only","Google Drive or Dropbox","USB drives","Printed documents"], ans: 1 },
-    { q: "What does 'time zone overlap' mean for remote work?", opts: ["Working overtime","Hours when distributed team members are all available simultaneously","Changing your timezone","Jet lag"], ans: 1 },
-    { q: "What is the best way to demonstrate reliability to a remote employer?", opts: ["Sending lots of emails","Meeting deadlines consistently and communicating proactively","Working very long hours","Being available 24/7"], ans: 1 },
-  ],
-};
-
-function getScenario() {
-  return SCENARIOS[candidate.skill] || DEFAULT_SCENARIO;
-}
-
-// ─── VERIF DEFINITIONS ────────────────────────────────────────────────────
-// ─── VELA 5-LAYER VERIFICATION FRAMEWORK ───────────────────────────────────
-const LAYERS = [
-  { id:"video",    icon:"id", title:"Layer 1 — Identity Verification",    shortTitle:"Identity Verified",     badge:"✔ Identity Verified",     desc:"Record a 60-second professional video introduction. Proves you are a real person with real communication ability.", auto: false, color:"#3B9EFF" },
-  { id:"comm",     icon:"brain", title:"Layer 2 — Skills Assessment",         shortTitle:"Skills Verified",       badge:"✔ Skills Verified",       desc:"Written scenario + mock interview scored by AI. Proves your actual skill level — not just what you claim.", auto: true,  color:"#00D48E" },
-  { id:"task",     icon:"folder", title:"Layer 3 — Portfolio Review",          shortTitle:"Portfolio Verified",    badge:"✔ Portfolio Verified",    desc:"Upload a real work sample — a report, design file, code, or case study. Human-reviewed within 48 hours.", auto: false, color:"#9333EA" },
-  { id:"tools",    icon:"globe", title:"Layer 4 — Remote Work Readiness",     shortTitle:"Remote Ready",          badge:"✔ Remote Ready",          desc:"10-question quiz on professional tools, async communication, and time zone management. Proves you can work remotely.", auto: true,  color:"#FFB347" },
-  { id:"interview",icon:"clock", title:"Layer 5 — Professional Reliability",  shortTitle:"Reliability Score",     badge:"✔ Reliability Verified",  desc:"3 in-depth situational questions. AI scores your judgment, professionalism, and reliability under pressure.", auto: true,  color:"#FF6B9D" },
+  {
+    id: 4,
+    icon: "🤖",
+    title: "Prompt Engineering & AI",
+    category: "ai",
+    categoryLabel: "AI · Fastest Growing",
+    demand: "explosive",
+    demandLabel: "🔥 Explosive Demand",
+    salary: "$700–$2,500/mo",
+    timeToReady: "6–10 weeks",
+    jobVolume: "35,000+ postings",
+    color: "linear-gradient(90deg, #7B61FF, #FF6B6B)",
+    desc: "The newest high-demand skill. Companies need people who know how to work with AI tools effectively — writing prompts, building workflows, training teams. Brand new field, less competition.",
+    tools: ["ChatGPT", "Claude", "Midjourney", "Make.com", "Zapier", "LangChain"],
+    roadmap: [
+      { title: "AI Fundamentals", desc: "How LLMs work, what they're good at, their limitations" },
+      { title: "Prompt Techniques", desc: "Chain of thought, few-shot, role prompting, structured outputs" },
+      { title: "AI Workflow Automation", desc: "Build automations with Make.com and Zapier using AI" },
+      { title: "Business Applications", desc: "Apply AI to customer service, content, data, and operations" },
+      { title: "Certified AI Professional", desc: "VELA AI certification — verified and employer-ready" }
+    ],
+    steps: ["AI Basics", "Prompting", "Automation", "Applied AI", "Certified"],
+    resources: [
+      { title: "ChatGPT Prompt Engineering for Developers", url: "https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/", source: "DeepLearning.AI", type: "Free" },
+      { title: "Prompt Engineering Guide", url: "https://www.promptingguide.ai", source: "DAIR.AI", type: "Free" },
+      { title: "Make.com Automation Academy", url: "https://www.make.com/en/academy", source: "Make.com", type: "Free" },
+      { title: "LangChain for Beginners", url: "https://www.youtube.com/watch?v=nAmC7SoVLd8", source: "YouTube · FreeCodeCamp", type: "YouTube" },
+      { title: "AI For Everyone — Andrew Ng", url: "https://www.coursera.org/learn/ai-for-everyone", source: "Coursera / DeepLearning.AI", type: "Free" },
+      { title: "Google AI Essentials", url: "https://grow.google/certificates/ai-essentials/", source: "Google", type: "Free" },
+      { title: "Zapier Learn Automation", url: "https://zapier.com/resources/guides", source: "Zapier", type: "Free" },
+      { title: "Microsoft AI Skills Challenge", url: "https://learn.microsoft.com/en-us/training/", source: "Microsoft Learn", type: "Free" }
+    ]
+  },
+  {
+    id: 5,
+    icon: "📱",
+    title: "Social Media Management",
+    category: "creative",
+    categoryLabel: "Creative · Business",
+    demand: "very-high",
+    demandLabel: "⚡ Very High Demand",
+    salary: "$500–$1,800/mo",
+    timeToReady: "6–10 weeks",
+    jobVolume: "32,000+ postings",
+    color: "linear-gradient(90deg, #FFA500, #FF6B6B)",
+    desc: "Every business needs a social media presence. Africans who understand both global platforms and local culture bring unique value. One of the most hireable creative skills.",
+    tools: ["Canva", "Buffer", "Hootsuite", "Meta Business Suite", "CapCut", "Later"],
+    roadmap: [
+      { title: "Platform Mastery", desc: "LinkedIn, Instagram, X, TikTok — how each algorithm works" },
+      { title: "Content Creation", desc: "Canva for graphics, CapCut for video, writing that converts" },
+      { title: "Strategy & Analytics", desc: "Content calendars, analytics, audience growth strategies" },
+      { title: "Scheduling & Tools", desc: "Buffer, Hootsuite, Later — manage multiple accounts efficiently" },
+      { title: "Portfolio", desc: "3 managed accounts or campaigns as proof of work" }
+    ],
+    steps: ["Platforms", "Content", "Strategy", "Tools", "Portfolio"],
+    resources: [
+      { title: "Meta Social Media Marketing Certificate", url: "https://www.coursera.org/professional-certificates/facebook-social-media-marketing", source: "Coursera / Meta", type: "Cert" },
+      { title: "HubSpot Social Media Marketing Certification", url: "https://academy.hubspot.com/courses/social-media", source: "HubSpot Academy", type: "Cert" },
+      { title: "Hootsuite Social Media Certification", url: "https://education.hootsuite.com", source: "Hootsuite Academy", type: "Cert" },
+      { title: "Buffer Blog — Social Media Strategy", url: "https://buffer.com/resources/social-media-marketing/", source: "Buffer", type: "Free" },
+      { title: "Canva Design School", url: "https://www.canva.com/learn/", source: "Canva", type: "Free" },
+      { title: "Content Marketing Fundamentals", url: "https://www.coursera.org/learn/content-marketing", source: "Coursera / UC Davis", type: "Free" },
+      { title: "TikTok Marketing Basics", url: "https://www.tiktok.com/business/en/blog", source: "TikTok Business", type: "Free" },
+      { title: "Analytics for Social Media", url: "https://www.linkedin.com/learning/learning-linkedin-analytics", source: "LinkedIn Learning", type: "Free" }
+    ]
+  },
+  {
+    id: 6,
+    icon: "✍️",
+    title: "Content Writing & Copywriting",
+    category: "creative",
+    categoryLabel: "Creative · High Demand",
+    demand: "very-high",
+    demandLabel: "⚡ Very High Demand",
+    salary: "$500–$2,000/mo",
+    timeToReady: "6–10 weeks",
+    jobVolume: "30,000+ postings",
+    color: "linear-gradient(90deg, #00C48C, #7B61FF)",
+    desc: "Businesses need words that sell, inform, and convert. Strong English writers from Africa are highly competitive here. Combines well with SEO for maximum hirability.",
+    tools: ["Grammarly", "Surfer SEO", "Jasper", "WordPress", "Hemingway", "Ahrefs"],
+    roadmap: [
+      { title: "Writing Foundations", desc: "Clarity, structure, persuasion — writing that actually works" },
+      { title: "Copywriting Frameworks", desc: "AIDA, PAS, StoryBrand — formulas that convert" },
+      { title: "SEO Writing", desc: "Keywords, structure, meta descriptions — rank on Google" },
+      { title: "Niche Specialisation", desc: "Pick a niche: tech, health, finance, SaaS — command higher rates" },
+      { title: "Writing Portfolio", desc: "5 published or sample pieces across different formats" }
+    ],
+    steps: ["Writing Basics", "Copywriting", "SEO", "Specialise", "Portfolio"],
+    resources: [
+      { title: "Google Digital Garage — Fundamentals of Digital Marketing", url: "https://learndigital.withgoogle.com/digitalgarage/course/digital-marketing", source: "Google", type: "Cert" },
+      { title: "Copyblogger — Free Copywriting Courses", url: "https://copyblogger.com/blog/", source: "Copyblogger", type: "Free" },
+      { title: "SEO Content Writing — Yoast", url: "https://yoast.com/academy/free-training-seo-copywriting/", source: "Yoast Academy", type: "Free" },
+      { title: "Content Marketing Certification", url: "https://academy.hubspot.com/courses/content-marketing", source: "HubSpot Academy", type: "Cert" },
+      { title: "Grammarly Writing Handbook", url: "https://www.grammarly.com/blog/writing-tips/", source: "Grammarly", type: "Free" },
+      { title: "Coursera — Good with Words: Writing and Editing", url: "https://www.coursera.org/learn/writing-editing-words", source: "Coursera / UMich", type: "Free" },
+      { title: "Email Marketing Copywriting (Mailchimp)", url: "https://mailchimp.com/resources/email-marketing-benchmarks/", source: "Mailchimp", type: "Free" },
+      { title: "Blogging Basics — Google Search Central", url: "https://developers.google.com/search/docs/fundamentals/creating-helpful-content", source: "Google", type: "Free" }
+    ]
+  },
+  {
+    id: 7,
+    icon: "🔍",
+    title: "SEO Specialist",
+    category: "tech",
+    categoryLabel: "Tech · Business",
+    demand: "high",
+    demandLabel: "✅ High Demand",
+    salary: "$600–$2,500/mo",
+    timeToReady: "2–4 months",
+    jobVolume: "28,000+ postings",
+    color: "linear-gradient(90deg, #2D6BE4, #00C48C)",
+    desc: "Every website wants to rank on Google. SEO specialists are consistently hired remotely with no location restrictions. Analytical thinkers excel here.",
+    tools: ["Ahrefs", "Semrush", "Google Search Console", "Screaming Frog", "Surfer SEO", "Moz"],
+    roadmap: [
+      { title: "SEO Fundamentals", desc: "How search engines work, ranking factors, on-page vs off-page" },
+      { title: "Keyword Research", desc: "Finding opportunities, understanding search intent, competitive analysis" },
+      { title: "Technical SEO", desc: "Site speed, crawlability, schema, Core Web Vitals" },
+      { title: "Link Building", desc: "Outreach, guest posting, authority building strategies" },
+      { title: "SEO Audit Portfolio", desc: "Real website audits as proof of your analytical capability" }
+    ],
+    steps: ["Fundamentals", "Keywords", "Technical", "Link Building", "Audit Portfolio"],
+    resources: [
+      { title: "Google SEO Starter Guide", url: "https://developers.google.com/search/docs/fundamentals/seo-starter-guide", source: "Google", type: "Free" },
+      { title: "Ahrefs SEO Course for Beginners", url: "https://ahrefs.com/academy/seo-training-course", source: "Ahrefs Academy", type: "Free" },
+      { title: "Semrush SEO Fundamentals Exam", url: "https://www.semrush.com/academy/courses/semrush-seo-fundamentals-course-with-greg-gifford/", source: "Semrush Academy", type: "Cert" },
+      { title: "Moz Beginner's Guide to SEO", url: "https://moz.com/beginners-guide-to-seo", source: "Moz", type: "Free" },
+      { title: "Yoast SEO for WordPress", url: "https://yoast.com/academy/free-training-yoast-seo-for-wordpress/", source: "Yoast Academy", type: "Free" },
+      { title: "Google Search Console Training", url: "https://support.google.com/webmasters/", source: "Google", type: "Free" },
+      { title: "Technical SEO — Screaming Frog Guide", url: "https://www.screamingfrog.co.uk/learn/", source: "Screaming Frog", type: "Free" },
+      { title: "Ubersuggest SEO Analyzer (Free Tool)", url: "https://neilpatel.com/ubersuggest/", source: "Neil Patel", type: "Practice" }
+    ]
+  },
+  {
+    id: 8,
+    icon: "💼",
+    title: "Project Management",
+    category: "business",
+    categoryLabel: "Business · Leadership",
+    demand: "very-high",
+    demandLabel: "⚡ Very High Demand",
+    salary: "$800–$3,500/mo",
+    timeToReady: "2–4 months",
+    jobVolume: "26,000+ postings",
+    color: "linear-gradient(90deg, #FFA500, #7B61FF)",
+    desc: "One of the most consistently remote-friendly careers. Companies need people who can keep projects on track, coordinate teams, and deliver results. Degree holders are already halfway there.",
+    tools: ["Asana", "Jira", "Monday.com", "Notion", "Slack", "MS Project"],
+    roadmap: [
+      { title: "PM Fundamentals", desc: "Scope, timeline, budget, risk — the four pillars of project management" },
+      { title: "Agile & Scrum", desc: "Sprints, standups, retrospectives — how modern tech teams work" },
+      { title: "Tool Mastery", desc: "Asana, Jira, Notion — manage projects where employers actually work" },
+      { title: "PMP or CAPM Prep", desc: "Entry certification that signals professional seriousness to employers" },
+      { title: "Simulated PM Case", desc: "VELA project scenario — assessed on planning and execution quality" }
+    ],
+    steps: ["PM Basics", "Agile", "Tools", "Certification", "Placed"],
+    resources: [
+      { title: "Google Project Management Certificate", url: "https://www.coursera.org/professional-certificates/google-project-management", source: "Coursera / Google", type: "Cert" },
+      { title: "PMI Project Management Basics", url: "https://www.pmi.org/learning/library", source: "PMI", type: "Free" },
+      { title: "Agile Foundations — LinkedIn Learning", url: "https://www.linkedin.com/learning/agile-foundations", source: "LinkedIn Learning", type: "Free" },
+      { title: "Scrum Guide (Official)", url: "https://scrumguides.org", source: "Scrum.org", type: "Free" },
+      { title: "Asana Project Management Academy", url: "https://academy.asana.com", source: "Asana", type: "Cert" },
+      { title: "Notion for Project Management", url: "https://www.notion.so/help/guides", source: "Notion", type: "Free" },
+      { title: "Jira Fundamentals Badge", url: "https://university.atlassian.com/student/catalog", source: "Atlassian University", type: "Cert" },
+      { title: "ClickUp Tutorial — Full Course", url: "https://www.youtube.com/watch?v=p0_1eSxABMk", source: "YouTube · ClickUp", type: "YouTube" },
+      { title: "Risk Management Basics", url: "https://www.coursera.org/learn/risk-management-project", source: "Coursera", type: "Free" }
+    ]
+  },
+  {
+    id: 9,
+    icon: "🎨",
+    title: "UI/UX Design",
+    category: "creative",
+    categoryLabel: "Creative · Tech",
+    demand: "high",
+    demandLabel: "✅ High Demand",
+    salary: "$700–$3,000/mo",
+    timeToReady: "3–5 months",
+    jobVolume: "24,000+ postings",
+    color: "linear-gradient(90deg, #FF6B6B, #7B61FF)",
+    desc: "Every app and website needs designers. No coding required. If you have visual instincts and can learn Figma, this path leads to some of the best-paid remote creative work available.",
+    tools: ["Figma", "Adobe XD", "Maze", "Miro", "Lottie", "Zeroheight"],
+    roadmap: [
+      { title: "Design Principles", desc: "Typography, colour, layout, hierarchy — the visual language of design" },
+      { title: "Figma Mastery", desc: "Components, auto-layout, prototyping — the industry standard tool" },
+      { title: "UX Research", desc: "User interviews, personas, journey mapping, usability testing" },
+      { title: "Case Study Projects", desc: "3 end-to-end design case studies solving real problems" },
+      { title: "Portfolio Site", desc: "Professional design portfolio — your ticket to global remote roles" }
+    ],
+    steps: ["Design Basics", "Figma", "UX Research", "Case Studies", "Portfolio"],
+    resources: [
+      { title: "Google UX Design Certificate", url: "https://www.coursera.org/professional-certificates/google-ux-design", source: "Coursera / Google", type: "Cert" },
+      { title: "Figma Tutorial for Beginners", url: "https://www.youtube.com/watch?v=FTFaQWZBqQ8", source: "YouTube · Figma", type: "YouTube" },
+      { title: "Interaction Design Foundation (IxDF)", url: "https://www.interaction-design.org/courses", source: "IxDF", type: "Course" },
+      { title: "Nielsen Norman Group — UX Articles", url: "https://www.nngroup.com/articles/", source: "NN/g", type: "Free" },
+      { title: "Figma — Free Design Courses", url: "https://www.figma.com/resources/learn-design/", source: "Figma", type: "Free" },
+      { title: "UX Design Fundamentals — Coursera", url: "https://www.coursera.org/learn/ux-design-fundamentals", source: "Coursera / CalArts", type: "Free" },
+      { title: "Maze Usability Testing Guide", url: "https://maze.co/guides/", source: "Maze", type: "Free" },
+      { title: "Mobbin — UI Design Inspiration", url: "https://mobbin.com", source: "Mobbin", type: "Practice" }
+    ]
+  },
+  {
+    id: 10,
+    icon: "📧",
+    title: "Email Marketing",
+    category: "business",
+    categoryLabel: "Business · Marketing",
+    demand: "high",
+    demandLabel: "✅ High Demand",
+    salary: "$500–$2,000/mo",
+    timeToReady: "6–10 weeks",
+    jobVolume: "22,000+ postings",
+    color: "linear-gradient(90deg, #00C48C, #FFA500)",
+    desc: "Email generates the highest ROI of any marketing channel. Businesses constantly hire for this. Learn copywriting plus email tools and you're highly hireable within 2 months.",
+    tools: ["Mailchimp", "Klaviyo", "ConvertKit", "ActiveCampaign", "Canva", "HubSpot"],
+    roadmap: [
+      { title: "Email Marketing Strategy", desc: "List building, segmentation, automation, deliverability basics" },
+      { title: "Copywriting for Email", desc: "Subject lines, CTAs, sequences — email copy that converts" },
+      { title: "Platform Mastery", desc: "Klaviyo for e-commerce, ConvertKit for creators, Mailchimp basics" },
+      { title: "A/B Testing & Analytics", desc: "Open rates, click rates, conversion — data-driven optimisation" },
+      { title: "Campaign Portfolio", desc: "Real or simulated campaigns with documented results" }
+    ],
+    steps: ["Strategy", "Copywriting", "Platforms", "Analytics", "Portfolio"],
+    resources: [
+      { title: "HubSpot Email Marketing Certification", url: "https://academy.hubspot.com/courses/email-marketing", source: "HubSpot Academy", type: "Cert" },
+      { title: "Mailchimp Foundations of Email", url: "https://mailchimp.com/resources/email-marketing-benchmarks/", source: "Mailchimp", type: "Free" },
+      { title: "Klaviyo Email Marketing Course", url: "https://www.klaviyo.com/marketing-resources", source: "Klaviyo", type: "Free" },
+      { title: "ActiveCampaign Certification", url: "https://www.activecampaign.com/education", source: "ActiveCampaign", type: "Cert" },
+      { title: "Brevo Email Marketing Academy", url: "https://www.brevo.com/blog/email-marketing/", source: "Brevo", type: "Free" },
+      { title: "Email Copywriting Mastery", url: "https://copyblogger.com/email-marketing/", source: "Copyblogger", type: "Free" },
+      { title: "Litmus Email Analytics Guide", url: "https://www.litmus.com/blog/", source: "Litmus", type: "Free" },
+      { title: "SendGrid Email Deliverability Guide", url: "https://sendgrid.com/blog/email-deliverability/", source: "SendGrid", type: "Free" }
+    ]
+  },
+  {
+    id: 11,
+    icon: "🔐",
+    title: "Cybersecurity Analyst",
+    category: "tech",
+    categoryLabel: "Tech · High Growth",
+    demand: "explosive",
+    demandLabel: "🔥 Explosive Demand",
+    salary: "$1,000–$4,000/mo",
+    timeToReady: "4–6 months",
+    jobVolume: "20,000+ postings",
+    color: "linear-gradient(90deg, #7B61FF, #2D6BE4)",
+    desc: "Cyber threats are rising globally and companies are hiring fast. One of the highest-paying entry paths in tech. Analytical minds from any background can enter this field with the right cert.",
+    tools: ["Wireshark", "Kali Linux", "Splunk", "Nmap", "Metasploit", "CompTIA"],
+    roadmap: [
+      { title: "Networking Fundamentals", desc: "TCP/IP, DNS, firewalls, VPNs — how networks actually work" },
+      { title: "Security Concepts", desc: "Threats, vulnerabilities, attack vectors, defence strategies" },
+      { title: "CompTIA Security+", desc: "The entry-level certification that opens doors globally" },
+      { title: "Hands-On Practice", desc: "TryHackMe and HackTheBox labs — real practice environments" },
+      { title: "SOC Analyst Ready", desc: "Security Operations Center analyst role — most common entry point" }
+    ],
+    steps: ["Networking", "Security Concepts", "Security+", "Lab Practice", "SOC Ready"],
+    resources: [
+      { title: "Google Cybersecurity Certificate", url: "https://www.coursera.org/professional-certificates/google-cybersecurity", source: "Coursera / Google", type: "Cert" },
+      { title: "TryHackMe — Free Cybersecurity Training", url: "https://tryhackme.com", source: "TryHackMe", type: "Practice" },
+      { title: "CompTIA Security+ Study Guide", url: "https://www.comptia.org/certifications/security", source: "CompTIA", type: "Course" },
+      { title: "Cybrary — Free Cybersecurity Courses", url: "https://www.cybrary.it", source: "Cybrary", type: "Free" },
+      { title: "OWASP Top 10 Web Security Risks", url: "https://owasp.org/www-project-top-ten/", source: "OWASP", type: "Free" },
+      { title: "HackTheBox Academy", url: "https://academy.hackthebox.com", source: "HackTheBox", type: "Practice" },
+      { title: "NIST Cybersecurity Framework", url: "https://www.nist.gov/cyberframework", source: "NIST", type: "Free" },
+      { title: "IBM Cybersecurity Analyst Certificate", url: "https://www.coursera.org/professional-certificates/ibm-cybersecurity-analyst", source: "Coursera / IBM", type: "Cert" }
+    ]
+  },
+  {
+    id: 12,
+    icon: "📚",
+    title: "Online Tutoring & Education",
+    category: "entry",
+    categoryLabel: "Entry Level · Education",
+    demand: "high",
+    demandLabel: "✅ High Demand",
+    salary: "$400–$1,500/mo",
+    timeToReady: "2–4 weeks",
+    jobVolume: "18,000+ postings",
+    color: "linear-gradient(90deg, #FFA500, #00C48C)",
+    desc: "If you have a degree, you already qualify. Math, science, English, and test prep tutors are hired constantly. One of the fastest paths to earning remotely with existing credentials.",
+    tools: ["Zoom", "Google Meet", "Teachable", "Notion", "Loom", "Miro"],
+    roadmap: [
+      { title: "Subject Mastery Proof", desc: "Document your credentials and areas of expertise clearly" },
+      { title: "Online Teaching Methods", desc: "Engagement, explanation, assessment — teaching that works virtually" },
+      { title: "Platform Profiles", desc: "VIPKid, Preply, Wyzant, Cambly — set up verified tutor profiles" },
+      { title: "First 10 Sessions", desc: "Build reviews and rating — social proof drives more bookings" },
+      { title: "Niche & Scale", desc: "Specialise in exam prep, coding, or professional skills for higher rates" }
+    ],
+    steps: ["Your Credentials", "Online Teaching", "Platforms", "First Reviews", "Scale"],
+    resources: [
+      { title: "Coursera Teaching Skills for Non-Educators", url: "https://www.coursera.org/learn/teach", source: "Coursera", type: "Free" },
+      { title: "Khan Academy Teacher Resources", url: "https://www.khanacademy.org/teachers", source: "Khan Academy", type: "Free" },
+      { title: "Google for Education Training", url: "https://edu.google.com/for-educators/", source: "Google", type: "Free" },
+      { title: "Zoom for Online Teaching Guide", url: "https://support.zoom.us/hc/en-us/categories/200101697", source: "Zoom", type: "Free" },
+      { title: "Teachable — Course Creation Guide", url: "https://teachable.com/blog", source: "Teachable", type: "Free" },
+      { title: "Bloom's Taxonomy — Teaching Methods", url: "https://tips.uark.edu/using-blooms-taxonomy/", source: "UofArkansas", type: "Free" },
+      { title: "Thinkific Free Plan — Build Courses", url: "https://www.thinkific.com", source: "Thinkific", type: "Free" },
+      { title: "Preply Tutor Academy", url: "https://preply.com/en/blog/category/tutoring/", source: "Preply", type: "Free" }
+    ]
+  },
+  {
+    id: 13,
+    icon: "💰",
+    title: "Bookkeeping & Accounting",
+    category: "business",
+    categoryLabel: "Business · Finance",
+    demand: "very-high",
+    demandLabel: "⚡ Very High Demand",
+    salary: "$600–$2,500/mo",
+    timeToReady: "2–4 months",
+    jobVolume: "17,000+ postings",
+    color: "linear-gradient(90deg, #2D6BE4, #FFA500)",
+    desc: "Accounting and finance grew 30%+ in remote job postings in 2025. Every business needs financial management. Highly trusted remote role that pays consistently well.",
+    tools: ["QuickBooks", "Xero", "Wave", "Excel", "FreshBooks", "Gusto"],
+    roadmap: [
+      { title: "Accounting Fundamentals", desc: "Debits, credits, financial statements — the core language of business finance" },
+      { title: "QuickBooks & Xero", desc: "The two most in-demand bookkeeping platforms globally" },
+      { title: "Payroll & Tax Basics", desc: "Understanding payroll processing and basic tax preparation" },
+      { title: "QuickBooks Certification", desc: "Official certification that employers specifically look for" },
+      { title: "First Clients", desc: "Start with small businesses — build a trusted track record" }
+    ],
+    steps: ["Accounting Basics", "Software", "Payroll/Tax", "Certified", "Placed"],
+    resources: [
+      { title: "QuickBooks ProAdvisor Certification", url: "https://quickbooks.intuit.com/accountants/quickbooks-online-certification/", source: "Intuit / QuickBooks", type: "Cert" },
+      { title: "Xero Advisor Certification", url: "https://www.xero.com/uk/advisor-programme/xero-advisor-certification/", source: "Xero", type: "Cert" },
+      { title: "Accounting Foundations — Coursera", url: "https://www.coursera.org/learn/accounting-fundamentals", source: "Coursera / UVA", type: "Free" },
+      { title: "Bookkeeping Basics — AccountingCoach", url: "https://www.accountingcoach.com/bookkeeping/explanation", source: "AccountingCoach", type: "Free" },
+      { title: "Wave Accounting — Free Tool + Tutorials", url: "https://www.waveapps.com/learning-centre/", source: "Wave", type: "Free" },
+      { title: "Khan Academy — Accounting", url: "https://www.khanacademy.org/economics-finance-domain/core-finance/accounting-and-financial-statements", source: "Khan Academy", type: "Free" },
+      { title: "AIPB Bookkeeper Certification Prep", url: "https://www.aipb.org", source: "AIPB", type: "Course" },
+      { title: "FreshBooks Accounting Glossary", url: "https://www.freshbooks.com/hub/accounting", source: "FreshBooks", type: "Free" }
+    ]
+  },
+  {
+    id: 14,
+    icon: "🛒",
+    title: "E-Commerce & Shopify",
+    category: "business",
+    categoryLabel: "Business · Tech",
+    demand: "high",
+    demandLabel: "✅ High Demand",
+    salary: "$500–$2,000/mo",
+    timeToReady: "6–10 weeks",
+    jobVolume: "15,000+ postings",
+    color: "linear-gradient(90deg, #00C48C, #FF6B6B)",
+    desc: "The global e-commerce market is massive and growing. Shopify store management, product listing, ads management, and customer handling are all hireable standalone skills.",
+    tools: ["Shopify", "WooCommerce", "Meta Ads", "Google Ads", "Canva", "Klaviyo"],
+    roadmap: [
+      { title: "E-Commerce Foundations", desc: "How online stores work — products, fulfilment, customer journey" },
+      { title: "Shopify Operations", desc: "Store setup, product management, orders, apps ecosystem" },
+      { title: "Digital Advertising", desc: "Meta Ads and Google Ads — drive traffic that converts" },
+      { title: "Analytics & Optimisation", desc: "Conversion rate optimisation, analytics, improving performance" },
+      { title: "E-Commerce Portfolio", desc: "A managed or built store as your core proof of work" }
+    ],
+    steps: ["Foundations", "Shopify", "Paid Ads", "Analytics", "Portfolio"],
+    resources: [
+      { title: "Shopify Partner Certification", url: "https://www.shopify.com/partners/certification", source: "Shopify", type: "Cert" },
+      { title: "Shopify Free Courses — Compass", url: "https://www.shopify.com/compass", source: "Shopify Compass", type: "Free" },
+      { title: "Google Digital Marketing Certificate", url: "https://learndigital.withgoogle.com/digitalgarage/course/digital-marketing", source: "Google", type: "Cert" },
+      { title: "Meta Ads Manager Fundamentals", url: "https://www.facebook.com/business/learn/courses", source: "Meta Blueprint", type: "Free" },
+      { title: "Amazon Seller University", url: "https://sellercentral.amazon.com/learn", source: "Amazon", type: "Free" },
+      { title: "Klaviyo Email + SMS for E-Commerce", url: "https://www.klaviyo.com/marketing-resources", source: "Klaviyo", type: "Free" },
+      { title: "E-Commerce SEO Guide", url: "https://ahrefs.com/blog/ecommerce-seo/", source: "Ahrefs Blog", type: "Free" },
+      { title: "Conversion Rate Optimisation — CXL", url: "https://cxl.com/blog/cro-guide/", source: "CXL", type: "Free" }
+    ]
+  },
+  {
+    id: 15,
+    icon: "👥",
+    title: "HR & Recruitment",
+    category: "business",
+    categoryLabel: "Business · People",
+    demand: "very-high",
+    demandLabel: "⚡ Very High Demand",
+    salary: "$600–$2,500/mo",
+    timeToReady: "2–4 months",
+    jobVolume: "14,000+ postings",
+    color: "linear-gradient(90deg, #FF6B6B, #FFA500)",
+    desc: "HR and recruiting grew 19%+ in remote postings in 2025. Companies hiring globally need remote HR professionals who understand international talent. Africans have a natural advantage here.",
+    tools: ["LinkedIn Recruiter", "Workday", "BambooHR", "Greenhouse", "Lever", "ATS systems"],
+    roadmap: [
+      { title: "HR Fundamentals", desc: "Employment law basics, onboarding, benefits, performance management" },
+      { title: "Recruitment Process", desc: "Sourcing, screening, interviewing, offer management" },
+      { title: "LinkedIn Recruiting", desc: "Boolean search, InMail, talent pipeline building" },
+      { title: "ATS Systems", desc: "Greenhouse, Lever, Workday — tools every HR team uses" },
+      { title: "SHRM-CP Prep", desc: "Entry HR certification that signals professional credibility globally" }
+    ],
+    steps: ["HR Basics", "Recruitment", "LinkedIn", "ATS Tools", "Certified"],
+    resources: [
+      { title: "SHRM HR Fundamentals", url: "https://www.shrm.org/learning/", source: "SHRM", type: "Course" },
+      { title: "LinkedIn Recruiter Certification", url: "https://business.linkedin.com/talent-solutions/blog/linkedin-recruiter/", source: "LinkedIn", type: "Free" },
+      { title: "Google — People Management", url: "https://www.coursera.org/learn/people-management", source: "Coursera / Google", type: "Free" },
+      { title: "HR Analytics — Coursera", url: "https://www.coursera.org/learn/people-analytics", source: "Coursera / Wharton", type: "Free" },
+      { title: "Greenhouse Recruiting Certification", url: "https://www.greenhouse.com/resources/", source: "Greenhouse", type: "Free" },
+      { title: "BambooHR HR Glossary + Guides", url: "https://www.bamboohr.com/resources/hr-glossary/", source: "BambooHR", type: "Free" },
+      { title: "Diversity & Inclusion Fundamentals", url: "https://www.coursera.org/learn/diversity-inclusion-workplace", source: "Coursera / USF", type: "Free" },
+      { title: "Indeed — Employer Academy", url: "https://indeed.com/lead/employer-resources", source: "Indeed", type: "Free" }
+    ]
+  }
 ];
 
-// Badge label mapping for employer-facing pages
-const LAYER_BADGE_LABELS = {
-  video:     "✔ Identity Verified",
-  comm:      "✔ Skills Verified",
-  task:      "✔ Portfolio Verified",
-  tools:     "✔ Remote Ready",
-  interview: "✔ Reliability Verified",
-};
-
-// Short labels for pills
-const LAYER_SHORT_LABELS = {
-  video:     "Identity",
-  comm:      "Skills",
-  task:      "Portfolio",
-  tools:     "Remote Ready",
-  interview: "Reliability",
-};
-
-// ─── PASSPORT ─────────────────────────────────────────────────────────────
-function updatePassport() {
-  const initials = candidate.name.split(" ").map(w=>w[0]).join("").toUpperCase().slice(0,2);
-  document.getElementById("pp-avatar").textContent = initials || "?";
-  document.getElementById("pp-name").textContent = candidate.name;
-  document.getElementById("pp-skill").innerHTML = candidate.skill
-    ? `${candidate.skill} · ${candidate.country || "Africa"}`
-    : `Skill path not set · <a href="profile.html" style="color:var(--accent);text-decoration:none">Complete your profile first →</a>`;
-
-  const passed = LAYERS.filter(l => verifState[l.id]?.status === "passed" || verifState[l.id]?.status === "review");
-  const allDone = passed.length === LAYERS.length;
-  // Calculate reliability score based on layers completed
-  const reliabilityScore = Math.round((passed.length / LAYERS.length) * 100);
-
-  document.getElementById("badge-icon").textContent = allDone ? "✅" : passed.length >= 3 ? "🔓" : "🔒";
-  document.getElementById("badge-status").textContent = allDone ? "VELA VERIFIED ™" : passed.length >= 3 ? `${passed.length} / 5 Layers` : "Not Yet Verified";
-
-  const badges = document.getElementById("passport-badges");
-  // Show VELA Score from profile if available
-  try {
-    const profileKeys = Object.keys(localStorage).filter(k => k.startsWith('vela_') && !k.includes('_step') && !k.includes('_quiz') && !k.includes('_theme') && !k.includes('_verif') && !k.includes('_role') && !k.includes('_skill') && !k.includes('_tool'));
-    if (profileKeys.length > 0) {
-      const p = JSON.parse(localStorage.getItem(profileKeys[0]) || '{}');
-      if (p.name) { candidate.name = p.name; document.getElementById('pp-name').textContent = p.name; }
-      if (p.skill) { candidate.skill = p.skill; document.getElementById('pp-skill').textContent = p.skill + (p.country ? ' · ' + p.country : ''); }
-      const scoreEl = document.getElementById('vela-score-display');
-      if (scoreEl && p.total_score) scoreEl.textContent = p.total_score + '/100';
-    }
-  } catch(e) {}
-
-  badges.innerHTML = LAYERS.map(l => {
-    const s = verifState[l.id]?.status;
-    const cls = s === "passed" ? "passed" : s === "review" ? "review" : s === "failed" ? "failed" : "locked";
-    const icon = s === "passed" ? "✓" : s === "review" ? "⏳" : s === "failed" ? "✗" : "○";
-    return `<span class="badge-chip ${cls}">${icon} ${l.shortTitle}</span>`;
-  }).join("");
-
-  if (allDone) document.getElementById("complete-banner").style.display = "block";
+function getDemandClass(d) {
+  if (d === 'explosive') return 'demand-explosive';
+  if (d === 'very-high') return 'demand-very-high';
+  return 'demand-high';
 }
 
-// ─── RENDER CARDS ─────────────────────────────────────────────────────────
-function renderCards() {
-  const grid = document.getElementById("verif-grid");
-  grid.innerHTML = LAYERS.map((layer, idx) => {
-    const state = verifState[layer.id] || {};
-    const status = state.status || "pending";
-    const score = state.score;
-    const cardClass = status === "passed" ? "passed-card" : status === "failed" ? "failed-card" : "";
-    const iconClass = status === "passed" ? "passed" : status === "failed" ? "failed" : status === "review" ? "review" : "";
-    const statusLabel = status === "passed" ? "Passed" : status === "failed" ? "Try Again" : status === "review" ? "Under Review" : "Not Started";
-    const statusClass = `status-${status === "pending" ? "pending" : status}`;
-
-    return `
-    <div class="verif-card ${cardClass}" id="card-${layer.id}">
-      <div class="verif-header" onclick="toggleCard('${layer.id}')">
-        <div class="verif-icon-wrap ${iconClass}" style="background:${iconClass==='icon-passed'?layer.color+'20':iconClass==='icon-review'?'rgba(255,165,0,0.1)':''};border-color:${iconClass==='icon-passed'?layer.color+'50':iconClass==='icon-review'?'rgba(255,165,0,0.3)':''};color:${iconClass==='icon-passed'?layer.color:iconClass==='icon-review'?'#FFB347':'var(--muted)'}">
-          ${({"video":'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M15 9h2M15 13h2"/></svg>',"comm":'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="12" y2="17"/></svg>',"task":'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><path d="M8 12l2 2 4-4"/></svg>',"tools":'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',"interview":'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>'})[layer.id] || layer.icon}
-        </div>
-        <div class="verif-meta">
-          <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap">
-            <span style="font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:${layer.color};background:${layer.color}18;border:1px solid ${layer.color}30;padding:0.15rem 0.55rem;border-radius:20px">${layer.shortTitle}</span>
-            ${status === 'passed' ? `<span style="font-size:0.68rem;font-weight:800;color:var(--accent)">✅ ${layer.badge}</span>` : ''}
+function renderCards(filter = 'all') {
+  const grid = document.getElementById('skills-grid');
+  const filtered = filter === 'all' ? skills : skills.filter(s => s.category === filter);
+  
+  grid.innerHTML = filtered.map((s, i) => `
+    <div class="card" onclick="openModal(${s.id})" style="animation: fadeUp 0.4s ${i * 0.05}s both">
+      <div class="card-top-bar" style="background: ${s.color}"></div>
+      <div class="card-body">
+        <div class="card-header">
+          <div class="card-icon-title">
+            <div class="card-icon">${s.icon}</div>
+            <div>
+              <div class="card-title">${s.title}</div>
+              <div class="card-category">${s.categoryLabel}</div>
+            </div>
           </div>
-          <div class="verif-title">${layer.title.includes(' — ') ? layer.title.split(' — ')[1] : layer.title}</div>
-          <div class="verif-desc">${layer.desc} ${layer.auto ? "· <span style='color:var(--accent);font-size:0.72rem'>⚡ AI-scored instantly</span>" : "· <span style='color:var(--warn);font-size:0.72rem'>👤 Human reviewed</span>"}</div>
+          <span class="demand-badge ${getDemandClass(s.demand)}">${s.demandLabel}</span>
         </div>
-        <div class="verif-right">
-          ${score !== undefined ? `<div class="verif-score" style="color:${score>=70?'var(--accent)':score>=50?'var(--warn)':'var(--danger)'}">${score}<span style="font-size:0.7rem;color:var(--muted);font-weight:400">/100</span></div>` : ""}
-          <span class="verif-status ${statusClass}">${statusLabel}</span>
-          <span class="chevron" id="chevron-${layer.id}">▼</span>
+
+        <p class="card-desc">${s.desc}</p>
+
+        <div class="card-stats">
+          <div class="stat-item">
+            <div class="stat-val">${s.salary}</div>
+            <div class="stat-lbl">Monthly Range</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <div class="stat-val">${s.timeToReady}</div>
+            <div class="stat-lbl">To Job Ready</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <div class="stat-val">${s.jobVolume}</div>
+            <div class="stat-lbl">Open Roles</div>
+          </div>
         </div>
-      </div>
-      <div class="verif-body" id="body-${layer.id}">
-        <div class="verif-body-inner">
-          ${renderLayerBody(layer, state)}
+
+        <div class="roadmap-preview">
+          <div class="roadmap-label">Your Roadmap</div>
+          <div class="roadmap-steps">
+            ${s.steps.map((step, i) => `
+              <div class="roadmap-step">
+                <div class="step-dot ${i === 0 ? 'active' : ''}">${i + 1}</div>
+                <div class="step-name">${step}</div>
+              </div>
+            `).join('')}
+          </div>
         </div>
-      </div>
-    </div>`;
-  }).join("");
-}
 
-function renderLayerBody(layer, state) {
-  const scenario = getScenario();
-  const status = state.status;
-
-  if (layer.id === "comm") return renderComm(scenario.comm, state);
-  if (layer.id === "task") return renderTask(scenario.task, state);
-  if (layer.id === "tools") return renderTools(state);
-  if (layer.id === "video") return renderVideo(state);
-  if (layer.id === "interview") return renderInterview(scenario.interview, state);
-  return "";
-}
-
-// ─── COMM ─────────────────────────────────────────────────────────────────
-function renderComm(s, state) {
-  if (state.status === "passed" || state.status === "failed") {
-    return renderResult("comm", state);
-  }
-  return `
-    <div class="scenario-box">
-      <div class="scenario-label">${s.title}</div>
-      <div class="scenario-text">${s.prompt}<br/><br/><em style="color:var(--muted)">${s.scenario}</em></div>
-    </div>
-    <label class="vf-label">Your Response</label>
-    <textarea class="vf-textarea" id="comm-response" placeholder="${s.placeholder}" style="min-height:160px">${state.draft||""}</textarea>
-    <div id="comm-feedback"></div>
-    <button class="btn-submit" onclick="submitComm()">
-      <span>Submit for AI Scoring</span> <span>→</span>
-    </button>`;
-}
-
-// ─── TASK ─────────────────────────────────────────────────────────────────
-function renderTask(t, state) {
-  if (state.status === "review") {
-    return `<div class="upload-done" style="margin-top:0">
-      <span>✅</span>
-      <div>
-        <div class="upload-done-name">${state.filename || "Document uploaded"}</div>
-        <div style="font-size:0.75rem;color:var(--muted);margin-top:0.2rem">Under review by VELA team. You'll be notified within 24–48 hours.</div>
-      </div>
-    </div>`;
-  }
-  return `
-    <div class="scenario-box">
-      <div class="scenario-label">Your Task</div>
-      <div class="scenario-text">${t.instructions}</div>
-    </div>
-    <div class="upload-zone" id="upload-zone-task" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop('task',event)">
-      <input type="file" accept="${t.accepts}" onchange="handleFile('task',this)"/>
-      <div class="upload-icon">📄</div>
-      <div class="upload-title">Drop your document here or click to browse</div>
-      <div class="upload-hint">Accepts: ${t.accepts.split(",").join(", ")} · Max 10MB</div>
-    </div>
-    <div id="task-file-info"></div>
-    <button class="btn-submit" id="btn-submit-task" onclick="submitTask()" style="display:none">
-      <span>Submit for Review</span> <span>→</span>
-    </button>`;
-}
-
-// ─── TOOLS ────────────────────────────────────────────────────────────────
-function renderTools(state) {
-  if (state.status === "passed" || state.status === "failed") {
-    return renderResult("tools", state);
-  }
-  const scenario = getScenario();
-  const tools = scenario.tools || DEFAULT_SCENARIO.tools;
-  return `
-    ${tools.map((q,i) => `
-      <div class="vq-item">
-        <div class="vq-text"><span class="vq-num">Q${i+1}.</span>${q.q}</div>
-        <div class="vq-options">
-          ${q.opts.map((opt,ai) => `
-            <div class="vq-opt" id="tools-q${i}-a${ai}" onclick="selectTool(${i},${ai})">${opt}</div>
-          `).join("")}
+        <div class="tools-row">
+          ${s.tools.slice(0,4).map(t => `<span class="tool-tag">${t}</span>`).join('')}
+          ${s.tools.length > 4 ? `<span class="tool-tag">+${s.tools.length - 4} more</span>` : ''}
         </div>
-      </div>`).join("")}
-    <button class="btn-submit" onclick="submitTools()">
-      <span>Submit Answers</span> <span>→</span>
-    </button>`;
-}
 
-// ─── VIDEO ────────────────────────────────────────────────────────────────
-function renderVideo(state) {
-  if (state.status === "review") {
-    return `<div class="upload-done" style="margin-top:0">
-      <span>✅</span>
-      <div>
-        <div class="upload-done-name">${state.filename || "Video uploaded"}</div>
-        <div style="font-size:0.75rem;color:var(--muted);margin-top:0.2rem">Under review by VELA team. Reviewed within 24–48 hours.</div>
-      </div>
-    </div>`;
-  }
-  return `
-    <div class="scenario-box">
-      <div class="scenario-label">What to cover in 60 seconds</div>
-      <div class="scenario-text">
-        1. Your name, country, and skill path<br/>
-        2. Your relevant background in 1–2 sentences<br/>
-        3. Why you want remote work and what you bring to an employer<br/>
-        4. One thing that makes you stand out<br/><br/>
-        <span style="color:var(--muted);font-size:0.82rem">Record using Loom, your phone, or any camera. Upload as MP4, MOV, or WebM.</span>
+        <button class="card-cta">View Full Roadmap →</button>
       </div>
     </div>
-    <div class="upload-zone" id="upload-zone-video" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop('video',event)">
-      <input type="file" accept=".mp4,.mov,.webm,.avi" onchange="handleFile('video',this)"/>
-      <div class="upload-icon">🎥</div>
-      <div class="upload-title">Drop your video here or click to browse</div>
-      <div class="upload-hint">MP4, MOV, WebM · Max 200MB · 60 seconds</div>
-    </div>
-    <div id="video-file-info"></div>
-    <button class="btn-submit" id="btn-submit-video" onclick="submitVideo()" style="display:none">
-      <span>Submit for Review</span> <span>→</span>
-    </button>`;
+  `).join('');
 }
 
-// ─── INTERVIEW ────────────────────────────────────────────────────────────
-function renderInterview(questions, state) {
-  if (state.status === "passed" || state.status === "failed") {
-    return renderResult("interview", state);
-  }
-  return `
-    <div style="background:rgba(0,196,140,0.05);border:1px solid rgba(34,197,94,0.12);border-radius:10px;padding:1rem;margin-bottom:1.25rem;font-size:0.85rem;color:var(--muted);line-height:1.6">
-      Answer each question as you would in a real interview. Write at least 3–4 sentences per answer. Be specific — use real examples where possible. The AI will score your clarity, relevance, and depth.
-    </div>
-    ${questions.map((q,i) => `
-      <div style="margin-bottom:1.5rem">
-        <label class="vf-label">Question ${i+1} of ${questions.length}</label>
-        <div style="font-family:'Syne',sans-serif;font-size:0.92rem;font-weight:700;color:var(--text);margin-bottom:0.75rem;line-height:1.4">${q.q}</div>
-        <textarea class="vf-textarea" id="int-q${i}" placeholder="${q.placeholder}"></textarea>
-      </div>`).join("")}
-    <div id="interview-feedback"></div>
-    <button class="btn-submit" onclick="submitInterview()">
-      <span>Submit for AI Scoring</span> <span>→</span>
-    </button>`;
+function filterCards(filter, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCards(filter);
 }
 
-// ─── RESULT DISPLAY ───────────────────────────────────────────────────────
-function renderResult(id, state) {
-  const passed = state.status === "passed";
-  return `
-    <div class="ai-feedback fade-in">
-      <div class="ai-feedback-header">
-        <div class="ai-feedback-label">${passed ? "✅ Passed" : "❌ Did Not Pass"}</div>
-        ${state.score !== undefined ? `<div class="ai-score-pill">${state.score}/100</div>` : ""}
+function openModal(id) {
+  const s = skills.find(x => x.id === id);
+  if (!s) return;
+  
+  document.getElementById('modal-body').innerHTML = `
+    <div class="modal-icon">${s.icon}</div>
+    <div class="modal-title">${s.title}</div>
+    <p class="modal-desc">${s.desc}</p>
+
+    <div class="modal-stats">
+      <div class="modal-stat">
+        <div class="modal-stat-val">${s.salary}</div>
+        <div class="modal-stat-lbl">Monthly Pay</div>
       </div>
-      <div class="ai-text">${state.feedback || ""}</div>
-    </div>
-    ${!passed ? `<button class="btn-retry-sm" onclick="retryLayer('${id}')">Try Again →</button>` : ""}`;
-}
-
-// ─── INTERACTIONS ─────────────────────────────────────────────────────────
-function toggleCard(id) {
-  const body = document.getElementById(`body-${id}`);
-  const chevron = document.getElementById(`chevron-${id}`);
-  const isOpen = body.classList.contains("open");
-  // Close all
-  document.querySelectorAll(".verif-body").forEach(b => b.classList.remove("open"));
-  document.querySelectorAll(".chevron").forEach(c => c.classList.remove("open"));
-  document.querySelectorAll(".verif-card").forEach(c => c.classList.remove("active"));
-  if (!isOpen) {
-    body.classList.add("open");
-    chevron.classList.add("open");
-    document.getElementById(`card-${id}`).classList.add("active");
-  }
-}
-
-let toolAnswers = {};
-function selectTool(qi, ai) {
-  toolAnswers[qi] = ai;
-  const scenario = getScenario();
-  const tools = scenario.tools || DEFAULT_SCENARIO.tools;
-  tools.forEach((_, i) => {
-    tools[i].opts.forEach((_, a) => {
-      const el = document.getElementById(`tools-q${i}-a${a}`);
-      if (el) el.classList.toggle("selected", i === qi && a === ai);
-    });
-  });
-}
-
-function handleFile(type, input) {
-  const file = input.files[0];
-  if (!file) return;
-  const infoId = `${type}-file-info`;
-  const btnId = `btn-submit-${type}`;
-  document.getElementById(infoId).innerHTML = `
-    <div class="upload-done" style="margin-top:0.75rem">
-      <span>📄</span>
-      <div>
-        <div class="upload-done-name">${file.name}</div>
-        <div style="font-size:0.75rem;color:var(--muted);margin-top:0.2rem">${(file.size/1024/1024).toFixed(2)} MB — ready to submit</div>
+      <div class="modal-stat">
+        <div class="modal-stat-val">${s.timeToReady}</div>
+        <div class="modal-stat-lbl">Time to Ready</div>
       </div>
-    </div>`;
-  const btn = document.getElementById(btnId);
-  if (btn) btn.style.display = "flex";
-  window[`${type}_file`] = file;
+      <div class="modal-stat">
+        <div class="modal-stat-val">${s.jobVolume}</div>
+        <div class="modal-stat-lbl">Open Roles</div>
+      </div>
+    </div>
+
+    <div class="modal-section-title">Your Step-by-Step Roadmap</div>
+    <div class="full-roadmap">
+      ${s.roadmap.map((r, i) => `
+        <div class="roadmap-item">
+          <div class="roadmap-num">${i + 1}</div>
+          <div class="roadmap-content">
+            <h4>${r.title}</h4>
+            <p>${r.desc}</p>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="modal-section-title">Tools You'll Master</div>
+    <div class="tools-row" style="margin-bottom: 1.75rem;">
+      ${s.tools.map(t => `<span class="tool-tag">${t}</span>`).join('')}
+    </div>
+
+    <div class="modal-section-title">📚 Free Learning Resources</div>
+    <div style="display:flex;flex-direction:column;gap:0.6rem;margin-bottom:1.75rem">
+      ${(s.resources || []).map(r => `
+        <a href="${r.url}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:space-between;background:#0F1A2E;border:1.5px solid rgba(255,255,255,0.07);border-radius:10px;padding:0.85rem 1rem;text-decoration:none;transition:border-color 0.2s" onmouseover="this.style.borderColor='rgba(0,196,140,0.3)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)'">
+          <span style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:600;color:#F0F4FF">${r.title}</span>
+          <span style="font-size:0.72rem;font-weight:700;color:#00C48C;white-space:nowrap;margin-left:0.75rem">${r.source} ↗</span>
+        </a>
+      `).join('')}
+    </div>
+
+    <button class="modal-cta" onclick="window.location.href='profile.html'">Start This Path on VELA →</button>
+  `;
+  
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
 }
 
-function handleDrop(type, event) {
-  event.preventDefault();
-  document.getElementById(`upload-zone-${type}`).classList.remove("drag");
-  const file = event.dataTransfer.files[0];
-  if (!file) return;
-  const fakeInput = { files: [file] };
-  handleFile(type, fakeInput);
+function closeModal(e) {
+  if (e.target === document.getElementById('modal')) closeModalDirect();
 }
 
-// ─── SUBMIT FUNCTIONS ─────────────────────────────────────────────────────
-async function submitComm() {
-  const response = document.getElementById("comm-response").value.trim();
-  if (response.length < 50) { alert("Please write a more complete response (at least 50 characters)."); return; }
-  const scenario = getScenario();
-  const feedbackEl = document.getElementById("comm-feedback");
-  feedbackEl.innerHTML = `<div class="ai-loading"><div class="spinner"></div>AI is scoring your response...</div>`;
-  document.querySelector("#card-comm .btn-submit").disabled = true;
-
-  const result = await scoreWithAI("comm", scenario.comm.scenario, response);
-  saveVerif("comm", result);
-  renderCards();
-  toggleCard("comm");
-  updatePassport();
+function closeModalDirect() {
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow = '';
 }
 
-async function submitInterview() {
-  const scenario = getScenario();
-  const answers = scenario.interview.map((q,i) => {
-    const el = document.getElementById(`int-q${i}`);
-    return el ? el.value.trim() : "";
-  });
-  if (answers.some(a => a.length < 30)) { alert("Please answer all questions with at least a few sentences each."); return; }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDirect(); });
 
-  document.getElementById("interview-feedback").innerHTML = `<div class="ai-loading"><div class="spinner"></div>AI is evaluating your interview responses...</div>`;
-  document.querySelector("#card-interview .btn-submit").disabled = true;
-
-  const combined = scenario.interview.map((q,i) => `Q: ${q.q}\nA: ${answers[i]}`).join("\n\n");
-  const result = await scoreWithAI("interview", "Mock interview for " + candidate.skill + " role", combined);
-  saveVerif("interview", result);
-  renderCards();
-  toggleCard("interview");
-  updatePassport();
-}
-
-function submitTools() {
-  const scenario = getScenario();
-  const tools = scenario.tools || DEFAULT_SCENARIO.tools;
-  if (Object.keys(toolAnswers).length < tools.length) {
-    alert(`Please answer all ${tools.length} questions before submitting.`); return;
-  }
-  let correct = 0;
-  tools.forEach((q,i) => { if (toolAnswers[i] === q.ans) correct++; });
-  const score = Math.round((correct / tools.length) * 100);
-  const passed = score >= 60;
-  const feedback = `You answered ${correct} out of ${tools.length} questions correctly.\n\n${passed
-    ? `Score: ${score}/100 — You demonstrated solid tool knowledge for ${candidate.skill}. Employers will see you know the core tools of your field.`
-    : `Score: ${score}/100 — You need to strengthen your tool knowledge. Review the tools for ${candidate.skill} on your skills roadmap page and try again.`}`;
-  saveVerif("tools", { score, passed, feedback });
-  renderCards();
-  toggleCard("tools");
-  updatePassport();
-}
-
-function submitTask() {
-  const file = window.task_file;
-  if (!file) { alert("Please select a file to upload."); return; }
-  saveVerif("task", { status: "review", filename: file.name, feedback: "Your document is under review by the VELA team. You'll hear back within 24–48 hours." });
-  renderCards();
-  updatePassport();
-}
-
-function submitVideo() {
-  const file = window.video_file;
-  if (!file) { alert("Please select a video file to upload."); return; }
-  saveVerif("video", { status: "review", filename: file.name, feedback: "Your video introduction is under review. You'll hear back within 24–48 hours." });
-  renderCards();
-  updatePassport();
-}
-
-function retryLayer(id) {
-  delete verifState[id];
-  localStorage.setItem("vela_verif", JSON.stringify(verifState));
-  if (id === "tools") toolAnswers = {};
-  renderCards();
-  setTimeout(() => toggleCard(id), 100);
-  updatePassport();
-}
-
-// ─── AI SCORING ───────────────────────────────────────────────────────────
-async function scoreWithAI(type, context, response) {
-  const prompts = {
-    comm: `You are a professional hiring assessor for VELA, a remote job platform for African professionals.
-Evaluate this professional written communication response for a ${candidate.skill} candidate.
-
-Context/Scenario: ${context}
-
-Candidate's Response:
-${response}
-
-Score from 0-100 based on:
-- Professional tone and language (25pts)
-- Clarity and structure (25pts)  
-- Relevance and addressing the scenario (25pts)
-- Grammar and written English quality (25pts)
-
-Respond in this exact format:
-SCORE: [number]
-VERDICT: [Passed/Failed]
-FEEDBACK: [3-4 sentences of specific, constructive feedback mentioning what they did well and what to improve]`,
-
-    interview: `You are a professional hiring assessor for VELA, a remote job platform for African professionals.
-Evaluate these mock interview responses from a ${candidate.skill} candidate applying for a remote role.
-
-${context}
-
-Score from 0-100 based on:
-- Clarity and communication (25pts)
-- Relevance and depth of answers (25pts)
-- Use of specific examples (25pts)
-- Professional confidence and tone (25pts)
-
-Respond in this exact format:
-SCORE: [number]
-VERDICT: [Passed/Failed]
-FEEDBACK: [4-5 sentences of specific, constructive feedback on their interview performance, what was strong and what needs work]`
-  };
-
-  try {
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 1000,
-        messages: [{ role: "user", content: prompts[type] }]
-      })
-    });
-    const data = await res.json();
-    const text = data.content?.[0]?.text || "";
-    const scoreMatch = text.match(/SCORE:\s*(\d+)/);
-    const verdictMatch = text.match(/VERDICT:\s*(Passed|Failed)/i);
-    const feedbackMatch = text.match(/FEEDBACK:\s*([\s\S]+)/);
-    const score = scoreMatch ? parseInt(scoreMatch[1]) : 50;
-    const passed = verdictMatch ? verdictMatch[1].toLowerCase() === "passed" : score >= 60;
-    const feedback = feedbackMatch ? feedbackMatch[1].trim() : text;
-    return { score, passed, feedback };
-  } catch (e) {
-    // Fallback scoring if API unavailable
-    const wordCount = response.split(" ").length;
-    const score = Math.min(Math.max(wordCount * 2, 30), 85);
-    const passed = score >= 60;
-    return {
-      score,
-      passed,
-      feedback: passed
-        ? `Your response showed good professional communication. Your writing demonstrated relevant knowledge and appropriate tone for a ${candidate.skill} role. To strengthen future responses, add more specific examples and quantifiable outcomes.`
-        : `Your response needs development. Try to be more specific in your answers, use professional language throughout, and address all parts of the scenario. Review professional communication guides and try again.`
-    };
-  }
-}
-
-// ─── SAVE STATE ───────────────────────────────────────────────────────────
-function saveVerif(id, result) {
-  verifState[id] = {
-    status: result.status || (result.passed ? "passed" : "failed"),
-    score: result.score,
-    feedback: result.feedback,
-    filename: result.filename,
-    timestamp: new Date().toISOString(),
-  };
-  localStorage.setItem("vela_verif", JSON.stringify(verifState));
-}
-
-// ─── INIT ─────────────────────────────────────────────────────────────────
-updatePassport();
+// Init
 renderCards();
-// Auto-open first incomplete layer
-const firstIncomplete = LAYERS.find(l => !verifState[l.id] || verifState[l.id].status === "failed");
-if (firstIncomplete) setTimeout(() => toggleCard(firstIncomplete.id), 300);
+
+// Add fadeUp animation
+const style = document.createElement('style');
+style.textContent = `@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }`;
+document.head.appendChild(style);
 </script>
 <script>
 
@@ -993,6 +1367,34 @@ document.addEventListener('keydown', function(e) {
   }
 });
 
+</script>
+<script>
+function toggleTheme() {
+  document.body.classList.toggle('light-mode');
+  const isLight = document.body.classList.contains('light-mode');
+  const btn = document.getElementById('theme-btn');
+  if (btn) btn.textContent = isLight ? '🌌 Navy' : '🌑 Dark';
+  localStorage.setItem('vela_theme', isLight ? 'light' : 'dark');
+}
+function applyTheme() {
+  if (localStorage.getItem('vela_theme') === 'light') {
+    document.body.classList.add('light-mode');
+    const btn = document.getElementById('theme-btn');
+    if (btn) btn.textContent = '🌌 Navy';
+  }
+}
+async function velaSignOut(e) {
+  if (e) e.preventDefault();
+  try {
+    const cfg = window.VELA_CONFIG || {};
+    if (typeof supabase !== 'undefined' && cfg.SUPABASE_URL) {
+      const _sb = supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_KEY);
+      await _sb.auth.signOut();
+    }
+  } catch(err) {}
+  window.location.href = 'login.html';
+}
+document.addEventListener('DOMContentLoaded', applyTheme);
 </script>
 </body>
 </html>
