@@ -1,0 +1,383 @@
+{
+  "updated": "2026-03-14T00:11:54.648040+00:00",
+  "total": 20,
+  "note": "Seed data \u2014 GitHub Actions scraper will replace this daily with fresh real jobs",
+  "skill_counts": {
+    "Customer Service": 1,
+    "Data Analysis": 3,
+    "Social Media Management": 3,
+    "SEO Specialist": 1,
+    "Virtual Assistant": 1,
+    "Project Management": 1,
+    "UI/UX Design": 2,
+    "Email Marketing": 1,
+    "Content Writing": 2,
+    "HR & Recruitment": 1,
+    "Bookkeeping": 1,
+    "E-Commerce": 1,
+    "Prompt Engineering & AI": 1,
+    "Cybersecurity": 1
+  },
+  "jobs": [
+    {
+      "id": "rok1",
+      "title": "Customer Support Specialist",
+      "company": "Automattic",
+      "skill": "Customer Service",
+      "tags": [
+        "support",
+        "remote",
+        "chat"
+      ],
+      "url": "https://automattic.com/work-with-us/",
+      "location": "Worldwide",
+      "salary": "$40k\u2013$65k",
+      "posted": "2026-03-13",
+      "source": "RemoteOK",
+      "remote": true,
+      "type": "job"
+    },
+    {
+      "id": "rok2",
+      "title": "Data Analyst",
+      "company": "GitLab",
+      "skill": "Data Analysis",
+      "tags": [
+        "sql",
+        "analytics",
+        "remote"
+      ],
+      "url": "https://about.gitlab.com/jobs/",
+      "location": "Worldwide",
+      "salary": "$70k\u2013$110k",
+      "posted": "2026-03-13",
+      "source": "RemoteOK",
+      "remote": true,
+      "type": "job"
+    },
+    {
+      "id": "rok3",
+      "title": "Social Media Manager",
+      "company": "Buffer",
+      "skill": "Social Media Management",
+      "tags": [
+        "social",
+        "content",
+        "marketing"
+      ],
+      "url": "https://buffer.com/journey",
+      "location": "Worldwide",
+      "salary": "$45k\u2013$65k",
+      "posted": "2026-03-13",
+      "source": "RemoteOK",
+      "remote": true,
+      "type": "job"
+    },
+    {
+      "id": "rok4",
+      "title": "SEO Specialist",
+      "company": "Zapier",
+      "skill": "SEO Specialist",
+      "tags": [
+        "seo",
+        "content",
+        "remote"
+      ],
+      "url": "https://zapier.com/jobs",
+      "location": "Worldwide",
+      "salary": "$55k\u2013$80k",
+      "posted": "2026-03-13",
+      "source": "RemoteOK",
+      "remote": true,
+      "type": "job"
+    },
+    {
+      "id": "rem1",
+      "title": "Virtual Assistant",
+      "company": "Belay Solutions",
+      "skill": "Virtual Assistant",
+      "tags": [
+        "va",
+        "admin",
+        "remote"
+      ],
+      "url": "https://belaysolutions.com/join-our-team/",
+      "location": "Worldwide",
+      "salary": "$18\u2013$25/hr",
+      "posted": "2026-03-13",
+      "source": "Remotive",
+      "remote": true,
+      "type": "job"
+    },
+    {
+      "id": "rem2",
+      "title": "Project Manager",
+      "company": "Toggl",
+      "skill": "Project Management",
+      "tags": [
+        "pm",
+        "agile",
+        "remote"
+      ],
+      "url": "https://toggl.com/jobs/",
+      "location": "Worldwide",
+      "salary": "$65k\u2013$95k",
+      "posted": "2026-03-13",
+      "source": "Remotive",
+      "remote": true,
+      "type": "job"
+    },
+    {
+      "id": "rem3",
+      "title": "UI/UX Designer",
+      "company": "InVision",
+      "skill": "UI/UX Design",
+      "tags": [
+        "figma",
+        "ux",
+        "product"
+      ],
+      "url": "https://www.invisionapp.com/careers",
+      "location": "Worldwide",
+      "salary": "$70k\u2013$100k",
+      "posted": "2026-03-13",
+      "source": "Remotive",
+      "remote": true,
+      "type": "job"
+    },
+    {
+      "id": "rem4",
+      "title": "Email Marketing Specialist",
+      "company": "Mailchimp",
+      "skill": "Email Marketing",
+      "tags": [
+        "email",
+        "klaviyo",
+        "campaigns"
+      ],
+      "url": "https://mailchimp.com/about/careers/",
+      "location": "Worldwide",
+      "salary": "$50k\u2013$70k",
+      "posted": "2026-03-13",
+      "source": "Remotive",
+      "remote": true,
+      "type": "job"
+    },
+    {
+      "id": "job1",
+      "title": "Content Writer",
+      "company": "HubSpot",
+      "skill": "Content Writing",
+      "tags": [
+        "writing",
+        "seo",
+        "content"
+      ],
+      "url": "https://www.hubspot.com/jobs",
+      "location": "Worldwide",
+      "salary": "$45k\u2013$70k",
+      "posted": "2026-03-13",
+      "source": "Jobicy",
+      "remote": true,
+      "type": "job"
+    },
+    {
+      "id": "job2",
+      "title": "HR Recruiter",
+      "company": "Deel",
+      "skill": "HR & Recruitment",
+      "tags": [
+        "hr",
+        "recruiter",
+        "remote"
+      ],
+      "url": "https://www.deel.com/careers",
+      "location": "Worldwide",
+      "salary": "$55k\u2013$80k",
+      "posted": "2026-03-13",
+      "source": "Jobicy",
+      "remote": true,
+      "type": "job"
+    },
+    {
+      "id": "job3",
+      "title": "Bookkeeper",
+      "company": "Bench",
+      "skill": "Bookkeeping",
+      "tags": [
+        "quickbooks",
+        "xero",
+        "finance"
+      ],
+      "url": "https://bench.co/careers",
+      "location": "Worldwide",
+      "salary": "$40k\u2013$60k",
+      "posted": "2026-03-13",
+      "source": "Jobicy",
+      "remote": true,
+      "type": "job"
+    },
+    {
+      "id": "job4",
+      "title": "Shopify E-Commerce Manager",
+      "company": "Thrasio",
+      "skill": "E-Commerce",
+      "tags": [
+        "shopify",
+        "ecommerce",
+        "growth"
+      ],
+      "url": "https://www.thrasio.com/careers",
+      "location": "Worldwide",
+      "salary": "$50k\u2013$75k",
+      "posted": "2026-03-13",
+      "source": "Jobicy",
+      "remote": true,
+      "type": "job"
+    },
+    {
+      "id": "him1",
+      "title": "AI Prompt Engineer",
+      "company": "Scale AI",
+      "skill": "Prompt Engineering & AI",
+      "tags": [
+        "ai",
+        "llm",
+        "prompt"
+      ],
+      "url": "https://scale.com/careers",
+      "location": "Worldwide",
+      "salary": "$80k\u2013$120k",
+      "posted": "2026-03-13",
+      "source": "Himalayas",
+      "remote": true,
+      "type": "job"
+    },
+    {
+      "id": "him2",
+      "title": "Cybersecurity Analyst",
+      "company": "CrowdStrike",
+      "skill": "Cybersecurity",
+      "tags": [
+        "soc",
+        "security",
+        "infosec"
+      ],
+      "url": "https://www.crowdstrike.com/careers/",
+      "location": "Worldwide",
+      "salary": "$70k\u2013$100k",
+      "posted": "2026-03-13",
+      "source": "Himalayas",
+      "remote": true,
+      "type": "job"
+    },
+    {
+      "id": "vol1",
+      "title": "Volunteer Social Media Manager",
+      "company": "Catchafire",
+      "skill": "Social Media Management",
+      "tags": [
+        "volunteer",
+        "nonprofit",
+        "social"
+      ],
+      "url": "https://www.catchafire.org/volunteer/",
+      "location": "Worldwide",
+      "salary": "Volunteer \u00b7 Portfolio Builder",
+      "posted": "2026-03-13",
+      "source": "Catchafire",
+      "remote": true,
+      "type": "volunteer"
+    },
+    {
+      "id": "vol2",
+      "title": "Volunteer Data Analyst",
+      "company": "UN Online Volunteers",
+      "skill": "Data Analysis",
+      "tags": [
+        "volunteer",
+        "data",
+        "un"
+      ],
+      "url": "https://www.onlinevolunteering.org/en/opportunities",
+      "location": "Worldwide",
+      "salary": "Volunteer \u00b7 UN Certificate",
+      "posted": "2026-03-13",
+      "source": "UN Volunteers",
+      "remote": true,
+      "type": "volunteer"
+    },
+    {
+      "id": "vol3",
+      "title": "Volunteer Content Writer",
+      "company": "Catchafire",
+      "skill": "Content Writing",
+      "tags": [
+        "volunteer",
+        "writing",
+        "nonprofit"
+      ],
+      "url": "https://www.catchafire.org/volunteer/",
+      "location": "Worldwide",
+      "salary": "Volunteer \u00b7 Portfolio Builder",
+      "posted": "2026-03-13",
+      "source": "Catchafire",
+      "remote": true,
+      "type": "volunteer"
+    },
+    {
+      "id": "vol4",
+      "title": "Volunteer UX Researcher",
+      "company": "Parker Dewey",
+      "skill": "UI/UX Design",
+      "tags": [
+        "volunteer",
+        "ux",
+        "research"
+      ],
+      "url": "https://app.parkerdewey.com/talent/opportunities",
+      "location": "Worldwide",
+      "salary": "Volunteer \u00b7 Portfolio Builder",
+      "posted": "2026-03-13",
+      "source": "Parker Dewey",
+      "remote": true,
+      "type": "volunteer"
+    },
+    {
+      "id": "int1",
+      "title": "Data Analysis Intern",
+      "company": "DataCamp",
+      "skill": "Data Analysis",
+      "tags": [
+        "intern",
+        "sql",
+        "analytics"
+      ],
+      "url": "https://www.datacamp.com/careers",
+      "location": "Worldwide",
+      "salary": "Paid \u00b7 Stipend",
+      "posted": "2026-03-13",
+      "source": "Remotive",
+      "remote": true,
+      "type": "internship"
+    },
+    {
+      "id": "int2",
+      "title": "Marketing Intern",
+      "company": "Hootsuite",
+      "skill": "Social Media Management",
+      "tags": [
+        "intern",
+        "social",
+        "marketing"
+      ],
+      "url": "https://www.hootsuite.com/company/careers",
+      "location": "Worldwide",
+      "salary": "Paid \u00b7 $12/hr",
+      "posted": "2026-03-13",
+      "source": "Jobicy",
+      "remote": true,
+      "type": "internship"
+    }
+  ]
+}
