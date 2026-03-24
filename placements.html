@@ -9,29 +9,45 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    :root{
-      --bg:#0B0F1F;--bg2:#0E1328;--surface:#151A2E;--card:#151A2E;
-      --border:#2A3153;--accent:#22C55E;--accent2:#3B82F6;
-      --grad1:#22C1C3;--grad2:#6C63FF;--gold:#F5A623;
-      --text:#FFFFFF;--text2:#A1A8C3;--muted:#6B7280;
-      --danger:#EF4444;--warn:#F59E0B;
+    :root {
+      --navy:         #0b1f3a;
+      --navy-mid:     #112d52;
+      --navy-light:   #1a3f6e;
+      --orange:       #f0650e;
+      --orange-light: #ff8a3d;
+      --orange-pale:  #fff1e8;
+      --bg:           #fdf8f3;
+      --bg2:          #f5efe6;
+      --surface:      #ffffff;
+      --card:         #ffffff;
+      --border:       rgba(11,31,58,0.10);
+      --accent:       #f0650e;
+      --accent2:      #1a3f6e;
+      --gold:         #f0650e;
+      --text:         #0b1f3a;
+      --text2:        #4a6080;
+      --muted:        #8ea5be;
+      --danger:       #EF4444;
+      --warn:         #f0650e;
+      --grad1:        #f0650e;
+      --grad2:        #ff8a3d;
     }
     body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;padding:2rem 5% 5rem;}
 
     /* NAV */
-    .top-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:2.5rem;padding-bottom:1.25rem;border-bottom:1px solid var(--border);}
-    .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;letter-spacing:0.08em;background:linear-gradient(135deg,#22C1C3,#6C63FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;}
+    .top-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:2.5rem;padding-bottom:1.25rem;border-bottom:2px solid var(--orange);}
+    .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;letter-spacing:0.08em;color:#ffffff;text-decoration:none;}
     .private-badge{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:#EF4444;font-size:0.68rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;padding:0.25rem 0.75rem;border-radius:20px;}
 
     /* MILESTONE HERO */
     .milestone{background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:2.5rem;margin-bottom:2rem;text-align:center;position:relative;overflow:hidden;}
-    .milestone::before{content:'';position:absolute;top:-40px;left:50%;transform:translateX(-50%);width:300px;height:200px;background:radial-gradient(circle,rgba(34,197,94,0.08),transparent 70%);border-radius:50%;}
+    .milestone::before{content:'';position:absolute;top:-40px;left:50%;transform:translateX(-50%);width:300px;height:200px;background:radial-gradient(circle,rgba(240,101,14,0.08),transparent 70%);border-radius:50%;}
     .milestone-label{font-size:0.72rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;}
     .milestone-count{font-family:'Syne',sans-serif;font-size:5rem;font-weight:800;line-height:1;margin-bottom:0.25rem;}
     .milestone-denom{font-size:1.2rem;color:var(--muted);font-weight:400;}
     .milestone-goal{font-size:0.9rem;color:var(--text2);margin-bottom:2rem;}
     .progress-track{height:12px;background:var(--surface);border-radius:100px;overflow:hidden;max-width:400px;margin:0 auto 0.75rem;}
-    .progress-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,#22C1C3,#22C55E);transition:width 1s cubic-bezier(0.4,0,0.2,1);}
+    .progress-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,#f0650e,#f0650e);transition:width 1s cubic-bezier(0.4,0,0.2,1);}
     .progress-pct{font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:700;color:var(--accent);}
 
     /* STATS ROW */
@@ -46,38 +62,38 @@
     .form-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.85rem;margin-bottom:1rem;}
     .field label{display:block;font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:0.4rem;}
     .field input,.field select,.field textarea{width:100%;background:var(--surface);border:1.5px solid var(--border);color:var(--text);padding:0.7rem 0.9rem;border-radius:9px;font-size:0.88rem;font-family:'DM Sans',sans-serif;outline:none;-webkit-text-fill-color:var(--text);transition:border-color 0.2s;}
-    .field input:focus,.field select:focus,.field textarea:focus{border-color:rgba(34,193,195,0.5);}
+    .field input:focus,.field select:focus,.field textarea:focus{border-color:rgba(240,101,14,0.5);}
     .field textarea{resize:vertical;min-height:72px;}
     .field select option{background:var(--surface);}
-    .btn-add{background:linear-gradient(135deg,#22C1C3,#6C63FF);color:#fff;border:none;padding:0.85rem 2rem;border-radius:10px;font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem;cursor:pointer;transition:opacity 0.2s;}
+    .btn-add{background:var(--orange);color:#fff;border:none;padding:0.85rem 2rem;border-radius:10px;font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem;cursor:pointer;transition:opacity 0.2s;}
     .btn-add:hover{opacity:0.88;}
 
     /* PLACEMENT LIST */
     .list-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
     .list-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:var(--text);}
     .filter-tabs{display:flex;gap:0.4rem;}
-    .ftab{background:transparent;border:1px solid var(--border);color:var(--muted);padding:0.3rem 0.85rem;border-radius:20px;font-size:0.75rem;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
-    .ftab.active{background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.3);color:#22C55E;}
+    .ftab{background:transparent;border:1px solid rgba(255,255,255,0.25);color:#ffffff;padding:0.3rem 0.85rem;border-radius:20px;font-size:0.75rem;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+    .ftab.active{background:rgba(240,101,14,0.1);border-color:rgba(240,101,14,0.3);color:#f0650e;}
 
     /* PLACEMENT CARDS */
     .placement-list{display:flex;flex-direction:column;gap:0.85rem;}
     .placement-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:1.25rem 1.5rem;display:grid;grid-template-columns:auto 1fr auto auto;gap:1rem;align-items:center;transition:border-color 0.2s;}
-    .placement-card:hover{border-color:#2A3153;}
-    .placement-card.hired{border-left:3px solid #22C55E;}
+    .placement-card:hover{border-color:rgba(11,31,58,0.12);}
+    .placement-card.hired{border-left:3px solid #f0650e;}
     .placement-card.interviewing{border-left:3px solid #3B82F6;}
     .placement-card.contacted{border-left:3px solid #F5A623;}
     .placement-card.rejected{border-left:3px solid #EF4444;opacity:0.65;}
-    .p-avatar{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#22C1C322,#22C1C344);border:1.5px solid #22C1C344;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem;color:#22C1C3;flex-shrink:0;}
+    .p-avatar{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#f0650e22,#f0650e44);border:1.5px solid #f0650e44;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem;color:#f0650e;flex-shrink:0;}
     .p-name{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:var(--text);margin-bottom:0.2rem;}
     .p-meta{font-size:0.78rem;color:var(--muted);}
     .p-status{font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.07em;padding:0.25rem 0.75rem;border-radius:20px;white-space:nowrap;flex-shrink:0;}
-    .p-status.hired{background:rgba(34,197,94,0.12);color:#22C55E;border:1px solid rgba(34,197,94,0.3);}
+    .p-status.hired{background:rgba(240,101,14,0.12);color:#f0650e;border:1px solid rgba(240,101,14,0.3);}
     .p-status.interviewing{background:rgba(59,130,246,0.12);color:#3B82F6;border:1px solid rgba(59,130,246,0.3);}
     .p-status.contacted{background:rgba(245,166,35,0.12);color:#F5A623;border:1px solid rgba(245,166,35,0.3);}
     .p-status.rejected{background:rgba(239,68,68,0.1);color:#EF4444;border:1px solid rgba(239,68,68,0.2);}
     .p-actions{display:flex;gap:0.4rem;flex-shrink:0;}
-    .p-btn{background:transparent;border:1px solid var(--border);color:var(--muted);width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.75rem;transition:all 0.2s;}
-    .p-btn:hover{border-color:#22C1C3;color:#22C1C3;}
+    .p-btn{background:transparent;border:1px solid rgba(255,255,255,0.25);color:#ffffff;width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.75rem;transition:all 0.2s;}
+    .p-btn:hover{border-color:#f0650e;color:#f0650e;}
     .p-btn.delete:hover{border-color:#EF4444;color:#EF4444;}
     .empty{text-align:center;padding:3rem;color:var(--muted);}
     .empty-icon{font-size:2.5rem;margin-bottom:0.75rem;}
@@ -105,7 +121,7 @@
 <body>
 
 <div class="top-bar">
-  <a href="index.html" class="logo">VELA</a>
+  <a href="index.html" class="logo"><span style="color:#f0650e;-webkit-text-fill-color:#f0650e;">V</span><span style="color:#ffffff;">ELA</span></a>
   <div style="display:flex;align-items:center;gap:0.75rem;">
     <span class="private-badge">🔒 Private</span>
     <span style="font-size:0.78rem;color:var(--muted);">Placement Tracker</span>
@@ -115,7 +131,7 @@
 <!-- MILESTONE HERO -->
 <div class="milestone" id="milestone-card">
   <div class="milestone-label">Mission: First 10 Successful Hires</div>
-  <div class="milestone-count" id="hired-count" style="color:#22C55E;">0<span class="milestone-denom">/10</span></div>
+  <div class="milestone-count" id="hired-count" style="color:#f0650e;">0<span class="milestone-denom">/10</span></div>
   <div class="milestone-goal">Every hire makes VELA credible. This is the only number that matters right now.</div>
   <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
   <div class="progress-pct" id="progress-pct">0% to goal</div>
@@ -124,7 +140,7 @@
 <!-- STATS -->
 <div class="stats-row">
   <div class="stat-card">
-    <div class="stat-num" id="stat-total" style="color:#A1A8C3;">0</div>
+    <div class="stat-num" id="stat-total" style="color:#4a6080;">0</div>
     <div class="stat-label">Total Candidates</div>
   </div>
   <div class="stat-card">
@@ -132,7 +148,7 @@
     <div class="stat-label">In Progress</div>
   </div>
   <div class="stat-card">
-    <div class="stat-num" id="stat-hired" style="color:#22C55E;">0</div>
+    <div class="stat-num" id="stat-hired" style="color:#f0650e;">0</div>
     <div class="stat-label">Hired ✓</div>
   </div>
   <div class="stat-card">
@@ -203,7 +219,7 @@
     <div class="modal-title" id="modal-title">Notes</div>
     <textarea id="modal-notes" style="width:100%;background:var(--surface);border:1.5px solid var(--border);color:var(--text);padding:0.75rem;border-radius:9px;font-family:'DM Sans',sans-serif;font-size:0.88rem;min-height:120px;resize:vertical;-webkit-text-fill-color:var(--text);"></textarea>
     <div style="display:flex;gap:0.75rem;margin-top:1rem;">
-      <button onclick="saveNotes()" style="background:linear-gradient(135deg,#22C1C3,#6C63FF);color:#fff;border:none;padding:0.75rem 1.5rem;border-radius:9px;font-family:'Syne',sans-serif;font-weight:700;cursor:pointer;">Save Notes</button>
+      <button onclick="saveNotes()" style="background:var(--orange);color:#fff;border:none;padding:0.75rem 1.5rem;border-radius:9px;font-family:'Syne',sans-serif;font-weight:700;cursor:pointer;">Save Notes</button>
       <select id="modal-status" style="background:var(--surface);border:1.5px solid var(--border);color:var(--text);padding:0.75rem;border-radius:9px;font-family:'DM Sans',sans-serif;">
         <option value="contacted">Contacted</option>
         <option value="interviewing">Interviewing</option>
@@ -318,7 +334,7 @@ function render() {
   var pct     = Math.min(Math.round((hired.length / 10) * 100), 100);
 
   document.getElementById("hired-count").innerHTML = hired.length + '<span class="milestone-denom">/10</span>';
-  document.getElementById("hired-count").style.color = hired.length >= 10 ? "#F5A623" : "#22C55E";
+  document.getElementById("hired-count").style.color = hired.length >= 10 ? "#F5A623" : "#f0650e";
   document.getElementById("progress-fill").style.width = pct + "%";
   document.getElementById("progress-pct").textContent = pct + "% to goal";
   document.getElementById("stat-total").textContent = placements.length;
