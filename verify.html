@@ -31,21 +31,27 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg:      #0B0F1F;
-      --bg2:     #0E1328;
-      --surface: #151A2E;
-      --card:    #1A2040;
-      --border:  #2A3153;
-      --accent:  #22C55E;
-      --accent2: #3B82F6;
-      --grad1:   #22C1C3;
-      --grad2:   #6C63FF;
-      --gold:    #F5A623;
-      --text:    #FFFFFF;
-      --text2:   #A1A8C3;
-      --muted:   #6B7280;
-      --danger:  #EF4444;
-      --warn:    #F59E0B;
+      --navy:         #0b1f3a;
+      --navy-mid:     #112d52;
+      --navy-light:   #1a3f6e;
+      --orange:       #f0650e;
+      --orange-light: #ff8a3d;
+      --orange-pale:  #fff1e8;
+      --bg:           #fdf8f3;
+      --bg2:          #f5efe6;
+      --surface:      #ffffff;
+      --card:         #ffffff;
+      --border:       rgba(11,31,58,0.10);
+      --accent:       #f0650e;
+      --accent2:      #1a3f6e;
+      --gold:         #f0650e;
+      --text:         #0b1f3a;
+      --text2:        #4a6080;
+      --muted:        #8ea5be;
+      --danger:       #EF4444;
+      --warn:         #f0650e;
+      --grad1:        #f0650e;
+      --grad2:        #ff8a3d;
     }
     body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
 
@@ -55,42 +61,41 @@
       background: rgba(8,12,18,0.95); position: sticky; top: 0; z-index: 100;
     }
     .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem;
-      letter-spacing: 0.08em; background: linear-gradient(135deg, #22C1C3, #6C63FF);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
+      letter-spacing: 0.08em; 
+      color: #ffffff; text-decoration: none; }
     .nav-links { display: flex; gap: 1.5rem; list-style: none; }
-    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: color 0.2s; }
     .nav-links a:hover { color: var(--accent); }
     .nav-links a.active { color: var(--accent); }
 
     /* PAGE HEADER */
     .page-header { padding: 3rem 5% 2rem; max-width: 1100px; margin: 0 auto; }
     .header-badge { display: inline-flex; align-items: center; gap: 0.5rem;
-      background: rgba(0,196,140,0.08); border: 1px solid rgba(0,196,140,0.2);
-      color: var(--accent); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+      background: rgba(240,101,14,0.08); border: 1px solid rgba(240,101,14,0.2);
+      color: var(--orange); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
       text-transform: uppercase; padding: 0.35rem 0.9rem; border-radius: 100px; margin-bottom: 1.25rem; }
     .page-header h1 { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 800; color: var(--text); margin-bottom: 0.6rem; line-height: 1.1; }
-    .page-header h1 span { background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+      font-weight: 800; color: var(--navy); margin-bottom: 0.6rem; line-height: 1.1; }
+    .page-header h1 span { color: var(--orange); -webkit-text-fill-color: var(--orange); }
     .page-header p { color: var(--muted); font-size: 0.95rem; max-width: 560px; line-height: 1.6; }
 
     /* PASSPORT PREVIEW */
     .passport-wrap { padding: 0 5% 2rem; max-width: 1100px; margin: 0 auto; }
     .passport {
       background: linear-gradient(135deg, #0D1A2E, #0A1020);
-      border: 1px solid rgba(0,196,140,0.2); border-radius: 20px; padding: 1.75rem 2rem;
+      border: 1px solid rgba(240,101,14,0.2); border-radius: 20px; padding: 1.75rem 2rem;
       display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;
       position: relative; overflow: hidden;
     }
     .passport::before {
       content: ''; position: absolute; top: -40px; right: -40px;
       width: 200px; height: 200px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,196,140,0.06), transparent 70%);
+      background: radial-gradient(circle, rgba(240,101,14,0.06), transparent 70%);
     }
     .passport-left { display: flex; align-items: center; gap: 1.25rem; }
     .passport-avatar {
       width: 56px; height: 56px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      background: linear-gradient(135deg, var(--orange), var(--navy-light));
       display: flex; align-items: center; justify-content: center;
       font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.3rem; color: #000;
     }
@@ -103,12 +108,12 @@
       letter-spacing: 0.06em; text-transform: uppercase; border: 1px solid;
     }
     .badge-chip.locked { background: rgba(255,255,255,0.03); border-color: var(--border); color: var(--muted); }
-    .badge-chip.passed { background: rgba(34,197,94,0.12); border-color: rgba(0,196,140,0.3); color: var(--accent); }
+    .badge-chip.passed { background: rgba(240,101,14,0.12); border-color: rgba(240,101,14,0.3); color: var(--accent); }
     .badge-chip.review { background: rgba(255,165,0,0.08); border-color: rgba(255,165,0,0.25); color: var(--warn); }
     .badge-chip.failed { background: rgba(255,107,107,0.08); border-color: rgba(255,107,107,0.25); color: var(--danger); }
     .vela-badge {
       display: flex; align-items: center; gap: 0.6rem;
-      background: rgba(0,196,140,0.06); border: 1.5px solid rgba(0,196,140,0.15);
+      background: rgba(240,101,14,0.06); border: 1.5px solid rgba(240,101,14,0.15);
       border-radius: 12px; padding: 0.75rem 1.1rem;
     }
     .vela-badge-icon { font-size: 1.5rem; }
@@ -122,8 +127,8 @@
       background: var(--card); border: 1.5px solid var(--border); border-radius: 16px; overflow: hidden;
       transition: border-color 0.3s;
     }
-    .verif-card.active { border-color: rgba(0,196,140,0.3); }
-    .verif-card.passed-card { border-color: rgba(0,196,140,0.2); }
+    .verif-card.active { border-color: rgba(240,101,14,0.3); }
+    .verif-card.passed-card { border-color: rgba(240,101,14,0.2); }
     .verif-card.failed-card { border-color: rgba(255,107,107,0.2); }
 
     .verif-header {
@@ -135,19 +140,19 @@
       justify-content: center; font-size: 1.2rem; flex-shrink: 0; border: 1px solid var(--border);
       background: var(--surface);
     }
-    .verif-icon-wrap.passed { background: rgba(34,197,94,0.12); border-color: rgba(0,196,140,0.3); }
+    .verif-icon-wrap.passed { background: rgba(240,101,14,0.12); border-color: rgba(240,101,14,0.3); }
     .verif-icon-wrap.failed { background: rgba(255,107,107,0.1); border-color: rgba(255,107,107,0.3); }
     .verif-icon-wrap.review { background: rgba(255,165,0,0.1); border-color: rgba(255,165,0,0.3); }
     .verif-meta { flex: 1; min-width: 0; }
-    .verif-title { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--text); }
-    .verif-desc { font-size: 0.8rem; color: var(--muted); margin-top: 0.15rem; }
+    .verif-title { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--navy); }
+    .verif-desc { font-size: 0.8rem; color: var(--text-soft); margin-top: 0.15rem; }
     .verif-right { display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; }
     .verif-status {
       font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
       padding: 0.25rem 0.7rem; border-radius: 100px; border: 1px solid;
     }
     .status-pending { background: rgba(107,122,153,0.1); border-color: rgba(107,122,153,0.2); color: var(--muted); }
-    .status-passed  { background: rgba(34,197,94,0.12); border-color: rgba(0,196,140,0.25); color: var(--accent); }
+    .status-passed  { background: rgba(240,101,14,0.12); border-color: rgba(240,101,14,0.25); color: var(--accent); }
     .status-failed  { background: rgba(255,107,107,0.1); border-color: rgba(255,107,107,0.25); color: var(--danger); }
     .status-review  { background: rgba(255,165,0,0.1); border-color: rgba(255,165,0,0.25); color: var(--warn); }
     .verif-score { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 800; }
@@ -162,17 +167,17 @@
     /* FORM ELEMENTS */
     .vf-label { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem; display: block; }
     .vf-textarea {
-      width: 100%; background: var(--surface); border: 1.5px solid var(--border); color: var(--text);
+      width: 100%; background: #fdf8f3; border: 1.5px solid rgba(11,31,58,0.15); color: var(--navy);
       padding: 0.85rem 1.1rem; border-radius: 10px; font-family: 'DM Sans', sans-serif;
       font-size: 0.9rem; outline: none; resize: vertical; min-height: 120px; line-height: 1.6;
       transition: border-color 0.2s;
     }
-    .vf-textarea:focus { border-color: var(--accent); }
+    .vf-textarea:focus { border-color: var(--orange); }
     .vf-textarea::placeholder { color: var(--muted); }
 
     /* QUIZ ITEMS */
     .vq-item { margin-bottom: 1.5rem; }
-    .vq-text { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 0.75rem; line-height: 1.4; }
+    .vq-text { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; color: var(--navy); margin-bottom: 0.75rem; line-height: 1.4; }
     .vq-num { color: var(--accent); margin-right: 0.4rem; }
     .vq-options { display: flex; flex-direction: column; gap: 0.4rem; }
     .vq-opt {
@@ -180,9 +185,9 @@
       padding: 0.7rem 1rem; cursor: pointer; font-size: 0.86rem; color: var(--muted);
       transition: all 0.2s; user-select: none;
     }
-    .vq-opt:hover { border-color: rgba(0,196,140,0.3); color: var(--text); }
-    .vq-opt.selected { border-color: var(--accent); background: rgba(0,196,140,0.07); color: var(--text); }
-    .vq-opt.correct { border-color: var(--accent); background: rgba(34,197,94,0.12); color: var(--accent); }
+    .vq-opt:hover { border-color: rgba(240,101,14,0.3); color: var(--navy); }
+    .vq-opt.selected { border-color: var(--orange); background: rgba(240,101,14,0.07); color: var(--navy); }
+    .vq-opt.correct { border-color: var(--orange); background: rgba(240,101,14,0.12); color: var(--accent); }
     .vq-opt.wrong { border-color: var(--danger); background: rgba(255,107,107,0.08); color: var(--danger); }
 
     /* UPLOAD ZONE */
@@ -190,13 +195,13 @@
       border: 2px dashed var(--border); border-radius: 12px; padding: 2.5rem 1rem;
       text-align: center; cursor: pointer; transition: all 0.2s; position: relative;
     }
-    .upload-zone:hover, .upload-zone.drag { border-color: var(--accent); background: rgba(0,196,140,0.03); }
+    .upload-zone:hover, .upload-zone.drag { border-color: var(--orange); background: rgba(240,101,14,0.03); }
     .upload-zone input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
     .upload-icon { font-size: 2rem; margin-bottom: 0.75rem; }
-    .upload-title { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 0.35rem; }
+    .upload-title { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; color: var(--navy); margin-bottom: 0.35rem; }
     .upload-hint { font-size: 0.78rem; color: var(--muted); }
-    .upload-done { display: flex; align-items: center; gap: 0.75rem; background: rgba(0,196,140,0.08);
-      border: 1px solid rgba(0,196,140,0.2); border-radius: 10px; padding: 0.85rem 1rem; margin-top: 0.75rem; }
+    .upload-done { display: flex; align-items: center; gap: 0.75rem; background: rgba(240,101,14,0.08);
+      border: 1px solid rgba(240,101,14,0.2); border-radius: 10px; padding: 0.85rem 1rem; margin-top: 0.75rem; }
     .upload-done-name { font-size: 0.85rem; color: var(--accent); font-weight: 500; }
 
     /* SCENARIO BOX */
@@ -206,7 +211,7 @@
     }
     .scenario-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
       color: var(--accent); margin-bottom: 0.6rem; }
-    .scenario-text { font-size: 0.88rem; color: var(--text); line-height: 1.6; }
+    .scenario-text { font-size: 0.88rem; color: var(--navy); line-height: 1.6; }
 
     /* AI FEEDBACK */
     .ai-feedback {
@@ -241,19 +246,19 @@
       padding: 0.6rem 1.2rem; border-radius: 8px; font-family: 'Syne', sans-serif;
       font-weight: 600; font-size: 0.8rem; cursor: pointer; transition: all 0.2s; margin-top: 0.75rem;
     }
-    .btn-retry-sm:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-retry-sm:hover { border-color: var(--orange); color: var(--accent); }
 
     /* COMPLETE BANNER */
     .complete-banner {
-      background: linear-gradient(135deg, rgba(34,197,94,0.12), rgba(45,107,228,0.08));
-      border: 1.5px solid rgba(0,196,140,0.3); border-radius: 16px;
+      background: linear-gradient(135deg, rgba(240,101,14,0.12), rgba(45,107,228,0.08));
+      border: 1.5px solid rgba(240,101,14,0.3); border-radius: 16px;
       padding: 2rem; text-align: center; margin: 0 5% 3rem; max-width: 1100px;
       margin-left: auto; margin-right: auto; display: none;
     }
     .complete-banner h2 { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800;
-      color: var(--text); margin-bottom: 0.5rem; }
+      color: var(--navy); margin-bottom: 0.5rem; }
     .complete-banner p { color: var(--muted); margin-bottom: 1.5rem; }
-    .btn-jobs { background: linear-gradient(135deg, var(--accent), #00C080); color: #000;
+    .btn-jobs { background: var(--orange); color: #ffffff;
       border: none; padding: 0.9rem 2rem; border-radius: 10px; font-family: 'Syne', sans-serif;
       font-weight: 700; font-size: 0.95rem; cursor: pointer; text-decoration: none; display: inline-block; }
 
@@ -296,7 +301,7 @@
 <body>
 
 <nav>
-  <a class="logo" href="index.html"><img src="logo.png" alt="VELA" style="width:28px;height:28px;object-fit:contain;vertical-align:middle;margin-right:6px;"/>VELA</a>
+  <a class="logo" href="index.html"><img src="logo.png" alt="VELA" style="width:28px;height:28px;object-fit:contain;vertical-align:middle;margin-right:6px;"/><span style="color:#f0650e;-webkit-text-fill-color:#f0650e;">V</span><span style="color:#ffffff;">ELA</span></a>
   <ul class="nav-links">
     <li><a href="index.html">Home</a></li>
     <li><a href="skills.html">Skills</a></li>
@@ -344,7 +349,7 @@
       <div class="passport-avatar" id="pp-avatar">?</div>
       <div>
         <div class="passport-name" id="pp-name">Your Name</div>
-        <div class="passport-skill" id="pp-skill">Skill path not set · <a href="profile.html" style="color:var(--accent);text-decoration:none">Complete your profile first →</a></div>
+        <div class="passport-skill" id="pp-skill">Skill path not set · <a href="profile.html" style="color:var(--orange);text-decoration:none">Complete your profile first →</a></div>
       </div>
     </div>
     <div class="passport-badges" id="passport-badges"></div>
@@ -512,7 +517,7 @@ function updatePassport() {
   document.getElementById("pp-name").textContent = candidate.name;
   document.getElementById("pp-skill").innerHTML = candidate.skill
     ? `${candidate.skill} · ${candidate.country || "Africa"}`
-    : `Skill path not set · <a href="profile.html" style="color:var(--accent);text-decoration:none">Complete your profile first →</a>`;
+    : `Skill path not set · <a href="profile.html" style="color:var(--orange);text-decoration:none">Complete your profile first →</a>`;
 
   const passed = LAYERS.filter(l => verifState[l.id]?.status === "passed" || verifState[l.id]?.status === "review");
   const allDone = passed.length === LAYERS.length;
@@ -706,13 +711,13 @@ function renderInterview(questions, state) {
     return renderResult("interview", state);
   }
   return `
-    <div style="background:rgba(0,196,140,0.05);border:1px solid rgba(34,197,94,0.12);border-radius:10px;padding:1rem;margin-bottom:1.25rem;font-size:0.85rem;color:var(--muted);line-height:1.6">
+    <div style="background:rgba(240,101,14,0.05);border:1px solid rgba(240,101,14,0.12);border-radius:10px;padding:1rem;margin-bottom:1.25rem;font-size:0.85rem;color:var(--muted);line-height:1.6">
       Answer each question as you would in a real interview. Write at least 3–4 sentences per answer. Be specific — use real examples where possible. The AI will score your clarity, relevance, and depth.
     </div>
     ${questions.map((q,i) => `
       <div style="margin-bottom:1.5rem">
         <label class="vf-label">Question ${i+1} of ${questions.length}</label>
-        <div style="font-family:'Syne',sans-serif;font-size:0.92rem;font-weight:700;color:var(--text);margin-bottom:0.75rem;line-height:1.4">${q.q}</div>
+        <div style="font-family:'Syne',sans-serif;font-size:0.92rem;font-weight:700;color:var(--navy);margin-bottom:0.75rem;line-height:1.4">${q.q}</div>
         <textarea class="vf-textarea" id="int-q${i}" placeholder="${q.placeholder}"></textarea>
       </div>`).join("")}
     <div id="interview-feedback"></div>
