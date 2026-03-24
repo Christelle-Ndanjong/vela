@@ -529,7 +529,7 @@ const AFRICAN_COUNTRIES = [
 ].sort();
 
 // ─── STATE ────────────────────────────────────────────────────────────────────
-let currentStep = 0;
+let currentStep = 1;
 let profile = {
   name:"", country:"", email:"",
   education:"", field:"", institution:"",
@@ -591,7 +591,7 @@ window.addEventListener('DOMContentLoaded', async function() {
   if (saved) {
     try {
       profile = JSON.parse(saved);
-      currentStep = parseInt(localStorage.getItem(keyStep)) || 0;
+      currentStep = Math.max(1, parseInt(localStorage.getItem(keyStep)) || 1);
       const sq = localStorage.getItem(keyQuiz);
       if (sq) quizAnswers = JSON.parse(sq);
       if (!profile.email) profile.email = currentUser.email;
@@ -836,6 +836,17 @@ function updateProgress() {
 }
 
 function renderStep() {
+  // If came from landing page with ?skill= param, always skip step 0
+  try {
+    var sp = new URLSearchParams(window.location.search);
+    var sk = sp.get('skill');
+    if (sk && currentStep === 0) {
+      var decoded = decodeURIComponent(sk.replace(/\+/g, ' '));
+      profile.skill = decoded;
+      if (!profile.skills || profile.skills.length === 0) profile.skills = [decoded];
+      currentStep = 1;
+    }
+  } catch(e) {}
   updateProgress();
   const container = document.getElementById("step-container");
   container.style.animation = "none";
@@ -1026,57 +1037,14 @@ function skipDiscovery() {
 
 const steps = [
 
-  // STEP 0 - Skill Discovery
+  // STEP 0 - Auto-skip to step 1
   () => {
-    var q1 = window._sq1 || '';
-    var q2 = window._sq2 || '';
-    var q3 = window._sq3 || '';
-    var q5 = window._sq5 || '';
-    var opts1 = ['Working with people','Working with data','Creating content','Managing & organising'];
-    var opts2 = ['Not very','Comfortable with apps','I learn tools quickly','Very technical'];
-    var opts3 = ['I need work now','About 1 month','2-3 months','3+ months'];
-    var opts5 = ['Communicating and helping','Analysing and solving problems','Writing and creating','Organising and planning'];
-    function makeOpts(opts, sel, key) {
-      return opts.map(function(o) {
-        var active = sel === o;
-        return '<div onclick="window.' + key + '=\'' + o + '\';renderStep()" style="padding:0.5rem 0.75rem;border-radius:8px;border:1.5px solid ' + (active?'var(--orange)':'var(--border)') + ';background:' + (active?'var(--orange-pale)':'transparent') + ';font-size:0.82rem;color:' + (active?'var(--orange)':'var(--text-soft)') + ';cursor:pointer;font-weight:' + (active?'700':'400') + ';transition:all 0.15s;">' + o + '</div>';
-      }).join('');
-    }
-    var rec = (q1&&q5) ? getSkillRecommendation(q1,q2,q3,q5) : '';
-    var allDone = q1&&q2&&q3&&q5;
-    return '<div class="step-num">Welcome</div>' +
-    '<h1 class="step-title">Let us find your <span>perfect skill</span></h1>' +
-    '<p class="step-sub">Answer 4 questions — VELA will recommend the best remote skill for you based on your answers.</p>' +
-
-    '<div style="display:flex;flex-direction:column;gap:0.85rem;margin-bottom:1.25rem;">' +
-
-    '<div style="background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.1rem;">' +
-    '<div style="font-size:0.8rem;font-weight:700;color:var(--navy);margin-bottom:0.5rem;">1. What do you enjoy most?</div>' +
-    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:0.4rem;">' + makeOpts(opts1,q1,'_sq1') + '</div></div>' +
-
-    '<div style="background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.1rem;">' +
-    '<div style="font-size:0.8rem;font-weight:700;color:var(--navy);margin-bottom:0.5rem;">2. How comfortable are you with technology?</div>' +
-    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:0.4rem;">' + makeOpts(opts2,q2,'_sq2') + '</div></div>' +
-
-    '<div style="background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.1rem;">' +
-    '<div style="font-size:0.8rem;font-weight:700;color:var(--navy);margin-bottom:0.5rem;">3. How long can you spend learning before your first job?</div>' +
-    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:0.4rem;">' + makeOpts(opts3,q3,'_sq3') + '</div></div>' +
-
-    '<div style="background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.1rem;">' +
-    '<div style="font-size:0.8rem;font-weight:700;color:var(--navy);margin-bottom:0.5rem;">4. What do people say you are good at?</div>' +
-    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:0.4rem;">' + makeOpts(opts5,q5,'_sq5') + '</div></div>' +
-
-    '</div>' +
-
-    (allDone ? '<div style="background:var(--orange-pale);border:1.5px solid rgba(240,101,14,0.3);border-radius:12px;padding:1rem 1.1rem;margin-bottom:1rem;"><div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--orange);margin-bottom:0.35rem;">Your recommended skill</div><div style="font-family:Syne,sans-serif;font-weight:800;font-size:1.1rem;color:var(--navy);">' + rec + '</div><div style="font-size:0.8rem;color:var(--text-soft);margin-top:0.25rem;">We will pre-select this for you. You can change it in the next step.</div></div>' : '<div style="font-size:0.82rem;color:var(--muted);text-align:center;margin-bottom:1rem;">Answer all questions to get your recommendation</div>') +
-
-    '<div style="display:flex;gap:0.75rem;flex-wrap:wrap;align-items:center;">' +
-    (allDone ? '<button class="btn-next" onclick="applySkillRec(this.getAttribute(\"data-skill\"))" data-skill="' + rec + '">Continue with ' + rec + ' →</button>' : '') +
-    '<button onclick="skipDiscovery()" style="background:transparent;border:none;color:var(--muted);font-size:0.82rem;cursor:pointer;text-decoration:underline;padding:0.5rem 0;">I already know my skill, skip this</button>' +
-    '</div>';
+    // Auto-advance — step 0 is now handled by skill-discovery.html
+    setTimeout(function() { advance(); }, 50);
+    return '<div style="text-align:center;padding:2rem;color:var(--muted)">Loading your profile...</div>';
   },
 
-  // STEP 1 — Welcome
+    // STEP 1 — Welcome
   () => `
     <div class="step-num">Step 1 of 10 · Welcome</div>
     <h1 class="step-title">Let's build your <span>VELA profile</span></h1>
