@@ -20,36 +20,42 @@
     html, body { overflow-x: hidden; max-width: 100%; }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg:      #0B0F1F;
-      --bg2:     #0E1328;
-      --surface: #151A2E;
-      --card:    #1A2040;
-      --border:  #2A3153;
-      --accent:  #22C55E;
-      --accent2: #3B82F6;
-      --grad1:   #22C1C3;
-      --grad2:   #6C63FF;
-      --gold:    #F5A623;
-      --text:    #FFFFFF;
-      --text2:   #A1A8C3;
-      --muted:   #6B7280;
-      --danger:  #EF4444;
-      --warn:    #F59E0B;
+      --navy:         #0b1f3a;
+      --navy-mid:     #112d52;
+      --navy-light:   #1a3f6e;
+      --orange:       #f0650e;
+      --orange-light: #ff8a3d;
+      --orange-pale:  #fff1e8;
+      --bg:           #fdf8f3;
+      --bg2:          #f5efe6;
+      --surface:      #ffffff;
+      --card:         #ffffff;
+      --border:       rgba(11,31,58,0.10);
+      --accent:       #f0650e;
+      --accent2:      #1a3f6e;
+      --gold:         #f0650e;
+      --text:         #0b1f3a;
+      --text2:        #4a6080;
+      --muted:        #8ea5be;
+      --danger:       #EF4444;
+      --warn:         #f0650e;
+      --grad1:        #f0650e;
+      --grad2:        #ff8a3d;
     }
     body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.5rem; }
-    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.8rem; background: linear-gradient(135deg, var(--accent), var(--blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.5rem; text-align: center; }
+    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.8rem;  color: #ffffff; margin-bottom: 0.5rem; text-align: center; }
     .tagline { font-size: 0.85rem; color: var(--muted); margin-bottom: 2.5rem; text-align: center; }
     .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; width: 100%; max-width: 420px; }
     .tabs { display: flex; gap: 0; margin-bottom: 1.75rem; background: var(--surface); border-radius: 10px; padding: 4px; }
     .tab { flex: 1; padding: 0.6rem; border: none; border-radius: 8px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; background: transparent; color: var(--muted); }
-    .tab.active { background: linear-gradient(135deg, #22C1C3, #6C63FF); color: #FFFFFF; }
+    .tab.active { background: var(--orange); color: #FFFFFF; }
     .form-group { margin-bottom: 1.1rem; }
     .form-label { display: block; font-size: 0.75rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4rem; }
     .form-input { width: 100%; background: var(--surface); border: 1.5px solid var(--border); color: var(--text); -webkit-text-fill-color: var(--text); padding: 0.75rem 1rem; border-radius: 10px; font-size: 0.9rem; font-family: 'DM Sans', sans-serif; outline: none; transition: border-color 0.2s; }
-    .form-input:focus { border-color: rgba(0,196,140,0.4); }
+    .form-input:focus { border-color: rgba(240,101,14,0.4); }
     .form-input::placeholder { color: var(--muted); opacity: 1; }
     .form-input:-webkit-autofill { -webkit-box-shadow: 0 0 0 100px var(--surface) inset !important; -webkit-text-fill-color: var(--text) !important; }
-    .btn-submit { width: 100%; background: linear-gradient(135deg, #22C1C3, #6C63FF); color: #FFFFFF; border: none; padding: 0.85rem; border-radius: 10px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; cursor: pointer; margin-top: 0.5rem; transition: opacity 0.2s; }
+    .btn-submit { width: 100%; background: var(--orange); color: #FFFFFF; border: none; padding: 0.85rem; border-radius: 10px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; cursor: pointer; margin-top: 0.5rem; transition: opacity 0.2s; }
     .btn-submit:hover { opacity: 0.88; }
     .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
     .btn-google { width: 100%; background: #fff; color: #1A1510; border: 1.5px solid rgba(255,255,255,0.15); padding: 0.85rem; border-radius: 10px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.92rem; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.65rem; margin-bottom: 0.85rem; }
@@ -63,7 +69,7 @@
     .msg.success { color: var(--accent); }
     .divider { height: 1px; background: var(--border); margin: 1.25rem 0; }
     .back-link { text-align: center; margin-top: 1.5rem; font-size: 0.82rem; color: var(--muted); }
-    .back-link a { color: var(--accent); text-decoration: none; }
+    .back-link a { color: var(--orange); text-decoration: none; }
 
   /* light mode removed — VELA is dark */
   </style>
@@ -71,7 +77,7 @@
 <body>
 
 <div style="position:fixed;top:1rem;right:1rem;z-index:100"></div>
-<div class="logo" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;"><img src="logo.png" alt="VELA" style="width:32px;height:32px;object-fit:contain;"/>VELA</div>
+<div class="logo" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;"><img src="logo.png" alt="VELA" style="width:32px;height:32px;object-fit:contain;"/><span style="color:#f0650e;-webkit-text-fill-color:#f0650e;">V</span><span style="color:#ffffff;">ELA</span></div>
 <div class="tagline">African Talent. Verified. Placed.</div>
 
 <!-- ROLE BANNER — shown based on URL param or localStorage -->
@@ -111,11 +117,11 @@
     <div class="msg" id="login-msg"></div>
     <div id="resend-wrap" style="display:none;text-align:center;margin-top:0.75rem;">
       <span style="font-size:0.8rem;color:var(--muted)">Didn't get the email? </span>
-      <a href="#" onclick="resendConfirmation()" style="font-size:0.8rem;color:var(--accent);text-decoration:none;font-weight:600;">Resend confirmation →</a>
+      <a href="#" onclick="resendConfirmation()" style="font-size:0.8rem;color:var(--orange);text-decoration:none;font-weight:600;">Resend confirmation →</a>
     </div>
     <div class="divider"></div>
     <div style="text-align:center;font-size:0.8rem;color:var(--muted)">
-      <a href="#" onclick="showForgot()" style="color:var(--accent);text-decoration:none;">Forgot your password?</a>
+      <a href="#" onclick="showForgot()" style="color:var(--orange);text-decoration:none;">Forgot your password?</a>
     </div>
   </div>
 
@@ -156,7 +162,7 @@
     <div class="msg" id="forgot-msg"></div>
     <div class="divider"></div>
     <div style="text-align:center;font-size:0.8rem;">
-      <a href="#" onclick="switchTab('login')" style="color:var(--accent);text-decoration:none;">← Back to Sign In</a>
+      <a href="#" onclick="switchTab('login')" style="color:var(--orange);text-decoration:none;">← Back to Sign In</a>
     </div>
   </div>
 </div>
@@ -193,8 +199,8 @@ function applyRoleBanner() {
     banner.innerHTML = '🏢 Recruiter account — you will be taken to the Employer Dashboard';
   } else {
     banner.style.display = 'block';
-    banner.style.background = 'rgba(0,196,140,0.08)';
-    banner.style.border = '1.5px solid rgba(0,196,140,0.25)';
+    banner.style.background = 'rgba(240,101,14,0.08)';
+    banner.style.border = '1.5px solid rgba(240,101,14,0.25)';
     banner.style.color = 'var(--accent)';
     banner.innerHTML = '🌍 Job Seeker account — you will be taken to your profile';
   }
