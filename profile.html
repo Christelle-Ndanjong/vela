@@ -17,21 +17,23 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg:      #0B0F1F;
-      --bg2:     #0E1328;
-      --surface: #151A2E;
-      --card:    #1A2040;
-      --border:  #2A3153;
-      --accent:  #22C55E;
-      --accent2: #3B82F6;
-      --grad1:   #22C1C3;
-      --grad2:   #6C63FF;
-      --gold:    #F5A623;
-      --text:    #FFFFFF;
-      --text2:   #A1A8C3;
-      --muted:   #6B7280;
-      --danger:  #EF4444;
-      --warn:    #F59E0B;
+      --navy:         #0b1f3a;
+      --navy-mid:     #112d52;
+      --navy-light:   #1a3f6e;
+      --orange:       #f0650e;
+      --orange-light: #ff8a3d;
+      --orange-pale:  #fff1e8;
+      --bg:           #fdf8f3;
+      --bg2:          #f5efe6;
+      --surface:      #ffffff;
+      --card:         #ffffff;
+      --border:       rgba(11,31,58,0.10);
+      --accent:       #22C55E;
+      --text:         #0b1f3a;
+      --text-soft:    #4a6080;
+      --muted:        #8ea5be;
+      --danger:       #EF4444;
+      --warn:         #f0650e;
     }
     html, body { scroll-behavior: smooth; overflow-x: hidden; max-width: 100%; }
     body {
@@ -43,20 +45,18 @@
     /* NAV */
     nav {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 1.1rem 5%; border-bottom: 1px solid var(--border);
+      padding: 1.1rem 5%; border-bottom: 2px solid var(--orange);
       background: rgba(8,12,18,0.95);
     }
     .logo {
       font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem;
-      letter-spacing: 0.08em; background: linear-gradient(135deg, #22C1C3, #6C63FF);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text; text-decoration: none;
+      letter-spacing: 0.08em; color: #ffffff; text-decoration: none;
     }
     .nav-step-info { color: var(--muted); font-size: 0.82rem; }
 
     /* PROGRESS BAR */
     .progress-wrap {
-      background: var(--surface); padding: 1rem 5%; border-bottom: 1px solid var(--border);
+      background: var(--bg2); padding: 1rem 5%; border-bottom: 1px solid var(--border);
       position: sticky; top: 0; z-index: 50;
     }
     .progress-meta {
@@ -100,8 +100,7 @@
       font-weight: 800; line-height: 1.1; color: var(--text); margin-bottom: 0.6rem;
     }
     .step-title span {
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      color: var(--orange);
     }
     .step-sub { color: var(--muted); font-size: 0.95rem; margin-bottom: 2rem; line-height: 1.6; }
 
@@ -118,7 +117,7 @@
       transition: border-color 0.2s, box-shadow 0.2s;
     }
     .input:focus, .select:focus, .textarea:focus {
-      border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,196,140,0.08);
+      border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,229,160,0.08);
     }
     .input::placeholder, .textarea::placeholder { color: var(--muted); }
     .select { cursor: pointer; appearance: none;
@@ -142,10 +141,10 @@
       padding: 1rem 1.1rem; cursor: pointer; transition: all 0.2s; user-select: none;
       display: flex; align-items: center; gap: 0.75rem;
     }
-    .choice-card:hover { border-color: rgba(0,196,140,0.3); background: rgba(0,196,140,0.04); }
+    .choice-card:hover { border-color: rgba(0,229,160,0.3); background: rgba(0,229,160,0.04); }
     .choice-card.selected {
-      border-color: var(--accent); background: rgba(0,196,140,0.08);
-      box-shadow: 0 0 0 3px rgba(34,197,94,0.12);
+      border-color: var(--accent); background: rgba(0,229,160,0.08);
+      box-shadow: 0 0 0 3px rgba(0,229,160,0.1);
     }
     .choice-icon { font-size: 1.3rem; flex-shrink: 0; }
     .choice-text { flex: 1; }
@@ -170,8 +169,8 @@
       padding: 0.85rem 1rem; cursor: pointer; transition: all 0.2s; user-select: none;
       display: flex; align-items: center; gap: 0.6rem;
     }
-    .skill-card:hover { border-color: rgba(45,107,228,0.35); }
-    .skill-card.selected { border-color: var(--accent2); background: rgba(45,107,228,0.08); }
+    .skill-card:hover { border-color: rgba(0,150,255,0.35); }
+    .skill-card.selected { border-color: var(--accent2); background: rgba(0,150,255,0.08); }
     .skill-card-icon { font-size: 1.1rem; flex-shrink: 0; }
     .skill-card-name { font-size: 0.82rem; font-weight: 600; color: var(--text); line-height: 1.3; }
 
@@ -184,8 +183,8 @@
       padding: 0.4rem 0.9rem; border-radius: 100px; font-size: 0.82rem; font-weight: 500;
       cursor: pointer; transition: all 0.2s; user-select: none;
     }
-    .tool-chip:hover { border-color: rgba(0,196,140,0.3); color: var(--text); }
-    .tool-chip.selected { background: rgba(34,197,94,0.12); border-color: var(--accent); color: var(--accent); }
+    .tool-chip:hover { border-color: rgba(0,229,160,0.3); color: var(--text); }
+    .tool-chip.selected { background: rgba(0,229,160,0.1); border-color: var(--accent); color: var(--accent); }
 
     /* SCALE SLIDER */
     .scale-options { display: flex; gap: 0.5rem; }
@@ -194,8 +193,8 @@
       color: var(--muted); padding: 0.75rem 0.5rem; border-radius: 10px;
       text-align: center; cursor: pointer; transition: all 0.2s; user-select: none;
     }
-    .scale-btn:hover { border-color: rgba(0,196,140,0.3); }
-    .scale-btn.selected { border-color: var(--accent); background: rgba(34,197,94,0.12); color: var(--accent); }
+    .scale-btn:hover { border-color: rgba(0,229,160,0.3); }
+    .scale-btn.selected { border-color: var(--accent); background: rgba(0,229,160,0.1); color: var(--accent); }
     .scale-num { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 800; }
     .scale-label { font-size: 0.65rem; color: var(--muted); margin-top: 0.2rem; }
     .scale-btn.selected .scale-label { color: var(--accent); }
@@ -213,9 +212,9 @@
       padding: 0.85rem 1.1rem; cursor: pointer; transition: all 0.2s;
       font-size: 0.9rem; color: var(--muted); user-select: none;
     }
-    .q-option:hover { border-color: rgba(0,196,140,0.3); color: var(--text); }
-    .q-option.selected { border-color: var(--accent); background: rgba(0,196,140,0.08); color: var(--text); }
-    .q-option.correct { border-color: var(--accent); background: rgba(34,197,94,0.12); color: var(--accent); }
+    .q-option:hover { border-color: rgba(0,229,160,0.3); color: var(--text); }
+    .q-option.selected { border-color: var(--accent); background: rgba(0,229,160,0.08); color: var(--text); }
+    .q-option.correct { border-color: var(--accent); background: rgba(0,229,160,0.12); color: var(--accent); }
     .q-option.wrong { border-color: var(--danger); background: rgba(255,107,107,0.08); color: var(--danger); }
 
     /* BUTTONS */
@@ -322,86 +321,17 @@
       .score-big { font-size: 3rem; }
       .choice-grid.cols-2 { grid-template-columns: 1fr; }
     }
-  /* light mode removed — VELA is dark */
-
-  /* ── VELA VERIFIED BADGE ─────────────────────────────────────────────── */
-  .vela-verified-badge {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    background: linear-gradient(135deg, rgba(0,212,142,0.12), rgba(59,158,255,0.08));
-    border: 1.5px solid rgba(0,212,142,0.35);
-    border-radius: 10px; padding: 0.6rem 1rem;
-    font-family: 'Syne', sans-serif;
-  }
-  .vela-verified-badge .badge-seal {
-    width: 32px; height: 32px; border-radius: 50%;
-    background: linear-gradient(135deg, #00D48E, #3B9EFF);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1rem; flex-shrink: 0;
-    box-shadow: 0 2px 8px rgba(0,212,142,0.3);
-  }
-  .vela-verified-badge .badge-text { display: flex; flex-direction: column; }
-  .vela-verified-badge .badge-title {
-    font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em;
-    text-transform: uppercase; color: #00D48E; line-height: 1;
-  }
-  .vela-verified-badge .badge-score {
-    font-size: 0.88rem; font-weight: 800; color: var(--text); line-height: 1.3;
-  }
-  .vela-layer-pills {
-    display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.5rem;
-  }
-  .vela-layer-pill {
-    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.05em;
-    text-transform: uppercase; padding: 0.2rem 0.55rem; border-radius: 20px;
-    border: 1px solid; white-space: nowrap;
-  }
-  .vela-layer-pill.passed { background: rgba(0,212,142,0.1); color: #00D48E; border-color: rgba(0,212,142,0.3); }
-  .vela-layer-pill.pending { background: rgba(107,122,153,0.1); color: var(--muted); border-color: var(--border); }
-  .vela-layer-pill.review  { background: rgba(255,179,71,0.1); color: #FFB347; border-color: rgba(255,179,71,0.25); }
-
-
-    @media (max-width: 640px) {
-      html, body { overflow-x: hidden; }
-      .card { padding: 1.25rem 1rem; }
-      .step-title { font-size: 1.4rem; }
-      .step-sub { font-size: 0.85rem; }
-      .choice-grid { grid-template-columns: 1fr; }
-      .choice-grid.cols-2 { grid-template-columns: 1fr 1fr; }
-      .skill-grid { grid-template-columns: repeat(2, 1fr) !important; }
-      .tools-grid { grid-template-columns: repeat(2, 1fr) !important; }
-      .btn-row { flex-direction: column; }
-      .btn-back, .btn-next { width: 100%; text-align: center; }
-      .progress-bar-wrap { padding: 0 1rem; }
-    }
-
-    @media (max-width: 768px) {
-      html, body { overflow-x: hidden; }
-      .step-container { padding: 1.5rem 5% 4rem; }
-      .choice-grid.cols-2 { grid-template-columns: 1fr; }
-      .skill-grid { grid-template-columns: repeat(2,1fr) !important; }
-      .tools-grid { grid-template-columns: repeat(2,1fr) !important; }
-      .btn-row { flex-direction: column; gap: 0.6rem; }
-      .btn-back, .btn-next { width: 100%; }
-      .result-card { padding: 1.5rem 1rem; }
-      .breakdown-grid { grid-template-columns: 1fr; }
-      .pass-actions { gap: 0.6rem; }
-    }
-    @media (max-width: 400px) {
-      .skill-grid { grid-template-columns: 1fr 1fr !important; }
-      h1.step-title { font-size: 1.5rem; }
-    }
   </style>
 </head>
 <body>
 
 <nav>
-  <a class="logo" href="index.html"><img src="logo.png" alt="VELA" style="width:28px;height:28px;object-fit:contain;vertical-align:middle;margin-right:6px;"/>VELA</a>
+  <a class="logo" href="index.html"><img src="logo.png" alt="VELA" style="width:28px;height:28px;object-fit:contain;vertical-align:middle;margin-right:6px;"/><span style="color:#f0650e;-webkit-text-fill-color:#f0650e;">V</span><span style="color:#ffffff;">ELA</span></a>
   <span class="nav-step-info" id="nav-step-info">Building your profile</span>
   <div style="display:flex;gap:0.5rem;align-items:center;">
-    <button onclick="saveProgress()" id="save-btn" style="background:transparent;border:1px solid rgba(0,196,140,0.25);color:var(--accent);padding:0.4rem 0.9rem;border-radius:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">💾 Save</button>
-    <button onclick="loadProgress()" id="load-btn" style="display:none;background:rgba(0,196,140,0.08);border:1px solid rgba(0,196,140,0.3);color:var(--accent);padding:0.4rem 0.9rem;border-radius:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">↩ Resume</button>
-    <a href="dashboard.html" id="nav-dashboard-btn" style="display:none;background:linear-gradient(135deg,#22C1C3,#6C63FF);color:#fff;padding:0.4rem 0.9rem;border-radius:8px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.78rem;text-decoration:none;white-space:nowrap;">My Dashboard →</a>
-    <button onclick="signOut()" style="background:transparent;border:1px solid rgba(255,100,100,0.25);color:#FF6B6B;padding:0.4rem 0.9rem;border-radius:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">Sign Out</button>
+    <button onclick="saveProgress()" id="save-btn" style="background:transparent;border:1px solid rgba(0,229,160,0.25);color:var(--accent);padding:0.4rem 0.9rem;border-radius:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">💾 Save</button>
+    <button onclick="loadProgress()" id="load-btn" style="display:none;background:rgba(0,229,160,0.08);border:1px solid rgba(0,229,160,0.3);color:var(--accent);padding:0.4rem 0.9rem;border-radius:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">↩ Resume</button>
+    <button onclick="signOut()" style="background:transparent;border:1px solid rgba(255,120,120,0.5);color:#ff9999;padding:0.4rem 0.9rem;border-radius:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">Sign Out</button>
   </div>
 </nav>
 
@@ -428,17 +358,6 @@ function supabaseLoadFailed() {
     document.getElementById('step-container').innerHTML = '';
     window._supabaseAvailable = false;
     applyTheme();
-    // Show dashboard button if profile exists
-    try {
-      const keys = Object.keys(localStorage).filter(k => k.startsWith('vela_') && !k.includes('_step') && !k.includes('_quiz') && !k.includes('_theme') && !k.includes('_verif') && !k.includes('_role'));
-      if (keys.length > 0) {
-        const p = JSON.parse(localStorage.getItem(keys[0]) || '{}');
-        if (p.name) {
-          const btn = document.getElementById('nav-dashboard-btn');
-          if (btn) btn.style.display = 'inline-block';
-        }
-      }
-    } catch(e) {}
     renderStep();
   });
 }
@@ -464,89 +383,23 @@ const SKILLS_15 = [
   { icon:"👥", name:"HR & Recruitment" },
 ];
 
-// ─── FULL SKILLS LIST (47 skills — used in Step 4 searchable grid) ───────────
-const ALL_SKILLS = [
-  // ── HIGH DEMAND TECHNICAL ─────────────────────────────────────────────────
-  { icon:"📊", name:"Data Analysis",             cat:"tech",     trend:true  },
-  { icon:"🤖", name:"Prompt Engineering & AI",   cat:"tech",     trend:true  },
-  { icon:"🔐", name:"Cybersecurity",             cat:"tech",     trend:true  },
-  { icon:"🎨", name:"UI/UX Design",              cat:"tech",     trend:true  },
-  { icon:"💻", name:"Web Development",           cat:"tech",     trend:true  },
-  { icon:"🐍", name:"Python Programming",        cat:"tech",     trend:true  },
-  { icon:"☁️", name:"Cloud Computing",           cat:"tech",     trend:true  },
-  { icon:"📱", name:"Mobile App Development",    cat:"tech",     trend:false },
-  { icon:"📈", name:"Business Intelligence",     cat:"tech",     trend:true  },
-  { icon:"🗄️", name:"Database Management",       cat:"tech",     trend:false },
-  // ── DIGITAL MARKETING ─────────────────────────────────────────────────────
-  { icon:"🔍", name:"SEO Specialist",            cat:"marketing",trend:true  },
-  { icon:"📧", name:"Email Marketing",           cat:"marketing",trend:true  },
-  { icon:"📱", name:"Social Media Management",   cat:"marketing",trend:true  },
-  { icon:"✍️", name:"Content Writing",           cat:"marketing",trend:true  },
-  { icon:"🎯", name:"Paid Ads Management",       cat:"marketing",trend:true  },
-  { icon:"📹", name:"Video Marketing",           cat:"marketing",trend:true  },
-  { icon:"📊", name:"Marketing Analytics",       cat:"marketing",trend:true  },
-  { icon:"📣", name:"Copywriting",               cat:"marketing",trend:false },
-  // ── OPERATIONS ────────────────────────────────────────────────────────────
-  { icon:"🎧", name:"Customer Service",          cat:"ops",      trend:true  },
-  { icon:"🤝", name:"Virtual Assistant",         cat:"ops",      trend:true  },
-  { icon:"💼", name:"Project Management",        cat:"ops",      trend:true  },
-  { icon:"👥", name:"HR & Recruitment",          cat:"ops",      trend:true  },
-  { icon:"💰", name:"Bookkeeping",               cat:"ops",      trend:true  },
-  { icon:"🛒", name:"E-Commerce",                cat:"ops",      trend:true  },
-  { icon:"📞", name:"Sales Development",         cat:"ops",      trend:true  },
-  { icon:"🔄", name:"Process Automation",        cat:"ops",      trend:true  },
-  { icon:"📋", name:"CRM Management",            cat:"ops",      trend:false },
-  { icon:"🏢", name:"Operations Management",     cat:"ops",      trend:false },
-  // ── CREATIVE ──────────────────────────────────────────────────────────────
-  { icon:"🎬", name:"Video Editing",             cat:"creative", trend:true  },
-  { icon:"🖌️", name:"Graphic Design",            cat:"creative", trend:true  },
-  { icon:"🎙️", name:"Podcast Production",        cat:"creative", trend:false },
-  { icon:"✏️", name:"Technical Writing",         cat:"creative", trend:false },
-  // ── SOFT SKILLS ───────────────────────────────────────────────────────────
-  { icon:"🗣️", name:"Public Speaking",           cat:"soft",     trend:false },
-  { icon:"🧠", name:"Critical Thinking",         cat:"soft",     trend:false },
-  { icon:"👑", name:"Team Leadership",           cat:"soft",     trend:false },
-  { icon:"💬", name:"Communication",             cat:"soft",     trend:false },
-  { icon:"🔧", name:"Problem Solving",           cat:"soft",     trend:false },
-  { icon:"📅", name:"Time Management",           cat:"soft",     trend:false },
-  // ── SPECIALISED ───────────────────────────────────────────────────────────
-  { icon:"📚", name:"Online Tutoring",           cat:"spec",     trend:false },
-  { icon:"⚖️", name:"Legal Assistant",           cat:"spec",     trend:false },
-  { icon:"🏥", name:"Medical VA",                cat:"spec",     trend:false },
-  { icon:"🌍", name:"Translation",               cat:"spec",     trend:false },
-  { icon:"📝", name:"Transcription",             cat:"spec",     trend:false },
-  { icon:"🏗️", name:"WordPress Management",      cat:"spec",     trend:false },
-  { icon:"🛍️", name:"Amazon FBA",                cat:"spec",     trend:false },
-  { icon:"🏠", name:"Real Estate VA",            cat:"spec",     trend:false },
-];
-
 const TOOLS_BY_SKILL = {
-  "Customer Service":          ["Zendesk","Intercom","Freshdesk","Salesforce","HubSpot","Slack","Zoom","Tidio","Gorgias","Front","LiveChat","Drift","Crisp","Monday.com","Notion"],
-  "Virtual Assistant":         ["Google Workspace","Notion","Trello","Asana","ClickUp","Calendly","ChatGPT","Zoom","Slack","Loom","Airtable","Monday.com","LastPass","Dropbox","OneDrive"],
-  "Data Analysis":             ["Excel","SQL","Python","Tableau","Power BI","Google Sheets","Looker","R","dbt","Snowflake","BigQuery","Pandas","Jupyter","Metabase","Google Analytics"],
-  "Prompt Engineering & AI":   ["ChatGPT","Claude","Midjourney","Make.com","Zapier","LangChain","Gemini","Perplexity","n8n","Cohere","Stable Diffusion","DALL-E","Hugging Face","AutoGPT","Runway"],
-  "Social Media Management":   ["Canva","Buffer","Hootsuite","Meta Business Suite","CapCut","Later","Sprout Social","Planoly","Creator Studio","TikTok Studio","LinkedIn Analytics","Twitter Analytics","Notion","Loomly","SocialBee"],
-  "Content Writing":           ["Grammarly","Surfer SEO","WordPress","Jasper","Hemingway","Ahrefs","Google Docs","Notion","ChatGPT","Semrush","Frase","Clearscope","CoSchedule","ProWritingAid","Canva"],
-  "SEO Specialist":            ["Ahrefs","Semrush","Google Search Console","Moz","Screaming Frog","Surfer SEO","Ubersuggest","Yoast","RankMath","SE Ranking","Keyword Planner","Google Analytics","Majestic","BrightEdge","Clearscope"],
-  "Project Management":        ["Asana","Jira","Monday.com","Notion","Trello","MS Project","ClickUp","Slack","Basecamp","Linear","Smartsheet","Teamwork","Wrike","Confluence","Miro"],
-  "UI/UX Design":              ["Figma","Adobe XD","Sketch","Miro","Maze","InVision","Zeroheight","Webflow","Balsamiq","Framer","Hotjar","UserTesting","Optimal Workshop","Zeplin","Principle"],
-  "Email Marketing":           ["Mailchimp","Klaviyo","ConvertKit","ActiveCampaign","HubSpot","Brevo","Drip","GetResponse","Campaign Monitor","Omnisend","Moosend","MailerLite","Constant Contact","Pardot","Marketo"],
-  "Cybersecurity":             ["Wireshark","Kali Linux","Splunk","Nmap","Burp Suite","Metasploit","TryHackMe","HackTheBox","OWASP ZAP","Nessus","CrowdStrike","SentinelOne","Palo Alto","Qualys","IBM QRadar"],
-  "Online Tutoring":           ["Zoom","Google Meet","Loom","Notion","Miro","Teachable","Padlet","Kahoot","Nearpod","Mentimeter","Google Classroom","Thinkific","Edpuzzle","Whiteboard.fi","Quizlet"],
-  "Bookkeeping":               ["QuickBooks","Xero","Wave","FreshBooks","Excel","Gusto","Sage","Zoho Books","Bench","Pilot","Dext","Receipt Bank","Expensify","NetSuite","Odoo"],
-  "E-Commerce":                ["Shopify","WooCommerce","Meta Ads","Google Ads","Canva","Klaviyo","Oberlo","Gorgias","Amazon Seller","eBay","Etsy","Printful","Triple Whale","ReConvert","Yotpo"],
-  "HR & Recruitment":          ["LinkedIn Recruiter","Workday","BambooHR","Greenhouse","Lever","ADP","Rippling","Gusto","Slack","HireVue","Calendly","Typeform","Notion","Culture Amp","15Five"],
-  "Web Development":           ["VS Code","GitHub","React","Node.js","HTML/CSS","JavaScript","TypeScript","Next.js","Tailwind CSS","WordPress","Webflow","Vercel","Netlify","Docker","Postman"],
-  "Graphic Design":            ["Adobe Photoshop","Adobe Illustrator","Canva","Figma","InDesign","Affinity Designer","Procreate","GIMP","CorelDRAW","Sketch","Vectr","Crello","Visme","Piktochart","Snappa"],
-  "Video Editing":             ["Adobe Premiere Pro","Final Cut Pro","DaVinci Resolve","CapCut","After Effects","iMovie","Filmora","Vegas Pro","Loom","Descript","Runway","OpusClip","Clipchamp","Veed.io","InShot"],
-  "Sales Development":         ["Salesforce","HubSpot","Apollo.io","Outreach","SalesLoft","LinkedIn Sales Navigator","ZoomInfo","Pipedrive","Gong","Chorus","Lemlist","Instantly","Clay","Reply.io","Lusha"],
-  "Paid Ads Management":       ["Google Ads","Meta Ads Manager","TikTok Ads","LinkedIn Ads","Microsoft Ads","Twitter Ads","Canva","Semrush","Google Analytics","Triple Whale","Northbeam","Supermetrics","Madgicx","AdEspresso","Hyros"],
-  "Python Programming":        ["Python","Pandas","NumPy","Django","Flask","FastAPI","Jupyter","VS Code","GitHub","PostgreSQL","Redis","Docker","AWS","Google Colab","Streamlit"],
-  "Cloud Computing":           ["AWS","Google Cloud","Azure","Terraform","Docker","Kubernetes","Linux","GitHub Actions","CI/CD","Cloudflare","Vercel","DigitalOcean","Heroku","Firebase","Supabase"],
-  "Process Automation":        ["Make.com","Zapier","n8n","Power Automate","UiPath","Automation Anywhere","ChatGPT","Python","Google Apps Script","Airtable","Notion","Slack","webhooks","API","Integromat"],
+  "Customer Service":          ["Zendesk","Intercom","Freshdesk","Slack","Zoom","HubSpot","Salesforce","Jira"],
+  "Virtual Assistant":         ["Google Workspace","Notion","Trello","Asana","Calendly","ChatGPT","Zoom","Slack"],
+  "Data Analysis":             ["Excel","SQL","Python","Tableau","Power BI","Google Sheets","Looker","R"],
+  "Prompt Engineering & AI":   ["ChatGPT","Claude","Midjourney","Make.com","Zapier","LangChain","Gemini","Perplexity"],
+  "Social Media Management":   ["Canva","Buffer","Hootsuite","Meta Business Suite","CapCut","Later","Sprout Social","TikTok"],
+  "Content Writing":           ["Grammarly","Surfer SEO","WordPress","Jasper","Hemingway","Ahrefs","Google Docs","Notion"],
+  "SEO Specialist":            ["Ahrefs","Semrush","Google Search Console","Moz","Screaming Frog","Surfer SEO","Ubersuggest","Yoast"],
+  "Project Management":        ["Asana","Jira","Monday.com","Notion","Trello","MS Project","ClickUp","Slack"],
+  "UI/UX Design":              ["Figma","Adobe XD","Sketch","Miro","Maze","InVision","Zeroheight","Webflow"],
+  "Email Marketing":           ["Mailchimp","Klaviyo","ConvertKit","ActiveCampaign","HubSpot","Brevo","Drip","GetResponse"],
+  "Cybersecurity":             ["Wireshark","Kali Linux","Splunk","Nmap","Burp Suite","CompTIA","Metasploit","TryHackMe"],
+  "Online Tutoring":           ["Zoom","Google Meet","Loom","Notion","Miro","Teachable","Padlet","Kahoot"],
+  "Bookkeeping":               ["QuickBooks","Xero","Wave","FreshBooks","Excel","Gusto","Sage","Zoho Books"],
+  "E-Commerce":                ["Shopify","WooCommerce","Meta Ads","Google Ads","Canva","Klaviyo","Oberlo","Gorgias"],
+  "HR & Recruitment":          ["LinkedIn Recruiter","Workday","BambooHR","Greenhouse","Lever","Slack","ADP","Rippling"],
 };
-// Fallback for skills not in the map
-const DEFAULT_TOOLS = ["Google Workspace","Slack","Zoom","Notion","Trello","Excel","ChatGPT","Canva","Gmail","Google Meet"];
 
 const QUIZ_BY_SKILL = {
   "Data Analysis": [
@@ -845,8 +698,8 @@ function saveProgress() {
     saveToSupabase();
     const btn = document.getElementById('save-btn');
     btn.textContent = '✅ Saved!';
-    btn.style.borderColor = 'rgba(0,196,140,0.6)';
-    setTimeout(() => { btn.textContent = '💾 Save'; btn.style.borderColor = 'rgba(0,196,140,0.25)'; }, 2000);
+    btn.style.borderColor = 'rgba(0,229,160,0.6)';
+    setTimeout(() => { btn.textContent = '💾 Save'; btn.style.borderColor = 'rgba(0,229,160,0.25)'; }, 2000);
   } catch(e) { alert('Could not save. Please try again.'); }
 }
 
@@ -887,13 +740,8 @@ function calcScore() {
   const expMap = {"none":0,"less1":5,"1to3":10,"3plus":15};
   score += expMap[profile.experience] || 0;
 
-  // Self level (max 15) — average across all skill ratings
-  const skillLevels = profile.skillLevels || {};
-  const levelVals = Object.values(skillLevels);
-  const avgLevel = levelVals.length > 0
-    ? levelVals.reduce((a,b)=>a+b,0)/levelVals.length
-    : (profile.selfLevel || 0);
-  score += Math.round(avgLevel) * 3;
+  // Self level (max 15) — 1–5 scale → 3,6,9,12,15
+  score += (profile.selfLevel || 0) * 3;
 
   // Tools known (max 15) — each tool = 2pts, max 15
   score += Math.min(profile.tools.length * 2, 15);
@@ -901,54 +749,40 @@ function calcScore() {
   // English (max 15) — 1–5 scale → 3,6,9,12,15
   score += (profile.english || 0) * 3;
 
-  // Quiz (max 20) — uses multi-skill quiz if available
-  const quiz = window._activeQuiz || QUIZ_BY_SKILL[profile.skill] || DEFAULT_QUIZ;
+  // Quiz (max 20) — MC correct = full points, text answers = points for effort/length
+  const quiz = (QUIZ_BY_SKILL[profile.skill] || DEFAULT_QUIZ);
   let quizPoints = 0;
   quiz.forEach((q, i) => {
     const ans = quizAnswers[i];
-    if (q.type === "mc") {
+    if (q.type === 'mc') {
       if (ans === q.answer) quizPoints += 4;
     } else {
-      const wordCount = ans ? ans.trim().split(/\s+/).filter(Boolean).length : 0;
-      if (wordCount >= 100) quizPoints += 4;
-      else if (wordCount >= (q.minWords || 20)) quizPoints += 3;
-      else if (wordCount >= 10) quizPoints += 1;
+      // Text/code answer — award points based on length and effort
+      const wordCount = ans ? ans.trim().split(/\s+/).length : 0;
+      if (wordCount >= (q.minWords || 20)) quizPoints += 4;
+      else if (wordCount >= 5) quizPoints += 2;
     }
   });
-  profile.quizScore = Math.round((quizPoints / (quiz.length * 4)) * 5);
+  profile.quizScore = Math.round((quizPoints / (quiz.length * 4)) * 5); // normalize to 0-5
   score += Math.min(quizPoints, 20);
 
   return Math.min(Math.round(score), 100);
 }
 
-function updateWordCount(qi, text, elId) {
-  // Persist text answer immediately
-  try {
-    const email = currentUser ? currentUser.email : (profile.email || 'guest');
-    localStorage.setItem('vela_quiz_' + email, JSON.stringify(quizAnswers));
-  } catch(e) {}
-  const words = text.trim().split(/\s+/).filter(Boolean).length;
-  const el = document.getElementById(elId);
-  if (el) {
-    el.textContent = words + " words";
-    el.style.color = words >= 200 ? "var(--accent)" : words >= 100 ? "var(--warn)" : "var(--muted)";
-  }
-}
-
 function validateAndShowScore() {
-  const quiz = window._activeQuiz || QUIZ_BY_SKILL[profile.skill] || DEFAULT_QUIZ;
+  const quiz = QUIZ_BY_SKILL[profile.skill] || DEFAULT_QUIZ;
   for (let i = 0; i < quiz.length; i++) {
     const q = quiz[i];
-    if (q.type === "mc") {
+    if (q.type === 'mc') {
       if (quizAnswers[i] === undefined) {
-        showStepError("Please answer Question " + (i+1) + " before submitting.");
+        showStepError(`Please answer Question ${i+1} before submitting.`);
         return;
       }
     } else {
       const ans = quizAnswers[i];
-      const wordCount = ans ? ans.trim().split(/\s+/).filter(Boolean).length : 0;
-      if (wordCount < 20) {
-        showStepError("Question " + (i+1) + " needs a written answer — at least a few sentences please.");
+      const wordCount = ans ? ans.trim().split(/\s+/).length : 0;
+      if (wordCount < 3) {
+        showStepError(`Question ${i+1} requires a written answer — please write at least a few sentences.`);
         return;
       }
     }
@@ -1070,7 +904,7 @@ function toggleTheme() {
   const btn = document.getElementById('theme-btn');
   body.classList.toggle('light-mode');
   const isLight = body.classList.contains('light-mode');
-  btn.textContent = isLight ? '🌌 Navy' : '🌑 Dark';
+  btn.textContent = isLight ? '☀️' : '🌙';
   localStorage.setItem('vela_theme', isLight ? 'light' : 'dark');
 }
 
@@ -1079,7 +913,7 @@ function applyTheme() {
   if (saved === 'light') {
     document.body.classList.add('light-mode');
     const btn = document.getElementById('theme-btn');
-    if (btn) btn.textContent = '🌌 Navy';
+    if (btn) btn.textContent = '☀️';
   }
 }
 
@@ -1097,7 +931,7 @@ function addCustomSkill() {
   const display = document.getElementById('custom-skills-display');
   if (display) {
     const span = document.createElement('span');
-    span.style.cssText = 'background:rgba(34,197,94,0.12);border:1px solid rgba(0,196,140,0.3);color:var(--accent);padding:0.35rem 0.85rem;border-radius:20px;font-size:0.82rem;font-weight:600';
+    span.style.cssText = 'background:rgba(0,229,160,0.1);border:1px solid rgba(0,229,160,0.3);color:var(--accent);padding:0.35rem 0.85rem;border-radius:20px;font-size:0.82rem;font-weight:600';
     span.innerHTML = `${val} <span onclick="removeCustomSkill('${val}')" style="cursor:pointer;margin-left:0.4rem;opacity:0.7">✕</span>`;
     display.appendChild(span);
   }
@@ -1119,109 +953,11 @@ function selectSkill(name, el) {
     profile.skills.push(name);
     el.classList.add("selected");
   }
+  // primary skill = first selected
   profile.skill = profile.skills[0] || "";
+  // update count badge
   const badge = document.getElementById("skill-count-badge");
-  if (badge) badge.textContent = profile.skills.length + " selected";
-}
-
-// ── LIVE SKILL FILTER — updates grid without re-rendering step ───────────────
-function filterSkillsLive(q) {
-  window._skillSearch = q;
-  const activeFilter = window._skillFilter || "all";
-  const grid = document.getElementById("skill-grid-live");
-  const badge = document.getElementById("skill-count-badge");
-  if (!grid) return;
-
-  const filtered = ALL_SKILLS.filter(s => {
-    const matchCat = activeFilter === "all" || s.cat === activeFilter;
-    const matchSearch = !q || s.name.toLowerCase().includes(q.toLowerCase());
-    return matchCat && matchSearch;
-  });
-
-  if (filtered.length === 0) {
-    grid.innerHTML = `<div style="color:var(--muted);font-size:0.88rem;padding:1rem;grid-column:1/-1">No skills match. Add it manually below.</div>`;
-    return;
-  }
-
-  grid.innerHTML = filtered.map(s => `
-    <div class="skill-card ${profile.skills.includes(s.name) ? "selected" : ""}"
-      onclick="selectSkill('${s.name.replace(/'/g,"\'")}', this)" style="position:relative">
-      <span class="skill-card-icon">${s.icon}</span>
-      <span class="skill-card-name">${s.name}</span>
-      ${s.trend ? `<span style="position:absolute;top:4px;right:4px;background:rgba(255,100,0,0.15);color:#FF6B35;font-size:0.6rem;font-weight:800;padding:1px 5px;border-radius:4px">🔥HOT</span>` : ""}
-    </div>`).join("");
-
-  if (badge) badge.textContent = profile.skills.length + " selected";
-}
-
-// Rate each skill individually
-function setSkillLevel(skillName, val, el) {
-  if (!profile.skillLevels) profile.skillLevels = {};
-  profile.skillLevels[skillName] = val;
-  profile.selfLevel = val; // keep backwards compat
-  document.querySelectorAll(".sl-opt").forEach(e => e.classList.remove("selected"));
-  el.classList.add("selected");
-}
-
-function advanceSkillRating(idx, total) {
-  if (!profile.skillLevels) profile.skillLevels = {};
-  const skillName = profile.skills[idx] || "";
-  if (!profile.skillLevels[skillName]) {
-    showStepError("Please rate your level for " + skillName);
-    return;
-  }
-  if (idx < total - 1) {
-    window._ratingIdx = idx + 1;
-    renderStep();
-  } else {
-    window._ratingIdx = 0;
-    // Set selfLevel to average of all skill levels
-    const levels = Object.values(profile.skillLevels);
-    profile.selfLevel = Math.round(levels.reduce((a,b)=>a+b,0)/levels.length);
-    next();
-  }
-}
-
-// ── LIVE TOOL FILTER — updates groups without re-render ─────────────────────
-function filterToolsLive(q) {
-  window._toolSearch = q;
-  const groups = document.getElementById("tools-groups-live");
-  if (!groups) return;
-  const skillsWithTools = profile.skills.filter(s => TOOLS_BY_SKILL[s]);
-  const useDefault = skillsWithTools.length === 0;
-  const grps = useDefault
-    ? [{ skill: "General Remote Work", tools: DEFAULT_TOOLS }]
-    : skillsWithTools.map(s => ({ skill: s, tools: TOOLS_BY_SKILL[s] || [] }));
-
-  groups.innerHTML = grps.map(g => {
-    const filtered = g.tools.filter(t => !q || t.toLowerCase().includes(q.toLowerCase()));
-    if (filtered.length === 0) return "";
-    return `
-      <div style="margin-bottom:1.25rem">
-        <div style="font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);margin-bottom:0.6rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border)">${g.skill}</div>
-        <div class="tools-grid">
-          ${filtered.map(t=>`<div class="tool-chip ${profile.tools.includes(t)?"selected":""}" onclick="toggleTool('${t.replace(/'/g,"\'")}',this)">${t}</div>`).join("")}
-        </div>
-      </div>`;
-  }).join("");
-}
-
-// Custom tool management
-function addCustomTool() {
-  const input = document.getElementById("custom-tool-input");
-  if (!input) return;
-  const val = input.value.trim();
-  if (!val) return;
-  if (profile.tools.includes(val)) { input.value = ""; return; }
-  profile.tools = profile.tools.filter(t => t !== "none");
-  profile.tools.push(val);
-  input.value = "";
-  renderStep();
-}
-
-function removeCustomTool(name) {
-  profile.tools = profile.tools.filter(t => t !== name);
-  renderStep();
+  if (badge) badge.textContent = profile.skills.length > 0 ? `${profile.skills.length} selected` : "Select all that apply";
 }
 
 function setScale(key, val, el, group) {
@@ -1235,41 +971,92 @@ function answerQuiz(qi, ans, el) {
   const wrap = el.closest(".quiz-question");
   wrap.querySelectorAll(".q-option").forEach(o => o.classList.remove("selected"));
   el.classList.add("selected");
-  // Persist immediately so answers survive navigation
-  try {
-    const email = currentUser ? currentUser.email : (profile.email || 'guest');
-    localStorage.setItem('vela_quiz_' + email, JSON.stringify(quizAnswers));
-  } catch(e) {}
 }
 
 // ─── STEPS ───────────────────────────────────────────────────────────────────
+
+function getSkillRecommendation(q1, q2, q3, q5) {
+  if (q1 === 'Working with people' || q5 === 'Communicating and helping') {
+    return q3 === 'I need work now' ? 'Virtual Assistant' : 'Customer Service';
+  }
+  if (q1 === 'Working with data' || q5 === 'Analysing and solving problems') {
+    return (q2 === 'I am very technical' || q2 === 'I learn tools quickly') ? 'Data Analysis' : 'Bookkeeping';
+  }
+  if (q1 === 'Creating content' || q5 === 'Writing and creating') {
+    return (q2 !== 'Not very') ? 'Social Media Management' : 'Content Writing';
+  }
+  return 'Virtual Assistant';
+}
+
+function applySkillRec(skill) {
+  profile.skill = skill;
+  if (!profile.skills || profile.skills.length === 0) profile.skills = [skill];
+  window._skillFilter = 'all';
+  window._skillSearch = '';
+  advance();
+}
+
+function skipDiscovery() {
+  advance();
+}
+
 const steps = [
 
-  // STEP 1 — Welcome + CV Upload
+  // STEP 0 - Skill Discovery
+  () => {
+    var q1 = window._sq1 || '';
+    var q2 = window._sq2 || '';
+    var q3 = window._sq3 || '';
+    var q5 = window._sq5 || '';
+    var opts1 = ['Working with people','Working with data','Creating content','Managing & organising'];
+    var opts2 = ['Not very','Comfortable with apps','I learn tools quickly','Very technical'];
+    var opts3 = ['I need work now','About 1 month','2-3 months','3+ months'];
+    var opts5 = ['Communicating and helping','Analysing and solving problems','Writing and creating','Organising and planning'];
+    function makeOpts(opts, sel, key) {
+      return opts.map(function(o) {
+        var active = sel === o;
+        return '<div onclick="window.' + key + '=\'' + o + '\';renderStep()" style="padding:0.5rem 0.75rem;border-radius:8px;border:1.5px solid ' + (active?'var(--orange)':'var(--border)') + ';background:' + (active?'var(--orange-pale)':'transparent') + ';font-size:0.82rem;color:' + (active?'var(--orange)':'var(--text-soft)') + ';cursor:pointer;font-weight:' + (active?'700':'400') + ';transition:all 0.15s;">' + o + '</div>';
+      }).join('');
+    }
+    var rec = (q1&&q5) ? getSkillRecommendation(q1,q2,q3,q5) : '';
+    var allDone = q1&&q2&&q3&&q5;
+    return '<div class="step-num">Welcome</div>' +
+    '<h1 class="step-title">Let us find your <span>perfect skill</span></h1>' +
+    '<p class="step-sub">Answer 4 questions — VELA will recommend the best remote skill for you based on your answers.</p>' +
+
+    '<div style="display:flex;flex-direction:column;gap:0.85rem;margin-bottom:1.25rem;">' +
+
+    '<div style="background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.1rem;">' +
+    '<div style="font-size:0.8rem;font-weight:700;color:var(--navy);margin-bottom:0.5rem;">1. What do you enjoy most?</div>' +
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:0.4rem;">' + makeOpts(opts1,q1,'_sq1') + '</div></div>' +
+
+    '<div style="background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.1rem;">' +
+    '<div style="font-size:0.8rem;font-weight:700;color:var(--navy);margin-bottom:0.5rem;">2. How comfortable are you with technology?</div>' +
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:0.4rem;">' + makeOpts(opts2,q2,'_sq2') + '</div></div>' +
+
+    '<div style="background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.1rem;">' +
+    '<div style="font-size:0.8rem;font-weight:700;color:var(--navy);margin-bottom:0.5rem;">3. How long can you spend learning before your first job?</div>' +
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:0.4rem;">' + makeOpts(opts3,q3,'_sq3') + '</div></div>' +
+
+    '<div style="background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.1rem;">' +
+    '<div style="font-size:0.8rem;font-weight:700;color:var(--navy);margin-bottom:0.5rem;">4. What do people say you are good at?</div>' +
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:0.4rem;">' + makeOpts(opts5,q5,'_sq5') + '</div></div>' +
+
+    '</div>' +
+
+    (allDone ? '<div style="background:var(--orange-pale);border:1.5px solid rgba(240,101,14,0.3);border-radius:12px;padding:1rem 1.1rem;margin-bottom:1rem;"><div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--orange);margin-bottom:0.35rem;">Your recommended skill</div><div style="font-family:Syne,sans-serif;font-weight:800;font-size:1.1rem;color:var(--navy);">' + rec + '</div><div style="font-size:0.8rem;color:var(--text-soft);margin-top:0.25rem;">We will pre-select this for you. You can change it in the next step.</div></div>' : '<div style="font-size:0.82rem;color:var(--muted);text-align:center;margin-bottom:1rem;">Answer all questions to get your recommendation</div>') +
+
+    '<div style="display:flex;gap:0.75rem;flex-wrap:wrap;align-items:center;">' +
+    (allDone ? '<button class="btn-next" onclick="applySkillRec(\'' + rec + '\')">Continue with ' + rec + '</button>' : '') +
+    '<button onclick="skipDiscovery()" style="background:transparent;border:none;color:var(--muted);font-size:0.82rem;cursor:pointer;text-decoration:underline;padding:0.5rem 0;">I already know my skill, skip this</button>' +
+    '</div>';
+  },
+
+  // STEP 1 — Welcome
   () => `
     <div class="step-num">Step 1 of 10 · Welcome</div>
     <h1 class="step-title">Let's build your <span>VELA profile</span></h1>
-    <p class="step-sub">Have an existing CV? Upload it and we will fill in your profile automatically. No CV? Just fill in manually below.</p>
-
-    <!-- CV UPLOAD BOX -->
-    <div id="cv-upload-box" style="border:2px dashed rgba(0,196,140,0.3);border-radius:14px;padding:1.5rem;text-align:center;margin-bottom:1.5rem;cursor:pointer;transition:all 0.2s;background:rgba(0,196,140,0.03)"
-      onclick="document.getElementById('cv-file-input').click()"
-      ondragover="event.preventDefault();this.style.borderColor='var(--accent)'"
-      ondragleave="this.style.borderColor='rgba(0,196,140,0.3)'"
-      ondrop="event.preventDefault();handleCVDrop(event.dataTransfer.files[0])">
-      <div style="font-size:2rem;margin-bottom:0.5rem">📄</div>
-      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:var(--text);margin-bottom:0.3rem">Upload your CV to auto-fill</div>
-      <div style="font-size:0.8rem;color:var(--muted)">PDF or Word (.docx) · Drag & drop or click</div>
-      <input type="file" id="cv-file-input" accept=".pdf,.doc,.docx" style="display:none" onchange="handleCVUpload(this.files[0])"/>
-    </div>
-    <div id="cv-parse-status" style="display:none;text-align:center;padding:1rem;margin-bottom:1rem;border-radius:10px;font-size:0.88rem"></div>
-
-    <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.25rem">
-      <div style="flex:1;height:1px;background:var(--border)"></div>
-      <span style="font-size:0.78rem;color:var(--muted);font-weight:600">OR FILL IN MANUALLY</span>
-      <div style="flex:1;height:1px;background:var(--border)"></div>
-    </div>
-
+    <p class="step-sub">10 quick steps. We get to know the real you — your background, your skill, your goal. At the end, you'll get a VELA Readiness Score and your path to getting placed.</p>
     <div class="field"><label>Full Name</label>
       <input class="input" id="f-name" placeholder="Your full name" value="${profile.name}" oninput="profile.name=this.value"/>
     </div>
@@ -1342,181 +1129,63 @@ const steps = [
       <button class="btn-next" onclick="saveStep3()">Continue →</button>
     </div>`,
 
-  // STEP 4 — Skill Choice (searchable, categorised, trending)
-  () => {
-    const cats = [
-      { key:"all", label:"All" },
-      { key:"tech", label:"💻 Tech" },
-      { key:"marketing", label:"📣 Marketing" },
-      { key:"ops", label:"⚙️ Operations" },
-      { key:"creative", label:"🎨 Creative" },
-      { key:"soft", label:"🧠 Soft Skills" },
-      { key:"spec", label:"🔬 Specialised" },
-    ];
-    const activeFilter = window._skillFilter || "all";
-    const searchQ = window._skillSearch || "";
-    const filtered = ALL_SKILLS.filter(s => {
-      const matchCat = activeFilter === "all" || s.cat === activeFilter;
-      const matchSearch = !searchQ || s.name.toLowerCase().includes(searchQ.toLowerCase());
-      return matchCat && matchSearch;
-    });
-    const customSkills = profile.skills.filter(s => !ALL_SKILLS.find(a => a.name === s));
-    return `
+  // STEP 4 — Skill Choice
+  () => `
     <div class="step-num">Step 4 of 10 · Your Skills</div>
     <h1 class="step-title">Choose your <span>skill paths</span></h1>
-    <p class="step-sub">Select every skill you have — hard skills, soft skills, all of them. <strong style="color:var(--accent)">🔥 Trending</strong> = most hired right now.</p>
-
-    <div style="display:flex;gap:0.5rem;margin-bottom:0.75rem;align-items:center;flex-wrap:wrap">
-      <input id="skill-search" class="input" placeholder="🔍 Search skills..." value="${searchQ}"
-        oninput="filterSkillsLive(this.value)" style="flex:1;min-width:180px;padding:0.6rem 1rem;font-size:0.88rem"/>
-      <span id="skill-count-badge" style="background:rgba(0,212,142,0.1);border:1px solid rgba(0,212,142,0.25);color:var(--accent);font-size:0.78rem;font-weight:700;padding:0.4rem 0.85rem;border-radius:20px;white-space:nowrap">${profile.skills.length} selected</span>
+    <p class="step-sub">Select every skill you have or are building. You can choose as many as you like — employers will see your full skill set.</p>
+    <div style="text-align:center;margin-bottom:1rem">
+      <span id="skill-count-badge" style="background:rgba(0,229,160,0.1);border:1px solid rgba(0,229,160,0.25);color:var(--accent);font-size:0.78rem;font-weight:700;padding:0.3rem 0.85rem;border-radius:20px">${profile.skills.length > 0 ? profile.skills.length + " selected" : "Select all that apply"}</span>
     </div>
-
-    <div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:1rem">
-      ${cats.map(c=>`
-        <button onclick="window._skillFilter='${c.key}';window._skillSearch='';filterSkillsLive('')"
-          style="padding:0.3rem 0.75rem;border-radius:20px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;
-          border:1.5px solid ${activeFilter===c.key?'var(--accent)':'var(--border)'};
-          background:${activeFilter===c.key?'rgba(0,212,142,0.12)':'transparent'};
-          color:${activeFilter===c.key?'var(--accent)':'var(--muted)'}">
-          ${c.label}
-        </button>`).join("")}
-    </div>
-
-    <div id="skill-grid-live" class="skill-grid" style="max-height:320px;overflow-y:auto;padding-right:4px">
-      ${filtered.length === 0
-        ? `<div style="color:var(--muted);font-size:0.88rem;padding:1rem;grid-column:1/-1">No skills match. Add it manually below.</div>`
-        : filtered.map(s=>`
-        <div class="skill-card ${profile.skills.includes(s.name)?"selected":""}" onclick="selectSkill('${s.name.replace(/'/g,"\'")}',this)"
-          style="position:relative">
+    <div class="skill-grid">
+      ${SKILLS_15.map(s=>`
+        <div class="skill-card ${profile.skills.includes(s.name)?"selected":""}" onclick="selectSkill('${s.name}',this)">
           <span class="skill-card-icon">${s.icon}</span>
           <span class="skill-card-name">${s.name}</span>
-          ${s.trend ? `<span style="position:absolute;top:4px;right:4px;background:rgba(255,100,0,0.15);color:#FF6B35;font-size:0.6rem;font-weight:800;padding:1px 5px;border-radius:4px">🔥HOT</span>` : ""}
         </div>`).join("")}
     </div>
-
-    <div style="margin-top:1rem;display:flex;gap:0.5rem;align-items:center">
-      <input id="custom-skill-input" class="input" placeholder="Add a skill not listed..." style="flex:1;padding:0.55rem 0.9rem;font-size:0.85rem"
-        onkeydown="if(event.key==='Enter'){addCustomSkill();event.preventDefault();}"/>
-      <button onclick="addCustomSkill()" style="background:rgba(0,212,142,0.12);border:1.5px solid rgba(0,212,142,0.3);color:var(--accent);padding:0.55rem 1rem;border-radius:8px;font-weight:700;font-size:0.85rem;cursor:pointer;font-family:'Syne',sans-serif;white-space:nowrap">+ Add</button>
-    </div>
-    ${customSkills.length > 0 ? `<div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.5rem">
-      ${customSkills.map(s=>`
-        <span style="background:rgba(0,212,142,0.1);border:1px solid rgba(0,212,142,0.3);color:var(--accent);padding:0.3rem 0.75rem;border-radius:20px;font-size:0.8rem;font-weight:600">
-          ${s} <span onclick="removeCustomSkill('${s.replace(/'/g,"\'")}');event.stopPropagation()" style="cursor:pointer;margin-left:0.35rem;opacity:0.7">✕</span>
-        </span>`).join("")}
-    </div>` : ""}
-
-    <div class="btn-row" style="margin-top:1.25rem">
+    <div class="btn-row" style="margin-top:1.5rem">
       <button class="btn-back" onclick="back()">← Back</button>
       <button class="btn-next" onclick="saveStep4()">Continue →</button>
-    </div>`;
-  },
+    </div>`,
 
-  // STEP 5 — Self Assessment (for EACH selected skill)
-  () => {
-    const skillsToRate = profile.skills.length > 0 ? profile.skills : ["General Remote Work"];
-    if (!profile.skillLevels) profile.skillLevels = {};
-    const currentSkillIdx = window._ratingIdx || 0;
-    const skillToRate = skillsToRate[currentSkillIdx];
-    const totalToRate = skillsToRate.length;
-    const currentRating = profile.skillLevels[skillToRate] || profile.selfLevel || 0;
-    return `
+  // STEP 5 — Self Assessment
+  () => `
     <div class="step-num">Step 5 of 10 · Current Level</div>
-    ${totalToRate > 1 ? `<div style="display:flex;gap:0.4rem;flex-wrap:wrap;margin-bottom:1rem">
-      ${skillsToRate.map((s,i)=>`<span style="padding:0.3rem 0.75rem;border-radius:20px;font-size:0.78rem;font-weight:700;
-        border:1.5px solid ${i===currentSkillIdx?'var(--accent)':'var(--border)'};
-        background:${i===currentSkillIdx?'rgba(34,197,94,0.12)':'transparent'};
-        color:${i===currentSkillIdx?'var(--accent)':profile.skillLevels[s]?'var(--text)':'var(--muted)'}">
-        ${profile.skillLevels[s]?'✓ ':''} ${s}
-      </span>`).join("")}
-    </div>` : ""}
-    <h1 class="step-title">How good are you at <span>${skillToRate}</span>?</h1>
-    <p class="step-sub">Rate yourself honestly — ${currentSkillIdx+1} of ${totalToRate} skill${totalToRate>1?"s":""}. Overrating leads to rejection. Underrating hides your potential.</p>
+    <h1 class="step-title">How good are you at <span>${profile.skill||"your skill"}</span> right now?</h1>
+    <p class="step-sub">Be honest — overrating yourself leads to mismatch. We'll use this to show you exactly what to work on.</p>
     <div class="scale-options">
-      ${[{v:1,label:"Never done it"},{v:2,label:"Basics only"},{v:3,label:"Intermediate"},{v:4,label:"Confident"},{v:5,label:"Advanced"}].map(s=>`
-        <div class="scale-btn sl-opt ${currentRating===s.v?"selected":""}"
-          onclick="setSkillLevel('${skillToRate.replace(/'/g,"\'")}',${s.v},this)">
+      ${[
+        {v:1,label:"Never done it"},
+        {v:2,label:"Basics only"},
+        {v:3,label:"Intermediate"},
+        {v:4,label:"Confident"},
+        {v:5,label:"Advanced"},
+      ].map(s=>`
+        <div class="scale-btn sl-opt ${profile.selfLevel===s.v?"selected":""}" onclick="setScale('selfLevel',${s.v},this,'sl-opt')">
           <div class="scale-num">${s.v}</div>
           <div class="scale-label">${s.label}</div>
         </div>`).join("")}
     </div>
     <div class="btn-row" style="margin-top:2rem">
-      <button class="btn-back" onclick="${currentSkillIdx>0?"window._ratingIdx--;renderStep()":"back()"}">← Back</button>
-      <button class="btn-next" onclick="advanceSkillRating(${currentSkillIdx},${totalToRate})">
-        ${currentSkillIdx < totalToRate-1 ? "Next Skill →" : "Continue →"}
-      </button>
-    </div>`;
-  },
+      <button class="btn-back" onclick="back()">← Back</button>
+      <button class="btn-next" onclick="saveStep5()">Continue →</button>
+    </div>`,
 
-  // STEP 6 — Tools (grouped by skill, with search + manual input)
-  () => {
-    const toolSearch = window._toolSearch || "";
-    // Build per-skill groups — only for skills that have a tools list
-    const skillsWithTools = profile.skills.filter(s => TOOLS_BY_SKILL[s]);
-    const useDefault = skillsWithTools.length === 0;
-    const groups = useDefault
-      ? [{ skill: "General Remote Work", tools: DEFAULT_TOOLS }]
-      : skillsWithTools.map(s => ({ skill: s, tools: TOOLS_BY_SKILL[s] || [] }));
-    // All tools flat (for custom display check)
-    const allRelevantTools = [...new Set(groups.flatMap(g => g.tools))];
-    const customTools = profile.tools.filter(t => !allRelevantTools.includes(t) && t !== "none");
-    const selectedCount = profile.tools.filter(t => t !== "none").length;
-
-    return `
+  // STEP 6 — Tools
+  () => `
     <div class="step-num">Step 6 of 10 · Tools</div>
     <h1 class="step-title">Which tools do you <span>already know</span>?</h1>
-    <p class="step-sub">Tools are grouped by your selected skills. Select every tool you can use — even basic familiarity counts.</p>
-
-    <input id="tool-search" class="input" placeholder="🔍 Search tools across all skills..."
-      value="${toolSearch}"
-      oninput="filterToolsLive(this.value)"
-      style="margin-bottom:1rem;padding:0.6rem 1rem;font-size:0.88rem;width:100%"/>
-
-    <div id="tools-groups-live">
-      ${groups.map(g => {
-        const filtered = g.tools.filter(t =>
-          !toolSearch || t.toLowerCase().includes(toolSearch.toLowerCase())
-        );
-        if (filtered.length === 0) return "";
-        return `
-        <div style="margin-bottom:1.25rem">
-          <div style="font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);margin-bottom:0.6rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border)">
-            ${g.skill}
-          </div>
-          <div class="tools-grid">
-            ${filtered.map(t=>`
-              <div class="tool-chip ${profile.tools.includes(t)?"selected":""}"
-                onclick="toggleTool('${t.replace(/'/g,"\'")}',this)">${t}</div>`).join("")}
-          </div>
-        </div>`;
-      }).join("")}
+    <p class="step-sub">Select every tool you can use today — even basic familiarity counts. These are the tools employers for ${profile.skill||"your skill"} expect.</p>
+    <div class="tools-grid">
+      ${(TOOLS_BY_SKILL[profile.skill] || Object.values(TOOLS_BY_SKILL)[0]).map(t=>`
+        <div class="tool-chip ${profile.tools.includes(t)?"selected":""}" onclick="toggleTool('${t}',this)">${t}</div>`).join("")}
+      <div class="tool-chip ${profile.tools.includes("none")?"selected":""}" onclick="toggleNone(this)" style="border-color:rgba(100,116,139,0.4);color:var(--muted)">🚫 None yet</div>
     </div>
-
-    <div style="margin-bottom:1rem">
-      <div class="tool-chip ${profile.tools.includes("none")?"selected":""}" onclick="toggleNone(this)"
-        style="border-color:rgba(100,116,139,0.4);color:var(--muted);display:inline-block">🚫 I don't know any of these yet</div>
-    </div>
-
-    <div style="display:flex;gap:0.5rem;align-items:center;margin-bottom:0.5rem">
-      <input id="custom-tool-input" class="input" placeholder="Add a tool not listed..."
-        style="flex:1;padding:0.55rem 0.9rem;font-size:0.85rem"
-        onkeydown="if(event.key==='Enter'){addCustomTool();event.preventDefault();}"/>
-      <button onclick="addCustomTool()" style="background:rgba(0,212,142,0.12);border:1.5px solid rgba(0,212,142,0.3);color:var(--accent);padding:0.55rem 1rem;border-radius:8px;font-weight:700;font-size:0.85rem;cursor:pointer;font-family:'Syne',sans-serif;white-space:nowrap">+ Add</button>
-    </div>
-    ${customTools.length > 0 ? `<div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:0.5rem">
-      ${customTools.map(t=>`
-        <span style="background:rgba(0,212,142,0.1);border:1px solid rgba(0,212,142,0.3);color:var(--accent);padding:0.3rem 0.75rem;border-radius:20px;font-size:0.8rem;font-weight:600">
-          ${t} <span onclick="removeCustomTool('${t.replace(/'/g,"\'")}');event.stopPropagation()" style="cursor:pointer;margin-left:0.35rem;opacity:0.7">✕</span>
-        </span>`).join("")}
-    </div>` : ""}
-    ${selectedCount > 0 ? `<div style="font-size:0.78rem;color:var(--accent);margin-bottom:0.5rem">✓ ${selectedCount} tool${selectedCount!==1?"s":""} selected</div>` : ""}
-
-    <div class="btn-row" style="margin-top:1.25rem">
+    <div class="btn-row" style="margin-top:1.5rem">
       <button class="btn-back" onclick="back()">← Back</button>
       <button class="btn-next" onclick="saveStep6()">Continue →</button>
-    </div>`;
-  },
+    </div>`,
 
   // STEP 7 — English
   () => `
@@ -1582,40 +1251,23 @@ const steps = [
       <button class="btn-next" onclick="saveStep9()">Continue →</button>
     </div>`,
 
-  // STEP 10 — Knowledge Check (covers ALL selected skills)
+  // STEP 10 — Knowledge Check
   () => {
-    // Build a mixed quiz from all selected skills — 3 questions per skill, max 15 total
-    const buildMultiSkillQuiz = () => {
-      const allSelected = profile.skills.filter(s => QUIZ_BY_SKILL[s]);
-      if (allSelected.length === 0) return DEFAULT_QUIZ;
-      if (allSelected.length === 1) return QUIZ_BY_SKILL[allSelected[0]] || DEFAULT_QUIZ;
-      // Mix: take questions from each skill
-      let mixed = [];
-      const perSkill = Math.max(2, Math.floor(12 / allSelected.length));
-      allSelected.forEach(s => {
-        const qs = QUIZ_BY_SKILL[s] || [];
-        mixed.push(...qs.slice(0, perSkill).map(q => ({...q, _skill: s})));
-      });
-      // Always add 1-2 remote work soft-skill questions
-      mixed.push(DEFAULT_QUIZ[0], DEFAULT_QUIZ[2]);
-      return mixed.slice(0, 12);
-    };
-    const quiz = buildMultiSkillQuiz();
-    window._activeQuiz = quiz;
-    const skillTabs = profile.skills.filter(s => QUIZ_BY_SKILL[s]);
+    const quiz = QUIZ_BY_SKILL[profile.skill] || DEFAULT_QUIZ;
     return `
     <div class="step-num">Step 10 of 10 · Knowledge Check</div>
-    <h1 class="step-title">Prove your <span>skills</span></h1>
-    ${skillTabs.length > 1 ? `
-    <div style="background:rgba(0,196,140,0.06);border:1px solid rgba(0,196,140,0.2);border-radius:10px;padding:0.75rem 1rem;margin-bottom:1.25rem;font-size:0.83rem;color:var(--muted)">
-      📋 Your assessment covers <strong style="color:var(--text)">${skillTabs.join(", ")}</strong> — ${quiz.length} questions total
-    </div>` : ""}
-    <p class="step-sub">Answer every question fully and honestly. This directly determines your VELA Readiness Score.</p>
+    <h1 class="step-title">Prove your <span>${profile.skill||"your skill"}</span> knowledge</h1>
+    ${profile.skills.length > 1 ? `<div style="margin-bottom:1.25rem">
+      <p style="color:var(--muted);font-size:0.85rem;margin-bottom:0.6rem">You selected multiple skills — choose which one to be assessed on:</p>
+      <div style="display:flex;flex-wrap:wrap;gap:0.5rem">
+        ${profile.skills.map(s=>`<div onclick="profile.skill='${s}';renderStep()" style="padding:0.45rem 1rem;border-radius:20px;border:1.5px solid ${profile.skill===s?'var(--accent)':'var(--border)'};background:${profile.skill===s?'rgba(0,229,160,0.1)':'transparent'};color:${profile.skill===s?'var(--accent)':'var(--muted)'};cursor:pointer;font-size:0.85rem;font-weight:600">${s}</div>`).join('')}
+      </div>
+    </div>` : ''}
+    <p class="step-sub">This is a rigorous assessment — not a formality. Answer every question fully. Your responses feed directly into your VELA Readiness Score and are reviewed by employers.</p>
     ${quiz.map((q,i)=>`
       <div class="quiz-question">
-        ${q._skill ? `<div style="font-size:0.7rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.5rem;opacity:0.8">${q._skill}</div>` : ""}
         <div class="q-text"><span class="q-num">Q${i+1}.</span>${q.q}</div>
-        ${q.type === "mc" ? `
+        ${q.type === 'mc' ? `
         <div class="q-options">
           ${q.options.map((opt,ai)=>`
             <div class="q-option ${quizAnswers[i]===ai?"selected":""}" onclick="answerQuiz(${i},${ai},this)">${opt}</div>
@@ -1624,17 +1276,11 @@ const steps = [
         <textarea
           id="quiz-text-${i}"
           class="textarea"
-          style="min-height:130px;font-family:'DM Sans',sans-serif;font-size:0.9rem;"
-          placeholder="${q.placeholder||"Write your answer here — aim for 100-300 words"}"
-          oninput="quizAnswers[${i}]=this.value;updateWordCount(${i},this.value,'wc-${i}')"
+          style="min-height:120px;font-family:'DM Sans',sans-serif;font-size:0.9rem;"
+          placeholder="${q.placeholder||"Write your answer here..."}"
+          oninput="quizAnswers[${i}]=this.value"
         >${quizAnswers[i]||""}</textarea>
-        <div style="display:flex;justify-content:space-between;margin-top:0.4rem">
-          <span style="font-size:0.75rem;color:var(--muted)">${q.type==="code"?"💻 Write your code or query":"✍️ Aim for 100–300 words"}</span>
-          <span id="wc-${i}" style="font-size:0.75rem;font-weight:700;color:${
-            (quizAnswers[i]||"").trim().split(/\s+/).filter(Boolean).length >= 200 ? "var(--accent)" :
-            (quizAnswers[i]||"").trim().split(/\s+/).filter(Boolean).length >= 100 ? "var(--warn)" : "var(--muted)"
-          }">${(quizAnswers[i]||"").trim().split(/\s+/).filter(Boolean).length} words</span>
-        </div>
+        <div style="font-size:0.75rem;color:var(--muted);margin-top:0.4rem;">${q.type==='code'?'💻 Write your code or query below':'✍️ Write a detailed answer — vague responses score lower'}</div>
         `}
       </div>`).join("")}
     <div class="btn-row">
@@ -1672,12 +1318,9 @@ function saveStep4() {
   next();
 }
 function saveStep5() {
-  // advanceSkillRating handles navigation for multi-skill
-  // This is a fallback if called directly
-  if (!profile.selfLevel && (!profile.skillLevels || Object.keys(profile.skillLevels).length === 0)) {
-    showStepError("Please rate your skill level"); return;
-  }
-  window._ratingIdx = 0;
+  if (!profile.selfLevel) { showStepError("Please rate your current level"); return; }
+  // If never done it, auto-set tools to none
+  if (profile.selfLevel === 1) { profile.tools = ["none"]; }
   next();
 }
 function saveStep6() {
@@ -1717,104 +1360,6 @@ function showStepError(msg) {
 
 // ─── SCORE SCREEN ─────────────────────────────────────────────────────────────
 // ─── PORTFOLIO PROJECTS BY SKILL ─────────────────────────────────────────────
-
-// ─── CAREER RECOMMENDATIONS ──────────────────────────────────────────────────
-const CAREER_PATHS = {
-  "Data Analysis": {
-    easilyHired: ["Data Entry Specialist","Reporting Analyst","Excel/Sheets Specialist","Junior BI Analyst"],
-    standOut: ["SQL Data Analyst","Business Intelligence Developer","Data Storyteller","Analytics Engineer"],
-    adjacent: ["Product Analyst","Growth Analyst","Marketing Analyst","Operations Analyst"],
-    tip: "SQL + one visualisation tool (Power BI or Tableau) + a public portfolio project = hireable. Most companies hiring data analysts care more about your SQL than your degree."
-  },
-  "Customer Service": {
-    easilyHired: ["Customer Support Agent","Live Chat Agent","Email Support Specialist","Help Desk Agent"],
-    standOut: ["Customer Success Manager","Account Manager","Support Team Lead","CX Operations"],
-    adjacent: ["Community Manager","Sales Development Rep","Technical Support","QA Analyst"],
-    tip: "A CRM certificate (HubSpot free) + sample support response portfolio = strong application. Zendesk and Intercom experience is highly valued."
-  },
-  "Virtual Assistant": {
-    easilyHired: ["General Virtual Assistant","Admin Assistant","Data Entry VA","Scheduling Assistant"],
-    standOut: ["Executive Virtual Assistant","Operations VA","OBM (Online Business Manager)","Chief of Staff VA"],
-    adjacent: ["Project Coordinator","EA to CEO","Ops Coordinator","Systems Manager"],
-    tip: "Specialise. General VAs earn $8–12/hr. Executive VAs with Notion + project management earn $25–45/hr. Pick a niche — legal VA, real estate VA, or tech startup VA."
-  },
-  "Social Media Management": {
-    easilyHired: ["Social Media Assistant","Content Scheduler","Community Moderator","Instagram Manager"],
-    standOut: ["Social Media Strategist","Brand Content Manager","Head of Social","Social Media Director"],
-    adjacent: ["Influencer Marketing","Content Creator","Digital Marketing Manager","Brand Partnerships"],
-    tip: "Metrics win jobs. Show follower growth %, engagement rate, and reach improvements. One case study showing 10K growth beats 5 pages of claims."
-  },
-  "Content Writing": {
-    easilyHired: ["Blog Writer","Article Writer","Social Media Copywriter","Email Writer"],
-    standOut: ["SEO Content Strategist","Technical Writer","UX Writer","Content Marketing Manager"],
-    adjacent: ["Brand Copywriter","Ghostwriter","Newsletter Writer","Thought Leadership Writer"],
-    tip: "SEO knowledge multiplies your value 3x. Learn keyword research basics + use Surfer SEO free plan. Specialise in one industry (SaaS, finance, health) for premium rates."
-  },
-  "Prompt Engineering & AI": {
-    easilyHired: ["AI Content Specialist","Prompt Writer","AI Trainer","LLM Data Annotator"],
-    standOut: ["AI Automation Engineer","Prompt Engineer","AI Product Specialist","LLM Developer"],
-    adjacent: ["AI Consultant","Automation Freelancer","No-Code AI Builder","AI Customer Success"],
-    tip: "Build 3 automation workflows with Make.com or Zapier + AI. Document them. That portfolio gets you $40–80/hr as a freelancer immediately."
-  },
-  "SEO Specialist": {
-    easilyHired: ["SEO Assistant","Link Builder","On-Page SEO Specialist","Content SEO Writer"],
-    standOut: ["SEO Manager","Technical SEO Specialist","SEO Strategist","Head of SEO"],
-    adjacent: ["Digital Marketing Manager","Growth Hacker","Content Marketing Lead","SEM Specialist"],
-    tip: "Technical SEO (site audits, Core Web Vitals, schema markup) pays 2x more than basic on-page SEO. Learn Screaming Frog + Google Search Console deeply."
-  },
-  "Project Management": {
-    easilyHired: ["Project Coordinator","Scrum Master (Junior)","Project Administrator","PMO Analyst"],
-    standOut: ["Senior Project Manager","Program Manager","Agile Coach","Head of Delivery"],
-    adjacent: ["Operations Manager","Product Manager","Business Analyst","Change Manager"],
-    tip: "PMP or PRINCE2 certification dramatically increases hire rate. PMI-ACP (Agile) is faster to get. Even a Jira + Scrum certification from Coursera helps significantly."
-  },
-  "UI/UX Design": {
-    easilyHired: ["Junior UI Designer","Visual Designer","Wireframe Designer","UI Prototype Builder"],
-    standOut: ["Product Designer","UX Researcher","Design Systems Designer","Lead UX Designer"],
-    adjacent: ["Frontend Developer","Brand Designer","Motion Designer","No-Code Builder"],
-    tip: "3 polished Figma case studies > 20 mediocre ones. Each case study needs: problem → research → wireframes → final design → results. Quality wins."
-  },
-  "Email Marketing": {
-    easilyHired: ["Email Marketing Assistant","Email Copywriter","ESP Manager","Campaign Coordinator"],
-    standOut: ["Email Marketing Manager","Lifecycle Marketing Specialist","CRM Marketing Manager","Retention Specialist"],
-    adjacent: ["Marketing Automation Specialist","Growth Marketer","Digital Marketing Manager","Klaviyo Specialist"],
-    tip: "Klaviyo and ActiveCampaign certifications (both free) + a portfolio of 3 live email sequences = strong entry point. E-commerce email pays best."
-  },
-  "Cybersecurity": {
-    easilyHired: ["SOC Analyst Tier 1","IT Security Assistant","Security Awareness Trainer","Compliance Assistant"],
-    standOut: ["Penetration Tester","Cloud Security Engineer","Incident Response Analyst","Security Engineer"],
-    adjacent: ["IT Auditor","Risk Analyst","Compliance Manager","DevSecOps Engineer"],
-    tip: "TryHackMe or HackTheBox profile + CompTIA Security+ = entry into SOC roles. CEH and OSCP certifications unlock senior roles. Bug bounty programs build real portfolio."
-  },
-  "Bookkeeping": {
-    easilyHired: ["Bookkeeping Assistant","Accounts Payable/Receivable","Payroll Assistant","Data Entry Accountant"],
-    standOut: ["Full-Charge Bookkeeper","Controller","Accounting Manager","CFO (Fractional)"],
-    adjacent: ["Tax Preparer","Financial Analyst","Accounts Manager","FP&A Analyst"],
-    tip: "QuickBooks ProAdvisor (free certification from Intuit) + Xero Advisor certification = strong credentials. Many remote bookkeeping firms hire certified candidates immediately."
-  },
-  "E-Commerce": {
-    easilyHired: ["E-Commerce Assistant","Product Lister","Order Fulfillment Specialist","Customer Service (E-Com)"],
-    standOut: ["E-Commerce Manager","DTC Growth Manager","Shopify Specialist","Amazon Brand Manager"],
-    adjacent: ["Digital Marketing Manager","Performance Marketer","Marketplace Manager","Supply Chain Analyst"],
-    tip: "Shopify Partner certification (free) + one live store case study showing revenue growth = strong hire signal. Meta Ads + email automation is the highest-value combo."
-  },
-  "HR & Recruitment": {
-    easilyHired: ["HR Assistant","Recruitment Coordinator","Talent Sourcer","People Ops Admin"],
-    standOut: ["Technical Recruiter","HR Business Partner","Talent Acquisition Manager","Chief People Officer"],
-    adjacent: ["L&D Specialist","Compensation Analyst","DEI Manager","Employer Branding Manager"],
-    tip: "LinkedIn Recruiter Lite experience + an ATS (Greenhouse or Lever) + SHRM-CP certification = ready for senior remote HR roles. Tech recruiting pays 40% more than general HR."
-  },
-};
-
-function getCareerRecommendations() {
-  const recs = [];
-  const skills = profile.skills.length > 0 ? profile.skills : [profile.skill];
-  skills.forEach(s => {
-    if (CAREER_PATHS[s]) recs.push({ skill: s, ...CAREER_PATHS[s] });
-  });
-  return recs;
-}
-
 const PORTFOLIO_BY_SKILL = {
   "Data Analysis": [
     { title:"Sales Dashboard", desc:"Analyse 12 months of sales data in Excel or Google Sheets. Build charts showing trends, top products, and regional performance.", tool:"Excel / Google Sheets" },
@@ -1901,11 +1446,11 @@ function getTierMessage(score, name) {
   if (tier === "ready") return {
     emoji: "🚀",
     headline: `You're ready to apply, ${first}!`,
-    color: "#00C48C",
+    color: "#00E5A0",
     verdict: "READY TO APPLY",
-    verdictColor: "rgba(0,196,140,0.15)",
-    verdictBorder: "rgba(0,196,140,0.4)",
-    verdictText: "#00C48C",
+    verdictColor: "rgba(0,229,160,0.15)",
+    verdictBorder: "rgba(0,229,160,0.4)",
+    verdictText: "#00E5A0",
     message: `Your score of <strong>${score}/100</strong> shows you have solid foundations in <strong>${skill}</strong>. Employers would consider your profile. Your next move is to build a strong portfolio so you stand out above other applicants — don't apply without one.`,
     actions: [
       { label:"💼 View Matched Jobs", href:"jobs.html", style:"primary" },
@@ -1996,9 +1541,9 @@ function showScore() {
   const quizS = Math.round((profile.quizScore/3)*20);
 
   const btnStyles = {
-    primary: `background:var(--accent);color:#07090F;border:none`,
-    blue: `background:rgba(45,107,228,0.12);border:1.5px solid rgba(45,107,228,0.3);color:#2D6BE4`,
-    ghost: `background:transparent;border:1.5px solid rgba(0,196,140,0.3);color:var(--accent)`,
+    primary: `background:var(--orange);color:#ffffff;border:none`,
+    blue: `background:rgba(0,150,255,0.12);border:1.5px solid rgba(0,150,255,0.3);color:#0096FF`,
+    ghost: `background:transparent;border:1.5px solid rgba(0,229,160,0.3);color:var(--accent)`,
     teal: `background:rgba(41,182,246,0.12);border:1.5px solid rgba(41,182,246,0.3);color:#29B6F6`,
   };
 
@@ -2024,9 +1569,6 @@ function showScore() {
       <!-- VERDICT BADGE -->
       <div style="display:inline-block;background:${tierData.verdictColor};border:1.5px solid ${tierData.verdictBorder};color:${tierData.verdictText};font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:800;letter-spacing:0.1em;padding:0.4rem 1.1rem;border-radius:20px;margin-bottom:1rem">${tierData.emoji} ${tierData.verdict}</div>
 
-      <!-- VELA VERIFIED BADGE -->
-      <div id="vela-badge-container" style="margin:0.75rem auto 1rem;text-align:left;max-width:100%"></div>
-
       <h2 class="score-title">${tierData.headline}</h2>
       <p class="score-message" style="margin-bottom:1.5rem">${tierData.message}</p>
 
@@ -2047,271 +1589,48 @@ function showScore() {
           </div>`).join("")}
       </div>
 
-      <!-- PERSONALISED FEEDBACK — general + per-skill roadmaps -->
+      <!-- PERSONALISED FEEDBACK -->
+      ${feedback.length > 0 ? `
       <div style="text-align:left;margin-bottom:1.75rem">
-        <div onclick="toggleSection('plan')" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.25rem;margin-bottom:0.5rem;">
-          <div style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:800;color:${tierData.color}">📋 Your Personal Action Plan</div>
-          <span id="sec-icon-plan" style="color:var(--muted);font-size:0.75rem;">▼</span>
-        </div>
-        <div id="sec-plan" style="display:none;margin-bottom:1rem;">
-
-        ${feedback.length > 0 ? `
-        <div style="display:flex;flex-direction:column;gap:0.65rem;margin-bottom:1.5rem">
+        <div style="font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:${tierData.color};margin-bottom:1rem">Your Personal Action Plan</div>
+        <div style="display:flex;flex-direction:column;gap:0.75rem">
           ${feedback.map((f,i)=>`
-            <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:0.9rem 1rem;display:flex;gap:0.75rem;align-items:flex-start">
-              <span style="font-size:1.2rem;flex-shrink:0">${f.icon}</span>
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1rem 1.1rem;display:flex;gap:0.85rem;align-items:flex-start">
+              <span style="font-size:1.3rem;flex-shrink:0">${f.icon}</span>
               <div style="flex:1">
-                <div style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--text);margin-bottom:0.25rem">${i+1}. ${f.title}</div>
-                <div style="font-size:0.8rem;color:var(--muted);line-height:1.5;margin-bottom:0.4rem">${f.detail}</div>
-                <a href="${f.href}" style="font-size:0.78rem;font-weight:700;color:${tierData.color};text-decoration:none">${f.action}</a>
+                <div style="font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:0.3rem">${i+1}. ${f.title}</div>
+                <div style="font-size:0.82rem;color:var(--muted);line-height:1.55;margin-bottom:0.5rem">${f.detail}</div>
+                <a href="${f.href}" style="font-size:0.8rem;font-weight:700;color:${tierData.color};text-decoration:none">${f.action}</a>
               </div>
             </div>`).join("")}
-        </div>` : ""}
+        </div>
+      </div>` : ""}
 
-        <!-- PER-SKILL ROADMAPS WITH LEARNING MATERIALS -->
-        ${(() => {
-          const skillsToShow = profile.skills.length > 0 ? profile.skills : (profile.skill ? [profile.skill] : []);
-          if (skillsToShow.length === 0) return "";
-
-          // Inline roadmap data for key skills
-          const SKILL_ROADMAPS = {
-            "Data Analysis": {
-              steps: ["Learn Excel & Google Sheets basics","Master SQL (SELECT, JOIN, GROUP BY)","Build Python/Pandas skills","Learn one visualisation tool (Power BI or Tableau)","Complete a real dataset project","Publish your work on GitHub"],
-              resources: [
-                { name:"Google Data Analytics Certificate", url:"https://www.coursera.org/professional-certificates/google-data-analytics", tag:"Free · Cert" },
-                { name:"SQL for Data Science — Coursera", url:"https://www.coursera.org/learn/sql-for-data-science", tag:"Free" },
-                { name:"Kaggle Free Courses", url:"https://www.kaggle.com/learn", tag:"Free · Practice" },
-                { name:"Power BI YouTube — Pragmatic Works", url:"https://www.youtube.com/watch?v=AGrl-H87pRU", tag:"YouTube" },
-              ]
-            },
-            "Customer Service": {
-              steps: ["Master professional written English","Learn Zendesk or Intercom (free trials)","Practice handling complaints, refunds, escalations","Get HubSpot Customer Service Certification","Build a portfolio of 5 sample responses","Apply to remote CS roles at SaaS companies"],
-              resources: [
-                { name:"HubSpot Customer Service Cert", url:"https://academy.hubspot.com/courses/customer-service-training", tag:"Free · Cert" },
-                { name:"Zendesk Training", url:"https://training.zendesk.com", tag:"Free" },
-                { name:"English for Professionals — Coursera", url:"https://www.coursera.org/learn/english-communication-professional", tag:"Free" },
-              ]
-            },
-            "Virtual Assistant": {
-              steps: ["Master Google Workspace (Gmail, Calendar, Drive, Docs)","Learn Notion for project management","Practice inbox management and scheduling","Take Asana Academy certification","Learn basic AI tools (ChatGPT for productivity)","Build a portfolio of SOPs and work samples"],
-              resources: [
-                { name:"Google Workspace Learning Center", url:"https://workspace.google.com/intl/en/learning-center/", tag:"Free" },
-                { name:"Asana Academy Certification", url:"https://academy.asana.com", tag:"Free · Cert" },
-                { name:"Make.com Automation Academy", url:"https://www.make.com/en/academy", tag:"Free" },
-              ]
-            },
-            "Social Media Management": {
-              steps: ["Learn all major platforms (Instagram, LinkedIn, TikTok, Facebook)","Master Canva for content creation","Understand analytics (reach, impressions, engagement rate)","Take Meta Social Media Marketing Certificate","Build a 30-day content calendar as a portfolio piece","Get your first client (friend, family, nonprofit)"],
-              resources: [
-                { name:"Meta Social Media Certificate", url:"https://www.coursera.org/professional-certificates/facebook-social-media-marketing", tag:"Free · Cert" },
-                { name:"HubSpot Social Media Cert", url:"https://academy.hubspot.com/courses/social-media", tag:"Free · Cert" },
-                { name:"Canva Design School", url:"https://www.canva.com/learn/", tag:"Free" },
-              ]
-            },
-            "Content Writing": {
-              steps: ["Study SEO basics (keyword research, on-page optimisation)","Learn Grammarly and Hemingway Editor","Read 10 great blog posts in your niche daily","Write and publish 5 sample pieces","Get HubSpot Content Marketing Certification","Build a portfolio site with your best work"],
-              resources: [
-                { name:"HubSpot Content Marketing Cert", url:"https://academy.hubspot.com/courses/content-marketing", tag:"Free · Cert" },
-                { name:"Yoast SEO Copywriting", url:"https://yoast.com/academy/free-training-seo-copywriting/", tag:"Free" },
-                { name:"Google Digital Garage", url:"https://learndigital.withgoogle.com/digitalgarage/course/digital-marketing", tag:"Free · Cert" },
-              ]
-            },
-            "SEO Specialist": {
-              steps: ["Master Google Search Console and Google Analytics","Learn keyword research (Ahrefs free tools, Ubersuggest)","Understand technical SEO (site speed, crawlability, schema)","Complete Semrush SEO Fundamentals Exam","Run a full site audit on a real website","Build a case study showing SEO results"],
-              resources: [
-                { name:"Ahrefs SEO Course for Beginners", url:"https://ahrefs.com/academy/seo-training-course", tag:"Free" },
-                { name:"Semrush SEO Fundamentals Exam", url:"https://www.semrush.com/academy/", tag:"Free · Cert" },
-                { name:"Google SEO Starter Guide", url:"https://developers.google.com/search/docs/fundamentals/seo-starter-guide", tag:"Free" },
-              ]
-            },
-            "Project Management": {
-              steps: ["Learn Agile and Scrum methodologies","Master Jira, Asana, or Monday.com","Study risk management and scope management","Take Google Project Management Certificate","Practice running a mock sprint with a real team","Pursue PMP or PRINCE2 certification"],
-              resources: [
-                { name:"Google PM Certificate — Coursera", url:"https://www.coursera.org/professional-certificates/google-project-management", tag:"Free · Cert" },
-                { name:"Jira Fundamentals — Atlassian", url:"https://university.atlassian.com/student/catalog", tag:"Free · Cert" },
-                { name:"Scrum Guide (Official)", url:"https://scrumguides.org", tag:"Free" },
-              ]
-            },
-            "UI/UX Design": {
-              steps: ["Learn Figma fundamentals (frames, components, auto-layout)","Study UX principles (Nielsen's heuristics, user flows)","Conduct your first usability test","Build 3 Figma case studies (problem → wireframe → final design)","Take Google UX Design Certificate","Publish your portfolio on Behance or personal site"],
-              resources: [
-                { name:"Google UX Design Certificate", url:"https://www.coursera.org/professional-certificates/google-ux-design", tag:"Free · Cert" },
-                { name:"Figma Learning Resources", url:"https://www.figma.com/resources/learn-design/", tag:"Free" },
-                { name:"Nielsen Norman Group Articles", url:"https://www.nngroup.com/articles/", tag:"Free" },
-              ]
-            },
-            "Email Marketing": {
-              steps: ["Learn email marketing fundamentals (open rates, CTR, deliverability)","Master Mailchimp or Klaviyo (free accounts available)","Study copywriting for email (subject lines, CTAs)","Get HubSpot Email Marketing Certification","Write a 5-email welcome sequence as a portfolio piece","Learn A/B testing and analytics"],
-              resources: [
-                { name:"HubSpot Email Marketing Cert", url:"https://academy.hubspot.com/courses/email-marketing", tag:"Free · Cert" },
-                { name:"Klaviyo Resources", url:"https://www.klaviyo.com/marketing-resources", tag:"Free" },
-                { name:"ActiveCampaign Certification", url:"https://www.activecampaign.com/education", tag:"Free · Cert" },
-              ]
-            },
-            "Cybersecurity": {
-              steps: ["Learn networking fundamentals (TCP/IP, DNS, HTTP)","Start TryHackMe beginner path (free)","Understand common vulnerabilities (OWASP Top 10)","Study CompTIA Security+ exam guide","Complete Google Cybersecurity Certificate","Build a home lab and document your experiments"],
-              resources: [
-                { name:"Google Cybersecurity Certificate", url:"https://www.coursera.org/professional-certificates/google-cybersecurity", tag:"Free · Cert" },
-                { name:"TryHackMe — Free Path", url:"https://tryhackme.com", tag:"Free · Practice" },
-                { name:"CompTIA Security+", url:"https://www.comptia.org/certifications/security", tag:"Paid · Cert" },
-              ]
-            },
-            "Bookkeeping": {
-              steps: ["Learn the accounting equation (Assets = Liabilities + Equity)","Master double-entry bookkeeping","Learn QuickBooks Online (free trial available)","Get QuickBooks ProAdvisor Certification (free via Intuit)","Get Xero Advisor Certification (free)","Build a sample financial report as a portfolio piece"],
-              resources: [
-                { name:"QuickBooks ProAdvisor Cert", url:"https://quickbooks.intuit.com/accountants/quickbooks-online-certification/", tag:"Free · Cert" },
-                { name:"Xero Advisor Certification", url:"https://www.xero.com/uk/advisor-programme/xero-advisor-certification/", tag:"Free · Cert" },
-                { name:"AccountingCoach — Free", url:"https://www.accountingcoach.com/bookkeeping/explanation", tag:"Free" },
-              ]
-            },
-            "E-Commerce": {
-              steps: ["Learn Shopify basics (free trial available)","Understand conversion rate optimisation","Master Meta Ads Manager","Learn email marketing for e-commerce (Klaviyo)","Take Shopify Partner Certification (free)","Build a case study showing a real store's metrics"],
-              resources: [
-                { name:"Shopify Compass — Free Courses", url:"https://www.shopify.com/compass", tag:"Free" },
-                { name:"Shopify Partner Certification", url:"https://www.shopify.com/partners/certification", tag:"Free · Cert" },
-                { name:"Meta Blueprint — Ads", url:"https://www.facebook.com/business/learn/courses", tag:"Free · Cert" },
-              ]
-            },
-            "HR & Recruitment": {
-              steps: ["Learn the full recruitment lifecycle (sourcing to onboarding)","Master LinkedIn Recruiter basics","Learn an ATS (Greenhouse or Lever — free demos)","Study employment law basics for remote work","Take Google People Management course","Build a sample interview guide and job description"],
-              resources: [
-                { name:"Google People Management", url:"https://www.coursera.org/learn/people-management", tag:"Free" },
-                { name:"HR Analytics — Wharton", url:"https://www.coursera.org/learn/people-analytics", tag:"Free" },
-                { name:"SHRM Learning", url:"https://www.shrm.org/learning/", tag:"Course" },
-              ]
-            },
-            "Prompt Engineering & AI": {
-              steps: ["Learn prompt engineering fundamentals (zero-shot, few-shot, chain-of-thought)","Master ChatGPT and Claude for professional tasks","Learn Make.com or Zapier for AI automation","Build 3 real automation workflows","Study LangChain or n8n for advanced pipelines","Build a portfolio of use cases with documented results"],
-              resources: [
-                { name:"ChatGPT Prompt Engineering — DeepLearning.AI", url:"https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/", tag:"Free" },
-                { name:"Make.com Academy", url:"https://www.make.com/en/academy", tag:"Free" },
-                { name:"Google AI Essentials", url:"https://grow.google/certificates/ai-essentials/", tag:"Free · Cert" },
-              ]
-            },
-          };
-
-          return skillsToShow.map(skillName => {
-            const roadmap = SKILL_ROADMAPS[skillName];
-            if (!roadmap) return "";
-            return `
-            <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.1rem 1.25rem;margin-bottom:1rem">
-              <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem;color:var(--text);margin-bottom:0.85rem;display:flex;align-items:center;gap:0.5rem">
-                📍 ${skillName} — Learning Roadmap
-              </div>
-              <div style="margin-bottom:0.85rem">
-                ${roadmap.steps.map((step, i) => `
-                  <div style="display:flex;gap:0.6rem;align-items:flex-start;padding:0.35rem 0;${i < roadmap.steps.length-1 ? 'border-bottom:1px solid var(--border)' : ''}">
-                    <span style="background:rgba(0,212,142,0.15);color:var(--accent);font-size:0.7rem;font-weight:800;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:0.1rem">${i+1}</span>
-                    <span style="font-size:0.82rem;color:var(--muted);line-height:1.5">${step}</span>
-                  </div>`).join("")}
-              </div>
-              <div style="font-family:'Syne',sans-serif;font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);margin-bottom:0.5rem">Free Resources to Start</div>
-              <div style="display:flex;flex-direction:column;gap:0.4rem">
-                ${roadmap.resources.map(r => `
-                  <a href="${r.url}" target="_blank" style="display:flex;align-items:center;justify-content:space-between;padding:0.5rem 0.75rem;background:rgba(59,158,255,0.06);border:1px solid rgba(59,158,255,0.15);border-radius:8px;text-decoration:none;transition:all 0.2s" onmouseover="this.style.borderColor='rgba(59,158,255,0.4)'" onmouseout="this.style.borderColor='rgba(59,158,255,0.15)'">
-                    <span style="font-size:0.8rem;color:var(--text);font-weight:500">${r.name}</span>
-                    <span style="font-size:0.68rem;font-weight:700;padding:0.15rem 0.5rem;border-radius:10px;background:rgba(0,212,142,0.12);color:var(--accent);white-space:nowrap;margin-left:0.5rem">${r.tag}</span>
-                  </a>`).join("")}
-              </div>
-            </div>`;
-          }).join("");
-        })()}
+      <!-- SAMPLE PORTFOLIO PROJECTS -->
+      <div style="text-align:left;margin-bottom:1.75rem">
+        <div style="font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#0096FF;margin-bottom:0.5rem">Sample Portfolio Projects for ${portfolioSkill}</div>
+        <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem">Pick one and build it. A real project beats a CV every time.</p>
+        <div style="display:flex;flex-direction:column;gap:0.75rem">
+          ${portfolioProjects.map((p,i)=>`
+            <div style="background:var(--card);border:1px solid rgba(0,150,255,0.2);border-radius:12px;padding:1rem 1.1rem">
+              <div style="font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:0.3rem">Project ${i+1}: ${p.title}</div>
+              <div style="font-size:0.82rem;color:var(--muted);line-height:1.55;margin-bottom:0.5rem">${p.desc}</div>
+              <span style="background:rgba(0,150,255,0.1);border:1px solid rgba(0,150,255,0.25);color:#0096FF;font-size:0.75rem;font-weight:700;padding:0.25rem 0.7rem;border-radius:20px">🛠️ ${p.tool}</span>
+            </div>`).join("")}
+        </div>
       </div>
-
-      <!-- CAREER RECOMMENDATIONS -->
-      ${(() => {
-        const careerRecs = getCareerRecommendations();
-        if (careerRecs.length === 0) return "";
-        return `
-        <div style="margin-bottom:0.5rem;cursor:pointer" onclick="toggleSection('career')">
-          <div style="display:flex;align-items:center;justify-content:space-between;background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.25rem;">
-            <div style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:800;color:#9333EA">🎯 Career Recommendations</div>
-            <span id="sec-icon-career" style="color:var(--muted);font-size:0.75rem;">▼</span>
-          </div>
-        </div>
-        <div id="sec-career" style="display:none;margin-bottom:1rem;">
-        <div style="text-align:left;margin-bottom:1.75rem">
-          <div style="font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#9333EA;margin-bottom:0.5rem">🎯 Career Recommendations For You</div>
-          <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem">Based on your skills — here is what you can get hired for right now, and what will make you stand out.</p>
-          ${careerRecs.map(rec => `
-            <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.1rem 1.25rem;margin-bottom:0.85rem">
-              <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem;color:var(--text);margin-bottom:0.85rem">📌 ${rec.skill}</div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:0.85rem">
-                <div>
-                  <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);margin-bottom:0.4rem">✅ Easily get hired as</div>
-                  ${rec.easilyHired.map(r=>`<div style="font-size:0.8rem;color:var(--muted);padding:0.2rem 0;border-bottom:1px solid var(--border)">${r}</div>`).join("")}
-                </div>
-                <div>
-                  <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#2D6BE4;margin-bottom:0.4rem">🚀 Stand out as</div>
-                  ${rec.standOut.map(r=>`<div style="font-size:0.8rem;color:var(--muted);padding:0.2rem 0;border-bottom:1px solid var(--border)">${r}</div>`).join("")}
-                </div>
-              </div>
-              <div style="font-size:0.78rem;color:var(--muted);margin-bottom:0.5rem"><strong style="color:var(--text)">Also explore:</strong> ${rec.adjacent.join(" · ")}</div>
-              <div style="background:rgba(147,51,234,0.07);border:1px solid rgba(147,51,234,0.2);border-radius:8px;padding:0.7rem 0.9rem;font-size:0.8rem;color:var(--muted);line-height:1.55">
-                💡 <strong style="color:var(--text)">Pro tip:</strong> ${rec.tip}
-              </div>
-            </div>`).join("")}
-        </div>
-        </div>`; /* close sec-career */
-      })()}
-
-      <!-- SAMPLE PORTFOLIO PROJECTS — ALL SKILLS -->
-      ${(() => {
-        const skillsWithPortfolio = profile.skills.filter(s => PORTFOLIO_BY_SKILL[s]);
-        if (skillsWithPortfolio.length === 0 && !PORTFOLIO_BY_SKILL[profile.skill]) return "";
-        const skillsToShow = skillsWithPortfolio.length > 0 ? skillsWithPortfolio : [portfolioSkill];
-        return `
-        <div style="margin-bottom:0.5rem;cursor:pointer" onclick="toggleSection('portfolio')">
-          <div style="display:flex;align-items:center;justify-content:space-between;background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.25rem;">
-            <div style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:800;color:#3B9EFF">🗂️ Sample Portfolio Projects</div>
-            <span id="sec-icon-portfolio" style="color:var(--muted);font-size:0.75rem;">▼</span>
-          </div>
-        </div>
-        <div id="sec-portfolio" style="display:none;margin-bottom:1rem;">
-        <div style="text-align:left;margin-bottom:1.75rem">
-          <div style="font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#3B9EFF;margin-bottom:0.5rem">🗂️ Sample Portfolio Projects</div>
-          <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem">One project per skill. Pick one and start today — a real project beats a CV every time.</p>
-          ${skillsToShow.map(skillName => {
-            const projects = PORTFOLIO_BY_SKILL[skillName];
-            if (!projects) return "";
-            return `
-            <div style="margin-bottom:1.5rem">
-              <div style="font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#3B9EFF;margin-bottom:0.75rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border)">
-                📌 ${skillName}
-              </div>
-              <div style="display:flex;flex-direction:column;gap:0.6rem">
-                ${projects.map((p,i)=>`
-                  <div style="background:var(--card);border:1px solid rgba(59,158,255,0.15);border-radius:12px;padding:0.9rem 1rem">
-                    <div style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--text);margin-bottom:0.25rem">Project ${i+1}: ${p.title}</div>
-                    <div style="font-size:0.8rem;color:var(--muted);line-height:1.5;margin-bottom:0.4rem">${p.desc}</div>
-                    <span style="background:rgba(59,158,255,0.1);border:1px solid rgba(59,158,255,0.2);color:#3B9EFF;font-size:0.72rem;font-weight:700;padding:0.2rem 0.6rem;border-radius:20px">🛠️ ${p.tool}</span>
-                  </div>`).join("")}
-              </div>
-            </div>`;
-          }).join("")}
-        </div>`;
-
-            })()}
 
       <!-- ACTION BUTTONS -->
       <div class="pass-actions">
-        <a class="btn-jobs" href="dashboard.html" style="background:linear-gradient(135deg,#22C1C3,#6C63FF);color:#fff;text-decoration:none;text-align:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.95rem;padding:1rem;border-radius:10px;display:block">🏠 Go to My Dashboard →</a>
+        <a class="btn-jobs" href="dashboard.html" style="background:var(--orange);color:#fff;text-decoration:none;text-align:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.95rem;padding:1rem;border-radius:10px;display:block">My Dashboard</a>
         ${tierData.actions.map(a=>`
           <a class="btn-jobs" style="${btnStyles[a.style]};text-decoration:none;text-align:center;${a.urgent?'animation:pulse 2s infinite':''}" href="${a.href}" ${a.external?'target="_blank"':''}>${a.label}</a>
         `).join("")}
-        <button class="btn-jobs" onclick="generateCV()" style="background:rgba(147,51,234,0.12);border:1.5px solid rgba(147,51,234,0.3);color:#9333EA;text-align:center;cursor:pointer;font-family:'Syne',sans-serif;font-weight:600;font-size:0.9rem;padding:0.9rem;border-radius:10px;width:100%">📄 Generate & Download My CV</button>
-        <a class="btn-jobs" href="ats-customiser.html" style="background:rgba(255,179,71,0.1);border:1.5px solid rgba(255,179,71,0.3);color:#FFB347;text-decoration:none;text-align:center;font-family:'Syne',sans-serif;font-weight:600;font-size:0.9rem;padding:0.9rem;border-radius:10px;display:block">🎯 Customise CV for a Specific Job →</a>
         ${tier !== "notready" ? `<button class="btn-retry" onclick="location.href='jobs.html'">View Matched Jobs →</button>` : ""}
         <button class="btn-retry" onclick="retryQuiz()" style="margin-top:0.5rem;opacity:0.7;font-size:0.82rem">Retake Knowledge Check</button>
       </div>
 
     </div>`;
-
-  // Render VELA badge
-  setTimeout(() => {
-    const badgeEl = document.getElementById('vela-badge-container');
-    if (badgeEl) renderVelaBadge(badgeEl, { showLayers: true, showScore: true, forceShow: true });
-  }, 200);
 
   // Save
   try {
@@ -2338,380 +1657,140 @@ function showScore() {
   document.getElementById("progress-label").textContent = "Your Score";
 }
 
-
-// ─── CV UPLOAD & PARSE ───────────────────────────────────────────────────────
-async function handleCVUpload(file) {
-  if (!file) return;
-  await parseCVFile(file);
-}
-function handleCVDrop(file) {
-  if (!file) return;
-  parseCVFile(file);
-}
-
-async function parseCVFile(file) {
-  const status = document.getElementById('cv-parse-status');
-  const box = document.getElementById('cv-upload-box');
-  if (!file) return;
-
-  const ext = file.name.split('.').pop().toLowerCase();
-  if (!['pdf','doc','docx'].includes(ext)) {
-    showCVStatus('❌ Please upload a PDF or Word (.docx) file', 'error');
-    return;
-  }
-
-  showCVStatus('⏳ Reading your CV...', 'loading');
-
-  try {
-    // Read file as text (works for plain text PDFs and docx converted)
-    const text = await readFileText(file);
-    if (!text || text.length < 50) {
-      showCVStatus('⚠️ Could not read this file automatically. Please fill in manually below.', 'warn');
-      return;
-    }
-    await autofillFromCVText(text);
-  } catch(e) {
-    showCVStatus('⚠️ Could not parse CV automatically. Please fill in manually below.', 'warn');
-  }
-}
-
-async function readFileText(file) {
-  return new Promise((resolve) => {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      // For text/plain and some PDFs
-      let text = '';
-      try { text = e.target.result; } catch(err) {}
-      // Clean binary noise
-      text = text.replace(/[^ -~	]/g, ' ').replace(/\s+/g, ' ');
-      resolve(text);
-    };
-    reader.onerror = () => resolve('');
-    reader.readAsText(file, 'utf-8');
-  });
-}
-
-async function autofillFromCVText(text) {
-  showCVStatus('🤖 Analysing your CV with AI...', 'loading');
-  try {
-    const cfg = window.VELA_CONFIG || {};
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        messages: [{
-          role: 'user',
-          content: `Extract information from this CV text and return ONLY valid JSON with these fields:
-{
-  "name": "full name or empty string",
-  "country": "country name or empty string",
-  "email": "email address or empty string",
-  "education": "secondary|diploma|bachelor|master|phd|other",
-  "field": "field of study or empty string",
-  "experience": "none|less1|1to3|3plus",
-  "expYears": "brief experience description, max 100 chars",
-  "skills": ["skill1", "skill2"],
-  "tools": ["tool1", "tool2"],
-  "motivation": "career summary from CV, max 150 chars",
-  "goal": "career objective from CV, max 150 chars"
-}
-
-CV text:
-${text.substring(0, 3000)}`
-        }]
-      })
-    });
-    const data = await response.json();
-    const raw = data.content?.[0]?.text || '{}';
-    const clean = raw.replace(/\`\`\`json|\`\`\`/g, '').trim();
-    const parsed = JSON.parse(clean);
-    applyParsedCV(parsed);
-    showCVStatus('✅ CV parsed! Profile auto-filled — review and adjust below.', 'success');
-  } catch(e) {
-    // Fallback: try basic regex extraction
-    autofillFromCVRegex(text);
-  }
-}
-
-function autofillFromCVRegex(text) {
-  // Basic extraction as fallback
-  const emailMatch = text.match(/[\w.+-]+@[\w-]+\.[a-z]{2,}/i);
-  if (emailMatch) profile.email = emailMatch[0];
-
-  const lines = text.split(/[\n\r]+/).map(l => l.trim()).filter(l => l.length > 2);
-  // First substantial line is often the name
-  const nameLine = lines.find(l => l.length > 3 && l.length < 50 && /^[A-Z]/.test(l) && !l.includes('@'));
-  if (nameLine && !profile.name) profile.name = nameLine;
-
-  // Detect education
-  const eduText = text.toLowerCase();
-  if (eduText.includes('phd') || eduText.includes('doctorate')) profile.education = 'phd';
-  else if (eduText.includes('master') || eduText.includes('msc') || eduText.includes('mba')) profile.education = 'master';
-  else if (eduText.includes('bachelor') || eduText.includes('bsc') || eduText.includes('degree')) profile.education = 'bachelor';
-  else if (eduText.includes('diploma') || eduText.includes('hnd')) profile.education = 'diploma';
-
-  // Detect experience
-  const expMatch = text.match(/(\d+)\+?\s*years?\s*(of)?\s*(experience|working)/i);
-  if (expMatch) {
-    const yrs = parseInt(expMatch[1]);
-    if (yrs >= 3) profile.experience = '3plus';
-    else if (yrs >= 1) profile.experience = '1to3';
-    else profile.experience = 'less1';
-  }
-
-  renderStep();
-  showCVStatus('✅ Some fields filled from your CV — please review and complete the rest.', 'success');
-}
-
-function applyParsedCV(parsed) {
-  if (parsed.name) profile.name = parsed.name;
-  if (parsed.email && !profile.email) profile.email = parsed.email;
-  if (parsed.country) profile.country = parsed.country;
-  if (parsed.education) profile.education = parsed.education;
-  if (parsed.field) profile.field = parsed.field;
-  if (parsed.experience) profile.experience = parsed.experience;
-  if (parsed.expYears) profile.expYears = parsed.expYears;
-  if (parsed.motivation) profile.motivation = parsed.motivation;
-  if (parsed.goal) profile.goal = parsed.goal;
-  if (Array.isArray(parsed.skills) && parsed.skills.length > 0) {
-    parsed.skills.forEach(s => {
-      if (!profile.skills.includes(s)) profile.skills.push(s);
-    });
-    profile.skill = profile.skills[0] || '';
-  }
-  if (Array.isArray(parsed.tools) && parsed.tools.length > 0) {
-    parsed.tools.forEach(t => {
-      if (!profile.tools.includes(t)) profile.tools.push(t);
-    });
-  }
-  renderStep();
-}
-
-function showCVStatus(msg, type) {
-  const el = document.getElementById('cv-parse-status');
-  if (!el) return;
-  el.style.display = 'block';
-  const colors = {
-    loading: 'rgba(45,107,228,0.1)',
-    success: 'rgba(34,197,94,0.12)',
-    error: 'rgba(255,107,107,0.1)',
-    warn: 'rgba(255,165,0,0.1)'
-  };
-  const textColors = {
-    loading: '#2D6BE4',
-    success: 'var(--accent)',
-    error: '#FF6B6B',
-    warn: '#FFA500'
-  };
-  el.style.background = colors[type] || colors.loading;
-  el.style.color = textColors[type] || textColors.loading;
-  el.style.border = '1px solid ' + (textColors[type] || textColors.loading).replace('var(--accent)', 'rgba(0,196,140,0.3)');
-  el.textContent = msg;
-}
-
-// ─── CV GENERATOR ─────────────────────────────────────────────────────────────
 function generateCV() {
-  // Check profile is complete enough
-  if (!profile.name) { alert('Please complete your profile first.'); return; }
-  
-  const skillsList = profile.skills.length > 0 ? profile.skills.join(' · ') : profile.skill || 'Remote Work';
-  const toolsList = profile.tools.filter(t => t !== 'none').join(', ') || 'Various tools';
-  const expLabel = {none:'Entry Level',less1:'Under 1 Year','1to3':'1–3 Years','3plus':'3+ Years'}[profile.experience] || '';
-  const eduLabel = {secondary:'Secondary School',diploma:'Diploma / HND',bachelor:"Bachelor's Degree",master:"Master's Degree",phd:'PhD / Doctorate',other:'Professional Certification'}[profile.education] || '';
-  const skillLevelsText = profile.skillLevels 
-    ? Object.entries(profile.skillLevels).map(([k,v]) => `${k}: ${['','Beginner','Basic','Intermediate','Proficient','Advanced'][v]}`).join(' | ')
-    : '';
+  if (!profile.name) { alert("Please complete your profile first."); return; }
+  var skillsList = profile.skills.length > 0 ? profile.skills.join(", ") : (profile.skill || "Remote Professional");
+  var toolsList  = profile.tools.filter(function(t){ return t !== "none"; }).join(", ") || "Various tools";
+  var expLabel   = ({none:"Entry Level",less1:"Under 1 Year","1to3":"1-3 Years","3plus":"3+ Years"})[profile.experience] || "Professional";
+  var eduLabel   = ({secondary:"Secondary School",diploma:"Diploma / HND",bachelor:"Bachelor Degree",master:"Master Degree",phd:"PhD",other:"Professional Certification"})[profile.education] || "";
+  var engLabel   = ({1:"Basic",2:"Conversational",3:"Intermediate",4:"Proficient",5:"Fluent"})[profile.english] || "Proficient";
 
-  const cvHTML = `<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8"/>
-<title>${profile.name} — CV</title>
-<style>
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family: 'Arial', sans-serif; font-size: 11pt; color: #1a1a1a; background: #fff; padding: 2cm; max-width: 21cm; margin: 0 auto; }
-  .cv-header { border-bottom: 3px solid #00C48C; padding-bottom: 1rem; margin-bottom: 1.5rem; }
-  .cv-name { font-size: 22pt; font-weight: 900; color: #07090F; letter-spacing: -0.5px; }
-  .cv-title { font-size: 12pt; color: #00C48C; font-weight: 700; margin-top: 0.2rem; }
-  .cv-contact { font-size: 9.5pt; color: #555; margin-top: 0.5rem; }
-  .cv-section { margin-bottom: 1.25rem; }
-  .cv-section-title { font-size: 10pt; font-weight: 900; text-transform: uppercase; letter-spacing: 0.12em; color: #07090F; border-bottom: 1.5px solid #eee; padding-bottom: 0.3rem; margin-bottom: 0.75rem; }
-  .cv-text { font-size: 10.5pt; line-height: 1.6; color: #333; }
-  .cv-skills { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-  .cv-skill-tag { background: #f0fdf9; border: 1px solid #00C48C; color: #007a5e; font-size: 9pt; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 4px; }
-  .cv-tools { font-size: 10pt; color: #444; line-height: 1.7; }
-  .cv-exp-row { display: flex; justify-content: space-between; margin-bottom: 0.2rem; }
-  .cv-exp-title { font-weight: 700; font-size: 11pt; }
-  .cv-exp-date { font-size: 9.5pt; color: #777; }
-  .cv-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-  .vela-badge { margin-top: 2rem; text-align: center; font-size: 8pt; color: #aaa; border-top: 1px solid #eee; padding-top: 0.75rem; }
-  @media print { body { padding: 1cm; } }
-</style>
-</head>
-<body>
+  var html = "<!DOCTYPE html><html><head><meta charset='UTF-8'/><title>" + profile.name + " - CV</title><style>";
+  html += "*{margin:0;padding:0;box-sizing:border-box;}";
+  html += "body{font-family:Arial,sans-serif;font-size:11pt;color:#1a1a1a;background:#fff;padding:2cm;max-width:21cm;margin:0 auto;}";
+  html += ".toolbar{position:fixed;top:0;left:0;right:0;background:#0b1f3a;padding:0.75rem 2rem;display:flex;gap:0.75rem;align-items:center;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,0.3);}";
+  html += ".toolbar-title{color:#fff;font-family:Arial;font-weight:700;font-size:0.9rem;flex:1;}";
+  html += ".btn-edit{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,0.4);padding:0.55rem 1.25rem;border-radius:7px;font-family:Arial;font-weight:600;font-size:0.85rem;cursor:pointer;}";
+  html += ".btn-print{background:#f0650e;color:#fff;border:none;padding:0.55rem 1.5rem;border-radius:7px;font-family:Arial;font-weight:700;font-size:0.85rem;cursor:pointer;}";
+  html += ".cv-body{margin-top:64px;}";
+  html += ".cv-header{border-bottom:3px solid #f0650e;padding-bottom:1rem;margin-bottom:1.5rem;}";
+  html += ".cv-name{font-size:22pt;font-weight:900;color:#0b1f3a;letter-spacing:-0.5px;}";
+  html += ".cv-role{font-size:12pt;color:#f0650e;font-weight:700;margin-top:0.25rem;}";
+  html += ".cv-contact{font-size:9.5pt;color:#555;margin-top:0.5rem;}";
+  html += ".cv-section{margin-bottom:1.25rem;}";
+  html += ".cv-section-title{font-size:10pt;font-weight:900;text-transform:uppercase;letter-spacing:0.1em;color:#0b1f3a;border-bottom:1.5px solid #eee;padding-bottom:0.3rem;margin-bottom:0.6rem;}";
+  html += ".cv-text{font-size:10.5pt;line-height:1.65;color:#333;}";
+  html += ".cv-skills{display:flex;flex-wrap:wrap;gap:0.4rem;}";
+  html += ".cv-skill-tag{background:#fff1e8;border:1px solid #f0650e;color:#0b1f3a;font-size:9pt;font-weight:700;padding:0.2rem 0.6rem;border-radius:4px;}";
+  html += ".exp-item{margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid #f0f0f0;}";
+  html += ".exp-item:last-child{border-bottom:none;}";
+  html += ".exp-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.3rem;}";
+  html += ".exp-title{font-weight:700;font-size:11pt;color:#0b1f3a;}";
+  html += ".exp-org{font-size:10pt;color:#f0650e;font-weight:600;}";
+  html += ".exp-date{font-size:9.5pt;color:#777;text-align:right;}";
+  html += ".exp-bullets{margin-top:0.4rem;padding-left:1.2rem;}";
+  html += ".exp-bullets li{font-size:10pt;line-height:1.65;color:#333;margin-bottom:0.2rem;}";
+  html += ".two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}";
+  html += ".add-exp-btn{background:#fff1e8;border:1.5px dashed #f0650e;color:#f0650e;padding:0.5rem 1rem;border-radius:7px;font-family:Arial;font-weight:600;font-size:0.85rem;cursor:pointer;width:100%;margin-top:0.5rem;}";
+  html += ".edit-hint{font-size:8pt;color:#bbb;text-align:center;margin-top:1rem;font-style:italic;}";
+  html += ".vela-badge{margin-top:1.5rem;text-align:center;font-size:8pt;color:#ccc;border-top:1px solid #f0f0f0;padding-top:0.75rem;}";
+  html += "[contenteditable=true]{outline:2px dashed rgba(240,101,14,0.45);border-radius:3px;min-height:1em;padding:1px 3px;}";
+  html += "[contenteditable=true]:hover{outline:2px dashed #f0650e;}";
+  html += "[contenteditable=true]:focus{outline:2px solid #f0650e;background:rgba(255,241,232,0.5);}";
+  html += "@media print{.toolbar{display:none;}.cv-body{margin-top:0;}[contenteditable]{outline:none!important;background:transparent!important;}}";
+  html += "</style></head><body>";
 
-<div class="cv-header">
-  <div class="cv-name">${profile.name.toUpperCase()}</div>
-  <div class="cv-title">${skillsList}</div>
-  <div class="cv-contact">
-    ${profile.email ? '✉ ' + profile.email + '&nbsp;&nbsp;' : ''}
-    ${profile.country ? '📍 ' + profile.country + '&nbsp;&nbsp;' : ''}
-    ${profile.timezone ? '🕐 ' + profile.timezone : ''}
-    ${profile.availability ? '&nbsp;&nbsp;⏱ ' + profile.availability : ''}
-  </div>
-</div>
+  // Toolbar
+  html += "<div class='toolbar'>";
+  html += "<span class='toolbar-title'>Edit your CV — click any section to update &nbsp;|&nbsp; " + profile.name + "</span>";
+  html += "<button class='btn-edit' onclick='toggleEdit(this)'>Edit Mode</button>";
+  html += "<button class='btn-print' onclick='window.print()'>Download PDF</button>";
+  html += "</div>";
 
-${profile.motivation ? `
-<div class="cv-section">
-  <div class="cv-section-title">Professional Summary</div>
-  <div class="cv-text">${profile.motivation}</div>
-</div>` : ''}
+  // CV Body
+  html += "<div class='cv-body'>";
 
-<div class="cv-two-col">
-<div>
-<div class="cv-section">
-  <div class="cv-section-title">Core Skills</div>
-  <div class="cv-skills">
-    ${profile.skills.map(s => `<span class="cv-skill-tag">${s}</span>`).join('')}
-  </div>
-  ${skillLevelsText ? `<div style="margin-top:0.5rem;font-size:9pt;color:#666">${skillLevelsText}</div>` : ''}
-</div>
+  // Header
+  html += "<div class='cv-header'>";
+  html += "<div class='cv-name' contenteditable='false'>" + profile.name.toUpperCase() + "</div>";
+  html += "<div class='cv-role' contenteditable='false'>" + skillsList + "</div>";
+  html += "<div class='cv-contact' contenteditable='false'>";
+  html += (profile.email ? "Email: " + profile.email + "   " : "");
+  html += (profile.country ? "Location: " + profile.country + "   " : "");
+  html += (profile.availability ? "Availability: " + profile.availability : "");
+  html += "</div></div>";
 
-<div class="cv-section">
-  <div class="cv-section-title">Tools & Platforms</div>
-  <div class="cv-tools">${toolsList}</div>
-</div>
-
-<div class="cv-section">
-  <div class="cv-section-title">Education</div>
-  <div class="cv-exp-title">${eduLabel}</div>
-  ${profile.field ? `<div class="cv-text">${profile.field}</div>` : ''}
-</div>
-</div>
-
-<div>
-<div class="cv-section">
-  <div class="cv-section-title">Experience</div>
-  <div class="cv-exp-title">${expLabel}</div>
-  ${profile.expYears ? `<div class="cv-text" style="margin-top:0.4rem">${profile.expYears}</div>` : ''}
-</div>
-
-<div class="cv-section">
-  <div class="cv-section-title">Languages</div>
-  <div class="cv-text">English — ${{1:'Basic',2:'Conversational',3:'Intermediate',4:'Proficient',5:'Fluent'}[profile.english] || 'Intermediate'}</div>
-</div>
-
-${profile.goal ? `
-<div class="cv-section">
-  <div class="cv-section-title">Career Goal</div>
-  <div class="cv-text">${profile.goal}</div>
-</div>` : ''}
-</div>
-</div>
-
-<div class="vela-badge">Generated by VELA · African Talent, Verified &amp; Placed · ${new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})}</div>
-</body>
-</html>`;
-
-  // Open CV preview in new tab
-  const win = window.open('', '_blank');
-  win.document.write(cvHTML);
-  win.document.close();
-  
-  // Trigger download as HTML (user can print to PDF from browser)
-  setTimeout(() => {
-    win.focus();
-    // Add download button to the opened window
-    const dlBtn = win.document.createElement('div');
-    dlBtn.style.cssText = 'position:fixed;top:1rem;right:1rem;display:flex;gap:0.5rem;z-index:999';
-    dlBtn.innerHTML = `
-      <button onclick="window.print()" style="background:#00C48C;color:#fff;border:none;padding:0.6rem 1.2rem;border-radius:8px;font-weight:700;cursor:pointer;font-size:0.9rem">🖨️ Print / Save PDF</button>
-      <button onclick="window.close()" style="background:#eee;color:#333;border:none;padding:0.6rem 1rem;border-radius:8px;font-weight:700;cursor:pointer;font-size:0.9rem">✕ Close</button>`;
-    win.document.body.appendChild(dlBtn);
-  }, 500);
-}
-
-
-// ── VELA VERIFIED BADGE RENDERER ────────────────────────────────────────────
-function renderVelaBadge(containerEl, options = {}) {
-  const { showLayers = true, showScore = true, compact = false } = options;
-  
-  // Load verification state + profile
-  let verifState = {};
-  let profileScore = 0;
-  let profileName = '';
-  try {
-    verifState = JSON.parse(localStorage.getItem('vela_verif') || '{}');
-    const pKeys = Object.keys(localStorage).filter(k =>
-      k.startsWith('vela_') && !k.includes('_step') && !k.includes('_quiz') &&
-      !k.includes('_theme') && !k.includes('_verif') && !k.includes('_role') &&
-      !k.includes('_skill') && !k.includes('_tool') && !k.includes('_saved')
-    );
-    if (pKeys.length > 0) {
-      const p = JSON.parse(localStorage.getItem(pKeys[0]) || '{}');
-      profileScore = p.total_score || 0;
-      profileName = p.name || '';
-    }
-  } catch(e) {}
-
-  const LAYER_DEFS = [
-    { id:'video',     label:'Identity Verified',    color:'#3B9EFF' },
-    { id:'comm',      label:'Skills Verified',       color:'#00D48E' },
-    { id:'task',      label:'Portfolio Verified',    color:'#9333EA' },
-    { id:'tools',     label:'Remote Ready',          color:'#FFB347' },
-    { id:'interview', label:'Reliability Verified',  color:'#FF6B9D' },
-  ];
-
-  const passedCount = LAYER_DEFS.filter(l =>
-    verifState[l.id]?.status === 'passed' || verifState[l.id]?.status === 'review'
-  ).length;
-
-  const isFullyVerified = passedCount === 5;
-  const hasStarted = passedCount > 0 || profileScore > 0;
-
-  if (!hasStarted && !options.forceShow) {
-    containerEl.style.display = 'none';
-    return;
+  // Summary
+  if (profile.motivation) {
+    html += "<div class='cv-section'><div class='cv-section-title'>Professional Summary</div>";
+    html += "<div class='cv-text' contenteditable='false'>" + profile.motivation + "</div></div>";
   }
 
-  containerEl.style.display = 'block';
+  // Skills
+  html += "<div class='cv-section'><div class='cv-section-title'>Core Skills</div>";
+  html += "<div class='cv-skills'>";
+  profile.skills.forEach(function(s){ html += "<span class='cv-skill-tag' contenteditable='false'>" + s + "</span>"; });
+  html += "</div>";
+  if (toolsList) html += "<div style='margin-top:0.5rem;font-size:9pt;color:#666;' contenteditable='false'>Tools: " + toolsList + "</div>";
+  html += "</div>";
 
-  const scoreDisplay = profileScore > 0 ? profileScore + '/100' : '—';
-  const statusText = isFullyVerified ? 'VELA VERIFIED' :
-    passedCount > 0 ? passedCount + '/5 Layers' : 'Profile Scored';
+  // Experience
+  html += "<div class='cv-section'><div class='cv-section-title'>Work Experience</div>";
+  html += "<div id='exp-container'>";
+  html += "<div class='exp-item'>";
+  html += "<div class='exp-header'><div>";
+  html += "<div class='exp-title' contenteditable='false'>Professional Role</div>";
+  html += "<div class='exp-org' contenteditable='false'>Organisation Name</div>";
+  html += "</div><div class='exp-date' contenteditable='false'>2022 - Present</div></div>";
+  html += "<ul class='exp-bullets'>";
+  html += "<li contenteditable='false'>" + (profile.expYears ? profile.expYears : "Describe your key responsibility and impact") + "</li>";
+  html += "<li contenteditable='false'>Add a second achievement or responsibility here</li>";
+  html += "<li contenteditable='false'>Include a measurable result where possible (e.g. reduced time by 30%)</li>";
+  html += "</ul></div></div>";
+  html += "<button class='add-exp-btn' onclick='addExp()'>+ Add Another Experience</button></div>";
 
-  containerEl.innerHTML = `
-    <div class="vela-verified-badge">
-      <div class="badge-seal">${isFullyVerified ? '✅' : passedCount >= 3 ? '🔓' : '⚡'}</div>
-      <div class="badge-text">
-        <div class="badge-title">${statusText}</div>
-        ${showScore ? `<div class="badge-score">VELA Score: ${scoreDisplay}</div>` : ''}
-      </div>
-    </div>
-    ${showLayers && !compact ? `
-    <div class="vela-layer-pills">
-      ${LAYER_DEFS.map(l => {
-        const st = verifState[l.id]?.status;
-        const cls = st === 'passed' ? 'passed' : st === 'review' ? 'review' : 'pending';
-        const icon = st === 'passed' ? '✔' : st === 'review' ? '⏳' : '○';
-        return `<span class="vela-layer-pill ${cls}" style="${st==='passed'?'border-color:'+l.color+'50;color:'+l.color+';background:'+l.color+'18':''}">${icon} ${l.label}</span>`;
-      }).join('')}
-    </div>` : ''}
-    <a href="verify.html" style="display:inline-block;margin-top:0.6rem;font-size:0.75rem;font-weight:700;color:var(--accent);text-decoration:none">
-      ${isFullyVerified ? 'View Verification Details →' : 'Complete Verification →'}
-    </a>`;
+  // Two column
+  html += "<div class='two-col'><div>";
+  html += "<div class='cv-section'><div class='cv-section-title'>Education</div>";
+  html += "<div class='exp-title' contenteditable='false'>" + eduLabel + "</div>";
+  if (profile.field) html += "<div class='cv-text' contenteditable='false'>" + profile.field + "</div>";
+  html += "</div>";
+  html += "<div class='cv-section'><div class='cv-section-title'>Languages</div>";
+  html += "<div class='cv-text' contenteditable='false'>English - " + engLabel + "</div></div>";
+  html += "</div><div>";
+  html += "<div class='cv-section'><div class='cv-section-title'>VELA Verification</div>";
+  html += "<div class='cv-text' contenteditable='false'>VELA Score: " + (profile.total_score || "--") + "/100<br>";
+  html += "Identity Verified | Skills Tested | Remote Ready</div></div>";
+  if (profile.goal) {
+    html += "<div class='cv-section'><div class='cv-section-title'>Career Goal</div>";
+    html += "<div class='cv-text' contenteditable='false'>" + profile.goal + "</div></div>";
+  }
+  html += "</div></div>";
+
+  html += "<div class='edit-hint'>Tip: Click Edit Mode to make sections editable. Click any field to update it. Use Download PDF to save.</div>";
+  html += "<div class='vela-badge'>Generated by VELA - African Talent, Verified, Placed, Global - " + new Date().toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"}) + "</div>";
+  html += "</div>";
+
+  html += "<script>";
+  html += "function toggleEdit(btn){";
+  html += "var els=document.querySelectorAll('[contenteditable]');";
+  html += "var editing=btn.textContent==='Done';";
+  html += "els.forEach(function(el){el.contentEditable=editing?'false':'true';});";
+  html += "btn.textContent=editing?'Edit Mode':'Done';";
+  html += "}";
+  html += "function addExp(){";
+  html += "var c=document.getElementById('exp-container');";
+  html += "var d=document.createElement('div');d.className='exp-item';";
+  html += "d.innerHTML='<div class=\'exp-header\'><div><div class=\'exp-title\' contenteditable=\'false\'>Job Title</div><div class=\'exp-org\' contenteditable=\'false\'>Organisation Name</div></div><div class=\'exp-date\' contenteditable=\'false\'>Year - Year</div></div><ul class=\'exp-bullets\'><li contenteditable=\'false\'>Key responsibility or achievement</li><li contenteditable=\'false\'>Another measurable result</li></ul>';";
+  html += "c.appendChild(d);}";
+  html += "<\/script></body></html>";
+
+  var win = window.open("", "_blank");
+  if (!win) { alert("Please allow popups to view your CV."); return; }
+  win.document.write(html);
+  win.document.close();
 }
 
-function toggleSection(id) {
-  const body = document.getElementById('sec-' + id);
-  const icon = document.getElementById('sec-icon-' + id);
-  if (!body) return;
-  const isOpen = body.style.display !== 'none';
-  body.style.display = isOpen ? 'none' : 'block';
-  if (icon) icon.textContent = isOpen ? '▼' : '▲';
-}
 
 function retryQuiz() {
   quizAnswers = {};
