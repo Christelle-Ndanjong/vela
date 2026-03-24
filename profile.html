@@ -793,21 +793,30 @@ function calcScore() {
 
 function validateAndShowScore() {
   const quiz = QUIZ_BY_SKILL[profile.skill] || DEFAULT_QUIZ;
+  let allOk = true;
+  let firstErr = '';
   for (let i = 0; i < quiz.length; i++) {
     const q = quiz[i];
     if (q.type === 'mc') {
-      if (quizAnswers[i] === undefined) {
-        showStepError(`Please answer Question ${i+1} before submitting.`);
-        return;
+      if (quizAnswers[i] === undefined || quizAnswers[i] === null) {
+        allOk = false;
+        firstErr = firstErr || `Please answer Question ${i+1} before submitting.`;
       }
     } else {
-      const ans = quizAnswers[i];
-      const wordCount = ans ? ans.trim().split(/\s+/).length : 0;
+      const ans = quizAnswers[i] || '';
+      const wordCount = ans.trim().split(/\s+/).filter(Boolean).length;
       if (wordCount < 3) {
-        showStepError(`Question ${i+1} requires a written answer — please write at least a few sentences.`);
-        return;
+        allOk = false;
+        firstErr = firstErr || `Question ${i+1} needs a written answer — a few sentences is fine.`;
       }
     }
+  }
+  if (!allOk) {
+    showStepError(firstErr);
+    // Scroll to top of questions
+    const firstQ = document.querySelector('.quiz-question');
+    if (firstQ) firstQ.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return;
   }
   showScore();
 }
@@ -1002,8 +1011,14 @@ function setScale(key, val, el, group) {
 function answerQuiz(qi, ans, el) {
   quizAnswers[qi] = ans;
   const wrap = el.closest(".quiz-question");
-  wrap.querySelectorAll(".q-option").forEach(o => o.classList.remove("selected"));
+  if (wrap) wrap.querySelectorAll(".q-option").forEach(o => o.classList.remove("selected"));
   el.classList.add("selected");
+  try {
+    const email = (currentUser && currentUser.email) ? currentUser.email : (profile.email || 'guest');
+    localStorage.setItem('vela_quiz_' + email, JSON.stringify(quizAnswers));
+  } catch(e) {}
+  const errEl = document.getElementById('step-error');
+  if (errEl) errEl.style.display = 'none';
 }
 
 // ─── STEPS ───────────────────────────────────────────────────────────────────
@@ -1252,7 +1267,7 @@ const steps = [
     ${profile.skills.length > 1 ? `<div style="margin-bottom:1.25rem">
       <p style="color:var(--muted);font-size:0.85rem;margin-bottom:0.6rem">You selected multiple skills — choose which one to be assessed on:</p>
       <div style="display:flex;flex-wrap:wrap;gap:0.5rem">
-        ${profile.skills.map(s=>`<div onclick="profile.skill='${s}';renderStep()" style="padding:0.45rem 1rem;border-radius:20px;border:1.5px solid ${profile.skill===s?'var(--accent)':'var(--border)'};background:${profile.skill===s?'rgba(0,229,160,0.1)':'transparent'};color:${profile.skill===s?'var(--accent)':'var(--muted)'};cursor:pointer;font-size:0.85rem;font-weight:600">${s}</div>`).join('')}
+        ${profile.skills.map(s=>`<div onclick="profile.skill='${s}';renderStep()" style="padding:0.45rem 1rem;border-radius:20px;border:1.5px solid ${profile.skill===s?'var(--orange)':'var(--border)'};background:${profile.skill===s?'rgba(240,101,14,0.08)':'transparent'};color:${profile.skill===s?'var(--orange)':'var(--muted)'};cursor:pointer;font-size:0.85rem;font-weight:600">${s}</div>`).join('')}
       </div>
     </div>` : ''}
     <p class="step-sub">This is a rigorous assessment — not a formality. Answer every question fully. Your responses feed directly into your VELA Readiness Score and are reviewed by employers.</p>
