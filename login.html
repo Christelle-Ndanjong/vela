@@ -282,37 +282,55 @@ async function handleLogin() {
   if (!email || !password) { msg.className = 'msg error'; msg.textContent = 'Please fill in all fields.'; return; }
 
   btn.disabled = true; btn.textContent = 'Signing in...';
+  msg.className = 'msg'; msg.textContent = '';
 
-  // Show "still working" message if Supabase is slow (free tier cold start)
-  const slowTimer = setTimeout(() => {
-    if (btn.disabled) msg.className = 'msg'; msg.textContent = '⏳ Still connecting... Supabase can be slow on first load. Please wait.';
-  }, 4000);
-
-  const { error } = await _supabase.auth.signInWithPassword({ email, password });
-  clearTimeout(slowTimer);
-
-  if (error) {
-    msg.className = 'msg error';
-    const m = error.message.toLowerCase();
-    if (m.includes('invalid login') || m.includes('invalid credentials') || m.includes('wrong password')) {
-      msg.textContent = '✗ Wrong email or password. Please try again.';
-    } else if (m.includes('email not confirmed') || m.includes('not confirmed')) {
-      msg.textContent = '📧 Please check your email and click the confirmation link before signing in.';
-      document.getElementById('resend-wrap').style.display = 'block';
-    } else if (m.includes('too many requests') || m.includes('rate limit')) {
-      msg.textContent = '⏳ Too many attempts. Please wait a few minutes and try again.';
-    } else if (m.includes('user not found') || m.includes('no user')) {
-      msg.textContent = '✗ No account found with this email. Please create an account first.';
-    } else if (m.includes('network') || m.includes('fetch')) {
-      msg.textContent = '🌐 Connection error. Please check your internet and try again.';
-    } else {
-      msg.textContent = error.message;
+  // Progressive messages — give Supabase time, keep user informed
+  const t1 = setTimeout(() => {
+    if (btn.disabled) { msg.className = 'msg'; msg.textContent = '⏳ Connecting... just a moment.'; }
+  }, 5000);
+  const t2 = setTimeout(() => {
+    if (btn.disabled) { msg.className = 'msg'; msg.textContent = '⏳ Still connecting — Supabase free tier can be slow on first load. Please keep waiting.'; }
+  }, 12000);
+  const t3 = setTimeout(() => {
+    if (btn.disabled) {
+      msg.className = 'msg error';
+      msg.innerHTML = '🌐 Connection is taking too long. This may be a Supabase outage or your internet. <br/><button onclick="handleLogin()" style="margin-top:0.5rem;background:var(--orange);color:#fff;border:none;padding:0.45rem 1rem;border-radius:7px;cursor:pointer;font-family:Syne,sans-serif;font-weight:700;font-size:0.82rem;">Try Again</button>';
+      btn.disabled = false; btn.textContent = 'Sign In →';
     }
+  }, 30000);
+
+  try {
+    const { error } = await _supabase.auth.signInWithPassword({ email, password });
+    clearTimeout(t1); clearTimeout(t2); clearTimeout(t3);
+
+    if (error) {
+      msg.className = 'msg error';
+      const m = error.message.toLowerCase();
+      if (m.includes('invalid login') || m.includes('invalid credentials') || m.includes('wrong password')) {
+        msg.textContent = '✗ Wrong email or password. Please try again.';
+      } else if (m.includes('email not confirmed') || m.includes('not confirmed')) {
+        msg.textContent = '📧 Please check your email and click the confirmation link before signing in.';
+        document.getElementById('resend-wrap').style.display = 'block';
+      } else if (m.includes('too many requests') || m.includes('rate limit')) {
+        msg.textContent = '⏳ Too many attempts. Please wait a few minutes and try again.';
+      } else if (m.includes('user not found') || m.includes('no user')) {
+        msg.textContent = '✗ No account found with this email. Please create an account first.';
+      } else if (m.includes('network') || m.includes('fetch') || m.includes('failed')) {
+        msg.textContent = '🌐 Connection error. Please check your internet and try again.';
+      } else {
+        msg.textContent = '✗ ' + error.message;
+      }
+      btn.disabled = false; btn.textContent = 'Sign In →';
+    } else {
+      msg.className = 'msg success';
+      msg.textContent = '✓ Signed in! Redirecting to your dashboard...';
+      setTimeout(() => window.location.href = getRedirectUrl(), 800);
+    }
+  } catch(e) {
+    clearTimeout(t1); clearTimeout(t2); clearTimeout(t3);
+    msg.className = 'msg error';
+    msg.innerHTML = '🌐 Could not connect to the server. Please check your internet and try again.<br/><button onclick="handleLogin()" style="margin-top:0.5rem;background:var(--orange);color:#fff;border:none;padding:0.45rem 1rem;border-radius:7px;cursor:pointer;font-family:Syne,sans-serif;font-weight:700;font-size:0.82rem;">Try Again</button>';
     btn.disabled = false; btn.textContent = 'Sign In →';
-  } else {
-    msg.className = 'msg success';
-    msg.textContent = '✓ Signed in! Redirecting...';
-    setTimeout(() => window.location.href = getRedirectUrl(), 1000);
   }
 }
 
