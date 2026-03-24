@@ -328,75 +328,88 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-pill">Now Live · Join the Community</div>
-  <div style="width:100%;text-align:center;"><h1 style="display:inline-block;text-align:center;">African Talent.<br/><span style="color:var(--orange);-webkit-text-fill-color:var(--orange)">Verified. Placed.</span><br/><span style="color:#ffffff;-webkit-text-fill-color:#ffffff">Global.</span></h1></div>
-  <p class="hero-sub">VELA connects verified African professionals to remote jobs worldwide — with the skills, evidence, and credibility to get hired with confidence.</p>
-  <!-- ROLE SELECTOR -->
-  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem;width:100%;max-width:560px;margin-left:auto;margin-right:auto">
+  <div style="max-width:700px;margin:0 auto;text-align:center;width:100%;padding:0 1rem;">
 
-    <!-- JOB SEEKER CARD -->
-    <div id="card-seeker" onclick="selectRole('seeker')"
-      style="flex:1;min-width:220px;background:rgba(255,255,255,0.08);border:2px solid rgba(240,101,14,0.5);border-radius:16px;padding:1.5rem 1.25rem;cursor:pointer;transition:all 0.25s;text-align:left;position:relative">
-      <div style="font-size:2rem;margin-bottom:0.6rem">🌍</div>
-      <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:#ffffff;margin-bottom:0.35rem">I am looking for work</div>
-      <div style="font-size:0.82rem;color:#8ea5be;line-height:1.5">Build your verified profile, get scored, and get matched to remote jobs worldwide</div>
-      <div style="margin-top:1rem;background:var(--orange);color:#ffffff;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;padding:0.55rem 1.1rem;border-radius:8px;display:inline-block">Build My Profile →</div>
-      <div style="margin-top:0.75rem;font-size:0.78rem;color:#8ea5be;">Not sure which skill? <a href="skill-discovery.html" style="color:#ff8a3d;font-weight:700;text-decoration:none;">Find yours in 5 questions →</a></div>
+    <!-- PILL -->
+    <div class="hero-pill" style="margin-bottom:1.5rem;">Now Live · Join the Community</div>
+
+    <!-- HEADLINE — 3 lines, fully centered -->
+    <h1 style="font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.4rem,6vw,4.5rem);color:#ffffff;line-height:1.12;letter-spacing:-0.02em;margin:0 auto 1.5rem;text-align:center;">
+      African Talent.<br/>
+      <span style="color:var(--orange);">Verified. Placed.</span><br/>
+      <span style="color:#ffffff;">Global.</span>
+    </h1>
+
+    <!-- SUBTITLE -->
+    <p class="hero-sub" style="text-align:center;margin:0 auto 2.5rem;">VELA connects verified African professionals to remote jobs worldwide — with the skills, evidence, and credibility to get hired with confidence.</p>
+
+    <!-- ROLE CARDS -->
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem;width:100%;max-width:560px;margin-left:auto;margin-right:auto;">
+
+      <!-- JOB SEEKER -->
+      <div id="card-seeker" onclick="selectRole('seeker')"
+        style="flex:1;min-width:220px;background:rgba(255,255,255,0.08);border:2px solid rgba(240,101,14,0.5);border-radius:16px;padding:1.5rem 1.25rem;cursor:pointer;transition:all 0.25s;text-align:left;position:relative;">
+        <div style="font-size:2rem;margin-bottom:0.6rem;">🌍</div>
+        <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:#ffffff;margin-bottom:0.35rem;">I am looking for work</div>
+        <div style="font-size:0.82rem;color:#8ea5be;line-height:1.5;">Build your verified profile, get scored, and get matched to remote jobs worldwide</div>
+        <div style="margin-top:1rem;background:var(--orange);color:#ffffff;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;padding:0.55rem 1.1rem;border-radius:8px;display:inline-block;">Build My Profile →</div>
+        <div style="margin-top:0.75rem;font-size:0.78rem;color:#8ea5be;">Not sure which skill? <a href="skill-discovery.html" style="color:#ff8a3d;font-weight:700;text-decoration:none;">Find yours in 5 questions →</a></div>
+      </div>
+
+      <!-- RECRUITER -->
+      <div id="card-recruiter" onclick="selectRole('recruiter')"
+        style="flex:1;min-width:220px;background:rgba(255,255,255,0.08);border:2px solid rgba(255,255,255,0.25);border-radius:16px;padding:1.5rem 1.25rem;cursor:pointer;transition:all 0.25s;text-align:left;position:relative;">
+        <div style="font-size:2rem;margin-bottom:0.6rem;">🏢</div>
+        <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:#ffffff;margin-bottom:0.35rem;">I am hiring talent</div>
+        <div style="font-size:0.82rem;color:#8ea5be;line-height:1.5;">Browse verified African professionals, filter by skill, score and availability — hire with confidence</div>
+        <div style="margin-top:1rem;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.4);color:#ffffff;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;padding:0.55rem 1.1rem;border-radius:8px;display:inline-block;">Browse Talent →</div>
+      </div>
+
     </div>
 
-    <!-- RECRUITER CARD -->
-    <div id="card-recruiter" onclick="selectRole('recruiter')"
-      style="flex:1;min-width:220px;background:rgba(255,255,255,0.08);border:2px solid rgba(255,255,255,0.25);border-radius:16px;padding:1.5rem 1.25rem;cursor:pointer;transition:all 0.25s;text-align:left;position:relative">
-      <div style="font-size:2rem;margin-bottom:0.6rem">🏢</div>
-      <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:#ffffff;margin-bottom:0.35rem">I am hiring talent</div>
-      <div style="font-size:0.82rem;color:#8ea5be;line-height:1.5">Browse verified African professionals, filter by skill, score and availability — hire with confidence</div>
-      <div style="margin-top:1rem;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.4);color:#ffffff;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;padding:0.55rem 1.1rem;border-radius:8px;display:inline-block">Browse Talent →</div>
+    <!-- COMMUNITY LINK -->
+    <div style="text-align:center;margin-bottom:3rem;">
+      <a href="https://t.me/+5d8WDDcuocdkNjM0" target="_blank" style="display:inline-block;border:1.5px solid rgba(255,255,255,0.3);color:#ffffff;background:transparent;padding:0.65rem 1.4rem;border-radius:9px;font-size:0.85rem;font-weight:600;text-decoration:none;">💬 Join the Community</a>
     </div>
 
-  </div>
+    <!-- STATS -->
+    <div class="hero-stats">
+      <div style="text-align:center;">
+        <div class="hero-stat-num">Growing</div>
+        <div class="hero-stat-lbl">Community</div>
+      </div>
+      <div style="text-align:center;">
+        <div class="hero-stat-num">54</div>
+        <div class="hero-stat-lbl">Countries</div>
+      </div>
+      <div style="text-align:center;">
+        <div class="hero-stat-num">15</div>
+        <div class="hero-stat-lbl">Skill Paths</div>
+      </div>
+      <div style="text-align:center;">
+        <div class="hero-stat-num">Free</div>
+        <div class="hero-stat-lbl">Until Hired</div>
+      </div>
+    </div>
 
-  <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;margin-bottom:3rem;">
-    <a href="https://t.me/+5d8WDDcuocdkNjM0" target="_blank" style="display:inline-block;border:1.5px solid rgba(255,255,255,0.3);color:#ffffff;background:transparent;padding:0.65rem 1.4rem;border-radius:9px;font-size:0.85rem;font-weight:600;text-decoration:none;transition:all 0.2s;">💬 Community</a>
   </div>
 
   <script>
   function selectRole(role) {
     localStorage.setItem('vela_role', role);
-    // Highlight selected card
     document.getElementById('card-seeker').style.borderColor = role === 'seeker' ? 'var(--orange)' : 'rgba(240,101,14,0.5)';
-    document.getElementById('card-recruiter').style.borderColor = role === 'recruiter' ? '#2D6BE4' : 'rgba(45,107,228,0.2)';
-    // Small delay so user sees the selection, then navigate
+    document.getElementById('card-recruiter').style.borderColor = role === 'recruiter' ? 'rgba(255,255,255,0.5)' : 'rgba(255,255,255,0.25)';
     setTimeout(() => {
       window.location.href = role === 'seeker' ? 'login.html?role=seeker' : 'login.html?role=recruiter';
     }, 200);
   }
-  // Restore selection if coming back
   document.addEventListener('DOMContentLoaded', () => {
     const saved = localStorage.getItem('vela_role');
     if (saved === 'seeker') document.getElementById('card-seeker').style.borderColor = 'var(--orange)';
-    if (saved === 'recruiter') document.getElementById('card-recruiter').style.borderColor = '#2D6BE4';
+    if (saved === 'recruiter') document.getElementById('card-recruiter').style.borderColor = 'rgba(255,255,255,0.5)';
   });
   </script>
-  <div class="hero-stats">
-    <div>
-      <div class="hero-stat-num">Growing</div>
-      <div class="hero-stat-lbl">Community</div>
-    </div>
-    <div>
-      <div class="hero-stat-num">54</div>
-      <div class="hero-stat-lbl">Countries</div>
-    </div>
-    <div>
-      <div class="hero-stat-num">15</div>
-      <div class="hero-stat-lbl">Skill Paths</div>
-    </div>
-    <div>
-      <div class="hero-stat-num">Free</div>
-      <div class="hero-stat-lbl">Until Hired</div>
-    </div>
-  </div>
 </section>
-
 
 <!-- TOP 5 MOST IN DEMAND -->
 <section style="padding:4rem 6%;background:var(--bg);">
