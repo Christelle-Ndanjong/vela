@@ -595,18 +595,40 @@ window.addEventListener('DOMContentLoaded', async function() {
       const sq = localStorage.getItem(keyQuiz);
       if (sq) quizAnswers = JSON.parse(sq);
       if (!profile.email) profile.email = currentUser.email;
-      if (profile._completed) { computeAndShow(); return; }
-      // Override skill from URL if present
+
+      // Check URL for skill param FIRST — always wins over saved profile
+      let urlSkill = null;
       try {
         const sp = new URLSearchParams(window.location.search);
         const sk = sp.get('skill');
-        if (sk) {
-          const dec = decodeURIComponent(sk.replace(/\+/g, ' '));
-          profile.skill = dec;
-          if (!profile.skills || profile.skills.length === 0) profile.skills = [dec];
-          if (currentStep === 0) currentStep = 1;
-        }
+        if (sk) urlSkill = decodeURIComponent(sk.replace(/\+/g, ' '));
       } catch(e) {}
+
+      if (urlSkill) {
+        // New skill from landing page — override saved skill
+        // If different from saved skill, reset to skills step so they can confirm
+        const isNewSkill = urlSkill !== profile.skill;
+        profile.skill = urlSkill;
+        profile.skills = [urlSkill];
+        if (isNewSkill) {
+          // Reset quiz answers since skill changed
+          quizAnswers = {};
+          localStorage.removeItem('vela_quiz_' + currentUser.email);
+          // If profile was completed, un-complete it so they redo the quiz
+          // but keep all their other info (name, education, experience etc)
+          profile._completed = false;
+          profile.total_score = 0;
+          profile.quizScore = 0;
+          currentStep = 4; // Go to skills step so they see their new skill selected
+        }
+        // Save the updated profile
+        localStorage.setItem(key, JSON.stringify(profile));
+        localStorage.setItem(keyStep, currentStep);
+        renderStep();
+        return;
+      }
+
+      if (profile._completed) { computeAndShow(); return; }
       renderStep();
       return;
     } catch(e) {}
