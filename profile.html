@@ -879,9 +879,12 @@ function getImproveItems(score) {
 // ─── RENDER STEP ─────────────────────────────────────────────────────────────
 function updateProgress() {
   const total = 10;
-  const pct = Math.round(((currentStep + 1) / total) * 100);
+  // currentStep goes 1-10 (step 0 auto-skips)
+  // Display as "Step 1 of 10" through "Step 10 of 10"
+  const displayStep = Math.min(currentStep, total);
+  const pct = Math.round((displayStep / total) * 100);
   document.getElementById("progress-fill").style.width = pct + "%";
-  document.getElementById("progress-fraction").textContent = `Step ${currentStep + 1} of ${total}`;
+  document.getElementById("progress-fraction").textContent = "Step " + displayStep + " of " + total;
   document.getElementById("progress-label").textContent = STEP_LABELS[currentStep] || "";
   document.getElementById("nav-step-info").textContent = STEP_LABELS[currentStep] || "";
 }
@@ -1045,9 +1048,16 @@ function selectSkill(name, el) {
 }
 
 function setScale(key, val, el, group) {
-  profile[key] = val;
-  document.querySelectorAll(`.${group}`).forEach(e => e.classList.remove("selected"));
+  // If already selected — uncheck it
+  if (el.classList.contains("selected")) {
+    el.classList.remove("selected");
+    profile[key] = 0;
+    return;
+  }
+  // Otherwise deselect all in group and select this one
+  document.querySelectorAll(".choice-card").forEach(e => e.classList.remove("selected"));
   el.classList.add("selected");
+  profile[key] = val;
 }
 
 function answerQuiz(qi, ans, el) {
@@ -1319,14 +1329,17 @@ const steps = [
 
   // STEP 10 — Knowledge Check
   () => {
-    const quiz = buildCombinedQuiz();
+    const quiz = QUIZ_BY_SKILL[profile.skill] || DEFAULT_QUIZ;
     return `
     <div class="step-num">Step 10 of 10 · Knowledge Check</div>
-    <h1 class="step-title">Knowledge Check — <span>${(profile.skills&&profile.skills.length>1)?profile.skills.join(", "):profile.skill||"your skill"}</span></h1>
-    <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem;">
-      ${profile.skills&&profile.skills.length>1 ? "Questions cover all " + profile.skills.length + " skills you selected." : "Questions are tailored to your skill."}
-    </p>
-    <p class="step-sub">Answer every question fully. Your responses feed directly into your VELA Readiness Score.</p>
+    <h1 class="step-title">Prove your <span>${profile.skill||"your skill"}</span> knowledge</h1>
+    ${profile.skills.length > 1 ? `<div style="margin-bottom:1.25rem">
+      <p style="color:var(--muted);font-size:0.85rem;margin-bottom:0.6rem">You selected multiple skills — choose which one to be assessed on:</p>
+      <div style="display:flex;flex-wrap:wrap;gap:0.5rem">
+        ${profile.skills.map(s=>`<div onclick="profile.skill='${s}';quizAnswers={};renderStep()" style="padding:0.45rem 1rem;border-radius:20px;border:1.5px solid ${profile.skill===s?'var(--orange)':'var(--border)'};background:${profile.skill===s?'rgba(240,101,14,0.08)':'transparent'};color:${profile.skill===s?'var(--orange)':'var(--muted)'};cursor:pointer;font-size:0.85rem;font-weight:600">${s}</div>`).join('')}
+      </div>
+    </div>` : ''}
+    <p class="step-sub">This is a rigorous assessment — not a formality. Answer every question fully. Your responses feed directly into your VELA Readiness Score and are reviewed by employers.</p>
     ${quiz.map((q,i)=>`
       <div class="quiz-question">
         <div class="q-text"><span class="q-num">Q${i+1}.</span>${q.q}</div>
