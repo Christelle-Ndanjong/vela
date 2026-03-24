@@ -251,13 +251,20 @@ function renderQuestion() {
     container.appendChild(btn);
   }
 
-  container.addEventListener("click", function(e) {
-    var btn = e.target.closest(".q-opt");
-    if (!btn) return;
-    var idx = parseInt(btn.getAttribute("data-index"));
-    selectAnswer(idx);
-  });
 }
+
+// Single click listener set up ONCE — not inside renderQuestion
+document.addEventListener("DOMContentLoaded", function() {
+  var container = document.getElementById("q-options");
+  if (container) {
+    container.addEventListener("click", function(e) {
+      var btn = e.target.closest(".q-opt");
+      if (!btn) return;
+      var idx = parseInt(btn.getAttribute("data-index"));
+      selectAnswer(idx);
+    });
+  }
+});
 
 function selectAnswer(index) {
   selectedAnswers[currentQ] = index;
