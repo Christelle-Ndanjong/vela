@@ -814,7 +814,7 @@ function calcScore() {
   score += (profile.english || 0) * 3;
 
   // Quiz (max 20) — MC correct = full points, text answers = points for effort/length
-  const quiz = buildCombinedQuiz();
+  const quiz = QUIZ_BY_SKILL[profile.skill] || DEFAULT_QUIZ;
   let quizPoints = 0;
   quiz.forEach((q, i) => {
     const ans = quizAnswers[i];
