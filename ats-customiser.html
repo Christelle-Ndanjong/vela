@@ -12,16 +12,32 @@
     html, body { overflow-x: hidden; max-width: 100%; }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #060A14; --bg2: #0B1120; --surface: #0F1829;
-      --card: #111E30; --border: rgba(255,255,255,0.08);
-      --accent: #00D48E; --accent2: #3B9EFF;
-      --text: #E8EEFF; --muted: #7A8AAD;
-      --danger: #FF5E5E; --warn: #FFB347;
+      --navy:         #0b1f3a;
+      --navy-mid:     #112d52;
+      --navy-light:   #1a3f6e;
+      --orange:       #f0650e;
+      --orange-light: #ff8a3d;
+      --orange-pale:  #fff1e8;
+      --bg:           #fdf8f3;
+      --bg2:          #f5efe6;
+      --surface:      #ffffff;
+      --card:         #ffffff;
+      --border:       rgba(11,31,58,0.10);
+      --accent:       #22C55E;
+      --accent2:      #1a3f6e;
+      --gold:         #f0650e;
+      --text:         #0b1f3a;
+      --text2:        #4a6080;
+      --muted:        #8ea5be;
+      --danger:       #EF4444;
+      --warn:         #f0650e;
+      --grad1:        #f0650e;
+      --grad2:        #ff8a3d;
     }
     body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
-    body.light-mode { --bg: #F5F0E8; --bg2: #EDE6D8; --card: #FDFAF5; --surface: #EDE6D8; --border: rgba(0,0,0,0.09); --text: #15110A; --muted: #6B5F4E; --accent: #00A86B; --accent2: #1A6FCC; }
+    /* light mode removed — VELA is dark */
     nav { display: flex; align-items: center; justify-content: space-between; padding: 1rem 5%; border-bottom: 1px solid var(--border); }
-    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.3rem; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
+    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.3rem;   -webkit-text-fill-color: transparent;  text-decoration: none; }
     .page { max-width: 900px; margin: 0 auto; padding: 2.5rem 5%; }
     h1 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.8rem; margin-bottom: 0.5rem; }
     h1 span { background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
@@ -59,9 +75,9 @@
 <body>
 
 <nav>
-  <a class="logo" href="index.html">VELA</a>
+  <a class="logo" href="index.html"><span style="color:#f0650e;-webkit-text-fill-color:#f0650e;">V</span><span style="color:#ffffff;">ELA</span></a>
   <div style="display:flex;gap:0.5rem;align-items:center">
-    <button id="theme-btn" onclick="toggleTheme()" style="background:transparent;border:1.5px solid rgba(255,255,255,0.12);color:var(--text);padding:0.4rem 0.75rem;border-radius:8px;cursor:pointer;font-size:0.9rem">🌙</button>
+    
     <a href="dashboard.html" style="color:var(--muted);text-decoration:none;font-size:0.82rem;font-weight:600;border:1px solid var(--border);padding:0.4rem 0.9rem;border-radius:8px">Dashboard</a>
     <a href="login.html" onclick="velaSignOut(event)" style="color:#FF5E5E;text-decoration:none;font-size:0.78rem;font-weight:600;border:1px solid rgba(255,94,94,0.25);padding:0.4rem 0.9rem;border-radius:8px">Sign Out</a>
   </div>
@@ -115,7 +131,7 @@
 
     <!-- CV Preview -->
     <div class="card" style="padding:0;overflow:hidden">
-      <div id="cv-preview-content" class="cv-preview">
+      <div id="cv-preview-content" class="cv-preview" contenteditable="true" spellcheck="true" style="outline:none;cursor:text;" title="Click anywhere to edit your CV">
         <!-- Generated CV renders here -->
       </div>
     </div>
@@ -123,7 +139,14 @@
     <!-- Print/Download Bar -->
     <div class="print-bar">
       <span style="font-size:0.82rem;color:var(--muted);flex:1">Your tailored CV is ready</span>
-      <button onclick="printCV()" class="btn-main" style="width:auto;padding:0.7rem 1.5rem;margin:0">🖨️ Print / Save as PDF</button>
+      <div style="font-size:0.78rem;color:var(--text-soft);margin-bottom:0.75rem;display:flex;align-items:center;gap:0.5rem;">
+          <span style="color:var(--orange)">✏️</span> Click anywhere in the CV to edit it directly. Add your experience, skills, or any details.
+        </div>
+        <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-bottom:0.5rem;">
+          <button onclick="addExperienceBlock()" style="background:var(--orange-pale);border:1.5px solid rgba(240,101,14,0.3);color:var(--orange);padding:0.6rem 1.1rem;border-radius:8px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;cursor:pointer;">+ Add Experience</button>
+          <button onclick="polishWithAI()" style="background:var(--navy);color:#ffffff;border:none;padding:0.6rem 1.1rem;border-radius:8px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;cursor:pointer;">✨ Polish with AI</button>
+          <button onclick="printCV()" class="btn-main" style="width:auto;padding:0.6rem 1.25rem;margin:0">🖨️ Save as PDF</button>
+        </div>
       <button onclick="resetForm()" class="btn-secondary" style="width:auto;padding:0.7rem 1.25rem">Start Over</button>
     </div>
 
@@ -346,6 +369,94 @@ function renderResult(r, originalCV) {
   document.getElementById('btn-customise').disabled = false;
   document.getElementById('btn-customise').textContent = '🤖 Customise My CV for This Job →';
   document.getElementById('result-section').scrollIntoView({ behavior: 'smooth' });
+}
+
+function addExperienceBlock() {
+  var preview = document.getElementById("cv-preview-content");
+  if (!preview) return;
+  // Find or create experience section
+  var expSection = preview.querySelector(".exp-edit-block");
+  if (!expSection) {
+    // Add after the last cv-section-title
+    var block = document.createElement("div");
+    block.className = "exp-edit-block";
+    block.innerHTML =
+      '<div class="cv-section-title" style="margin-top:1rem">Experience</div>' +
+      '<div class="exp-entry" style="margin-bottom:1rem;padding:0.75rem;border-left:3px solid #f0650e;background:#fff7f2;">' +
+        '<div contenteditable="true" style="font-weight:700;color:#0b1f3a;font-size:10.5pt;outline:none;">Job Title</div>' +
+        '<div contenteditable="true" style="color:#f0650e;font-size:10pt;outline:none;">Organisation Name</div>' +
+        '<div contenteditable="true" style="color:#8ea5be;font-size:9pt;outline:none;">Start Date — End Date</div>' +
+        '<div contenteditable="true" style="color:#4a6080;font-size:10pt;margin-top:0.35rem;outline:none;line-height:1.6;">Describe your key responsibilities and achievements here</div>' +
+      '</div>' +
+      '<button onclick="addAnotherExp(this)" style="background:transparent;border:1px dashed rgba(240,101,14,0.4);color:#f0650e;padding:0.4rem 0.9rem;border-radius:6px;font-size:0.78rem;cursor:pointer;font-family:DM Sans,sans-serif;">+ Add Another Role</button>';
+    preview.appendChild(block);
+  } else {
+    addAnotherExp(expSection.querySelector("button"));
+  }
+  expSection = preview.querySelector(".exp-edit-block");
+  if (expSection) expSection.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+function addAnotherExp(btn) {
+  var container = btn ? btn.parentElement : document.querySelector(".exp-edit-block");
+  if (!container) return;
+  var entry = document.createElement("div");
+  entry.className = "exp-entry";
+  entry.style.cssText = "margin-bottom:1rem;padding:0.75rem;border-left:3px solid #f0650e;background:#fff7f2;";
+  entry.innerHTML =
+    '<div contenteditable="true" style="font-weight:700;color:#0b1f3a;font-size:10.5pt;outline:none;">Job Title</div>' +
+    '<div contenteditable="true" style="color:#f0650e;font-size:10pt;outline:none;">Organisation Name</div>' +
+    '<div contenteditable="true" style="color:#8ea5be;font-size:9pt;outline:none;">Start Date — End Date</div>' +
+    '<div contenteditable="true" style="color:#4a6080;font-size:10pt;margin-top:0.35rem;outline:none;line-height:1.6;">Key responsibilities and achievements</div>';
+  container.insertBefore(entry, btn);
+}
+
+async function polishWithAI() {
+  var preview = document.getElementById("cv-preview-content");
+  if (!preview) return;
+  var cvText = preview.innerText;
+  if (!cvText || cvText.length < 50) {
+    alert("Please generate or edit your CV first, then use AI Polish.");
+    return;
+  }
+  var polishBtn = document.querySelector("[onclick=\"polishWithAI()\"]");
+  if (polishBtn) { polishBtn.textContent = "Polishing..."; polishBtn.disabled = true; }
+
+  try {
+    var cfg = window.VELA_CONFIG || {};
+    var res = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1000,
+        messages: [{
+          role: "user",
+          content: "Polish this CV text to make it more professional, ATS-optimised, and impactful. Keep all the same information but improve the language, action verbs, and clarity. Return ONLY the improved text, no explanations:\n\n" + cvText
+        }]
+      })
+    });
+    var data = await res.json();
+    var polished = data.content && data.content[0] && data.content[0].text;
+    if (polished) {
+      // Update line by line — preserve structure
+      alert("AI has polished your CV. Review the improvements and adjust if needed.");
+      // Show the polished text in a side panel approach
+      var polishedDiv = document.getElementById("polished-suggestion");
+      if (!polishedDiv) {
+        polishedDiv = document.createElement("div");
+        polishedDiv.id = "polished-suggestion";
+        polishedDiv.style.cssText = "background:#f0faf5;border:1.5px solid rgba(240,101,14,0.3);border-radius:12px;padding:1rem;margin-top:1rem;font-size:0.82rem;color:#0b1f3a;white-space:pre-wrap;line-height:1.6;";
+        preview.parentElement.appendChild(polishedDiv);
+      }
+      polishedDiv.innerHTML = "<div style=\"font-weight:700;color:#f0650e;margin-bottom:0.5rem;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;\">✨ AI Polished Version — Copy and paste into your CV above</div>" + polished.replace(/\n/g, "<br/>");
+      polishedDiv.scrollIntoView({ behavior: "smooth" });
+    }
+  } catch(e) {
+    alert("AI polish failed. Please check your connection and try again.");
+  } finally {
+    if (polishBtn) { polishBtn.textContent = "✨ Polish with AI"; polishBtn.disabled = false; }
+  }
 }
 
 function printCV() {
