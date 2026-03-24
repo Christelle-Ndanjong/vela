@@ -773,6 +773,26 @@ const STEP_LABELS = [
 ];
 
 // ─── SCORING ─────────────────────────────────────────────────────────────────
+function buildCombinedQuiz() {
+  // Build quiz combining questions from ALL selected skills
+  var skills = profile.skills && profile.skills.length > 0 ? profile.skills : [profile.skill];
+  var seen = {};
+  var combined = [];
+  skills.forEach(function(skill) {
+    var qs = QUIZ_BY_SKILL[skill] || [];
+    qs.forEach(function(q) {
+      var key = q.q.substring(0, 40); // dedup by question start
+      if (!seen[key]) {
+        seen[key] = true;
+        combined.push(q);
+      }
+    });
+  });
+  // Cap at 8 questions max to avoid overwhelming the user
+  if (combined.length === 0) combined = DEFAULT_QUIZ;
+  return combined.slice(0, 8);
+}
+
 function calcScore() {
   let score = 0;
 
@@ -794,7 +814,7 @@ function calcScore() {
   score += (profile.english || 0) * 3;
 
   // Quiz (max 20) — MC correct = full points, text answers = points for effort/length
-  const quiz = (QUIZ_BY_SKILL[profile.skill] || DEFAULT_QUIZ);
+  const quiz = buildCombinedQuiz();
   let quizPoints = 0;
   quiz.forEach((q, i) => {
     const ans = quizAnswers[i];
@@ -1202,19 +1222,36 @@ const steps = [
     </div>`,
 
   // STEP 6 — Tools
-  () => `
-    <div class="step-num">Step 6 of 10 · Tools</div>
-    <h1 class="step-title">Which tools do you <span>already know</span>?</h1>
-    <p class="step-sub">Select every tool you can use today — even basic familiarity counts. These are the tools employers for ${profile.skill||"your skill"} expect.</p>
-    <div class="tools-grid">
-      ${(TOOLS_BY_SKILL[profile.skill] || Object.values(TOOLS_BY_SKILL)[0]).map(t=>`
-        <div class="tool-chip ${profile.tools.includes(t)?"selected":""}" onclick="toggleTool('${t}',this)">${t}</div>`).join("")}
-      <div class="tool-chip ${profile.tools.includes("none")?"selected":""}" onclick="toggleNone(this)" style="border-color:rgba(100,116,139,0.4);color:var(--muted)">🚫 None yet</div>
-    </div>
-    <div class="btn-row" style="margin-top:1.5rem">
-      <button class="btn-back" onclick="back()">← Back</button>
-      <button class="btn-next" onclick="saveStep6()">Continue →</button>
-    </div>`,
+  () => {
+    const allSkills = (profile.skills && profile.skills.length > 0) ? profile.skills : [profile.skill];
+    // Build one section per skill — clearly separated
+    const sections = allSkills.map(function(skill) {
+      const tools = TOOLS_BY_SKILL[skill] || [];
+      if (tools.length === 0) return '';
+      const chips = tools.map(function(t) {
+        const sel = profile.tools.includes(t) ? ' selected' : '';
+        return '<div class="tool-chip' + sel + '" onclick="toggleTool(\`' + t + '\`,this)">' + t + '</div>';
+      }).join('');
+      return '<div style="background:#ffffff;border:1.5px solid var(--border);border-radius:14px;padding:1.25rem;margin-bottom:1.25rem;box-shadow:0 2px 12px rgba(11,31,58,0.06);">' +
+        '<div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.9rem;">' +
+          '<div style="background:var(--orange);color:#fff;font-family:Syne,sans-serif;font-weight:800;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.08em;padding:0.2rem 0.65rem;border-radius:20px;">' + skill + '</div>' +
+          '<div style="font-size:0.78rem;color:var(--text-soft);">Select all you know</div>' +
+        '</div>' +
+        '<div class="tools-grid" style="margin-bottom:0;">' + chips + '</div>' +
+      '</div>';
+    }).join('');
+    return '<div class="step-num">Step 6 of 10 · Tools</div>' +
+    '<h1 class="step-title">Which tools do you <span>already know</span>?</h1>' +
+    '<p class="step-sub">Each skill has its own tool set. Select every tool you can use today — even basic familiarity counts.</p>' +
+    sections +
+    '<div style="background:#ffffff;border:1.5px solid rgba(100,116,139,0.2);border-radius:14px;padding:1rem 1.25rem;margin-bottom:1.25rem;">' +
+      '<div class="tool-chip ' + (profile.tools.includes('none') ? 'selected' : '') + '" onclick="toggleNone(this)" style="border-color:rgba(100,116,139,0.4);color:var(--muted);">🚫 I do not know any of these yet</div>' +
+    '</div>' +
+    '<div class="btn-row" style="margin-top:1.5rem">' +
+      '<button class="btn-back" onclick="back()">← Back</button>' +
+      '<button class="btn-next" onclick="saveStep6()">Continue →</button>' +
+    '</div>';
+  },
 
   // STEP 7 — English
   () => `
@@ -1282,17 +1319,14 @@ const steps = [
 
   // STEP 10 — Knowledge Check
   () => {
-    const quiz = QUIZ_BY_SKILL[profile.skill] || DEFAULT_QUIZ;
+    const quiz = buildCombinedQuiz();
     return `
     <div class="step-num">Step 10 of 10 · Knowledge Check</div>
-    <h1 class="step-title">Prove your <span>${profile.skill||"your skill"}</span> knowledge</h1>
-    ${profile.skills.length > 1 ? `<div style="margin-bottom:1.25rem">
-      <p style="color:var(--muted);font-size:0.85rem;margin-bottom:0.6rem">You selected multiple skills — choose which one to be assessed on:</p>
-      <div style="display:flex;flex-wrap:wrap;gap:0.5rem">
-        ${profile.skills.map(s=>`<div onclick="profile.skill='${s}';renderStep()" style="padding:0.45rem 1rem;border-radius:20px;border:1.5px solid ${profile.skill===s?'var(--orange)':'var(--border)'};background:${profile.skill===s?'rgba(240,101,14,0.08)':'transparent'};color:${profile.skill===s?'var(--orange)':'var(--muted)'};cursor:pointer;font-size:0.85rem;font-weight:600">${s}</div>`).join('')}
-      </div>
-    </div>` : ''}
-    <p class="step-sub">This is a rigorous assessment — not a formality. Answer every question fully. Your responses feed directly into your VELA Readiness Score and are reviewed by employers.</p>
+    <h1 class="step-title">Knowledge Check — <span>${(profile.skills&&profile.skills.length>1)?profile.skills.join(", "):profile.skill||"your skill"}</span></h1>
+    <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem;">
+      ${profile.skills&&profile.skills.length>1 ? "Questions cover all " + profile.skills.length + " skills you selected." : "Questions are tailored to your skill."}
+    </p>
+    <p class="step-sub">Answer every question fully. Your responses feed directly into your VELA Readiness Score.</p>
     ${quiz.map((q,i)=>`
       <div class="quiz-question">
         <div class="q-text"><span class="q-num">Q${i+1}.</span>${q.q}</div>
