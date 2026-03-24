@@ -596,6 +596,17 @@ window.addEventListener('DOMContentLoaded', async function() {
       if (sq) quizAnswers = JSON.parse(sq);
       if (!profile.email) profile.email = currentUser.email;
       if (profile._completed) { computeAndShow(); return; }
+      // Override skill from URL if present
+      try {
+        const sp = new URLSearchParams(window.location.search);
+        const sk = sp.get('skill');
+        if (sk) {
+          const dec = decodeURIComponent(sk.replace(/\+/g, ' '));
+          profile.skill = dec;
+          if (!profile.skills || profile.skills.length === 0) profile.skills = [dec];
+          if (currentStep === 0) currentStep = 1;
+        }
+      } catch(e) {}
       renderStep();
       return;
     } catch(e) {}
@@ -629,6 +640,17 @@ window.addEventListener('DOMContentLoaded', async function() {
   // Fresh start
   if (!profile.name && currentUser.user_metadata?.full_name) profile.name = currentUser.user_metadata.full_name;
   if (!profile.email) profile.email = currentUser.email || '';
+  // Read ?skill= URL param — skip discovery and pre-select skill
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const skillParam = params.get('skill');
+    if (skillParam) {
+      const decoded = decodeURIComponent(skillParam.replace(/\+/g, ' '));
+      profile.skill = decoded;
+      if (!profile.skills || profile.skills.length === 0) profile.skills = [decoded];
+      currentStep = 1; // Skip step 0 — go straight to profile building
+    }
+  } catch(e) {}
   renderStep();
 });
 
@@ -989,14 +1011,16 @@ function getSkillRecommendation(q1, q2, q3, q5) {
 }
 
 function applySkillRec(skill) {
-  profile.skill = skill;
-  if (!profile.skills || profile.skills.length === 0) profile.skills = [skill];
+  if (!skill || skill.trim() === '') { advance(); return; }
+  profile.skill = skill.trim();
+  if (!profile.skills || profile.skills.length === 0) profile.skills = [skill.trim()];
   window._skillFilter = 'all';
   window._skillSearch = '';
   advance();
 }
 
 function skipDiscovery() {
+  // If a skill was pre-selected from URL, keep it
   advance();
 }
 
@@ -1047,7 +1071,7 @@ const steps = [
     (allDone ? '<div style="background:var(--orange-pale);border:1.5px solid rgba(240,101,14,0.3);border-radius:12px;padding:1rem 1.1rem;margin-bottom:1rem;"><div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--orange);margin-bottom:0.35rem;">Your recommended skill</div><div style="font-family:Syne,sans-serif;font-weight:800;font-size:1.1rem;color:var(--navy);">' + rec + '</div><div style="font-size:0.8rem;color:var(--text-soft);margin-top:0.25rem;">We will pre-select this for you. You can change it in the next step.</div></div>' : '<div style="font-size:0.82rem;color:var(--muted);text-align:center;margin-bottom:1rem;">Answer all questions to get your recommendation</div>') +
 
     '<div style="display:flex;gap:0.75rem;flex-wrap:wrap;align-items:center;">' +
-    (allDone ? '<button class="btn-next" onclick="applySkillRec(\'' + rec + '\')">Continue with ' + rec + '</button>' : '') +
+    (allDone ? '<button class="btn-next" onclick="applySkillRec(this.getAttribute(\"data-skill\"))" data-skill="' + rec + '">Continue with ' + rec + ' →</button>' : '') +
     '<button onclick="skipDiscovery()" style="background:transparent;border:none;color:var(--muted);font-size:0.82rem;cursor:pointer;text-decoration:underline;padding:0.5rem 0;">I already know my skill, skip this</button>' +
     '</div>';
   },
