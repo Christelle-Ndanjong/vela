@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VELA — Become a Verified Online Teacher</title>
+  <meta name="description" content="VELA helps African professionals become verified Online Teachers and get hired remotely. Free roadmap, portfolio guidance and verification."/>
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{--navy:#0b1f3a;--navy-light:#1a3f6e;--orange:#f0650e;--orange-light:#ff8a3d;--orange-pale:#fff1e8;--bg:#fdf8f3;--card:#ffffff;--border:rgba(11,31,58,0.10);--text:#0b1f3a;--text-soft:#4a6080;--muted:#8ea5be;--shadow:0 4px 24px rgba(11,31,58,0.10);}
+    body{background:var(--bg);color:var(--text);font-family:"DM Sans",sans-serif;min-height:100vh;}
+    nav{background:var(--navy);border-bottom:2px solid var(--orange);padding:0 5%;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+    .logo{font-family:"Syne",sans-serif;font-weight:800;font-size:1.3rem;letter-spacing:0.08em;text-decoration:none;display:flex;align-items:center;gap:0.5rem;}
+    .logo img{width:26px;height:26px;object-fit:contain;}
+    .nav-cta{background:var(--orange);color:#ffffff;padding:0.45rem 1.1rem;border-radius:7px;font-family:"Syne",sans-serif;font-weight:700;font-size:0.85rem;text-decoration:none;}
+    .hero{background:var(--navy);padding:64px 5% 60px;position:relative;overflow:hidden;text-align:center;}
+    .hero::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 120%,rgba(240,101,14,0.18),transparent);pointer-events:none;}
+    .hero-inner{max-width:720px;margin:0 auto;position:relative;}
+    .hero-badge{display:inline-block;background:rgba(240,101,14,0.15);border:1px solid rgba(240,101,14,0.4);color:#ff8a3d;padding:4px 14px;border-radius:20px;font-size:0.78rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:1.25rem;}
+    .hero-emoji{font-size:3.5rem;margin-bottom:0.75rem;display:block;}
+    .hero h1{font-family:"Syne",sans-serif;font-weight:800;color:#ffffff;font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.15;margin-bottom:0.75rem;}
+    .hero h1 em{color:var(--orange);font-style:normal;}
+    .hero-sub{color:#8ea5be;font-size:1rem;max-width:500px;margin:0 auto 1.5rem;line-height:1.7;}
+    .salary-pill{display:inline-block;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:0.65rem 1.5rem;color:#ffffff;font-family:"Syne",sans-serif;font-weight:700;font-size:1rem;margin-bottom:1.75rem;}
+    .salary-pill em{color:var(--orange);font-style:normal;}
+    .btn-hero{display:inline-block;background:var(--orange);color:#ffffff;padding:1rem 2.5rem;border-radius:10px;font-family:"Syne",sans-serif;font-weight:800;font-size:1rem;text-decoration:none;box-shadow:0 4px 20px rgba(240,101,14,0.35);}
+    .hero-note{font-size:0.78rem;color:#8ea5be;margin-top:0.75rem;}
+    .section{padding:3.5rem 5%;max-width:960px;margin:0 auto;}
+    .section-label{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--orange);margin-bottom:0.5rem;}
+    .section-title{font-family:"Syne",sans-serif;font-weight:800;font-size:clamp(1.25rem,2.5vw,1.7rem);color:var(--navy);margin-bottom:0.6rem;line-height:1.25;}
+    .section-sub{color:var(--text-soft);font-size:0.9rem;line-height:1.7;margin-bottom:1.75rem;max-width:580px;}
+    .divider{height:1px;background:var(--border);margin:0 5%;}
+    .pain-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.85rem;}
+    .pain-card{background:rgba(239,68,68,0.04);border:1px solid rgba(239,68,68,0.12);border-radius:12px;padding:0.9rem 1.1rem;display:flex;align-items:flex-start;gap:0.7rem;}
+    .pain-x{color:#ef4444;font-weight:800;flex-shrink:0;font-size:0.9rem;margin-top:0.1rem;}
+    .pain-text{font-size:0.85rem;color:var(--text-soft);line-height:1.55;}
+    .who-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+    .who-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:1.25rem;text-align:center;box-shadow:var(--shadow);}
+    .who-icon{font-size:1.75rem;margin-bottom:0.5rem;}
+    .who-title{font-family:"Syne",sans-serif;font-weight:700;font-size:0.88rem;color:var(--navy);margin-bottom:0.3rem;}
+    .who-desc{font-size:0.78rem;color:var(--text-soft);line-height:1.55;}
+    .steps-list{display:flex;flex-direction:column;gap:0.85rem;}
+    .step-row{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:1.1rem 1.4rem;display:flex;align-items:flex-start;gap:1.1rem;box-shadow:var(--shadow);}
+    .step-num{width:34px;height:34px;border-radius:50%;background:var(--orange);color:#ffffff;font-family:"Syne",sans-serif;font-weight:800;font-size:0.85rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .step-body h4{font-family:"Syne",sans-serif;font-weight:700;font-size:0.9rem;color:var(--navy);margin-bottom:0.2rem;}
+    .step-body p{font-size:0.82rem;color:var(--text-soft);line-height:1.55;}
+    .step-tag{display:inline-block;background:var(--orange-pale);border:1px solid rgba(240,101,14,0.2);color:var(--orange);font-size:0.68rem;font-weight:700;padding:0.15rem 0.5rem;border-radius:20px;margin-top:0.3rem;}
+    .platform-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.85rem;}
+    .platform-card{background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.1rem;box-shadow:var(--shadow);transition:border-color 0.2s;text-decoration:none;display:block;}
+    .platform-card:hover{border-color:var(--orange);}
+    .platform-name{font-family:"Syne",sans-serif;font-weight:700;font-size:0.88rem;color:var(--navy);margin-bottom:0.15rem;}
+    .platform-pay{font-size:0.78rem;color:var(--orange);font-weight:600;}
+    .platform-desc{font-size:0.73rem;color:var(--text-soft);margin-top:0.25rem;}
+    .portfolio-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.85rem;}
+    .port-card{background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:1.1rem 1.25rem;box-shadow:var(--shadow);}
+    .port-num{font-size:0.65rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--orange);margin-bottom:0.35rem;}
+    .port-title{font-family:"Syne",sans-serif;font-weight:700;font-size:0.88rem;color:var(--navy);margin-bottom:0.3rem;}
+    .port-desc{font-size:0.78rem;color:var(--text-soft);line-height:1.55;}
+    .gives-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;}
+    .gives-item{display:flex;align-items:flex-start;gap:0.7rem;background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:0.9rem 1.1rem;box-shadow:var(--shadow);}
+    .gives-check{color:var(--orange);font-weight:800;flex-shrink:0;margin-top:0.1rem;}
+    .gives-text{font-size:0.84rem;color:var(--text);line-height:1.5;}
+    .cta-section{background:var(--navy);padding:5rem 5%;text-align:center;position:relative;overflow:hidden;}
+    .cta-section::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 120%,rgba(240,101,14,0.15),transparent);pointer-events:none;}
+    .cta-section h2{font-family:"Syne",sans-serif;font-weight:800;color:#ffffff;font-size:clamp(1.4rem,3vw,2rem);margin-bottom:0.75rem;position:relative;}
+    .cta-section p{color:#8ea5be;font-size:0.92rem;max-width:460px;margin:0 auto 2rem;line-height:1.7;position:relative;}
+    .cta-badges{display:flex;justify-content:center;gap:1.25rem;flex-wrap:wrap;margin-top:1.25rem;position:relative;}
+    .cta-badge{font-size:0.78rem;color:#8ea5be;}
+    footer{background:var(--navy);border-top:1px solid rgba(255,255,255,0.08);padding:1.25rem 5%;text-align:center;}
+    .footer-text{font-size:0.78rem;color:#8ea5be;}
+    .footer-text a{color:#ff8a3d;text-decoration:none;}
+    @media(max-width:700px){
+      .pain-grid,.who-grid,.platform-grid,.portfolio-grid,.gives-grid{grid-template-columns:1fr;}
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <a class="logo" href="index.html">
+    <img src="logo.png" alt="VELA"/>
+    <span style="color:#f0650e;-webkit-text-fill-color:#f0650e;">V</span><span style="color:#ffffff;-webkit-text-fill-color:#ffffff;">ELA</span>
+  </a>
+  <a href="profile.html?skill=Online+Teacher" class="nav-cta">Start Free</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">Free · Verified · Hired</div>
+    <span class="hero-emoji">📚</span>
+    <h1>Become a <em>Verified<br/>Online Teacher</em> and Get Hired Remotely</h1>
+    <p class="hero-sub">Platforms like Cambly, Preply, and Outschool are actively hiring African teachers right now. VELA verifies your teaching ability and connects you directly to where to apply.</p>
+    <div class="salary-pill">Earn <em>$600 – $2,500 / month</em> working remotely from Africa</div><br/>
+    <a href="profile.html?skill=Online+Teacher" class="btn-hero">Start My Free Profile</a>
+    <div class="hero-note">Free forever &nbsp;·&nbsp; 10 minutes to start &nbsp;·&nbsp; No experience required to begin</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">Sound Familiar?</div>
+  <div class="section-title">Why most Online Teachers are not getting hired</div>
+  <div class="section-sub">It is not your fault. The system was never built to trust African credentials. VELA fixes that.</div>
+  <div class="pain-grid"><div class="pain-card"><span class="pain-x">✗</span><span class="pain-text">You are qualified but platforms reject your application with no explanation</span></div><div class="pain-card"><span class="pain-x">✗</span><span class="pain-text">International employers do not know how to evaluate African teaching credentials</span></div><div class="pain-card"><span class="pain-x">✗</span><span class="pain-text">You do not know which platforms are actually worth applying to</span></div><div class="pain-card"><span class="pain-x">✗</span><span class="pain-text">Your profile does not stand out from thousands of other applicants</span></div><div class="pain-card"><span class="pain-x">✗</span><span class="pain-text">Nobody told you what these platforms are specifically looking for</span></div><div class="pain-card"><span class="pain-x">✗</span><span class="pain-text">You have great teaching skills but no way to prove them online</span></div></div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section">
+  <div class="section-label">Who This Is For</div>
+  <div class="section-title">You do not need to be perfect. You need to be verified.</div>
+  <br/>
+  <div class="who-grid"><div class="who-card"><div class="who-icon">🎓</div><div class="who-title">Qualified Teachers</div><div class="who-desc">You have a teaching qualification or classroom experience. VELA verifies your skills for international platforms.</div></div><div class="who-card"><div class="who-icon">📖</div><div class="who-title">Subject Experts</div><div class="who-desc">You know your subject deeply — maths, science, English, coding. No teaching degree needed to tutor online.</div></div><div class="who-card"><div class="who-icon">🌍</div><div class="who-title">English Speakers</div><div class="who-desc">Strong conversational English is enough to start on Cambly. VELA verifies your English proficiency level.</div></div></div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section">
+  <div class="section-label">Your Path on VELA</div>
+  <div class="section-title">From where you are to globally hired — step by step</div>
+  <br/>
+  <div class="steps-list"><div class="step-row"><div class="step-num">1</div><div class="step-body"><h4>Build your VELA profile</h4><p>Tell us your subject, experience, and availability. Get your VELA Score and verified English level.</p><span class="step-tag">Takes 10 minutes</span></div></div><div class="step-row"><div class="step-num">2</div><div class="step-body"><h4>Get your teaching roadmap</h4><p>Lesson planning for online environments, platform setup, student engagement — specific to remote teaching.</p><span class="step-tag">All free resources</span></div></div><div class="step-row"><div class="step-num">3</div><div class="step-body"><h4>Build your teaching portfolio</h4><p>Sample lesson plan, a short teaching video, a student reference. VELA shows exactly what platforms want to see.</p><span class="step-tag">What gets you hired</span></div></div><div class="step-row"><div class="step-num">4</div><div class="step-body"><h4>Complete verification</h4><p>Communication test, English proficiency, teaching scenario. Earn your VELA Remote Ready badge.</p><span class="step-tag">AI-scored instantly</span></div></div><div class="step-row"><div class="step-num">5</div><div class="step-body"><h4>Apply directly to platforms</h4><p>VELA links you to the exact application page of every platform hiring African teachers right now.</p><span class="step-tag">Direct apply links</span></div></div></div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section">
+  <div class="section-label">Apply Directly</div>
+  <div class="section-title">Platforms hiring Online Teachers from Africa right now</div>
+  <div class="section-sub">These companies are actively recruiting. Your VELA verified profile gives you a real advantage.</div>
+  <div class="platform-grid"><a href="https://www.cambly.com/en/tutor-application" target="_blank" class="platform-card"><div class="platform-name">Cambly</div><div class="platform-pay">$10.20/hr</div><div class="platform-desc">English conversation, no lesson planning needed</div></a><a href="https://preply.com/en/become-a-tutor" target="_blank" class="platform-card"><div class="platform-name">Preply</div><div class="platform-pay">$15 – $40/hr</div><div class="platform-desc">Any subject, set your own rate</div></a><a href="https://outschool.com/teach" target="_blank" class="platform-card"><div class="platform-name">Outschool</div><div class="platform-pay">$30 – $80/hr</div><div class="platform-desc">Creative and academic classes</div></a><a href="https://italki.com/teach" target="_blank" class="platform-card"><div class="platform-name">iTalki</div><div class="platform-pay">$10 – $35/hr</div><div class="platform-desc">Language teaching globally</div></a><a href="https://www.tutor.com/apply" target="_blank" class="platform-card"><div class="platform-name">Tutor.com</div><div class="platform-pay">$13 – $18/hr</div><div class="platform-desc">All subjects K-12</div></a><a href="https://www.wyzant.com/become_a_tutor" target="_blank" class="platform-card"><div class="platform-name">Wyzant</div><div class="platform-pay">$25 – $60/hr</div><div class="platform-desc">Academic tutoring</div></a></div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section">
+  <div class="section-label">Build Your Portfolio</div>
+  <div class="section-title">VELA tells you exactly which projects to build</div>
+  <div class="section-sub">Not generic advice. The specific projects employers hire for in this category.</div>
+  <div class="portfolio-grid"><div class="port-card"><div class="port-num">Project 1</div><div class="port-title">Sample Lesson Plan</div><div class="port-desc">Write a complete 45-minute lesson plan for any topic — objectives, activities, assessment, and materials. Shows your teaching structure.</div></div><div class="port-card"><div class="port-num">Project 2</div><div class="port-title">Teaching Video Clip</div><div class="port-desc">Record a 3-5 minute clip explaining any concept clearly. This is what Cambly and Preply specifically look for.</div></div><div class="port-card"><div class="port-num">Project 3</div><div class="port-title">Student Progress Report</div><div class="port-desc">Create a sample report showing how you track learning, give feedback, and adapt your teaching to each student.</div></div><div class="port-card"><div class="port-num">Project 4</div><div class="port-title">Mini Course Outline</div><div class="port-desc">Design a 4-week course on any subject you know well — weekly topics, learning goals, and free resources for students.</div></div></div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section">
+  <div class="section-label">Everything Included — Free</div>
+  <div class="section-title">What VELA gives every Online Teacher</div>
+  <br/>
+  <div class="gives-grid">
+    <div class="gives-item"><span class="gives-check">✓</span><span class="gives-text">VELA Score out of 100 — independently assessed</span></div>
+    <div class="gives-item"><span class="gives-check">✓</span><span class="gives-text">Step-by-step skill roadmap with free certifications</span></div>
+    <div class="gives-item"><span class="gives-check">✓</span><span class="gives-text">Specific portfolio projects employers actually hire for</span></div>
+    <div class="gives-item"><span class="gives-check">✓</span><span class="gives-text">5-layer verification — identity, skills, portfolio, remote readiness, reliability</span></div>
+    <div class="gives-item"><span class="gives-check">✓</span><span class="gives-text">ATS-optimised CV customised for every job application</span></div>
+    <div class="gives-item"><span class="gives-check">✓</span><span class="gives-text">Daily remote Online Teacher jobs matched to your profile</span></div>
+  </div>
+</div>
+
+<div class="cta-section">
+  <h2>Ready to become a<br/>Verified Online Teacher?</h2>
+  <p>Join thousands of African professionals building their verified profiles on VELA. Free forever.</p>
+  <a href="profile.html?skill=Online+Teacher" class="btn-hero" style="position:relative;">Start My Free Profile</a>
+  <div class="cta-badges">
+    <span class="cta-badge">✓ Free forever</span>
+    <span class="cta-badge">✓ 10 minutes to start</span>
+    <span class="cta-badge">✓ No experience required</span>
+    <span class="cta-badge">✓ Join the community</span>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-text">
+    2026 VELA &nbsp;·&nbsp; <a href="index.html">Home</a> &nbsp;·&nbsp; <a href="jobs.html">Jobs</a> &nbsp;·&nbsp; <a href="https://t.me/+5d8WDDcuocdkNjM0" target="_blank">Community</a>
+  </div>
+</footer>
+</body>
+</html>
