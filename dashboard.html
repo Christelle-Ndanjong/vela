@@ -32,43 +32,47 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg:      #0B0F1F;
-      --bg2:     #0E1328;
-      --surface: #151A2E;
-      --card:    #1A2040;
-      --border:  #2A3153;
-      --accent:  #22C55E;
-      --accent2: #3B82F6;
-      --grad1:   #22C1C3;
-      --grad2:   #6C63FF;
-      --gold:    #F5A623;
-      --text:    #FFFFFF;
-      --text2:   #A1A8C3;
-      --muted:   #6B7280;
-      --danger:  #EF4444;
-      --warn:    #F59E0B;
+      --navy:         #0b1f3a;
+      --navy-mid:     #112d52;
+      --navy-light:   #1a3f6e;
+      --orange:       #f0650e;
+      --orange-light: #ff8a3d;
+      --orange-pale:  #fff1e8;
+      --bg:           #fdf8f3;
+      --bg2:          #f5efe6;
+      --surface:      #ffffff;
+      --card:         #ffffff;
+      --border:       rgba(11,31,58,0.10);
+      --accent:       #f0650e;
+      --accent2:      #1a3f6e;
+      --gold:         #f0650e;
+      --text:         #0b1f3a;
+      --text2:        #4a6080;
+      --muted:        #8ea5be;
+      --danger:       #EF4444;
+      --warn:         #f0650e;
+      --grad1:        #f0650e;
+      --grad2:        #ff8a3d;
     }
-    html, body { scroll-behavior: smooth; overflow-x: hidden; max-width: 100%; }
-    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+    html, body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
 
     /* ── NAV ── */
     nav {
       display: flex; align-items: center; justify-content: space-between;
       padding: 1rem 5%; border-bottom: 1px solid var(--border);
       background: rgba(8,12,18,0.95); position: sticky; top: 0; z-index: 100;
-      backdrop-filter: blur(20px);
+      
     }
     .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem;
-      letter-spacing: 0.08em; background: linear-gradient(135deg, #22C1C3, #6C63FF);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text; text-decoration: none; }
+      letter-spacing: 0.08em; 
+      color: #ffffff; text-decoration: none; }
     .nav-right { display: flex; align-items: center; gap: 1.5rem; }
     .nav-links { display: flex; gap: 1.5rem; list-style: none; }
-    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--text); }
+    .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: #ffffff; }
     .nav-links a.active { color: var(--accent); }
     .nav-avatar { width: 34px; height: 34px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      background: var(--orange);
       display: flex; align-items: center; justify-content: center;
       font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.8rem;
       color: #000; cursor: pointer; flex-shrink: 0; }
@@ -81,19 +85,18 @@
     .welcome-left { }
     .welcome-greeting { font-size: 0.8rem; color: var(--muted); font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.4rem; }
     .welcome-name { font-family: 'Syne', sans-serif; font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 800; color: var(--text); line-height: 1.1; }
-    .welcome-name span { background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .welcome-name span { color: var(--orange); background: none; -webkit-text-fill-color: var(--orange); }
     .welcome-sub { color: var(--muted); font-size: 0.9rem; margin-top: 0.4rem; }
     .verified-badge { display: flex; align-items: center; gap: 0.6rem;
-      background: rgba(0,196,140,0.08); border: 1.5px solid rgba(0,196,140,0.25);
+      background: rgba(240,101,14,0.08); border: 1.5px solid rgba(240,101,14,0.25);
       border-radius: 100px; padding: 0.5rem 1.1rem;
       font-family: 'Syne', sans-serif; font-size: 0.8rem; font-weight: 700; color: var(--accent); }
     .verified-dot { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
 
     /* ── NEXT ACTION BANNER ── */
     .next-action {
-      background: linear-gradient(135deg, rgba(0,196,140,0.08), rgba(45,107,228,0.05));
-      border: 1.5px solid rgba(0,196,140,0.2); border-radius: 14px;
+      background: linear-gradient(135deg, rgba(240,101,14,0.08), rgba(45,107,228,0.05));
+      border: 1.5px solid rgba(240,101,14,0.2); border-radius: 14px;
       padding: 1.25rem 1.5rem; margin-bottom: 2rem;
       display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
     }
@@ -102,7 +105,7 @@
     .next-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.2rem; }
     .next-text { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--text); }
     .btn-action {
-      background: linear-gradient(135deg, var(--accent), #00C080); color: #000;
+      background: var(--orange); color: #ffffff;
       border: none; padding: 0.65rem 1.4rem; border-radius: 8px;
       font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem;
       cursor: pointer; text-decoration: none; white-space: nowrap; transition: opacity 0.2s;
@@ -115,15 +118,15 @@
 
     /* ── SCORE CARD ── */
     .score-card {
-      background: linear-gradient(160deg, #0D1A2E, #080C12);
-      border: 1.5px solid rgba(0,196,140,0.2); border-radius: 20px;
+      background: var(--navy);
+      border: 1.5px solid rgba(240,101,14,0.2); border-radius: 20px;
       padding: 2rem 1.5rem; display: flex; flex-direction: column; align-items: center;
       text-align: center; position: relative; overflow: hidden;
     }
     .score-card::before {
       content: ''; position: absolute; top: -60px; left: 50%; transform: translateX(-50%);
       width: 200px; height: 200px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,196,140,0.07), transparent 70%);
+      background: radial-gradient(circle, rgba(240,101,14,0.07), transparent 70%);
     }
     .score-label-top { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
       text-transform: uppercase; color: var(--accent); margin-bottom: 1.25rem; }
@@ -141,7 +144,7 @@
     .mini-bar-row { display: flex; align-items: center; gap: 0.5rem; }
     .mini-bar-label { font-size: 0.7rem; color: var(--muted); width: 70px; text-align: right; flex-shrink: 0; }
     .mini-bar-track { flex: 1; height: 4px; background: var(--surface); border-radius: 100px; overflow: hidden; }
-    .mini-bar-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 1s ease; }
+    .mini-bar-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--orange), var(--navy-light)); transition: width 1s ease; }
     .mini-bar-val { font-size: 0.68rem; color: var(--muted); width: 28px; flex-shrink: 0; font-family: 'Syne', sans-serif; font-weight: 700; }
 
     /* ── STATS GRID ── */
@@ -151,15 +154,15 @@
       padding: 1.4rem; display: flex; flex-direction: column; justify-content: space-between;
       transition: border-color 0.3s; text-decoration: none; color: inherit;
     }
-    .stat-card:hover { border-color: rgba(0,196,140,0.25); }
+    .stat-card:hover { border-color: rgba(240,101,14,0.25); }
     .stat-card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1rem; }
     .stat-card-icon { font-size: 1.3rem; }
     .stat-card-arrow { color: var(--muted); font-size: 0.8rem; }
     .stat-card-val { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--text); margin-bottom: 0.2rem; line-height: 1; }
     .stat-card-label { font-size: 0.78rem; color: var(--muted); }
     .stat-card-sub { font-size: 0.72rem; color: var(--muted); margin-top: 0.5rem; }
-    .accent-val { background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .accent-val { color: var(--orange); background: none; -webkit-text-fill-color: var(--orange);
+      color: var(--orange); }
 
     /* ── MAIN GRID ── */
     .main-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem; }
@@ -169,7 +172,7 @@
     .section-header { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border);
       display: flex; align-items: center; justify-content: space-between; }
     .section-title { font-family: 'Syne', sans-serif; font-size: 0.88rem; font-weight: 700; color: var(--text); }
-    .section-link { font-size: 0.75rem; color: var(--accent); text-decoration: none; font-weight: 600; transition: opacity 0.2s; }
+    .section-link { font-size: 0.75rem; color: var(--orange); text-decoration: none; font-weight: 600; transition: opacity 0.2s; }
     .section-link:hover { opacity: 0.75; }
     .section-body { padding: 1.25rem 1.5rem; }
 
@@ -178,7 +181,7 @@
     .verif-row { display: flex; align-items: center; gap: 0.75rem; }
     .verif-dot { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center;
       justify-content: center; font-size: 0.8rem; flex-shrink: 0; border: 1px solid var(--border); }
-    .verif-dot.passed { background: rgba(34,197,94,0.12); border-color: rgba(0,196,140,0.3); }
+    .verif-dot.passed { background: rgba(240,101,14,0.12); border-color: rgba(240,101,14,0.3); }
     .verif-dot.review { background: rgba(255,165,0,0.1); border-color: rgba(255,165,0,0.25); }
     .verif-dot.failed { background: rgba(255,107,107,0.1); border-color: rgba(255,107,107,0.25); }
     .verif-dot.pending { background: var(--surface); }
@@ -189,7 +192,7 @@
     .status-failed { color: var(--danger); }
     .status-pending { color: var(--muted); }
     .verif-progress-bar { height: 3px; background: var(--surface); border-radius: 100px; overflow: hidden; margin-top: 1rem; }
-    .verif-progress-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 0.8s ease; }
+    .verif-progress-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--orange), var(--navy-light)); transition: width 0.8s ease; }
 
     /* ── ROADMAP ── */
     .roadmap-list { display: flex; flex-direction: column; gap: 0.5rem; }
@@ -197,7 +200,7 @@
     .roadmap-step-num { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center;
       justify-content: center; font-family: 'Syne', sans-serif; font-size: 0.65rem; font-weight: 800;
       flex-shrink: 0; border: 1.5px solid var(--border); color: var(--muted); }
-    .roadmap-step-num.done { background: rgba(0,196,140,0.15); border-color: rgba(0,196,140,0.35); color: var(--accent); }
+    .roadmap-step-num.done { background: rgba(240,101,14,0.15); border-color: rgba(240,101,14,0.35); color: var(--accent); }
     .roadmap-step-num.current { background: rgba(45,107,228,0.15); border-color: rgba(45,107,228,0.35); color: var(--accent2); animation: glowPulse 2s infinite; }
     .roadmap-step-text { font-size: 0.82rem; color: var(--muted); flex: 1; }
     .roadmap-step-text.done { color: var(--text); text-decoration: line-through; }
@@ -217,7 +220,7 @@
     .job-row { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem;
       background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
       text-decoration: none; color: inherit; transition: border-color 0.2s; }
-    .job-row:hover { border-color: rgba(0,196,140,0.25); }
+    .job-row:hover { border-color: rgba(240,101,14,0.25); }
     .job-logo-sm { width: 32px; height: 32px; border-radius: 8px; background: var(--surface);
       border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
       font-size: 0.8rem; flex-shrink: 0; font-family: 'Syne', sans-serif; font-weight: 800; color: var(--muted); }
@@ -225,7 +228,7 @@
     .job-title-sm { font-family: 'Syne', sans-serif; font-size: 0.82rem; font-weight: 700; color: var(--text);
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .job-company-sm { font-size: 0.72rem; color: var(--muted); }
-    .job-badge-new { background: rgba(34,197,94,0.12); border: 1px solid rgba(0,196,140,0.2);
+    .job-badge-new { background: rgba(240,101,14,0.12); border: 1px solid rgba(240,101,14,0.2);
       color: var(--accent); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.06em;
       text-transform: uppercase; padding: 0.15rem 0.45rem; border-radius: 4px; flex-shrink: 0; }
 
@@ -327,7 +330,7 @@
 
 <!-- NAV -->
 <nav>
-  <a class="logo" href="index.html"><img src="logo.png" alt="VELA" style="width:28px;height:28px;object-fit:contain;vertical-align:middle;margin-right:6px;"/>VELA</a>
+  <a class="logo" href="index.html"><img src="logo.png" alt="VELA" style="width:28px;height:28px;object-fit:contain;vertical-align:middle;margin-right:6px;"/><span style="color:#f0650e;-webkit-text-fill-color:#f0650e;">V</span><span style="color:#ffffff;">ELA</span></a>
   <ul class="nav-links">
     <li><a href="index.html">Home</a></li>
     <li><a href="skills.html">Skills</a></li>
@@ -340,7 +343,7 @@
     
     <div class="nav-avatar" id="nav-avatar">?</div>
   </div>
-  <a href="login.html" onclick="velaSignOut(event)" style="background:transparent;border:1px solid rgba(255,100,100,0.25);color:#FF6B6B;padding:0.4rem 0.9rem;border-radius:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;">Sign Out</a>
+  <a href="login.html" onclick="velaSignOut(event)" style="background:transparent;border:1px solid rgba(255,100,100,0.4);color:#ff8a8a;padding:0.4rem 0.9rem;border-radius:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;">Sign Out</a>
 
   <button class="hamburger-btn" onclick="toggleMobileNav()" aria-label="Open menu">☰</button>
 
@@ -384,10 +387,10 @@
         <span class="verified-dot"></span> VELA Verified
       </div>
       <button onclick="shareProfile()"
-        style="background:transparent;border:1px solid var(--border);color:var(--muted);
+        style="background:transparent;border:1px solid rgba(255,255,255,0.25);color:#ffffff;
         padding:0.45rem 0.9rem;border-radius:8px;font-size:0.78rem;font-family:'DM Sans',sans-serif;
         cursor:pointer;display:flex;align-items:center;gap:0.4rem;transition:all 0.2s;"
-        onmouseover="this.style.borderColor='rgba(0,196,140,0.35)';this.style.color='var(--accent)'"
+        onmouseover="this.style.borderColor='rgba(240,101,14,0.35)';this.style.color='var(--accent)'"
         onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">
         🔗 Share My Progress
       </button>
@@ -396,7 +399,7 @@
 
   <!-- PORTFOLIO CTA -->
 <div style="max-width:1200px;margin:1rem auto 0;padding:0 4%">
-  <a href="portfolio.html" style="display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,rgba(45,107,228,0.1),rgba(0,196,140,0.06));border:1.5px solid rgba(45,107,228,0.25);border-radius:14px;padding:1.25rem 1.5rem;text-decoration:none;transition:all 0.2s" onmouseover="this.style.borderColor='rgba(45,107,228,0.5)'" onmouseout="this.style.borderColor='rgba(45,107,228,0.25)'">
+  <a href="portfolio.html" style="display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,rgba(45,107,228,0.1),rgba(240,101,14,0.06));border:1.5px solid rgba(45,107,228,0.25);border-radius:14px;padding:1.25rem 1.5rem;text-decoration:none;transition:all 0.2s" onmouseover="this.style.borderColor='rgba(45,107,228,0.5)'" onmouseout="this.style.borderColor='rgba(45,107,228,0.25)'">
     <div style="display:flex;align-items:center;gap:1rem">
       <div style="font-size:1.8rem">🗂️</div>
       <div>
@@ -414,8 +417,8 @@
     <div class="tracker-header">
       <div class="tracker-title">📋 Application Tracker</div>
       <button onclick="toggleTrackerForm()" id="tracker-toggle-btn"
-        style="background:transparent;border:1px solid var(--border);color:var(--muted);padding:0.35rem 0.8rem;border-radius:7px;font-size:0.75rem;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;"
-        onmouseover="this.style.borderColor='rgba(0,196,140,0.3)';this.style.color='var(--accent)'"
+        style="background:transparent;border:1px solid rgba(255,255,255,0.25);color:#ffffff;padding:0.35rem 0.8rem;border-radius:7px;font-size:0.75rem;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;"
+        onmouseover="this.style.borderColor='rgba(240,101,14,0.3)';this.style.color='var(--accent)'"
         onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">
         + Add Application
       </button>
@@ -475,7 +478,7 @@
         <svg viewBox="0 0 140 140" width="140" height="140">
           <circle class="score-ring-track" cx="70" cy="70" r="62"/>
           <circle class="score-ring-fill" cx="70" cy="70" r="62"
-            id="score-ring" stroke="#00C48C"
+            id="score-ring" stroke="#f0650e"
             stroke-dasharray="389.6" stroke-dashoffset="389.6"/>
         </svg>
         <div class="score-center">
@@ -791,7 +794,7 @@ function getNextAction() {
 }
 
 function getScoreColor(s) {
-  return s >= 70 ? "#00C48C" : s >= 50 ? "#FFA500" : "#FF6B6B";
+  return s >= 70 ? "#f0650e" : s >= 50 ? "#FFA500" : "#FF6B6B";
 }
 
 // ─── RENDER ───────────────────────────────────────────────────────────────
@@ -968,16 +971,16 @@ function buildActivity() {
     if (mins < 1440) return `${Math.floor(mins/60)} hours ago`;
     return `${Math.floor(mins/1440)} days ago`;
   };
-  if (profile.name && !isDemo)      acts.push({ icon:"👤", bg:"rgba(34,197,94,0.12)", text:"Profile created — welcome to VELA!", time:fmt(30) });
+  if (profile.name && !isDemo)      acts.push({ icon:"👤", bg:"rgba(240,101,14,0.12)", text:"Profile created — welcome to VELA!", time:fmt(30) });
   if (verifState.comm?.status)      acts.push({ icon:"✍️", bg:"rgba(45,107,228,0.1)", text:`Communication Test ${verifState.comm.status === "passed" ? "passed with score "+verifState.comm.score : "submitted"}`, time:fmt(120) });
-  if (verifState.tools?.status)     acts.push({ icon:"🛠️", bg:"rgba(34,197,94,0.12)", text:`Tool Knowledge Assessment ${verifState.tools.status === "passed" ? "passed — "+verifState.tools.score+"/100" : "submitted"}`, time:fmt(180) });
+  if (verifState.tools?.status)     acts.push({ icon:"🛠️", bg:"rgba(240,101,14,0.12)", text:`Tool Knowledge Assessment ${verifState.tools.status === "passed" ? "passed — "+verifState.tools.score+"/100" : "submitted"}`, time:fmt(180) });
   if (verifState.task?.status)      acts.push({ icon:"📁", bg:"rgba(255,165,0,0.1)", text:"Task Simulation document submitted for review", time:fmt(360) });
   if (verifState.video?.status)     acts.push({ icon:"🎥", bg:"rgba(255,165,0,0.1)", text:"Video Introduction submitted for review", time:fmt(480) });
   if (verifState.interview?.status) acts.push({ icon:"💬", bg:"rgba(45,107,228,0.1)", text:`Mock Interview ${verifState.interview.status === "passed" ? "passed — "+verifState.interview.score+"/100" : "submitted"}`, time:fmt(600) });
   if (isDemo) return [
-    { icon:"👤", bg:"rgba(34,197,94,0.12)", text:"Profile created — welcome to VELA!", time:"2 hours ago" },
+    { icon:"👤", bg:"rgba(240,101,14,0.12)", text:"Profile created — welcome to VELA!", time:"2 hours ago" },
     { icon:"✍️", bg:"rgba(45,107,228,0.1)", text:"Communication Test passed — 82/100", time:"1 hour ago" },
-    { icon:"🛠️", bg:"rgba(34,197,94,0.12)", text:"Tool Knowledge Assessment passed — 90/100", time:"45 minutes ago" },
+    { icon:"🛠️", bg:"rgba(240,101,14,0.12)", text:"Tool Knowledge Assessment passed — 90/100", time:"45 minutes ago" },
     { icon:"📁", bg:"rgba(255,165,0,0.1)", text:"Task Simulation submitted for review", time:"20 minutes ago" },
   ];
   return acts.reverse();
@@ -1296,7 +1299,7 @@ function renderVelaBadge(el, opts) {
     h += "<span class=\"vela-layer-pill " + cls + "\"" + sty + ">" + (st === "passed" ? "check" : st === "review" ? "review" : "pending") + " " + l.label + "</span>";
   });
   h += "</div>";
-  h += "<a href=\"verify.html\" style=\"display:inline-block;margin-top:0.6rem;font-size:0.75rem;font-weight:700;color:var(--accent);text-decoration:none\">";
+  h += "<a href=\"verify.html\" style=\"display:inline-block;margin-top:0.6rem;font-size:0.75rem;font-weight:700;color:var(--orange);text-decoration:none\">";
   h += full ? "View Verification" : "Complete Verification";
   h += "</a>";
   el.innerHTML = h;
