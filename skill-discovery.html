@@ -144,7 +144,7 @@ var QUESTIONS = [
       { icon:"📊", label:"Analysing data and finding patterns", val:"data" },
       { icon:"✍️", label:"Writing, creating, or communicating ideas", val:"creative" },
       { icon:"⚙️", label:"Organising tasks and keeping things running smoothly", val:"ops" },
-      { icon:"💻", label:"Working with technology and digital tools", val:"tech" },
+      { icon:"💻", label:"Working with technology and digital tools", val:"tech" }
     ]
   },
   {
@@ -152,15 +152,15 @@ var QUESTIONS = [
     opts: [
       { icon:"😊", label:"Very comfortable — I pick up new tools quickly", val:"high" },
       { icon:"👍", label:"Fairly comfortable — I can learn what I need", val:"mid" },
-      { icon:"😐", label:"Basic — I use email and common apps fine", val:"low" },
+      { icon:"😐", label:"Basic — I use email and common apps fine", val:"low" }
     ]
   },
   {
-    text: "How much time can you dedicate to learning before your first job?",
+    text: "How much time can you spend learning before your first job?",
     opts: [
       { icon:"⚡", label:"I want to start working within 2 to 4 weeks", val:"fast" },
       { icon:"📅", label:"I can spend 1 to 3 months learning properly", val:"medium" },
-      { icon:"🎓", label:"I am willing to invest 3 to 6 months to build strong skills", val:"long" },
+      { icon:"🎓", label:"I am willing to invest 3 to 6 months to build strong skills", val:"long" }
     ]
   },
   {
@@ -169,7 +169,7 @@ var QUESTIONS = [
       { icon:"🗣️", label:"Communication — I explain things clearly and professionally", val:"comm" },
       { icon:"🔢", label:"Numbers and logic — I notice patterns and think analytically", val:"logic" },
       { icon:"🎨", label:"Creativity — I come up with ideas and express them well", val:"creative" },
-      { icon:"📋", label:"Organisation — I plan, prioritise, and execute reliably", val:"org" },
+      { icon:"📋", label:"Organisation — I plan, prioritise, and execute reliably", val:"org" }
     ]
   },
   {
@@ -178,44 +178,32 @@ var QUESTIONS = [
       { icon:"👥", label:"Working closely with clients or customers every day", val:"client" },
       { icon:"🔍", label:"Deep focused work on projects with clear deliverables", val:"project" },
       { icon:"📣", label:"Building and growing something creative or a brand", val:"brand" },
-      { icon:"🤝", label:"Supporting an executive or a team to stay organised", val:"support" },
+      { icon:"🤝", label:"Supporting an executive or a team to stay organised", val:"support" }
     ]
   }
 ];
 
-var answers = [];
-var current = 0;
+function getRecommendation(vals) {
+  var work = vals[0], tech = vals[1], time = vals[2], ability = vals[3], env = vals[4];
+  if ((work === "data" || ability === "logic") && tech !== "low")
+    return { skill:"Data Analysis", icon:"📊", why:"You enjoy analysing patterns and are comfortable with technology. Data Analysis is one of the highest-paying remote skills globally.", tags:["SQL","Excel","Python","Power BI"], cta:"profile.html?skill=Data+Analysis" };
+  if ((work === "ops" || ability === "org") && env === "support")
+    return { skill:"Virtual Assistant", icon:"🤝", why:"Your organisational skills and enjoyment of supporting others make Virtual Assistant the perfect entry point. High volume, fastest to get hired.", tags:["Google Workspace","Notion","Asana","Calendly"], cta:"vela-va.html" };
+  if (work === "people" || env === "client")
+    return { skill:"Customer Service", icon:"🎧", why:"You are energised by helping people. Customer Service is one of the easiest remote skills to get hired for globally with strong English.", tags:["Zendesk","HubSpot","Slack","Intercom"], cta:"vela-cs.html" };
+  if ((work === "creative" || ability === "creative") && env === "brand")
+    return { skill:"Social Media Management", icon:"📱", why:"Your creativity and desire to build something make Social Media Management perfect. Every business needs this.", tags:["Canva","Buffer","Meta Ads","Analytics"], cta:"profile.html?skill=Social+Media+Management" };
+  if (ability === "comm" && (work === "creative" || env === "brand"))
+    return { skill:"Content Writing", icon:"✍️", why:"Your communication strength is exactly what content writing requires. Fully remote, flexible, and in high demand globally.", tags:["SEO","Grammarly","WordPress","Copywriting"], cta:"profile.html?skill=Content+Writing" };
+  if (work === "people" && ability === "comm")
+    return { skill:"Online Teaching", icon:"📚", why:"You enjoy working with people and communicating well. Platforms like Preply, Cambly, and Outschool are actively hiring African educators.", tags:["Preply","Cambly","Outschool","Zoom"], cta:"vela-teaching.html" };
+  if (ability === "org" || work === "ops")
+    return { skill:"Project Management", icon:"💼", why:"Your organisational mindset aligns perfectly with remote Project Management. Companies globally hire for this at competitive salaries.", tags:["Asana","Jira","Agile","Slack"], cta:"profile.html?skill=Project+Management" };
+  return { skill:"Virtual Assistant", icon:"🤝", why:"Based on your answers, Virtual Assistant is a strong starting point with high global demand and the fastest path to your first remote job.", tags:["Google Workspace","Notion","Asana","Trello"], cta:"vela-va.html" };
+}
 
-var SKILL_MAP = {
-  // Logic: map answer combinations to skills
-  // Format: [work, tech, time, ability, environment] → skill
-  recommend: function(a) {
-    var work = a[0], tech = a[1], time = a[2], ability = a[3], env = a[4];
-    // Data Analysis
-    if ((work==="data" || ability==="logic") && tech !== "low")
-      return { skill:"Data Analysis", icon:"📊", why:"You enjoy analysing patterns and are comfortable with technology. Data Analysis is one of the highest-paying remote skills and matches your analytical strength perfectly.", tags:["SQL","Excel","Python","Power BI"], cta:"profile.html?skill=Data+Analysis" };
-    // VA
-    if ((work==="ops" || ability==="org") && env==="support")
-      return { skill:"Virtual Assistant", icon:"🤝", why:"Your organisational skills and enjoyment of supporting others make Virtual Assistant the perfect entry point. It is one of the highest-volume remote job categories and requires no technical background.", tags:["Google Workspace","Notion","Asana","Calendly"], cta:"profile.html?skill=Virtual+Assistant" };
-    // Customer Service
-    if (work==="people" || env==="client")
-      return { skill:"Customer Service", icon:"🎧", why:"You are energised by helping people and communicating clearly. Customer Service is one of the easiest remote skills to get hired in, especially with strong English communication.", tags:["Zendesk","HubSpot","Slack","Intercom"], cta:"profile.html?skill=Customer+Service" };
-    // Social Media
-    if ((work==="creative" || ability==="creative") && env==="brand")
-      return { skill:"Social Media Management", icon:"📱", why:"Your creativity and desire to build something resonate with Social Media Management. Every business in the world needs this — and creative Africans are thriving in this space.", tags:["Canva","Buffer","Meta Ads","TikTok"], cta:"profile.html?skill=Social+Media+Management" };
-    // Content Writing
-    if (ability==="comm" && (work==="creative" || env==="brand"))
-      return { skill:"Content Writing", icon:"✍️", why:"Your communication strength and creative energy are exactly what content writing requires. It is fully remote, flexible, and in high demand globally.", tags:["SEO","Grammarly","WordPress","Copywriting"], cta:"profile.html?skill=Content+Writing" };
-    // Online Tutoring
-    if (work==="people" && ability==="comm" && env==="client")
-      return { skill:"Online Tutoring", icon:"📚", why:"You enjoy working with people and communicating well — qualities every great tutor needs. Platforms like Preply, Cambly, and Outschool are actively hiring African educators right now.", tags:["Preply","Cambly","Outschool","Zoom"], cta:"profile.html?skill=Online+Tutoring" };
-    // Project Management
-    if ((ability==="org" || work==="ops") && env==="project")
-      return { skill:"Project Management", icon:"💼", why:"Your organisational mindset and preference for focused project work align perfectly with remote Project Management. Companies globally are hiring for this at competitive salaries.", tags:["Asana","Jira","Agile","Slack"], cta:"profile.html?skill=Project+Management" };
-    // Default fallback
-    return { skill:"Virtual Assistant", icon:"🤝", why:"Based on your answers, Virtual Assistant is a strong starting point. It combines communication, organisation, and technology in a role that is in high demand globally for African professionals.", tags:["Google Workspace","Notion","Asana","Trello"], cta:"profile.html?skill=Virtual+Assistant" };
-  }
-};
+var currentQ = 0;
+var selectedAnswers = {};
 
 function selectJourney(type) {
   if (type === "ready") {
@@ -224,86 +212,107 @@ function selectJourney(type) {
   }
   document.getElementById("journey-section").style.display = "none";
   document.getElementById("quiz-section").style.display = "block";
-  renderQ();
+  currentQ = 0;
+  selectedAnswers = {};
+  renderQuestion();
 }
 
-function renderQ() {
-  var q = QUESTIONS[current];
-  document.getElementById("q-step").textContent = "Question " + (current+1) + " of " + QUESTIONS.length;
+function renderQuestion() {
+  var q = QUESTIONS[currentQ];
+  var total = QUESTIONS.length;
+  var isLast = currentQ === total - 1;
+
+  document.getElementById("q-step").textContent = "Question " + (currentQ + 1) + " of " + total;
   document.getElementById("q-text").textContent = q.text;
-  document.getElementById("progress").style.width = ((current+1)/QUESTIONS.length*100) + "%";
-  document.getElementById("btn-back").style.visibility = current > 0 ? "visible" : "hidden";
-  document.getElementById("btn-next").disabled = (answers[current] === undefined || answers[current] === null);
+  document.getElementById("progress").style.width = (((currentQ + 1) / total) * 100) + "%";
+  document.getElementById("btn-back").style.visibility = currentQ > 0 ? "visible" : "hidden";
+  document.getElementById("btn-next").textContent = isLast ? "See My Result →" : "Continue →";
+  document.getElementById("btn-next").disabled = !(currentQ in selectedAnswers);
+
   var container = document.getElementById("q-options");
   container.innerHTML = "";
-  q.opts.forEach(function(opt, idx) {
+
+  for (var i = 0; i < q.opts.length; i++) {
+    var opt = q.opts[i];
     var btn = document.createElement("button");
-    btn.className = answers[current] === idx ? "q-opt selected" : "q-opt";
-    var icon = document.createElement("span");
-    icon.className = "opt-icon";
-    icon.textContent = opt.icon;
-    var label = document.createElement("span");
-    label.textContent = opt.label;
-    btn.appendChild(icon);
-    btn.appendChild(label);
-    btn.addEventListener("click", function() { selectOpt(idx); });
+    btn.className = "q-opt" + (selectedAnswers[currentQ] === i ? " selected" : "");
+
+    var iconEl = document.createElement("span");
+    iconEl.className = "opt-icon";
+    iconEl.textContent = opt.icon;
+
+    var labelEl = document.createElement("span");
+    labelEl.textContent = opt.label;
+
+    btn.appendChild(iconEl);
+    btn.appendChild(labelEl);
+    btn.setAttribute("data-index", i);
+
     container.appendChild(btn);
+  }
+
+  container.addEventListener("click", function(e) {
+    var btn = e.target.closest(".q-opt");
+    if (!btn) return;
+    var idx = parseInt(btn.getAttribute("data-index"));
+    selectAnswer(idx);
   });
 }
 
-
-function selectOpt(idx) {
-  answers[current] = idx;
-  // Update visual selection
-  var opts = document.getElementById("q-options").querySelectorAll(".q-opt");
-  opts.forEach(function(b, i) {
-    b.classList.toggle("selected", i === idx);
-  });
+function selectAnswer(index) {
+  selectedAnswers[currentQ] = index;
+  var btns = document.getElementById("q-options").querySelectorAll(".q-opt");
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].className = "q-opt" + (i === index ? " selected" : "");
+  }
   document.getElementById("btn-next").disabled = false;
 }
 
 function nextQ() {
-  if (answers[current] === undefined) return; // safety guard
-  if (current < QUESTIONS.length - 1) {
-    current++;
-    renderQ();
+  if (!(currentQ in selectedAnswers)) return;
+  if (currentQ < QUESTIONS.length - 1) {
+    currentQ++;
+    renderQuestion();
   } else {
     showResult();
   }
 }
 
 function prevQ() {
-  if (current > 0) { current--; renderQ(); }
+  if (currentQ > 0) {
+    currentQ--;
+    renderQuestion();
+  }
 }
 
 function showResult() {
-  // Guard: ensure all 5 answers are present
-  if (answers.length < QUESTIONS.length) {
-    alert("Please answer all questions to continue.");
-    return;
-  }
-  for (var j = 0; j < QUESTIONS.length; j++) {
-    if (answers[j] === undefined) {
-      current = j;
-      renderQ();
+  var vals = [];
+  for (var i = 0; i < QUESTIONS.length; i++) {
+    if (!(i in selectedAnswers)) {
+      currentQ = i;
+      renderQuestion();
       return;
     }
+    vals.push(QUESTIONS[i].opts[selectedAnswers[i]].val);
   }
-  // Map answer indices to values
-  var vals = answers.map(function(idx, qi) {
-    return QUESTIONS[qi].opts[idx].val;
-  });
-  var rec = SKILL_MAP.recommend(vals);
+
+  var rec = getRecommendation(vals);
 
   document.getElementById("r-icon").textContent = rec.icon;
   document.getElementById("r-skill").textContent = rec.skill;
   document.getElementById("r-why").textContent = rec.why;
-  document.getElementById("r-tags").innerHTML = rec.tags.map(function(t) {
-    return '<span class="result-tag">' + t + '</span>';
-  }).join("");
-  document.getElementById("r-cta").href = rec.cta;
 
-  localStorage.setItem("vela_recommended_skill", rec.skill);
+  var tagsEl = document.getElementById("r-tags");
+  tagsEl.innerHTML = "";
+  for (var t = 0; t < rec.tags.length; t++) {
+    var span = document.createElement("span");
+    span.className = "result-tag";
+    span.textContent = rec.tags[t];
+    tagsEl.appendChild(span);
+  }
+
+  document.getElementById("r-cta").href = rec.cta;
+  try { localStorage.setItem("vela_recommended_skill", rec.skill); } catch(e) {}
 
   document.getElementById("quiz-section").style.display = "none";
   document.getElementById("result-section").style.display = "block";
@@ -311,8 +320,8 @@ function showResult() {
 }
 
 function resetQuiz() {
-  answers = [];
-  current = 0;
+  currentQ = 0;
+  selectedAnswers = {};
   document.getElementById("result-section").style.display = "none";
   document.getElementById("journey-section").style.display = "block";
   window.scrollTo({ top: 0, behavior: "smooth" });
