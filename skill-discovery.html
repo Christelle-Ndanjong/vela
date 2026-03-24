@@ -233,7 +233,7 @@ function renderQ() {
   document.getElementById("q-text").textContent = q.text;
   document.getElementById("progress").style.width = ((current+1)/QUESTIONS.length*100) + "%";
   document.getElementById("btn-back").style.visibility = current > 0 ? "visible" : "hidden";
-  document.getElementById("btn-next").disabled = answers[current] === undefined;
+  document.getElementById("btn-next").disabled = (answers[current] === undefined || answers[current] === null);
   var container = document.getElementById("q-options");
   container.innerHTML = "";
   q.opts.forEach(function(opt, idx) {
@@ -254,13 +254,16 @@ function renderQ() {
 
 function selectOpt(idx) {
   answers[current] = idx;
-  document.querySelectorAll(".q-opt").forEach(function(b, i) {
+  // Update visual selection
+  var opts = document.getElementById("q-options").querySelectorAll(".q-opt");
+  opts.forEach(function(b, i) {
     b.classList.toggle("selected", i === idx);
   });
   document.getElementById("btn-next").disabled = false;
 }
 
 function nextQ() {
+  if (answers[current] === undefined) return; // safety guard
   if (current < QUESTIONS.length - 1) {
     current++;
     renderQ();
@@ -274,6 +277,18 @@ function prevQ() {
 }
 
 function showResult() {
+  // Guard: ensure all 5 answers are present
+  if (answers.length < QUESTIONS.length) {
+    alert("Please answer all questions to continue.");
+    return;
+  }
+  for (var j = 0; j < QUESTIONS.length; j++) {
+    if (answers[j] === undefined) {
+      current = j;
+      renderQ();
+      return;
+    }
+  }
   // Map answer indices to values
   var vals = answers.map(function(idx, qi) {
     return QUESTIONS[qi].opts[idx].val;
